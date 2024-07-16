@@ -1,6 +1,6 @@
 # #############################################################################################################
 # Title: Connect-TSNotion
-# Description:
+# Description: Connects to the Notion API using the provided Bearer token and URL
 # 07/2024 Fabian Steiner, Thomas Subotitsch
 # # Minimum Powershell Version: 7
 # #Requires -Version "7"
@@ -18,7 +18,7 @@ function Connect-TSNotion
     The Bearer token used for authentication. This parameter is mandatory.
     
     .PARAMETER notionURL
-    The URL to the Notion API. This parameter is mandatory.
+    The URL to the Notion API. This parameter is optional and defaults to 'https://api.notion.com/v1'
     
     .PARAMETER APIVersion
     The version of the Notion API to use. Valid values are '2022-02-22' and '2022-06-28'. This parameter is optional and defaults to '2022-06-28'.
@@ -27,6 +27,11 @@ function Connect-TSNotion
     Connect-TSNotion -BearerToken $secureToken -notionURL "https://api.notion.com/v1" -APIVersion '2022-06-28'
     
     Connects to the Notion API using the specified Bearer token, URL, and API version.
+    .EXAMPLE
+    $BearerToken = Read-Host -Prompt "Enter your Bearer token" | ConvertTo-Securestring -AsPlainText
+    Connect-TSNotion -BearerToken $BearerToken
+
+    Asks for the API token and connects to the Notion API.
     
     .OUTPUTS
     System.Collections.Hashtable

@@ -96,6 +96,11 @@ function Invoke-TSNotionApiCall
 
     Process
     {
+        # https://developers.notion.com/reference/intro
+        # Parameter location varies by endpoint
+        #  GET requests accept parameters in the query string.
+        #  POST requests receive parameters in the request body.
+
         "Request params:", $Params | Add-TSNotionLogToFile -filename $fileName -level DEBUG
         :loop while ($true)
         {
@@ -111,6 +116,7 @@ function Invoke-TSNotionApiCall
                 {
                     $Params["URI"] = $uri + "?" + ($queryParameters.GetEnumerator() | ForEach-Object { "{0}={1}" -f $_.Key, $_.Value }) -join "&"
                 }
+                # Add parameter to the body
                 elseif ($method -eq "POST")
                 {
                     $Params["URI"] = $uri
@@ -127,8 +133,17 @@ function Invoke-TSNotionApiCall
                 }
                 Write-Debug "$method $($Params["URI"])"
                 $content = Invoke-RestMethod @Params
-                $type = $content.type
-                $output += $content.results
+                # $content.results only exists if the response is paginated, otherwise $content is the result
+                # TODO: ist aber nicht ideal, denn man sollte nur die $content.results beim pagen aufsummieren, aber das ganze Objekt zurückgeben
+                if ($content.results)
+                {
+                    $output += $content.results
+                }
+                else
+                {
+                    $output += $content
+                }
+                
                 if (($content.has_more -eq $true) -and ($output.count -lt $first))
                 {
                     $queryParameters | Add-Member -MemberType NoteProperty -Name "start_cursor" -Value $content.next_cursor -Force
@@ -136,6 +151,8 @@ function Invoke-TSNotionApiCall
                     continue loop
                 }
                 return $output
+                # Convert the output to Notion objects
+                # return $output | ConvertTo-TSNotionObject
             }
             catch [Microsoft.PowerShell.Commands.HttpResponseException]
             {
