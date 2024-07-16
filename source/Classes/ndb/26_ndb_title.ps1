@@ -1,0 +1,2 @@
+class ndb_title {}
+}
