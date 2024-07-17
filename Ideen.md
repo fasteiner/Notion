@@ -6,6 +6,10 @@
 - Get-TSNotionPage
 - Get-TSNotionPageContent (Get-TSNotionBlockChildren)
 
+
+- https://github.com/makenotion/notion-sdk-js/blob/main/examples/intro-to-notion-api/intermediate/2-add-page-to-database.js
+
+
 Invoke-TSNotionWebrequest
 
 # ConvertTo-TSNotionObject
