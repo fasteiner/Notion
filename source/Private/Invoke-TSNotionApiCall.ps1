@@ -109,6 +109,20 @@ function Invoke-TSNotionApiCall
                 $output = @()
                 if ($first -and ($first -lt ($pageSize + $output.count)))
                 {
+                    #https://developers.notion.com/reference/intro#pagination
+                    # Usage of page_size only allowed for the following requests
+                    # GET  https://api.notion.com/v1/users
+                    # GET  https://api.notion.com/v1/comments
+                    # GET  https://api.notion.com/v1/pages/ { page_id }/properties/ { property_id}
+                    # POST https://api.notion.com/v1/databases/ { database_id }/query
+                    # POST https://api.notion.com/v1/search
+                    
+                    # https://developers.notion.com/reference/retrieve-a-page-property#paginated-properties
+                    # * title
+                    # * rich_text
+                    # * relation
+                    # * people
+
                     $queryParameters.page_size = $first
                 }
                 # Add query parameters to the URI
@@ -156,7 +170,6 @@ function Invoke-TSNotionApiCall
             }
             catch [Microsoft.PowerShell.Commands.HttpResponseException]
             {
-                Wait-Debugger
                 $message = ($error.Errordetails.message | ConvertFrom-Json)
                 $e = @{
                     Status     = $message.status

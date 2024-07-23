@@ -1,8 +1,9 @@
  # Title
   Short Description 
  
-- [ ] Connect-TSNotion -BearerToken -notionUri  -ApiKey
+- [X] Connect-TSNotion -BearerToken -notionUri  -ApiKey
 - [ ] Connect-TSNotion -Profile
+- [ ] Connect-TSNotion Errorhandling/Output bei falschem Bearer Token
 - Get-TSNotionPage
 - Get-TSNotionPageContent (Get-TSNotionBlockChildren)
 

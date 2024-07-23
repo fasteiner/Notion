@@ -15,7 +15,7 @@ function Connect-TSNotion
     The Connect-TSNotion function is used to establish a connection to the Notion API. It requires a Bearer token and the URL to the Notion API. Optionally, you can specify the API version.
     
     .PARAMETER BearerToken
-    The Bearer token used for authentication. This parameter is mandatory.
+    The Bearer token (aka APIKey) used for authentication. This parameter is mandatory.
     
     .PARAMETER notionURL
     The URL to the Notion API. This parameter is optional and defaults to 'https://api.notion.com/v1'
