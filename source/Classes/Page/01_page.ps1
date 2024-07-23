@@ -9,24 +9,27 @@
 class page
 {
     #https://developers.notion.com/reference/page
-    [string]$object = "page"
-    [string]$id
-    [string]$created_time
-    [user]$created_by
-    [string]$last_edited_time
-    [user]$last_edited_by
-    [bool]  $archived
-    [bool]  $in_trash
-    [file]$icon
-    [file]$cover
-    [object]$properties
+    [string]     $object = "page"
+    [string]     $id
+    [string]     $created_time
+    [user]       $created_by
+    [string]     $last_edited_time
+    [user]       $last_edited_by
+    [bool]       $archived
+    [bool]       $in_trash
+    [file]       $icon
+    [file]       $cover
+    [object]     $properties
     [page_parent]$parent
-    [string]$url
-    [string]$public_url
+    [string]     $url
+    [string]     $public_url
 
+    #Constructors
     page()
     {
         $this.id = [guid]::NewGuid().ToString()
+        $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+
     }
     
     page([string] $id)
@@ -34,7 +37,9 @@ class page
         $this.id = $id
     }
 
-    ConvertfromObject($Value)
+    #Methods
+    #BUG: Warum ist diese Methode nicht via [page]::ConvertfromObject($Value) verfügbar?
+    ConvertFromObject($Value)
     {
         $this.id = $Value.id
         $this.created_time = $Value.created_time
