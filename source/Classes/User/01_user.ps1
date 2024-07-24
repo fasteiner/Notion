@@ -13,11 +13,23 @@ class user {
     [string]$name
     [string]$avatar_url
 
-    ConvertFromObject($Value)
+    user ([object]$user) {
+        $this.id = $user.id
+        $this.type = $user.type
+        $this.name = $user.name
+        $this.avatar_url = $user.avatar_url
+    }
+
+    user([string]$id) {
+        $this.id = $id
+    }
+
+    static ConvertFromObject($Value)
     {
-        $this.id = $Value.id
-        $this.type = $Value.type
-        $this.name = $Value.name
-        $this.avatar_url = $Value.avatar_url
+        $user= [user]::new()
+        $user.id = $Value.id
+        $user.type = $Value.type
+        $user.name = $Value.name
+        $user.avatar_url = $Value.avatar_url
     }
 }

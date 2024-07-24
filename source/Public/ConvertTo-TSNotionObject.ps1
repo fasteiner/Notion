@@ -33,54 +33,121 @@ function ConvertTo-TSNotionObject
         
         ("Object: {0} Type: {1} " -f $Value.object, $Value.Type) | Add-TSNotionLogToFile -Level INFO
             "Object", $Value | Add-TSNotionLogToFile -Level DEBUG
-        
-            # $Value| Get-Member -MemberType Properties | ForEach-Object {
-            #     $Property = $_.Name
-            #     $Value = $Value.$Property
-            #     $Property, $Value | Add-TSNotionLogToFile -Level INFO
-            # }
-
             #TODO: Constructor für jede Klasse erstellen .ConvertfromObject() -> $Object = [NotionObject]::new().ConvertfromObject($Value)
-                switch ($Value.object)
+            switch ($Value.object)
+            {
+                "list"
+                {  
+                    "List" | Add-TSNotionLogToFile -Level INFO 
+                    #TODO: Gibt's einen Block Type List?
+                    if  ($Value.results -is [array])
+                    {
+                        foreach ($result in $Value.results)
+                        {
+                            $result | ConvertTo-TSNotionObject
+                        }
+                    }
+                    #TODO: $out = [Block]::new()
+                    # Block vom Typ List erstellen
+                    # Children aus den Einzelobjekten hinzufügen
+                }
+
+                "block"
                 {
-                    "block"
-                    {
-                        "Block" | Add-TSNotionLogToFile -Level INFO 
-                    }
-        
-                    "comment"
-                    {  
-                        "Comment" | Add-TSNotionLogToFile -Level INFO 
-                    }
-        
-                    "database"
-                    {  
-                        "Database" | Add-TSNotionLogToFile -Level INFO 
-                    }
-        
-                    "page"
-                    {  
-                        "Page" | Add-TSNotionLogToFile -Level INFO 
-                    }
-        
-                    "page_or_database"
-                    {  
-                        "PageOrDatabase" | Add-TSNotionLogToFile -Level INFO 
-                    }
-        
-                    "property_item"
-                    {  
-                        "PropertyItem" | Add-TSNotionLogToFile -Level INFO 
-                    }
-        
-                    "user"
-                    {  
-                        "User" | Add-TSNotionLogToFile -Level INFO 
-                    }
-                    Default
-                    {
+                    "Block" | Add-TSNotionLogToFile -Level INFO 
+                    switch ($value.type) {
+                        "paragraph"
+                        {
+                            "Paragraph" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "heading_1"
+                        {
+                            "Heading1" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "heading_2"
+                        {
+                            "Heading2" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "heading_3"
+                        {
+                            "Heading3" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "bulleted_list_item"
+                        {
+                            "BulletedListItem" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "numbered_list_item"
+                        {
+                            "NumberedListItem" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "to_do"
+                        {
+                            "ToDo" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "toggle"
+                        {
+                            "Toggle" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "child_page"
+                        {
+                            "ChildPage" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "unsupported"
+                        {
+                            "Unsupported" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        Default
+                        {
+                            "Unsupported" | Add-TSNotionLogToFile -Level WARN
+                        }
+                    
                     }
                 }
+        
+                "comment"
+                {  
+                    "Comment" | Add-TSNotionLogToFile -Level INFO 
+                }
+        
+                "database"
+                {  
+                    "Database" | Add-TSNotionLogToFile -Level INFO 
+                }
+        
+                "page"
+                {  
+                    "Page" | Add-TSNotionLogToFile -Level INFO 
+                    [page]::ConvertfromObject($value)
+                }
+        
+                "page_or_database"
+                {  
+                    "PageOrDatabase" | Add-TSNotionLogToFile -Level INFO 
+                }
+        
+                "property_item"
+                {  
+                    "PropertyItem" | Add-TSNotionLogToFile -Level INFO 
+                }
+        
+                "user"
+                {  
+                    "User" | Add-TSNotionLogToFile -Level INFO 
+                }
+                Default
+                {
+                }
+            }
             "-" * 50
             Break
         }

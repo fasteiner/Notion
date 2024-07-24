@@ -38,23 +38,43 @@ class page
     }
 
     #Methods
-    #BUG: Warum ist diese Methode nicht via [page]::ConvertfromObject($Value) verfügbar?
-    ConvertFromObject($Value)
+    #TODO: Wie kann man verhindern, dass diese Methode mit falschen Objekten aufgerufen wird? Oder mit einem Array of Objects?
+    static [page] ConvertFromObject($Value)
     {
-        $this.id = $Value.id
-        $this.created_time = $Value.created_time
-        $this.created_by = $Value.created_by
-        $this.last_edited_time = $Value.last_edited_time
-        $this.last_edited_by = $Value.last_edited_by
-        $this.archived = $Value.archived
-        $this.in_trash = $Value.in_trash
-        $this.icon = $Value.icon
-        $this.cover = $Value.cover
-        $this.properties = $Value.properties
-        $this.parent = [page_parent]::new($Value.parent)
-        $this.url = $Value.url
-        $this.public_url = $Value.public_url
+         if ($Value -is [System.Object] -and !($Value -is [string]) -and !($Value -is [int]) -and !($Value -is [bool]) -and $Value.Object -and ($Value.Object -eq "page")) {
+        $page = [page]::new()
+        $page.id = $Value.id
+        $page.created_time = Get-Date $Value.created_time -Format "yyyy-MM-ddTHH:mm:ss.fffZ"
+        $page.created_by = [user]::new($Value.created_by)
+        $page.last_edited_time = Get-Date $Value.last_edited_time -Format "yyyy-MM-ddTHH:mm:ss.fffZ"
+        $page.last_edited_by = [user]::new($Value.last_edited_by)
+        $page.archived = $Value.archived
+        $page.in_trash = $Value.in_trash
+        $page.icon = $Value.icon
+        $page.cover = $Value.cover
+        $page.properties = $Value.properties
+        $page.parent = [page_parent]::new($Value.page_id)
+        $page.url = $Value.url
+        $page.public_url = $Value.public_url
+        return $page
+        } else {
+            if ($Value.Object -ne "page")
+            {
+                "Provided value's object type is ""$($Value.Object)"" instead of ""page""" | Add-TSNotionLogToFile -Level ERROR
+            }
+            else
+            {
+                "Provided value is type [$($Value.GetType().Name)] instead of [object]" | Add-TSNotionLogToFile -Level ERROR
+            }
+            return $null
+        }
     }
+
+    # static [page] ConvertToISO8601($date)
+    # {
+    #     Write-Output $date
+    #     return (Get-Date $date -Format "yyyy-MM-ddTHH:mm:ss.fffZ" )
+    # }
 }
 
 # https://developers.notion.com/reference/page-property-values#paginated-page-properties
