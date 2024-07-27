@@ -1,5 +1,4 @@
-name: 🔍 Verify
-run-name: 🎉 Your First Binary PS Module! 🎉
+name: 🔍 Build & Verify
 on: [
   pull_request
 ]
