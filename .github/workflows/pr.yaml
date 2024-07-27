@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: build
+      - name: 🧪 build
         run: |
           ./build.ps1 -ResolveDependency -UseModuleFast -Tasks build
       - name: 🧪 Pester Tests
@@ -23,7 +23,4 @@ jobs:
         env:
           NOTION_BEARER_TOKEN: ${{ secrets.NOTION_BEARER_TOKEN }}
         run: |
-          Install-Module -Name Pester -MinimumVersion 5.4.1 -Force -SkipPublisherCheck -Scope CurrentUser
-          Write-Host -Fore Green "Running Available Tests in $PWD"
-          Import-Module Pester -PassThru
-          Invoke-Pester -Output Detailed
+          ./build.ps1 -ResolveDependency -UseModuleFast -Tasks test
