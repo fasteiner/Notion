@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
       - name: build
         run: |
-          ./build.ps1 -ResolveDependency -Tasks noop -UseModuleFast
+          ./build.ps1 -ResolveDependency -UseModuleFast -Tasks build
       - name: 🧪 Pester Tests
         id: test
         env:
