@@ -16,11 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: 🧪 build
-        run: |
-          ./build.ps1 -ResolveDependency -UseModuleFast -Tasks build
-      - name: 🧪 Pester Tests
-        id: test
         env:
           NOTION_BEARER_TOKEN: ${{ secrets.NOTION_BEARER_TOKEN }}
         run: |
-          ./build.ps1 -ResolveDependency -UseModuleFast -Tasks test
+          ./build.ps1 -ResolveDependency -UseModuleFast
