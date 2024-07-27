@@ -1,9 +1,17 @@
 
+BeforeAll{
+    Import-Module -Name "$PSScriptRoot\..\..\..\output\TSNotion.psd1" -Force
+    $standardOutput = [System.IO.StringWriter]::new()
+}
+BeforeEach {
+    $BearerToken = $env:NOTION_BEARER_TOKEN
+    $standardOutput.GetStringBuilder().Clear() | Out-Null
+}
 Describe "Connect-TSNotion" {
     Context "When providing valid Bearer token and URL" {
         It "Should connect to the Notion API" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            
             $notionURL = "https://api.notion.com/v1"
             $expectedResult = @{
                 url     = $notionURL
@@ -11,17 +19,18 @@ Describe "Connect-TSNotion" {
             }
 
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
+            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL > $standardOutput
 
             # Assert
             $result | Should Be $expectedResult
+            $standardOutput | Should -Contain "Successfully connected to Notion API."
         }
     }
 
     Context "When not providing the API version" {
         It "Should use the default API version" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            
             $notionURL = "https://api.notion.com/v1"
             $expectedResult = @{
                 url     = $notionURL
@@ -53,7 +62,7 @@ Describe "Connect-TSNotion" {
     Context "When not providing the API version" {
         It "Should use the default API version" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            
             $notionURL = "https://api.notion.com/v1"
             $expectedResult = @{
                 url     = $notionURL
@@ -113,7 +122,7 @@ Describe "Connect-TSNotion" {
     Context "When providing an invalid URL" {
         It "Should fail to connect to the Notion API" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            
             $notionURL = "invalidURL"
     
             # Act
@@ -127,7 +136,7 @@ Describe "Connect-TSNotion" {
     Context "When providing a null URL" {
         It "Should fail to connect to the Notion API" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            
             $notionURL = $null
     
             # Act
@@ -141,7 +150,7 @@ Describe "Connect-TSNotion" {
     Context "When providing an empty URL" {
         It "Should fail to connect to the Notion API" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            
             $notionURL = ""
     
             # Act
