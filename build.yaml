@@ -34,7 +34,7 @@ NestedModule:
 #    OutputDirectory: ///Modules/HelperSubmodule
 #    VersionedOutputDirectory: false
 #    AddToManifest: false
-#    SemVer:
+#    SemVer: 
 #    # suffix:
 #    # prefix:
 
@@ -76,11 +76,10 @@ BuildWorkflow:
     #- Merge_CodeCoverage_Files
 
   publish:
-    # - publish_module_to_gallery
-    # - Publish_Release_To_GitHub
-    # - Publish_GitHub_Wiki_Content
+    - Publish_Release_To_GitHub # Runs first, if token is expired it will fail early
+    - Publish_GitHub_Wiki_Content
 
-
+    - publish_module_to_gallery
 
 ####################################################
 #       PESTER  Configuration                      #
@@ -154,3 +153,9 @@ TaskHeader: |
   Write-Build DarkGray "  $Path"
   Write-Build DarkGray "  $($Task.InvocationInfo.ScriptName):$($Task.InvocationInfo.ScriptLineNumber)"
   ""
+
+
+
+
+
+

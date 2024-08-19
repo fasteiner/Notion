@@ -5,4 +5,3 @@ class ndb_rollup {
     [string] $rollup_property_id
     [function] $function
 }
-}

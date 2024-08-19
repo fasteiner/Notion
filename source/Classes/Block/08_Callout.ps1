@@ -7,6 +7,6 @@ class Callout : Block
         "type"  = "emoji"
         "emoji" = $null
     }
-    [color] $color = "default"
+    [notion_color] $color = "default"
     #[block] $children = $null
 }

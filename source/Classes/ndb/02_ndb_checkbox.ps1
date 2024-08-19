@@ -1,4 +1,4 @@
 class ndb_checkbox {
     [string] $name
-    [color] $color
+    [notion_color] $color
 }

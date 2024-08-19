@@ -5,8 +5,9 @@
 # Minimum Powershell Version: 7
 #Requires -Version "7"
 #############################################################################################################
-class people {
+class people
+{
     # https://developers.notion.com/reference/user#people
-    [string]person
-    [string]person_email
+    [string]$person
+    [string]$person_email
 }

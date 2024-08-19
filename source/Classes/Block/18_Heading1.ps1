@@ -2,7 +2,7 @@ class Heading1 : Block
 {
     [blocktype] $type = "heading_1"
     [rich_text[]] $rich_text
-    [color] $color = "default"
+    [notion_color] $color = "default"
     [boolean] $is_toggleable
     #BUG children is not working
     #[block] $children = $null

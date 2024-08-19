@@ -5,7 +5,7 @@
 # Minimum Powershell Version: 7
 #Requires -Version "7"
 #############################################################################################################
-class file
+class notion_file
 {
     # https://developers.notion.com/reference/file-object
     [string]$type

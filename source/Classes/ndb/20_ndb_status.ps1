@@ -1,5 +1,5 @@
-class ndb_status {
+class ndb_status
+{
     [string] $name
-    [color] $color
-}
+    [notion_color] $color
 }

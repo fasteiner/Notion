@@ -5,7 +5,7 @@ class annotation
     [bool] $strikethrough = $false
     [bool] $underline = $false
     [bool] $code = $false
-    [color] $color = "default"
+    [notion_color] $color = "default"
     annotation()
     {
     }
@@ -38,9 +38,9 @@ class annotation
             }
 
             #BUG: color is not working
-            #([color].GetEnumNames()) {
+            #([notion_color].GetEnumNames()) {
             #            {"blue" -or "blue_background" -or "brown" -or "brown_background" -or "default" -or "gray" -or "gray_background" -or "green" -or "green_background" -or "orange" -or "orange_background" -or "yellow" -or "pink" -or "pink_background" -or "purple" -or "purple_background" -or "red" -or "red_background" -or "yellow_background"} {
-            #                $this.color = [color]$_
+            #                $this.color = [notion_color]$_
             #            }
         }
     }

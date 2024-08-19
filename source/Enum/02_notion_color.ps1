@@ -1,4 +1,4 @@
-enum color
+enum notion_color
 {
     blue
     blue_background
