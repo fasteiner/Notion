@@ -64,7 +64,11 @@ function ConvertTo-TSNotionObject
     {
         foreach ($item in $InputObject)
         {
-        
+        if ($item.template) {
+                "Template" | Add-TSNotionLogToFile -Level INFO
+                exit
+        }
+
         
         ("Object: {0} Type: {1} " -f $InputObject.object, $InputObject.Type) | Add-TSNotionLogToFile -Level INFO
             "Object", $InputObject | Add-TSNotionLogToFile -Level DEBUG
@@ -252,6 +256,7 @@ function ConvertTo-TSNotionObject
                 "comment"
                 {  
                     "Comment" | Add-TSNotionLogToFile -Level INFO 
+                    [comment]::ConvertfromObject($InputObject)
                 }
         
                 "database"
@@ -281,6 +286,7 @@ function ConvertTo-TSNotionObject
                 {
                     # https://developers.notion.com/reference/user
                     "User" | Add-TSNotionLogToFile -Level INFO 
+                    [user]::ConvertFromObject($InputObject)
                 }
                 Default
                 {
