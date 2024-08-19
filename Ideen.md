@@ -7,12 +7,18 @@
 - Get-TSNotionPage
 - Get-TSNotionPageContent (Get-TSNotionBlockChildren)
 
-
 - https://github.com/makenotion/notion-sdk-js/blob/main/examples/intro-to-notion-api/intermediate/2-add-page-to-database.js
-
 
 Invoke-TSNotionWebrequest
 
+# Naming Convention
+To prevent name conflicts, use the NoClobber or Prefix parameters of the Import-Module cmdlet. The Prefix parameter adds a prefix to the names of imported commands so that they're unique in the session. The NoClobber parameter doesn't import any commands that would hide or replace existing commands in the session.
+
+You can also use the Alias, Cmdlet, Function, and Variable parameters of Import-Module to select only the commands that you want to import, and you can exclude commands that cause name conflicts in your session.
+
+Module authors can prevent name conflicts by using the DefaultCommandPrefix property of the module manifest to add a default prefix to all command names. The value of the Prefix parameter takes precedence over the value of DefaultCommandPrefix.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # ConvertTo-TSNotionObject
 ## Top-level resources have an "object" property. This property can be used to determine the type of the resource (e.g. "database", "user", etc.)
 ## https://developers.notion.com/reference/intro

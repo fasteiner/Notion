@@ -112,9 +112,10 @@ function Invoke-TSNotionApiCall
                     #https://developers.notion.com/reference/intro#pagination
                     # Usage of page_size only allowed for the following requests
                     # GET  https://api.notion.com/v1/users
+                    # GET  https://api.notion.com/v1/blocks/{block_id}/children
                     # GET  https://api.notion.com/v1/comments
-                    # GET  https://api.notion.com/v1/pages/ { page_id }/properties/ { property_id}
-                    # POST https://api.notion.com/v1/databases/ { database_id }/query
+                    # GET  https://api.notion.com/v1/pages/{page_id}/properties/{property_id}
+                    # POST https://api.notion.com/v1/databases/{database_id}/query
                     # POST https://api.notion.com/v1/search
                     
                     # https://developers.notion.com/reference/retrieve-a-page-property#paginated-properties
@@ -123,7 +124,39 @@ function Invoke-TSNotionApiCall
                     # * relation
                     # * people
 
-                    $queryParameters.page_size = $first
+                    # Example $uri containing a full URL
+                    #$uri = "https://api.notion.com/v1/databases/query"
+
+                    # Define the patterns for the endpoints you want to filter
+                    $patterns = @(
+                        "/v1/users", 
+                        "/v1/blocks/.*/children",
+                        "/v1/comments",
+                        "/v1/pages/.*/properties/.*", 
+                        "/v1/databases/.*/query", 
+                        "/v1/search"
+                    )
+
+                    # Extract the endpoint part of the URL
+                    $endpoint = $uri -replace '^https://[^/]+', ''
+
+                    # Filter the endpoint based on the defined patterns
+                    $filteredEndpoint = $patterns.Where( { $endpoint -match $_ })
+
+                    # Output the result if it matches any of the patterns
+                    if ($filteredEndpoint)
+                    {
+                        Write-Debug "Paging: Matched endpoint: $filteredEndpoint using page_size $first"
+                        $queryParameters.page_size = $first
+                    }
+                    else
+                    {
+                        Write-Debug "Paging: No matching endpoint found."
+                        # remove page_size from queryParameters
+                        $queryParameters.Remove("page_size")
+                    }
+
+
                 }
                 # Add query parameters to the URI
                 if ($method -eq "GET")
@@ -148,16 +181,17 @@ function Invoke-TSNotionApiCall
                 Write-Debug "$method $($Params["URI"])"
                 $content = Invoke-RestMethod @Params
                 # $content.results only exists if the response is paginated, otherwise $content is the result
-                # TODO: ist aber nicht ideal, denn man sollte nur die $content.results beim pagen aufsummieren, aber das ganze Objekt zurückgeben
-                if ($content.results)
+                if (($content.object -eq "list") -and ($content.results))
                 {
+                    Write-Debug "Paging: Found $($content.results.count) items"
                     $output += $content.results
                 }
                 else
                 {
+                    Write-Debug "Paging: Result is not paginated, object type: $($content.object)"
                     $output += $content
                 }
-                
+                # content.has_more is only available if the endpoint supports pagination
                 if (($content.has_more -eq $true) -and ($output.count -lt $first))
                 {
                     $queryParameters | Add-Member -MemberType NoteProperty -Name "start_cursor" -Value $content.next_cursor -Force
