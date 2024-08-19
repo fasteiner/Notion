@@ -64,10 +64,11 @@ function ConvertTo-TSNotionObject
     {
         foreach ($item in $InputObject)
         {
-        if ($item.template) {
+            if ($item.template)
+            {
                 "Template" | Add-TSNotionLogToFile -Level INFO
                 exit
-        }
+            }
 
         
         ("Object: {0} Type: {1} " -f $InputObject.object, $InputObject.Type) | Add-TSNotionLogToFile -Level INFO
@@ -186,7 +187,8 @@ function ConvertTo-TSNotionObject
                         #Mention ??
                         "numbered_list_item"
                         {
-                            "NumberedListItem" | Add-TSNotionLogToFile -Level INFO 
+                            "NumberedListItem" | Add-TSNotionLogToFile -Level INFO
+                            [NumberedListItem]::ConvertfromObject($InputObject)
                             break
                         }
                         "paragraph"
@@ -201,7 +203,8 @@ function ConvertTo-TSNotionObject
                         }
                         "quote"
                         {
-                            "Quote" | Add-TSNotionLogToFile -Level INFO 
+                            "Quote" | Add-TSNotionLogToFile -Level INFO
+                            [quote]::ConvertfromObject($InputObject)
                             break
                         }
                         "synced_block"
@@ -292,7 +295,9 @@ function ConvertTo-TSNotionObject
                 {
                 }
             }
-            "-" * 50
+            "-" * 100
+            $InputObject
+            "=" * 100
             Break
         }
     }

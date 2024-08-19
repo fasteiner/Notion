@@ -4,4 +4,11 @@ class Quote : Block
     [rich_text[]] $rich_text
     [notion_color] $color = "default"
     #[block] $children = $null
+
+    static ConvertFromObject($Value)
+    {
+        $quote = [quote]::new()
+        $quote.rich_text = [rich_text]::ConvertFromObject($Value.rich_text)
+        $quote.color = $Value.color        
+    }
 }
