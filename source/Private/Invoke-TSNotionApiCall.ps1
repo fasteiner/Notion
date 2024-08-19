@@ -1,52 +1,52 @@
 
 function Invoke-TSNotionApiCall
-<#
-.SYNOPSIS
-    Invokes an API call to Notion.
-
-.DESCRIPTION
-    This function is used to make API calls to Notion. It supports various HTTP methods such as GET, POST, PUT, DELETE, and PATCH. It also allows you to specify the API key, API version, and other parameters required for the API call.
-
-.PARAMETER uri
-    The URI to Notion.
-
-.PARAMETER APIKey
-    The API key to authenticate the API call. (Optional)
-
-.PARAMETER APIVersion
-    The version of the Notion API. (Optional)
-
-.PARAMETER method
-    The HTTP method to use for the API call. Valid values are "GET", "POST", "PUT", "DELETE", and "PATCH".
-
-.PARAMETER body
-    The body of the API request. (Optional)
-
-.PARAMETER fileName
-    The name of the log file to write the API call details. (Optional)
-
-.PARAMETER pageSize
-    The number of items from the full list desired in the response. Maximum: 100. (Default: 100)
-
-.PARAMETER first
-    The number of items returned from the first page in the response. Maximum: 100.
-
-.EXAMPLE
-    Invoke-TSNotionApiCall -uri "https://api.notion.com/v1/databases" -APIKey "YOUR_API_KEY" -APIVersion "2021-05-13" -method "GET" -pageSize 50
-
-    This example invokes a GET API call to the Notion API to retrieve a list of databases. It specifies the API key, API version, and page size of 50.
-
-.OUTPUTS
-    The output of the API call, which can be an array of results or null if an error occurs.
-
-.NOTES
-    This function requires the "Invoke-RestMethod" cmdlet to be available.
-
-.LINK
-    https://www.notion.com/developers/api-reference
-    Notion API Reference
-#>
 {
+    <#
+    .SYNOPSIS
+        Invokes an API call to Notion.
+    
+    .DESCRIPTION
+        This function is used to make API calls to Notion. It supports various HTTP methods such as GET, POST, PUT, DELETE, and PATCH. It also allows you to specify the API key, API version, and other parameters required for the API call.
+    
+    .PARAMETER uri
+        The URI to Notion.
+    
+    .PARAMETER APIKey
+        The API key to authenticate the API call. (Optional)
+    
+    .PARAMETER APIVersion
+        The version of the Notion API. (Optional)
+    
+    .PARAMETER method
+        The HTTP method to use for the API call. Valid values are "GET", "POST", "PUT", "DELETE", and "PATCH".
+    
+    .PARAMETER body
+        The body of the API request. (Optional)
+    
+    .PARAMETER fileName
+        The name of the log file to write the API call details. (Optional)
+    
+    .PARAMETER pageSize
+        The number of items from the full list desired in the response. Maximum: 100. (Default: 100)
+    
+    .PARAMETER first
+        The number of items returned from the first page in the response. Maximum: 100.
+    
+    .EXAMPLE
+        Invoke-TSNotionApiCall -uri "https://api.notion.com/v1/databases" -APIKey "YOUR_API_KEY" -APIVersion "2021-05-13" -method "GET" -pageSize 50
+    
+        This example invokes a GET API call to the Notion API to retrieve a list of databases. It specifies the API key, API version, and page size of 50.
+    
+    .OUTPUTS
+        The output of the API call, which can be an array of results or null if an error occurs.
+    
+    .NOTES
+        This function requires the "Invoke-RestMethod" cmdlet to be available.
+    
+    .LINK
+        https://www.notion.com/developers/api-reference
+        Notion API Reference
+    #>
     
     [CmdletBinding()]
     Param(

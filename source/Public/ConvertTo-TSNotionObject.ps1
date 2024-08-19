@@ -7,9 +7,42 @@
 #############################################################################################################
 function ConvertTo-TSNotionObject
 {
+    <#
+    .SYNOPSIS
+    Converts an object to a TypeScript Notion object.
+    
+    .DESCRIPTION
+    This function takes an object and converts it to a TypeScript Notion object.
+    
+    .PARAMETER Value
+    The object to be converted.
+
+    .PARAMETER Object
+    The object to be converted. (Alias for Value)
+    
+    .OUTPUTS
+    The converted TypeScript Notion object.
+    
+    .EXAMPLE
+    $object = @{ Name = "John"; Age = 30 }
+    $convertedObject = ConvertTo-TSNotionObject -Object $object
+
+    .EXAMPLE
+    $object = @{ Name = "John"; Age = 30 }
+    $object | ConvertTo-TSNotionObject
+
+    .EXAMPLE
+    $object = @{ Name = "John"; Age = 30 }
+    ConvertTo-TSNotionObject -value $object
+    
+    .NOTES
+    Author: [Your Name]
+    Date: [Current Date]
+    #>
     [CmdletBinding()]
     param (
         [Parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true, HelpMessage = "The input object to convert to a Notion object based on classes")]
+        [Alias("Object")]
         $Value
     )
     
@@ -40,7 +73,7 @@ function ConvertTo-TSNotionObject
                 {  
                     "List" | Add-TSNotionLogToFile -Level INFO 
                     #TODO: Gibt's einen Block Type List?
-                    if  ($Value.results -is [array])
+                    if ($Value.results -is [array])
                     {
                         foreach ($result in $Value.results)
                         {
@@ -55,7 +88,8 @@ function ConvertTo-TSNotionObject
                 "block"
                 {
                     "Block" | Add-TSNotionLogToFile -Level INFO 
-                    switch ($value.type) {
+                    switch ($value.type)
+                    {
                         "paragraph"
                         {
                             "Paragraph" | Add-TSNotionLogToFile -Level INFO 

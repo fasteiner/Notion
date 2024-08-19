@@ -13,6 +13,9 @@ function Disconnect-TSNotion
     
     .DESCRIPTION
     The Disconnect-TSNotion function is used to disconnect from the Notion API. It clears the global variables used to store the connection information. The function uses ShouldProcess to confirm the action with the user.
+  
+    .PARAMETER Confirm
+    Prompts the user to confirm the disconnection from the Notion API.
     
     .EXAMPLE
     Disconnect-TSNotion

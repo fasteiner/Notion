@@ -1,16 +1,37 @@
 
-BeforeAll{
-    Import-Module -Name "$PSScriptRoot\..\..\..\output\TSNotion.psd1" -Force
+BeforeDiscovery {
+    $projectPath = "$($PSScriptRoot)\..\.." | Convert-Path
+
+    <#
+        If the QA tests are run outside of the build script (e.g with Invoke-Pester)
+        the parent scope has not set the variable $ProjectName.
+    #>
+    if (-not $ProjectName)
+    {
+        # Assuming project folder name is project name.
+        $ProjectName = Get-SamplerProjectName -BuildRoot $projectPath
+    }
+
+    $script:moduleName = $ProjectName
+
+    Remove-Module -Name $script:moduleName -Force -ErrorAction SilentlyContinue
+
+    $mut = Get-Module -Name $script:moduleName -ListAvailable |
+        Select-Object -First 1 |
+            Import-Module -Force -ErrorAction Stop -PassThru
+}
+
+BeforeAll {
+    #Import-Module -Name "$PSScriptRoot\..\..\..\output\TSNotion.psd1" -Force
     $standardOutput = [System.IO.StringWriter]::new()
+    $BearerToken = $env:NOTION_BEARER_TOKEN | ConvertTo-SecureString -AsPlainText -Force
 }
-BeforeEach {
-    $BearerToken = $env:NOTION_BEARER_TOKEN
-    $standardOutput.GetStringBuilder().Clear() | Out-Null
-}
+
 Describe "Connect-TSNotion" {
     Context "When providing valid Bearer token and URL" {
         It "Should connect to the Notion API" {
             # Arrange
+            $standardOutput.GetStringBuilder().Clear() | Out-Null
             
             $notionURL = "https://api.notion.com/v1"
             $expectedResult = @{
@@ -22,7 +43,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL > $standardOutput
 
             # Assert
-            $result | Should Be $expectedResult
+            $result | Should -Be $expectedResult
             $standardOutput | Should -Contain "Successfully connected to Notion API."
         }
     }
@@ -41,7 +62,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
 
             # Assert
-            $result | Should Be $expectedResult
+            $result | Should -Be $expectedResult
         }
     }
 
@@ -55,7 +76,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
 
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
 
@@ -73,7 +94,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $expectedResult
+            $result | Should -Be $expectedResult
         }
     }
     
@@ -87,7 +108,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
     
@@ -101,7 +122,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
     
@@ -115,7 +136,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
     
@@ -129,7 +150,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
     
@@ -143,7 +164,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
     
@@ -157,7 +178,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
 }
