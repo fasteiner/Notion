@@ -14,68 +14,70 @@ function ConvertTo-TSNotionObject
     .DESCRIPTION
     This function takes an object and converts it to a TypeScript Notion object.
     
-    .PARAMETER Value
+    .PARAMETER InputObject
     The object to be converted.
 
     .PARAMETER Object
-    The object to be converted. (Alias for Value)
+    The object to be converted. (Alias for InputObject)
     
     .OUTPUTS
-    The converted TypeScript Notion object.
+    The converted Notion object.
     
     .EXAMPLE
-    $object = @{ Name = "John"; Age = 30 }
+    $object = @{ object = "block"; type = "code" }
     $convertedObject = ConvertTo-TSNotionObject -Object $object
 
-    .EXAMPLE
-    $object = @{ Name = "John"; Age = 30 }
-    $object | ConvertTo-TSNotionObject
+    Returns an block object of type "code".
 
     .EXAMPLE
-    $object = @{ Name = "John"; Age = 30 }
-    ConvertTo-TSNotionObject -value $object
-    
-    .NOTES
-    Author: [Your Name]
-    Date: [Current Date]
+    $object = @{ object = "list"; results = @(@{ object = "block"; type = "paragraph" }, @{ object = "block"; type = "heading_1" }) }
+    $object | ConvertTo-TSNotionObject
+
+    Returns a list object with two block objects of type "paragraph" and "heading_1".
+
+    .EXAMPLE
+    $object = @{ object = "block"; type = "bookmark" }
+    ConvertTo-TSNotionObject -InputObject $object
+
+    Returns a block object of type "bookmark".    
     #>
     [CmdletBinding()]
     param (
         [Parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true, HelpMessage = "The input object to convert to a Notion object based on classes")]
         [Alias("Object")]
-        $Value
+        $InputObject
     )
     
 
     begin
     {
-        # if ($_) { $Value = $_ }
-        # $Value.GetType().BaseType
-        # if (!(($Value -is [System.Object]) -or ($Value -is [System.Array])))
+        # if ($_) { $InputObject = $_ }
+        # $InputObject.GetType().BaseType
+        # if (!(($InputObject -is [System.Object]) -or ($InputObject -is [System.Array])))
         # {
-        #     $Type = $Value.GetType().BaseType
+        #     $Type = $InputObject.GetType().BaseType
         #     "Input is not an array or object (is $Type)" | Add-TSNotionLogToFile -Level ERROR
         #     Break
         # }
     }
     process
     {
-        foreach ($item in $Value)
+        foreach ($item in $InputObject)
         {
         
         
-        ("Object: {0} Type: {1} " -f $Value.object, $Value.Type) | Add-TSNotionLogToFile -Level INFO
-            "Object", $Value | Add-TSNotionLogToFile -Level DEBUG
-            #TODO: Constructor für jede Klasse erstellen .ConvertfromObject() -> $Object = [NotionObject]::new().ConvertfromObject($Value)
-            switch ($Value.object)
+        ("Object: {0} Type: {1} " -f $InputObject.object, $InputObject.Type) | Add-TSNotionLogToFile -Level INFO
+            "Object", $InputObject | Add-TSNotionLogToFile -Level DEBUG
+            #TODO: Constructor für jede Klasse erstellen .ConvertfromObject() -> $Object = [NotionObject]::new().ConvertfromObject($InputObject)
+            switch ($InputObject.object)
             {
                 "list"
                 {  
                     "List" | Add-TSNotionLogToFile -Level INFO 
-                    #TODO: Gibt's einen Block Type List?
-                    if ($Value.results -is [array])
+                    #TODO: Gibt's einen Object Type List?
+                    if ($InputObject.results -is [array])
                     {
-                        foreach ($result in $Value.results)
+                        foreach ($result in $InputObject.results)
                         {
                             $result | ConvertTo-TSNotionObject
                         }
@@ -87,12 +89,69 @@ function ConvertTo-TSNotionObject
 
                 "block"
                 {
+                    # https://developers.notion.com/reference/block
                     "Block" | Add-TSNotionLogToFile -Level INFO 
-                    switch ($value.type)
+                    switch ($InputObject.type)
+                    # https://developers.notion.com/reference/block#block-type-objects
                     {
-                        "paragraph"
+                        "bookmark"
                         {
-                            "Paragraph" | Add-TSNotionLogToFile -Level INFO 
+                            "Bookmark" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "breadcrumb"
+                        {
+                            "Breadcrumb" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "bulleted_list_item"
+                        {
+                            "BulletedListItem" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "callout"
+                        {
+                            "Callout" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "child_database"
+                        {
+                            "ChildDatabase" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "child_page"
+                        {
+                            "ChildPage" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "code"
+                        {
+                            "Code" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "column"
+                        {
+                            "Column" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "divider"
+                        {
+                            "Divider" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "embed"
+                        {
+                            "Embed" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "equation"
+                        {
+                            "Equation" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "file"
+                        {
+                            "File" | Add-TSNotionLogToFile -Level INFO 
                             break
                         }
                         "heading_1"
@@ -110,16 +169,58 @@ function ConvertTo-TSNotionObject
                             "Heading3" | Add-TSNotionLogToFile -Level INFO 
                             break
                         }
-                        "bulleted_list_item"
+                        "image"
                         {
-                            "BulletedListItem" | Add-TSNotionLogToFile -Level INFO 
+                            "Image" | Add-TSNotionLogToFile -Level INFO 
                             break
                         }
+                        "link_preview"
+                        {
+                            "LinkPreview" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        #Mention ??
                         "numbered_list_item"
                         {
                             "NumberedListItem" | Add-TSNotionLogToFile -Level INFO 
                             break
                         }
+                        "paragraph"
+                        {
+                            "Paragraph" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "pdf"
+                        {
+                            "Pdf" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "quote"
+                        {
+                            "Quote" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "synced_block"
+                        {
+                            "SyncedBlock" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "table"
+                        {
+                            "Table" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "table_row"
+                        {
+                            "TableRow" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "table_of_contents"
+                        {
+                            "TableOfContents" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        # template ???
                         "to_do"
                         {
                             "ToDo" | Add-TSNotionLogToFile -Level INFO 
@@ -130,14 +231,14 @@ function ConvertTo-TSNotionObject
                             "Toggle" | Add-TSNotionLogToFile -Level INFO 
                             break
                         }
-                        "child_page"
-                        {
-                            "ChildPage" | Add-TSNotionLogToFile -Level INFO 
-                            break
-                        }
                         "unsupported"
                         {
                             "Unsupported" | Add-TSNotionLogToFile -Level INFO 
+                            break
+                        }
+                        "video"
+                        {
+                            "Video" | Add-TSNotionLogToFile -Level INFO 
                             break
                         }
                         Default
@@ -154,14 +255,16 @@ function ConvertTo-TSNotionObject
                 }
         
                 "database"
-                {  
+                {
+                    # https://developers.notion.com/reference/database
                     "Database" | Add-TSNotionLogToFile -Level INFO 
                 }
         
                 "page"
-                {  
+                {
+                    # https://developers.notion.com/reference/page
                     "Page" | Add-TSNotionLogToFile -Level INFO 
-                    [page]::ConvertfromObject($value)
+                    [page]::ConvertfromObject($InputObject)
                 }
         
                 "page_or_database"
@@ -175,7 +278,8 @@ function ConvertTo-TSNotionObject
                 }
         
                 "user"
-                {  
+                {
+                    # https://developers.notion.com/reference/user
                     "User" | Add-TSNotionLogToFile -Level INFO 
                 }
                 Default
