@@ -43,6 +43,14 @@ class annotation
             #            {"blue" -or "blue_background" -or "brown" -or "brown_background" -or "default" -or "gray" -or "gray_background" -or "green" -or "green_background" -or "orange" -or "orange_background" -or "yellow" -or "pink" -or "pink_background" -or "purple" -or "purple_background" -or "red" -or "red_background" -or "yellow_background"} {
             #                $this.color = [notion_color]$_
             #            }
+
+            static ConvertFromObject($Value)
+            {
+                $annotations = [annotations]::new()
+                foreach ($annotation in $Value)
+                {
+                    $annotations += [annotation]::new($annotation)
+                }
         }
     }
 }
