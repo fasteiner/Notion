@@ -1,4 +1,4 @@
-class NumberedListItem : Block
+class numbered_list_item : Block
 {
     [blocktype] $type = "numbered_list_item"
     [rich_text[]] $rich_text

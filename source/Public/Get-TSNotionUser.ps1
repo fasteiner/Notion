@@ -1,11 +1,3 @@
-#############################################################################################################
-# Title: Get-TSNotionUser
-# Description: 
-# 07/2024 Thomas.Subotitsch@base-IT.at
-# Minimum Powershell Version: 7
-#Requires -Version "7"
-#############################################################################################################
-
 function Get-TSNotionUser
 {
     <#

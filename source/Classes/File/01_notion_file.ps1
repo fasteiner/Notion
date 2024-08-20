@@ -1,10 +1,3 @@
-#############################################################################################################
-# Title: 01_file
-# Description: 
-# 07/2024 Thomas.Subotitsch@base-IT.at
-# Minimum Powershell Version: 7
-#Requires -Version "7"
-#############################################################################################################
 class notion_file
 {
     # https://developers.notion.com/reference/file-object

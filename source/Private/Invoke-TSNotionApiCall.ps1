@@ -53,13 +53,13 @@ function Invoke-TSNotionApiCall
         [Parameter(Mandatory = $false, HelpMessage = "The URI to Notion", Position = 0)]
         [string]$uri,
         [Parameter(Mandatory = $false, HelpMessage = "The API key to authenticate the API call")]
-        [String]$APIKey = ($global:TSNotionAPIKey | ConvertFrom-SecureString -AsPlainText),
+        [securestring]$APIKey,
         [Parameter(Mandatory = $false, HelpMessage = "The version of the Notion API")]
         [String]$APIVersion = $global:TSNotionAPIVersion,
         [Parameter(Mandatory = $false, HelpMessage = "The HTTP method to use for the API call")]
         [ValidateSet("GET", "POST", "PUT", "DELETE", "PATCH") ]
         $method = "GET",
-        [Parameter(ValueFromPipeline, ParameterSetName = "Body")]
+        [Parameter(ParameterSetName = "Body")]
         [System.Object]$body,
         $fileName,
         [Parameter(HelpMessage = "The number of items from the full list desired in the response. Maximum: 100")]
@@ -69,8 +69,21 @@ function Invoke-TSNotionApiCall
         $first
     )
 
-    Begin
+
+    Process
     {
+        if ((-not $Global:TSNotionAPIKey) -and (-not $APIKey))
+        {
+            $ErrorRecord = New-Object System.Management.Automation.ErrorRecord (
+                [System.Management.Automation.RuntimeException]::new("API key is not set. Please use Connect-TSNotion to set the API key."),
+                "APIKeyNotSet",
+                [System.Management.Automation.ErrorCategory]::InvalidData,
+                $PSBoundParameters
+            )
+
+            throw $ErrorRecord
+        }
+        $APIKey ??= $Global:TSNotionAPIKey
         $queryParameters = @{
             "page_size" = $pageSize
         }
@@ -81,7 +94,7 @@ function Invoke-TSNotionApiCall
         $Params = @{
             "URI"     = $uri
             "Headers" = @{
-                "Authorization"  = "Bearer {0}" -F $APIKey
+                "Authorization"  = "Bearer {0}" -F ($APIKey | ConvertFrom-SecureString -AsPlainText)
                 "Accept"         = "application/json"
                 "Content-type"   = "application/json"
                 "Notion-Version" = "{0}" -F $APIVersion
@@ -92,10 +105,6 @@ function Invoke-TSNotionApiCall
         {
             $Params.Add("Body", ($body | ConvertTo-Json))
         }
-    }
-
-    Process
-    {
         # https://developers.notion.com/reference/intro
         # Parameter location varies by endpoint
         #  GET requests accept parameters in the query string.
@@ -107,27 +116,9 @@ function Invoke-TSNotionApiCall
             Try
             {
                 $output = @()
-                if ($first -and ($first -lt ($pageSize + $output.count)))
-                {
-                    #https://developers.notion.com/reference/intro#pagination
-                    # Usage of page_size only allowed for the following requests
-                    # GET  https://api.notion.com/v1/users
-                    # GET  https://api.notion.com/v1/blocks/{block_id}/children
-                    # GET  https://api.notion.com/v1/comments
-                    # GET  https://api.notion.com/v1/pages/{page_id}/properties/{property_id}
-                    # POST https://api.notion.com/v1/databases/{database_id}/query
-                    # POST https://api.notion.com/v1/search
-                    
-                    # https://developers.notion.com/reference/retrieve-a-page-property#paginated-properties
-                    # * title
-                    # * rich_text
-                    # * relation
-                    # * people
-
-                    # Example $uri containing a full URL
-                    #$uri = "https://api.notion.com/v1/databases/query"
-
-                    # Define the patterns for the endpoints you want to filter
+                if ($method -in @("GET", "POST"))
+                {                   
+                    # https://developers.notion.com/reference/intro#pagination
                     $patterns = @(
                         "/v1/users", 
                         "/v1/blocks/.*/children",
@@ -136,27 +127,53 @@ function Invoke-TSNotionApiCall
                         "/v1/databases/.*/query", 
                         "/v1/search"
                     )
-
+    
                     # Extract the endpoint part of the URL
                     $endpoint = $uri -replace '^https://[^/]+', ''
-
+    
                     # Filter the endpoint based on the defined patterns
                     $filteredEndpoint = $patterns.Where( { $endpoint -match $_ })
-
+    
                     # Output the result if it matches any of the patterns
-                    if ($filteredEndpoint)
+                    if ($filteredEndpoint )
                     {
-                        Write-Debug "Paging: Matched endpoint: $filteredEndpoint using page_size $first"
-                        $queryParameters.page_size = $first
+                        Write-Debug "Paging: Endpoint: $endpoint supports paging using page_size $first"
+                        if (-not $queryParameters.page_size)
+                        {
+                            $queryParameters.Add("page_size", $first)
+                        }
                     }
                     else
                     {
-                        Write-Debug "Paging: No matching endpoint found."
+                        Write-Debug "Paging: Endpoint $endpoint doesn't support paging"
                         # remove page_size from queryParameters
+                        try
+                        {
+                            $queryParameters.Remove("page_size")
+                        }
+                        catch
+                        {
+                            <#Do this if a terminating exception happens#>
+                            $error.Clear()
+                        }
+                    }
+                }
+                else
+                {
+                    Write-Debug "Paging: Method $method doesn't support paging"
+                    # remove page_size from queryParameters
+                    try
+                    {
                         $queryParameters.Remove("page_size")
                     }
-
-
+                    catch
+                    {
+                        $error.Clear()
+                    }
+                }
+                if ($first -and $queryParameters.page_size -and ($first -lt ($pageSize + $output.count)))
+                {
+                    $queryParameters.page_size = $first
                 }
                 # Add query parameters to the URI
                 if ($method -eq "GET")
@@ -204,15 +221,15 @@ function Invoke-TSNotionApiCall
             }
             catch [Microsoft.PowerShell.Commands.HttpResponseException]
             {
-                $message = ($error.Errordetails.message | ConvertFrom-Json)
+                $message = ($_.Errordetails.message | ConvertFrom-Json)
                 $e = @{
                     Status     = $message.status
                     Code       = $message.code
                     Message    = $message.message
-                    Command    = $error.InvocationInfo.MyCommand
-                    Method     = $error.TargetObject.Method
-                    RequestUri = $error.TargetObject.RequestUri
-                    Headers    = $error.TargetObject.Headers
+                    Command    = $_.InvocationInfo.MyCommand
+                    Method     = $_.TargetObject.Method
+                    RequestUri = $_.TargetObject.RequestUri
+                    Headers    = $_.TargetObject.Headers
                 }
                 #$e | Add-TSNotionLogToFile -filename $fileName -level ERROR
                 "InvokeParams", $params | Add-TSNotionLogToFile -filename $fileName -level ERROR

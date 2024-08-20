@@ -1,28 +1,25 @@
-class Heading3 : Block
+class Heading3 : Heading
 {
-    [blocktype] $type = "heading_3"
-    [rich_text[]] $rich_text
-    [notion_color] $color = "default"
-    [boolean] $is_toggleable
-    #BUG children is not working
-    #[block] $children = $null
-
-    Heading3 ()
+    # Generates an empty heading3 block
+    Heading3() : base(3)
     {
-
-    }
-    Heading3([string] $text)
-    {
-        $rt = [rich_text]::new($text)
-        $this.addRichText($rt)
     }
 
-    [void] addRichText([rich_text] $richtext)
+    # Generates a heading3 block with content
+    # [Heading3]::new("Hallo")
+    Heading3([string] $content) : base(3, $content)
     {
-        $this.rich_text += $richtext
     }
-    [void] addRichText([string] $text)
+
+    # Generates a heading3 block with content and toggleable option
+    # [Heading3]::new("Hallo", $true)
+    Heading3([string] $content, [bool] $is_toggleable) : base(3, $content, $is_toggleable)
     {
-        $this.rich_text += [rich_text]::new($text)
+    }
+
+    # Generates a heading3 block with content class rich_text and toggleable
+    # [Heading3]::new([rich_text]::new("Hallo"), $true)
+    Heading3([rich_text] $content, [bool] $is_toggleable) : base(3, $content, $is_toggleable)
+    {
     }
 }

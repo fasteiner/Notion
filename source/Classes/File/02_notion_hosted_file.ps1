@@ -1,10 +1,3 @@
-#############################################################################################################
-# Title: 02_notion_hosted_file
-# Description: 
-# 07/2024 Thomas.Subotitsch@base-IT.at
-# Minimum Powershell Version: 7
-#Requires -Version "7"
-#############################################################################################################
 class notion_hosted_file {
     [string]$url
     [string]$expiry_time

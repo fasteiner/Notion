@@ -1,10 +1,3 @@
-#############################################################################################################
-# Title: ConvertTo-TSNotionObject
-# Description: 
-# 07/2024 Thomas.Subotitsch@base-IT.at
-# Minimum Powershell Version: 7
-#Requires -Version "7"
-#############################################################################################################
 function ConvertTo-TSNotionObject
 {
     <#
@@ -59,6 +52,7 @@ function ConvertTo-TSNotionObject
         #     "Input is not an array or object (is $Type)" | Add-TSNotionLogToFile -Level ERROR
         #     Break
         # }
+        $output = @()
     }
     process
     {
@@ -187,8 +181,8 @@ function ConvertTo-TSNotionObject
                         #Mention ??
                         "numbered_list_item"
                         {
-                            "NumberedListItem" | Add-TSNotionLogToFile -Level INFO
-                            [NumberedListItem]::ConvertfromObject($InputObject)
+                            "numbered_list_item" | Add-TSNotionLogToFile -Level INFO
+                            $output += [numbered_list_item]::ConvertfromObject($InputObject)
                             break
                         }
                         "paragraph"
@@ -204,7 +198,7 @@ function ConvertTo-TSNotionObject
                         "quote"
                         {
                             "Quote" | Add-TSNotionLogToFile -Level INFO
-                            [quote]::ConvertfromObject($InputObject)
+                            $output += [quote]::ConvertfromObject($InputObject)
                             break
                         }
                         "synced_block"
@@ -259,7 +253,7 @@ function ConvertTo-TSNotionObject
                 "comment"
                 {  
                     "Comment" | Add-TSNotionLogToFile -Level INFO 
-                    [comment]::ConvertfromObject($InputObject)
+                    $output += [comment]::ConvertfromObject($InputObject)
                 }
         
                 "database"
@@ -272,7 +266,7 @@ function ConvertTo-TSNotionObject
                 {
                     # https://developers.notion.com/reference/page
                     "Page" | Add-TSNotionLogToFile -Level INFO 
-                    [page]::ConvertfromObject($InputObject)
+                    $output += [page]::ConvertfromObject($InputObject)
                 }
         
                 "page_or_database"
@@ -289,19 +283,17 @@ function ConvertTo-TSNotionObject
                 {
                     # https://developers.notion.com/reference/user
                     "User" | Add-TSNotionLogToFile -Level INFO 
-                    [user]::ConvertFromObject($InputObject)
+                    $output += [user]::ConvertFromObject($InputObject)
                 }
                 Default
                 {
                 }
             }
-            "-" * 100
-            $InputObject
-            "=" * 100
-            Break
+            #Break
         }
     }
     end
     {
+        return $output
     }
 }

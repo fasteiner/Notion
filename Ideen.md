@@ -88,8 +88,12 @@ paragraph        : @{rich_text=System.Object[]; color=default}
 https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_classes?view=powershell-7.4#exporting-classes-with-type-accelerators
 By default, PowerShell modules don't automatically export classes and enumerations defined in PowerShell. The custom types aren't available outside of the module without calling a using module statement.
 
-## Wie bekommen wir das in das .psm1 File hinein?
+
 ## Wie befüllen wir das Array der exportierbaren Classes?
   $ExportableTypes =@(
       [plane]
   )
+
+
+  [ ] New-TSNotionBlock
+  

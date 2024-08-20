@@ -1,4 +1,4 @@
-enum language
+enum notion_language
 {
     abap
     arduino

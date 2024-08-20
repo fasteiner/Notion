@@ -1,10 +1,3 @@
-#############################################################################################################
-# Title: 01_comment
-# Description: 
-# 07/2024 Thomas.Subotitsch@base-IT.at
-# Minimum Powershell Version: 7
-#Requires -Version "7"
-#############################################################################################################
 class comment
 {
     #https://developers.notion.com/reference/comment-object
