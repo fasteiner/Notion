@@ -1,10 +1,7 @@
 class rich_text
 {
     [rich_text_type] $type = "text"
-    $text = @{
-        "content" = ""
-        "link"    = $null
-    }
+    $text = [rich_text_content]::new()
     [annotation] $annotations = [annotation]::new()
     [string] $plain_text = $null
     $href = $null
@@ -13,10 +10,7 @@ class rich_text
     # [rich_text]::new()
     rich_text()
     {
-        $this.text = @{
-            "content" = ""
-            "link"    = $null
-        }
+        $this.text = [rich_text_content]::new()
         $this.plain_text = $this.text.content
     }
 
@@ -24,10 +18,7 @@ class rich_text
     # [rich_text]::new("Hallo")
     rich_text([string] $content)
     {
-        $this.text = @{
-            "content" = $content
-            "link"    = $null
-        }
+        $this.text = [rich_text_content]::new($content)
         $this.plain_text = $this.text.content
     }
 
@@ -35,10 +26,7 @@ class rich_text
     # [rich_text]::new("Hallo", [annotation]::new())
     rich_text([string] $content, [annotation] $annotations)
     {
-        $this.text = @{
-            "content" = $content
-            "link"    = $null
-        }
+        $this.text = [rich_text_content]::new($content)
         $this.plain_text = $this.text.content
         $this.annotations = $annotations
     }
@@ -50,4 +38,12 @@ class rich_text
         return $out | ConvertTo-Json -Depth 10 -compress:$compress
     }
 
+    static ConvertFromObject($Value)
+    {
+        $rich_text = [rich_text]::new()
+        $rich_text.text = [rich_text_content]::new($Value.text.content, $Value.text.link)
+        $rich_text.annotations = [annotation]::ConvertFromObject($Value.annotations)
+        $rich_text.plain_text = $Value.plain_text
+        $rich_text.href = $Value.href
+    }
 }

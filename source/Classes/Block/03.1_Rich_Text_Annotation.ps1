@@ -1,4 +1,5 @@
 class annotation
+# https://developers.notion.com/reference/rich-text#the-annotation-object
 {
     [bool] $bold = $false
     [bool] $italic = $false

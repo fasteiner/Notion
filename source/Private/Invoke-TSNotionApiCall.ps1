@@ -191,10 +191,6 @@ function Invoke-TSNotionApiCall
                     }
                     $Params["Body"] = ($body | ConvertTo-Json)
                 }
-                else
-                {
-                    Write-Error "Method $method does not support pagination" -Category NotImplemented -RecommendedAction "Use GET or POST method"
-                }
                 Write-Debug "$method $($Params["URI"])"
                 $content = Invoke-RestMethod @Params
                 # $content.results only exists if the response is paginated, otherwise $content is the result
