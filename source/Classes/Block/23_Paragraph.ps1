@@ -14,6 +14,6 @@ class Paragraph
     {
         $Paragraph = [Paragraph]::new()
         $Paragraph.rich_text = [rich_text]::ConvertFromObject($Value.rich_text)
-        
+    }
 
 }
