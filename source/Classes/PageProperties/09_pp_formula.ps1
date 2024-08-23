@@ -1,4 +1,3 @@
-class ndb_formula {
+class pp_formula {
     [string] $expression
 }
-

@@ -1,6 +1,6 @@
-class ndb_textProperty {
+class pp_textProperty {
     [string] $content
-    ndb_textProperty($content) {
+    pp_textProperty($content) {
         $this.content = $content
     }
 }

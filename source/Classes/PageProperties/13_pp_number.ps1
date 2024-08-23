@@ -1,7 +1,7 @@
-class ndb_number {
+class pp_number {
     $number
 
-    ndb_number($number) {
+    pp_number($number) {
         $this.number = $number
     }
 }

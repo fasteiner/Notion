@@ -1,4 +1,5 @@
-class ndb_checkbox {
+class pp_status
+{
     [string] $name
     [notion_color] $color
 }

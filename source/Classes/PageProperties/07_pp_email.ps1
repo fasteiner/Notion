@@ -1,8 +1,8 @@
-class ndb_email {
+class pp_email {
     $type = "email"
     [string] $email
 
-    ndb_email($email) {
+    pp_email($email) {
         $this.email = $email
     }
 }

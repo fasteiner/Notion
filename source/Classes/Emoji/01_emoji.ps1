@@ -1,16 +1,14 @@
-#############################################################################################################
-# Title: 01_emoji
-# Description: 
-# 07/2024 Thomas.Subotitsch@base-IT.at
-# Minimum Powershell Version: 7
-#Requires -Version "7"
-#############################################################################################################
-class emoji {
-    [string]$object = "emoji"
+class emoji
+{
+    [icontype]$type = "emoji"
     [string]$emoji
 
     emoji($emoji)
     {
+        # if ($emoji.Length -ne 1)
+        # {
+        #     throw [System.ArgumentException]::new("The emoji must be a single character.")
+        # }
         $this.emoji = $emoji
     }
 }

@@ -1,5 +1,5 @@
 
-enum DBproperties
+enum PagePropertyType
 {
     title
     rich_text

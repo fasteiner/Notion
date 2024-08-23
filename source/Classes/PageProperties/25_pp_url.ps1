@@ -1,4 +1,4 @@
-class ndb_url
+class pp_url
 {
     [string] $url
 }

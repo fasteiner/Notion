@@ -65,18 +65,18 @@ function ConvertTo-TSNotionObject
             }
 
         
-        ("Object: {0} Type: {1}" -f $item.object, $item.Type) | Add-TSNotionLogToFile -Level INFO
-            "Object", $item | Add-TSNotionLogToFile -Level DEBUG
-            #TODO: Constructor für jede Klasse erstellen .ConvertfromObject() -> $Object = [NotionObject]::new().ConvertfromObject($item)
-            switch ($item.object)
+        ("Object: {0} Type: {1} " -f $InputObject.object, $InputObject.Type) | Add-TSNotionLogToFile -Level INFO
+            "Object", $InputObject | Add-TSNotionLogToFile -Level DEBUG
+            #TODO: Constructor für jede Klasse erstellen .ConvertfromObject() -> $Object = [NotionObject]::new().ConvertfromObject($InputObject)
+            switch ($InputObject.object)
             {
                 "list"
                 {  
                     "List" | Add-TSNotionLogToFile -Level INFO 
                     #TODO: Gibt's einen Object Type List?
-                    if ($item.results -is [array])
+                    if ($InputObject.results -is [array])
                     {
-                        foreach ($result in $item.results)
+                        foreach ($result in $InputObject.results)
                         {
                             $result | ConvertTo-TSNotionObject
                         }
@@ -90,7 +90,7 @@ function ConvertTo-TSNotionObject
                 {
                     # https://developers.notion.com/reference/block
                     "Block" | Add-TSNotionLogToFile -Level INFO 
-                    switch ($item.type)
+                    switch ($InputObject.type)
                     # https://developers.notion.com/reference/block#block-type-objects
                     {
                         "bookmark"
@@ -182,7 +182,7 @@ function ConvertTo-TSNotionObject
                         "numbered_list_item"
                         {
                             "numbered_list_item" | Add-TSNotionLogToFile -Level INFO
-                            $output += [numbered_list_item]::ConvertfromObject($item)
+                            $output += [numbered_list_item]::ConvertfromObject($InputObject)
                             break
                         }
                         "paragraph"
@@ -198,7 +198,7 @@ function ConvertTo-TSNotionObject
                         "quote"
                         {
                             "Quote" | Add-TSNotionLogToFile -Level INFO
-                            $output += [quote]::ConvertfromObject($item)
+                            $output += [quote]::ConvertfromObject($InputObject)
                             break
                         }
                         "synced_block"
@@ -253,7 +253,7 @@ function ConvertTo-TSNotionObject
                 "comment"
                 {  
                     "Comment" | Add-TSNotionLogToFile -Level INFO 
-                    $output += [comment]::ConvertfromObject($item)
+                    $output += [comment]::ConvertfromObject($InputObject)
                 }
         
                 "database"
@@ -266,7 +266,7 @@ function ConvertTo-TSNotionObject
                 {
                     # https://developers.notion.com/reference/page
                     "Page" | Add-TSNotionLogToFile -Level INFO 
-                    $output += [page]::ConvertfromObject($item)
+                    $output += [page]::ConvertfromObject($InputObject)
                 }
         
                 "page_or_database"
@@ -283,7 +283,7 @@ function ConvertTo-TSNotionObject
                 {
                     # https://developers.notion.com/reference/user
                     "User" | Add-TSNotionLogToFile -Level INFO 
-                    $output += [user]::ConvertFromObject($item)
+                    $output += [user]::ConvertFromObject($InputObject)
                 }
                 Default
                 {

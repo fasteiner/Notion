@@ -8,7 +8,6 @@ class Block
     # }
     #$after = ""
     $children = @()
-    # [block]::new() - Generates a new block with a random id
     Block()
     {
         #$this.id = [guid]::NewGuid().ToString()

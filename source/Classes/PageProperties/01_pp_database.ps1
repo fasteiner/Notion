@@ -1,4 +1,4 @@
-class ndb_database
+class pp_database
 {
     # [rich_text[]] $title
     # $cover
@@ -7,7 +7,8 @@ class ndb_database
     # $is_inline
     [PSCustomObject]$properties
     $parent
-    #[DBproperties] $properties
+    #TODO
+    #[PagePropertyType] $properties
 
     addProperty([string]$name, [object]$value)
     {

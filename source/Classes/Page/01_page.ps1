@@ -17,12 +17,13 @@ class page
     [user]       $last_edited_by
     [bool]       $archived
     [bool]       $in_trash
-    [notion_file]       $icon
-    [notion_file]       $cover
+    [page_icon]    $icon
+    [notion_file]  $cover
     [object]     $properties
-    [page_parent]$parent
+    [page_parent]  $parent
     [string]     $url
     [string]     $public_url
+    [string]     $request_id
 
     #Constructors
     page()
@@ -32,6 +33,19 @@ class page
 
     }
     
+    page([System.Object]$parent, $properties)
+    {
+        $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+        $this.parent = [page_parent]::new($parent)
+        #TODO properties depending of parent.type (page_id or database_id)
+        # if ($parent.type -eq "database_id")
+        # {
+        #     #TODO
+        #     $this.properties = $properties
+        # }
+        $this.properties = $properties
+    }
+
     page([string] $id)
     {
         $this.id = $id
@@ -41,7 +55,7 @@ class page
     #TODO: Wie kann man verhindern, dass diese Methode mit falschen Objekten aufgerufen wird? Oder mit einem Array of Objects?
     static [page] ConvertFromObject($Value)
     {
-        if ($Value -is [System.Object] -and !($Value -is [string]) -and !($Value -is [int]) -and !($Value -is [bool]) -and $Value.Object -and ($Value.Object -eq "page"))
+        if (($Value -is [System.Object]) -and !($Value -is [string]) -and !($Value -is [int]) -and !($Value -is [bool]) -and $Value.Object -and ($Value.Object -eq "page"))
         {
             $page = [page]::new()
             $page.id = $Value.id
@@ -51,12 +65,34 @@ class page
             $page.last_edited_by = [user]::new($Value.last_edited_by)
             $page.archived = $Value.archived
             $page.in_trash = $Value.in_trash
-            $page.icon = $Value.icon
-            $page.cover = $Value.cover
+            #$page.icon = $Value.icon
+            switch ($Value.icon.type)
+            {
+                "notion_file"
+                {
+                    $page.icon = [notion_file]::new($Value.icon.external.url) 
+                }
+                "emoji"
+                {
+                    $page.icon = [emoji]::new($Value.icon.emoji) 
+                }
+            }
+            switch ($Value.cover.type)
+            {
+                "external"
+                {
+                    $page.cover = [external_file]::new($Value.cover.external.url) 
+                }
+            }
+            #TODO Konvertierung aller Properties in Klassen
             $page.properties = $Value.properties
-            $page.parent = [page_parent]::new($Value.page_id)
+            $page.parent = [page_parent]::new($Value.parent)
             $page.url = $Value.url
             $page.public_url = $Value.public_url
+            $page.archived = $Value.archived ? $Value.archived : $false
+            $page.in_trash = $Value.in_trash ? $Value.in_trash : $false
+            #BUG warum wird das nicht befüllt?
+            $page.request_id = $Value.request_id ? $Value.request_id : $null
             return $page
         }
         else

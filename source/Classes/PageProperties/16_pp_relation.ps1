@@ -1,4 +1,4 @@
-class ndb_relation
+class pp_relation
 {
     [string] $database_id
     [type] $type

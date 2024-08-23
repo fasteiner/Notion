@@ -90,10 +90,32 @@ By default, PowerShell modules don't automatically export classes and enumeratio
 
 
 ## Wie befüllen wir das Array der exportierbaren Classes?
+(Sampler Q&A: Exporting classes with type accelerators)[https://github.com/gaelcolas/Sampler/discussions/493]
   $ExportableTypes =@(
       [plane]
   )
 
 
   [ ] New-TSNotionBlock
-  
+
+
+# PageProperties
+Page Properties müssen im Zuge der [Page]::ConvertFromObject mitberücksichtig und in echte Klassen konvertiert werden!!! (Dort sind in der DB die Daten drinnen)
+
+
+## DB Row = Page, Properties = Daten
+$pageClass3.properties
+
+Ordernumber     : @{id=C%3E%3FU; type=number; number=10000}
+Comment         : @{id=EuKy; type=rich_text; rich_text=System.Object[]}
+Tags            : @{id=G%7CXt; type=multi_select; multi_select=System.Object[]}
+Telefon         : @{id=INcy; type=phone_number; phone_number=+43 1 234567890}
+Bestellvariante : @{id=MTPa; type=select; select=}
+ArtikelNummer   : @{id=Zv%5By; type=rich_text; rich_text=System.Object[]}
+Orderdate       : @{id=%5Byc%3C; type=date; date=}
+Geschlecht      : @{id=%5CEp%7D; type=select; select=}
+Nachname        : @{id=%5Dt%7Cy; type=rich_text; rich_text=System.Object[]}
+Anwesend        : @{id=ch%3Di; type=checkbox; checkbox=True}
+E-Mail          : @{id=dBvC; type=email; email=hansi.huber@gmail.com}
+Bezahlstatus    : @{id=lqUd; type=select; select=}
+Vorname         : @{id=title; type=title; title=System.Object[]}
