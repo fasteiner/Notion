@@ -6,7 +6,7 @@ class Heading : Block
     [notion_color] $color = "default"
     [boolean] $is_toggleable
     #BUG children is not working
-    #[block] $children = $null
+
 
     # Generates an empty heading block with a specified level
     Heading([int] $level)

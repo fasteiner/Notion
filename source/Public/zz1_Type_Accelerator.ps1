@@ -14,7 +14,7 @@ $ExportableTypes = @(
     [Bookmark]
     [bot]
     [Breadcrumb]
-    [BulletedListItem]
+    [bulleted_list_item]
     [Callout]
     [ChildDatabase]
     [ChildPage]

@@ -105,7 +105,7 @@ function ConvertTo-TSNotionObject
                         }
                         "bulleted_list_item"
                         {
-                            "BulletedListItem" | Add-TSNotionLogToFile -Level INFO 
+                            "bulleted_list_item" | Add-TSNotionLogToFile -Level INFO 
                             break
                         }
                         "callout"

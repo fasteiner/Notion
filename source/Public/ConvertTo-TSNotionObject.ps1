@@ -105,12 +105,13 @@ function ConvertTo-TSNotionObject
                         }
                         "bulleted_list_item"
                         {
-                            "BulletedListItem" | Add-TSNotionLogToFile -Level INFO 
+                            "bulleted_list_item" | Add-TSNotionLogToFile -Level INFO 
                             break
                         }
                         "callout"
                         {
                             "Callout" | Add-TSNotionLogToFile -Level INFO 
+                            $output += [Callout]::ConvertfromObject($item)
                             break
                         }
                         "child_database"
@@ -187,7 +188,8 @@ function ConvertTo-TSNotionObject
                         }
                         "paragraph"
                         {
-                            "Paragraph" | Add-TSNotionLogToFile -Level INFO 
+                            "Paragraph" | Add-TSNotionLogToFile -Level INFO
+                            $output += [paragraph]::ConvertfromObject($item)
                             break
                         }
                         "pdf"
@@ -225,6 +227,7 @@ function ConvertTo-TSNotionObject
                         "to_do"
                         {
                             "ToDo" | Add-TSNotionLogToFile -Level INFO 
+                            $output += [to_do]::ConvertfromObject($item)
                             break
                         }
                         "toggle"
@@ -287,7 +290,7 @@ function ConvertTo-TSNotionObject
                 }
                 Default
                 {
-                    "Type: $() not recognized" | Add-TSNotionLogToFile -Level WARN
+                    "Object: $($item.object) not recognized" | Add-TSNotionLogToFile -Level WARN
                 }
             }
             #Break

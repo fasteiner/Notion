@@ -9,7 +9,8 @@ class Code : Block
 
     code ($Code)
     {
-        $this.rich_text = $Code.rich_text
+        $this.caption = [rich_text_content]::new($Code.caption)
+        $this.rich_text = [rich_text_content]::new($Code.rich_text)
         switch ($Code.language)
         {
             "csharp"

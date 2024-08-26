@@ -43,14 +43,15 @@ class PageProperties
     #         "$type" = $out
     #     }
     # }
-    static ConvertFromObject($Values)
-    {
-        foreach ($Value in $Values.properties.psobject.properties.name)
-        {
-            Write-Host "Value: $Value"
-            #$this.$Value = @()
-            $PageProperties = [PageProperties]::new()
-            $PageProperties.$Value.type = $Values.$Value.type
-        }
-    }
+    
+    # static ConvertFromObject($Values)
+    # {
+    #     foreach ($Value in $Values.properties.psobject.properties.name)
+    #     {
+    #         Write-Host "Value: $Value"
+    #         #$this.$Value = @()
+    #         $PageProperties = [PageProperties]::new()
+    #         $PageProperties.$Value.type = $Values.$Value.type
+    #     }
+    # }
 }

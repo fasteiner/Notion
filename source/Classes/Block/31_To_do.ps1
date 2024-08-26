@@ -4,5 +4,14 @@ class To_do : Block
     [rich_text[]] $rich_text
     [bool] $checked = $false
     [notion_color] $color = "default"
-    #[block] $children = $null
+    #[block[]] $children = $null
+
+    #TODO: geht nicht
+    static ConvertFromObject ($Value)
+    {
+        $todo = [To_do]::new()
+        $todo.rich_text = [rich_text]::ConvertFromObject($Value.rich_text)
+        $todo.checked = $Value.checked
+        $todo.color = $Value.color
+    }
 }
