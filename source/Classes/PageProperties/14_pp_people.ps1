@@ -1,4 +1,5 @@
-class pp_people {
+class pp_people : PageProperties
+{
     [string] $id
     [string] $type
     [string] $name

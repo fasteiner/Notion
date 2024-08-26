@@ -1,4 +1,4 @@
-class pp_database
+class pp_database : PageProperties
 {
     # [rich_text[]] $title
     # $cover

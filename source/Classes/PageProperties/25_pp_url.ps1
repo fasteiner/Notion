@@ -1,4 +1,4 @@
-class pp_url
+class pp_url : PageProperties
 {
     [string] $url
 }

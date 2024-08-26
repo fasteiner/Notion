@@ -1,3 +1,4 @@
-class pp_created_time {
+class pp_created_time : PageProperties
+{
     [string] $start
 }

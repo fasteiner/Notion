@@ -1,4 +1,5 @@
-class pp_files {
+class pp_files : PageProperties
+{
     [string] $name
     [string] $type
     [string] $url

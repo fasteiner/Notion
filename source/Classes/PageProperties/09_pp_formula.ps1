@@ -1,3 +1,4 @@
-class pp_formula {
+class pp_formula : PageProperties
+{
     [string] $expression
 }

@@ -1,11 +1,3 @@
-#############################################################################################################
-# Title: 01_Page
-# Description: 
-# 07/2024 Thomas.Subotitsch@base-IT.at
-# Minimum Powershell Version: 7
-#Requires -Version "7"
-#############################################################################################################
-
 class page
 {
     #https://developers.notion.com/reference/page
@@ -17,10 +9,10 @@ class page
     [user]       $last_edited_by
     [bool]       $archived
     [bool]       $in_trash
-    [page_icon]    $icon
-    [notion_file]  $cover
-    [object]     $properties
-    [page_parent]  $parent
+    [page_icon]      $icon
+    [notion_file]    $cover
+    [PageProperties] $properties
+    [page_parent]    $parent
     [string]     $url
     [string]     $public_url
     [string]     $request_id
