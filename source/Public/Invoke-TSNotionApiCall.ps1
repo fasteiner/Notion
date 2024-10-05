@@ -119,7 +119,7 @@ function Invoke-TSNotionApiCall
                 if ($method -in @("GET", "POST"))
                 {                   
                     # https://developers.notion.com/reference/intro#pagination
-                    $patterns = @(
+                    $SupportPagingPatterns = @(
                         "/v1/users", 
                         "/v1/blocks/.*/children",
                         "/v1/comments",
@@ -132,7 +132,7 @@ function Invoke-TSNotionApiCall
                     $endpoint = $uri -replace '^https://[^/]+', ''
     
                     # Filter the endpoint based on the defined patterns
-                    $filteredEndpoint = $patterns.Where( { $endpoint -match $_ })
+                    $filteredEndpoint = $SupportPagingPatterns.Where( { $endpoint -match $_ })
     
                     # Output the result if it matches any of the patterns
                     if ($filteredEndpoint )
@@ -178,7 +178,11 @@ function Invoke-TSNotionApiCall
                 # Add query parameters to the URI
                 if ($method -eq "GET")
                 {
-                    $Params["URI"] = $uri + "?" + ($queryParameters.GetEnumerator() | ForEach-Object { "{0}={1}" -f $_.Key, $_.Value }) -join "&"
+                    $Params["URI"] = $uri 
+                    if($queryParameters.Count -gt 0)
+                    {
+                        $Params["URI"] += "?" + ($queryParameters.GetEnumerator() | ForEach-Object { "{0}={1}" -f $_.Key, $_.Value }) -join "&"
+                    }
                 }
                 # Add parameter to the body
                 elseif ($method -eq "POST")

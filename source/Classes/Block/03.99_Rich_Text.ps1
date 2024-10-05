@@ -38,12 +38,13 @@ class rich_text
         return $out | ConvertTo-Json -Depth 10 -compress:$compress
     }
 
-    static ConvertFromObject($Value)
+    static [rich_text] ConvertFromObject($Value)
     {
         $rich_text = [rich_text]::new()
-        $rich_text.text = [rich_text_content]::new($Value.text.content, $Value.text.link)
+        $rich_text.text = [rich_text_content]::ConvertFromObject($Value.text)
         $rich_text.annotations = [annotation]::ConvertFromObject($Value.annotations)
         $rich_text.plain_text = $Value.plain_text
         $rich_text.href = $Value.href
+        return $rich_text
     }
 }

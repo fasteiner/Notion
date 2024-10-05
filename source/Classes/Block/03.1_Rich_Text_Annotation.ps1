@@ -9,35 +9,31 @@ class annotation
     [notion_color] $color = "default"
     annotation()
     {
+        
     }
     # annotation with format option
     # [annotation]::new("bold")
     # [annotation]::new(@("bold","code"))
-    annotation([hashtable] $annotations)
+    annotation($annotations)
     {
-        switch ($annotations)
-        {
-            "bold"
-            {
-                $this.bold = $true 
-            }
-            "italic"
-            {
-                $this.italic = $true
-            }
-            "strikethrough"
-            {
-                $this.strikethrough = $true
-            }
-            "underline"
-            {
-                $this.underline = $true
-            }
-            "code"
-            {
-                $this.code = $true
-            }
+        if (!$annotations) {
+            return
         }
+        $this.bold = $annotations.bold
+        $this.italic = $annotations.italic
+        $this.strikethrough = $annotations.strikethrough
+        $this.underline = $annotations.underline
+        $this.code = $annotations.code
+        $this.color = [Enum]::Parse([notion_color], $annotations.color)
+    }
+    annotation([bool]$bold,[bool]$italic,[bool]$strikethrough,[bool]$underline,[bool]$code,[notion_color]$color)
+    {
+        $this.bold = $bold
+        $this.italic = $italic
+        $this.strikethrough = $strikethrough
+        $this.underline = $underline
+        $this.code = $code
+        $this.color = $color
     }
 
     #BUG: color is not working
@@ -46,12 +42,8 @@ class annotation
     #                $this.color = [notion_color]$_
     #            }
 
-    static ConvertFromObject($Value)
+    static [annotation] ConvertFromObject($Value)
     {
-        $annotations = [annotation]::new()
-        foreach ($annotation in $Value)
-        {
-            $annotations += [annotation]::new($annotation)
-        }
+        return [annotation]::new($Value)
     }
 }

@@ -24,10 +24,10 @@ function Disconnect-TSNotion
         Remove-Variable -Name TSNotionAPIKey -Scope Global -ErrorAction SilentlyContinue
         Remove-Variable -Name TSNotionApiUri -Scope Global -ErrorAction SilentlyContinue
         Remove-Variable -Name TSNotionAPIVersion -Scope Global -ErrorAction SilentlyContinue
-        Write-Output "Disconnected from the Notion API."
+        Write-Host "Disconnected from the Notion API." -ForegroundColor Green
     }
     else
     {
-        Write-Output "Disconnection from the Notion API was cancelled."
+        Write-Host "Disconnection from the Notion API was cancelled." -ForegroundColor Yellow
     }
 }

@@ -1,13 +1,19 @@
 class Block
 {
-    #$object = "block"
-    #$id = $null
-    # $parent = @{
-    #     "type"     = "block_id"
-    #     "block_id" = $null
-    # }
+    $object = "block"
+    $id = $null
+    $parent = $null
     #$after = ""
     $children = @()
+    [string]$created_time
+    [user]$created_by
+    [string]$last_edited_time
+    [user]$last_edited_by
+    [bool]$archived
+    [bool]$in_trash
+    $has_children = $false
+
+    
     Block()
     {
         #$this.id = [guid]::NewGuid().ToString()
@@ -18,6 +24,10 @@ class Block
     {
         #$this.id = [guid]::NewGuid().ToString()
         $this.children = $children
+        if($children.count -gt 0)
+        {
+            $this.has_children = $true
+        }
     }
     # Block with array of children and parent id
     # [block]::new(@($block1,$block2), $parent)
@@ -28,6 +38,10 @@ class Block
         $this.parent = @{
             "type"     = "block_id"
             "block_id" = $parent
+        }
+        if($children.count -gt 0)
+        {
+            $this.has_children = $true
         }
     }
     addChild($child, [string] $type)
@@ -41,6 +55,7 @@ class Block
             "type"  = $type
             "$type" = $out
         }
+        $this.has_children = $true
     }
     addChild($child)
     {

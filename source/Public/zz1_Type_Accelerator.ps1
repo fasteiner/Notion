@@ -3,7 +3,6 @@ $ExportableTypes = @(
     # enums
     [blocktype]
     [notion_color]
-    [notion_language]
     [rich_text_type]
     [icontype]
     [page_parent_type]

@@ -6,6 +6,7 @@ enum blocktype
     callout
     child_database
     child_page
+    code
     column
     column_list
     divider

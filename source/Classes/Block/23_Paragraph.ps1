@@ -10,10 +10,11 @@ class Paragraph
         $this.rich_text += $richtext
     }
 
-    static ConvertFromObject($Value)
+    static [Paragraph] ConvertFromObject($Value)
     {
         $Paragraph = [Paragraph]::new()
         $Paragraph.rich_text = [rich_text]::ConvertFromObject($Value.rich_text)
+        return $Paragraph
     }
 
 }

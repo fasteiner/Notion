@@ -1,8 +1,7 @@
-class Table
+class Table : Block
 {
     $type = "table"
     [int] $table_width = $null
-    [System.Collections.ArrayList] $children = @()
     [bool] $has_column_header = $false
     [bool] $has_row_header = $false
 
@@ -130,4 +129,20 @@ class Table
     }
 
     # Aus ShopWare kommt ein Array of CustomObjects
+    static [table] ConvertFromObject($Value)
+    {
+        $table = [Table]::new()
+        $table.table_width = $Value.table.table_width
+        $table.has_column_header = $Value.table.has_column_header
+        $table.has_row_header = $Value.table.has_row_header
+        $table.id = $Value.id
+        $table.parent = $value.parent
+        $table.created_time = $value.created_time
+        $table.last_edited_time = $value.last_edited_time
+        $table.created_by = [user]::ConvertFromObject($Value.created_by)
+        $table.last_edited_by = [user]::ConvertFromObject($Value.last_edited_by)
+        $table.archived = $Value.archived
+        $table.in_trash = $Value.in_trash
+        return $table
+    }
 }

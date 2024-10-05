@@ -60,19 +60,19 @@ function ConvertTo-TSNotionObject
         {
             if ($item.template)
             {
-                "Template - not implemented yet" | Add-TSNotionLogToFile -Level INFO
-                exit
+                "Template - not implemented yet" | Add-TSNotionLogToFile -Level WARN
+                return
             }
 
         
-        ("Object: {0} Type: {1}" -f $item.object, $item.Type) | Add-TSNotionLogToFile -Level INFO
+        ("Object: {0} Type: {1}" -f $item.object, $item.Type) | Add-TSNotionLogToFile -Level DEBUG
             "Object", $item | Add-TSNotionLogToFile -Level DEBUG
             #TODO: Constructor für jede Klasse erstellen .ConvertfromObject() -> $Object = [NotionObject]::new().ConvertfromObject($item)
             switch ($item.object)
             {
                 "list"
                 {  
-                    "List" | Add-TSNotionLogToFile -Level INFO 
+                    "List" | Add-TSNotionLogToFile -Level DEBUG
                     #TODO: Gibt's einen Object Type List?
                     if ($item.results -is [array])
                     {
@@ -89,160 +89,165 @@ function ConvertTo-TSNotionObject
                 "block"
                 {
                     # https://developers.notion.com/reference/block
-                    "Block" | Add-TSNotionLogToFile -Level INFO 
+                    "Block" | Add-TSNotionLogToFile -Level DEBUG
                     switch ($item.type)
                     # https://developers.notion.com/reference/block#block-type-objects
                     {
                         "bookmark"
                         {
-                            "Bookmark" | Add-TSNotionLogToFile -Level INFO 
+                            "Bookmark" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "breadcrumb"
                         {
-                            "Breadcrumb" | Add-TSNotionLogToFile -Level INFO 
+                            "Breadcrumb" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "bulleted_list_item"
                         {
-                            "bulleted_list_item" | Add-TSNotionLogToFile -Level INFO 
+                            "bulleted_list_item" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "callout"
                         {
-                            "Callout" | Add-TSNotionLogToFile -Level INFO 
+                            "Callout" | Add-TSNotionLogToFile -Level DEBUG
                             $output += [Callout]::ConvertfromObject($item)
                             break
                         }
                         "child_database"
                         {
-                            "ChildDatabase" | Add-TSNotionLogToFile -Level INFO 
+                            "ChildDatabase" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "child_page"
                         {
-                            "ChildPage" | Add-TSNotionLogToFile -Level INFO 
+                            "ChildPage" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "code"
                         {
-                            "Code" | Add-TSNotionLogToFile -Level INFO 
+                            "Code" | Add-TSNotionLogToFile -Level DEBUG
+                            $output += [Code]::ConvertfromObject($item)
                             break
                         }
                         "column"
                         {
-                            "Column" | Add-TSNotionLogToFile -Level INFO 
+                            "Column" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "divider"
                         {
-                            "Divider" | Add-TSNotionLogToFile -Level INFO 
+                            "Divider" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "embed"
                         {
-                            "Embed" | Add-TSNotionLogToFile -Level INFO 
+                            "Embed" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "equation"
                         {
-                            "Equation" | Add-TSNotionLogToFile -Level INFO 
+                            "Equation" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "file"
                         {
-                            "File" | Add-TSNotionLogToFile -Level INFO 
+                            "File" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "heading_1"
                         {
-                            "Heading1" | Add-TSNotionLogToFile -Level INFO 
+                            "Heading1" | Add-TSNotionLogToFile -Level DEBUG
+                            $output += [heading]::ConvertfromObject($item)
                             break
                         }
                         "heading_2"
                         {
-                            "Heading2" | Add-TSNotionLogToFile -Level INFO 
+                            "Heading2" | Add-TSNotionLogToFile -Level DEBUG
+                            $output += [heading]::ConvertfromObject($item)
                             break
                         }
                         "heading_3"
                         {
-                            "Heading3" | Add-TSNotionLogToFile -Level INFO 
+                            "Heading3" | Add-TSNotionLogToFile -Level DEBUG
+                            $output += [heading]::ConvertfromObject($item)
                             break
                         }
                         "image"
                         {
-                            "Image" | Add-TSNotionLogToFile -Level INFO 
+                            "Image" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "link_preview"
                         {
-                            "LinkPreview" | Add-TSNotionLogToFile -Level INFO 
+                            "LinkPreview" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         #Mention ??
                         "numbered_list_item"
                         {
-                            "numbered_list_item" | Add-TSNotionLogToFile -Level INFO
+                            "numbered_list_item" | Add-TSNotionLogToFile -Level DEBUG
                             $output += [numbered_list_item]::ConvertfromObject($item)
                             break
                         }
                         "paragraph"
                         {
-                            "Paragraph" | Add-TSNotionLogToFile -Level INFO
+                            "Paragraph" | Add-TSNotionLogToFile -Level DEBUG
                             $output += [paragraph]::ConvertfromObject($item)
                             break
                         }
                         "pdf"
                         {
-                            "Pdf" | Add-TSNotionLogToFile -Level INFO 
+                            "Pdf" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "quote"
                         {
-                            "Quote" | Add-TSNotionLogToFile -Level INFO
+                            "Quote" | Add-TSNotionLogToFile -Level DEBUG
                             $output += [quote]::ConvertfromObject($item)
                             break
                         }
                         "synced_block"
                         {
-                            "SyncedBlock" | Add-TSNotionLogToFile -Level INFO 
+                            "SyncedBlock" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "table"
                         {
-                            "Table" | Add-TSNotionLogToFile -Level INFO 
+                            "Table" | Add-TSNotionLogToFile -Level DEBUG
+                            $output += [table]::ConvertfromObject($item) 
                             break
                         }
                         "table_row"
                         {
-                            "TableRow" | Add-TSNotionLogToFile -Level INFO 
+                            "TableRow" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "table_of_contents"
                         {
-                            "TableOfContents" | Add-TSNotionLogToFile -Level INFO 
+                            "TableOfContents" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         # template ???
                         "to_do"
                         {
-                            "ToDo" | Add-TSNotionLogToFile -Level INFO 
+                            "ToDo" | Add-TSNotionLogToFile -Level DEBUG
                             $output += [to_do]::ConvertfromObject($item)
                             break
                         }
                         "toggle"
                         {
-                            "Toggle" | Add-TSNotionLogToFile -Level INFO 
+                            "Toggle" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "unsupported"
                         {
-                            "Unsupported" | Add-TSNotionLogToFile -Level INFO 
+                            "Unsupported" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "video"
                         {
-                            "Video" | Add-TSNotionLogToFile -Level INFO 
+                            "Video" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         Default
@@ -255,37 +260,37 @@ function ConvertTo-TSNotionObject
         
                 "comment"
                 {  
-                    "Comment" | Add-TSNotionLogToFile -Level INFO 
+                    "Comment" | Add-TSNotionLogToFile -Level DEBUG
                     $output += [comment]::ConvertfromObject($item)
                 }
         
                 "database"
                 {
                     # https://developers.notion.com/reference/database
-                    "Database" | Add-TSNotionLogToFile -Level INFO 
+                    "Database" | Add-TSNotionLogToFile -Level DEBUG
                 }
         
                 "page"
                 {
                     # https://developers.notion.com/reference/page
-                    "Page" | Add-TSNotionLogToFile -Level INFO 
+                    "Page" | Add-TSNotionLogToFile -Level DEBUG
                     $output += [page]::ConvertfromObject($item)
                 }
         
                 "page_or_database"
                 {  
-                    "PageOrDatabase" | Add-TSNotionLogToFile -Level INFO 
+                    "PageOrDatabase" | Add-TSNotionLogToFile -Level DEBUG
                 }
         
                 "property_item"
                 {  
-                    "PropertyItem" | Add-TSNotionLogToFile -Level INFO 
+                    "PropertyItem" | Add-TSNotionLogToFile -Level DEBUG
                 }
         
                 "user"
                 {
                     # https://developers.notion.com/reference/user
-                    "User" | Add-TSNotionLogToFile -Level INFO 
+                    "User" | Add-TSNotionLogToFile -Level DEBUG
                     $output += [user]::ConvertFromObject($item)
                 }
                 Default

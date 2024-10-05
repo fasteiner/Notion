@@ -73,4 +73,19 @@ class Heading : Block
     {
         $this.rich_text += [rich_text]::new($text)
     }
+
+    static [Heading] ConvertFromObject($Value, $level)
+    {
+        $local:type = $Value.type
+        $heading = [Heading]::new($level)
+        $heading.rich_text = [rich_text]::ConvertFromObject($Value."$local:type".rich_text)
+        $heading.color = [Enum]::Parse([notion_color], $Value.$local:type.color)
+        $heading.is_toggleable = $Value.$local:type.is_toggleable
+        return $heading
+    }
+
+    static [Heading] ConvertFromObject($Value)
+    {
+        return [Heading]::ConvertFromObject($Value, $Value.type.split("_")[1])
+    }
 }

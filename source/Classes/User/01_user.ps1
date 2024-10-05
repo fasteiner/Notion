@@ -6,6 +6,10 @@ class user {
     [string]$name
     [string]$avatar_url
 
+    user(){
+        
+    }
+
     user ([object]$user) {
         $this.id = $user.id
         $this.type = $user.type

@@ -17,6 +17,7 @@ class page
     [string]     $url
     [string]     $public_url
     [string]     $request_id
+    $children = @()
 
     #Constructors
     page()
@@ -43,8 +44,42 @@ class page
     {
         $this.id = $id
     }
-
+    
+    
     #Methods
+    addChild($child, [string] $type)
+    {
+        $out = $child
+        if ($child.type)
+        {
+            $out = $out | Select-Object -ExcludeProperty "type"
+        }
+        $this.children += @{
+            "type"  = $type
+            "$type" = $out
+        }
+    }
+    addChild($child)
+    {
+        $out = $child
+        $type = $child.type
+        # remove type propety from child object
+        if ($child.type)
+        {
+            $out = $out | Select-Object -ExcludeProperty "type"
+        }
+        $this.children += @{
+            "type"  = $type
+            "$type" = $out
+        }
+    }
+    addChildren($children)
+    {
+        foreach ($child in $children)
+        {
+            $this.addChild($child)
+        }
+    }
     #TODO: Wie kann man verhindern, dass diese Methode mit falschen Objekten aufgerufen wird? Oder mit einem Array of Objects?
     static [page] ConvertFromObject($Value)
     {
@@ -78,6 +113,7 @@ class page
                 }
             }
             #TODO Konvertierung aller Properties in Klassen
+            #$page.properties = [PageProperties]::ConvertFromObject($Value.properties)
             $page.properties = $Value.properties
             $page.parent = [page_parent]::new($Value.parent)
             $page.url = $Value.url
