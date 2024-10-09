@@ -2,10 +2,10 @@ TOPIC
     about_TSNotion
 
 SHORT DESCRIPTION
-    Module for interaction with Notion based on classes
+    Module for interaction with the Notion API based on classes
 
 LONG DESCRIPTION
-    Module for interaction with Notion based on classes
+    Module for interaction with the Notion API based on classes
 
 EXAMPLES
     PS C:\> {{ add examples here }}
@@ -20,5 +20,4 @@ SEE ALSO
     - {{ Please add Project URI such as github }}}
 
 KEYWORDS
-    {{ Add comma separated keywords here }}
-
+    Notion API, Read, Write, Class, Blocks Page, PageProperties, Database, Emoji, File, Comment, User

@@ -2,6 +2,7 @@ output/
 old/
 
 **.bak
+**.bkp
 *.local.*
 !**/README.md
 .kitchen/
