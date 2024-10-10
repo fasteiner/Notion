@@ -1,4 +1,5 @@
-class Paragraph
+class Paragraph : Block
+# https://developers.notion.com/reference/block#paragraph
 {
     #[blocktype] $type = "paragraph"
     [rich_text[]] $rich_text
@@ -16,5 +17,4 @@ class Paragraph
         $Paragraph.rich_text = [rich_text]::ConvertFromObject($Value.rich_text)
         return $Paragraph
     }
-
 }

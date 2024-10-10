@@ -1,4 +1,5 @@
 class Heading2 : Heading
+# https://developers.notion.com/reference/block#headings
 {
     # Generates an empty heading2 block
     Heading2() : base(2)

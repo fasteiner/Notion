@@ -1,4 +1,5 @@
 class Table : Block
+# https://developers.notion.com/reference/block#table
 {
     $type = "table"
     [int] $table_width = $null

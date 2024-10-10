@@ -1,4 +1,5 @@
 class Callout : Block
+# https://developers.notion.com/reference/block#callout
 {
     [blocktype] $type = "callout"
     [rich_text[]] $rich_text
@@ -6,7 +7,7 @@ class Callout : Block
     $icon = [emoji]::new("")
     [notion_color] $color = "default"
 
-    static ConvertFromObject($Value)
+    static [Callout] ConvertFromObject($Value)
     {
         $callout = [Callout]::new()
         $callout.rich_text = @()
@@ -19,5 +20,6 @@ class Callout : Block
             "file" {  $callout.icon = [notion_file]::new($Value.icon.external.url) }
         }
         $callout.color = [notion_color]::ConvertFromObject($Value.color)
+        return $callout
     }
 }

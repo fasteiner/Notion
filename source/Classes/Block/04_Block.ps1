@@ -1,4 +1,5 @@
 class Block
+# https://developers.notion.com/reference/block
 {
     $object = "block"
     $id = $null
@@ -24,7 +25,7 @@ class Block
     {
         #$this.id = [guid]::NewGuid().ToString()
         $this.children = $children
-        if($children.count -gt 0)
+        if ($children.count -gt 0)
         {
             $this.has_children = $true
         }
@@ -39,7 +40,7 @@ class Block
             "type"     = "block_id"
             "block_id" = $parent
         }
-        if($children.count -gt 0)
+        if ($children.count -gt 0)
         {
             $this.has_children = $true
         }

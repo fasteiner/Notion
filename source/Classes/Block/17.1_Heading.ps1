@@ -1,4 +1,5 @@
 class Heading : Block
+# https://developers.notion.com/reference/block#headings
 {
     [int] $level
     [blocktype] $type
