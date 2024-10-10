@@ -69,6 +69,8 @@ $ExportableTypes = @(
     [pp_textProperty]
     [pp_title]
     [pp_url]
+    [pp_unique_id]
+    [pp_verification]
     [Quote]
     [rich_text]
     [rich_text_content]

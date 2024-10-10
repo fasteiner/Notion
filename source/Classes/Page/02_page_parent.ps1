@@ -14,14 +14,15 @@ class page_parent
         {
             "page_id"
             { 
-                Write-Host "page_id"
-                $this.type = "page_id"
+                #Write-Host "page_id"
+                
+                $this.type = [Enum]::Parse([page_parent_type], $Value.type)
                 $this.page_id = $Value.page_id
             }
             "database_id"
             {
-                Write-Host "databse_id"
-                $this.type = "database_id"
+                #Write-Host "databse_id"
+                $this.type = [Enum]::Parse([page_parent_type], $Value.type)
                 $this.database_id = $Value.database_id
             }
             default
@@ -29,5 +30,10 @@ class page_parent
                 throw "Invalid type"
             }
         }
+    }
+
+    static [page_parent] ConvertFromObject($Value)
+    {
+        return [page_parent]::new($Value)
     }
 }

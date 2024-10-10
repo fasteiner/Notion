@@ -16,4 +16,16 @@ class notion_file
         $this.type = "external"
         $this.external = [external_file]::new($url)
     }
+
+    static [notion_file] ConvertFromObject($Value)
+    {
+        if ($Value.type -eq "file")
+        {
+            return [notion_file]::new($Value.file.url, $Value.file.expiry_time)
+        }
+        else
+        {
+            return [notion_file]::new($Value.external.url)
+        }
+    }
 }

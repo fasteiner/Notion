@@ -9,9 +9,15 @@ class notion_hosted_file
         $this.url = $url
         $this.expiry_time = Get-Date $expiry_time -Format "yyyy-MM-ddTHH:mm:ss.fffZ"
     }
+
     notion_hosted_file([System.Object]$Value)
     {
         $this.url = $Value.url
         $this.expiry_time = Get-Date $Value.expiry_time -Format "yyyy-MM-ddTHH:mm:ss.fffZ"
+    }
+
+    static [notion_hosted_file] ConvertFromObject($Value)
+    {
+        return [notion_hosted_file]::new($Value.url, $Value.expiry_time)
     }
 }

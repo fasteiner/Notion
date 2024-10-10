@@ -8,4 +8,9 @@ class external_file
     {
         $this.url = $url
     }
+
+    static [external_file] ConvertFromObject($Value)
+    {
+        return [external_file]::new($Value.url)
+    }
 }

@@ -1,4 +1,5 @@
 class PageProperties
+# https://developers.notion.com/reference/page-property-values
 {
     #[PagePropertyType] $Type
 

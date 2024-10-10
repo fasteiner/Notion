@@ -1,10 +1,24 @@
 class pp_title : PageProperties
+# https://developers.notion.com/reference/page-property-values#title
 {
     $type = "title"
-    $title = @()
+    [rich_text[]] $title = @()
 
-    pp_title([pp_text]$text)
+    # Constructor
+    pp_title($value)
     {
-        $this.title += $text
+        $this.title = [rich_text]::new($Value)
+        
+    }
+    #Methods
+    add($value)
+    {
+        $this.title += [rich_text]::new($Value)
+    }
+
+    #TODO Array of rich_text?
+    static [pp_title] ConvertFromObject($Value)
+    {
+        return [pp_title]::new($Value)
     }
 }

@@ -1,0 +1,5 @@
+enum state
+{
+    unverified
+    verified
+}

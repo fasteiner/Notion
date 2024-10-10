@@ -21,4 +21,9 @@ class page_icon
             }
         }
     }
+
+    static [page_icon] ConvertFromObject($Value)
+    {
+        return [page_icon]::new($Value)
+    }
 }

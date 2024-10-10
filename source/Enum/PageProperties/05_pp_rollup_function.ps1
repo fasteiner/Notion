@@ -1,4 +1,4 @@
-enum function
+enum rollup_function
 {
     count_all
     count_values
