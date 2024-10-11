@@ -1,13 +1,6 @@
-#############################################################################################################
-# Title: 02_sub_type
-# Description: 
-# 07/2024 Thomas.Subotitsch@base-IT.at
-# Minimum Powershell Version: 7
-#Requires -Version "7"
-#############################################################################################################
 class sub_type
+# https://developers.notion.com/reference/unfurl-attribute-object#inline-sub_type-objects
 {
-    # https://developers.notion.com/reference/unfurl-attribute-object#inline-sub_type-objects
     $color
     $date
     $datetime
@@ -24,6 +17,4 @@ class sub_type
         $this.plain_text = $plain_text
         $this.title = $title
     }
-
-    
 }

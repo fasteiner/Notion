@@ -1,5 +1,4 @@
-# TSNotion Commands
-
+# Commands by verb (Add, Get, New,Remove, )
 ## New- commands
 
 ``` PowerShell
@@ -7,6 +6,9 @@ New-TSNotionBlock
 New-TSNotionBlock -Type
 
 New-TSNotionPage                                # TODO: destination teamspaces or private???
+
+New-TSNotionDatabase
+
 ```
 
 ## Add- commands
@@ -16,6 +18,8 @@ Add-TSNotionBlock -PageId                       # Adds a block to the page
 Add-TSNotionPage -PageId|-Database (alias)      # Adds a page to the page (childpage) or database ("database row")
 Add-TSNotionDatabase -PageId                    # Adda a block of type ChildDatabase (= database) to a page
 Add-TSNotionPageProperties -PageId              # Adds the given property to the page
+
+Add-TSNotionDatabase -PageId                    # Adds an Block:ChildDatabase to the page, including an database object
 ```
 
 ## Remove- commands
@@ -24,7 +28,10 @@ Add-TSNotionPageProperties -PageId              # Adds the given property to the
 Remove-TSNotionPage -PageId                     # Moves the page to trash
 Remove-TSNotionPageProperty -PageId -PropertyId # Removes the specified property from the page
 Remove-TSNotionPageProperty -PageId -All        # Removes all properties from the page
+
 Remove-TSNotionBlock -BlockId                   # Removes the block and all sub-blocks
+
+Remove-TSNotionDatabase                         # Removes the given database (set in_trash = true)
 ```
 
 ## Get- commands
@@ -40,3 +47,5 @@ Import-TSNotionDatabaseContent                  # imports an array of objects in
 ``` PowerShell
 [block]::new()
 ```
+
+# Commands by type (Object= Block, Page, PageProperties, Database, DatabaseProperties)

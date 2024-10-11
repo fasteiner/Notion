@@ -1,5 +1,0 @@
-enum state
-{
-    unverified
-    verified
-}
