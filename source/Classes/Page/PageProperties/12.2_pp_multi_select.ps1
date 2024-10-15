@@ -21,12 +21,14 @@ class pp_multi_select : pp_multi_select_item
         }
         if ($Value -is [object[]])
         {
-            $multi_select = @()
+            $pp_multi_select = @()
             foreach ($item in $Value)
             {
-                $multi_select += [pp_multi_select_item]::new($item.color, $item.name)
+                $pp_multi_select += [pp_multi_select_item]::new($item.color, $item.name)
             }
-            return [pp_multi_select]::new($multi_select)
+            return [pp_multi_select]::new($pp_multi_select)
         }
+        # Not all code path returns value within method.
+        return [pp_multi_select]::new($Value)
     }
 }

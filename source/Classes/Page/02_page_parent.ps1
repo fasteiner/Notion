@@ -1,7 +1,7 @@
 class page_parent
 {
     # https://developers.notion.com/reference/parent-object
-    [page_parent_type]$type
+    [parent_type]$type
     #BUG: Wie bekomme ich nur das eine, oder das anderer Property?
     [string]$page_id
     [string]$database_id
@@ -16,13 +16,13 @@ class page_parent
             { 
                 #Write-Host "page_id"
                 
-                $this.type = [Enum]::Parse([page_parent_type], $Value.type)
+                $this.type = [Enum]::Parse([parent_type], $Value.type)
                 $this.page_id = $Value.page_id
             }
             "database_id"
             {
                 #Write-Host "databse_id"
-                $this.type = [Enum]::Parse([page_parent_type], $Value.type)
+                $this.type = [Enum]::Parse([parent_type], $Value.type)
                 $this.database_id = $Value.database_id
             }
             default

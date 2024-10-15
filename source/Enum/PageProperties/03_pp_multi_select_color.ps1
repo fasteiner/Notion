@@ -1,4 +1,4 @@
-enum color
+enum multi_select_color
 {
     default
     gray

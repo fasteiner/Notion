@@ -11,7 +11,7 @@ class pp_relation : PageProperties
         $this.relation = @()
         foreach ($relation_item in $relation)
         {
-            $this.relation += [relation]::ConvertFromObject($relation_item)
+            $this.relation += [pp_relation]::ConvertFromObject($relation_item)
         }
         if ($this.relation.count -gt 25 )
         {

@@ -31,6 +31,5 @@ class pp_rich_text : PageProperties
             }
             return [pp_rich_text]::new($rich_text)
         }
-        return [pp_rich_text]::new($Value)
     }
 }
