@@ -1,4 +1,5 @@
-class user {
+class user
+{
     # https://developers.notion.com/reference/user
     [string]$object = "user"
     [string]$id
@@ -6,24 +7,26 @@ class user {
     [string]$name
     [string]$avatar_url
 
-    user(){
-        
+    user()
+    {
     }
 
-    user ([object]$user) {
+    user([object]$user)
+    {
         $this.id = $user.id
         $this.type = $user.type
         $this.name = $user.name
         $this.avatar_url = $user.avatar_url
     }
 
-    user([string]$id) {
+    user([string]$id)
+    {
         $this.id = $id
     }
 
-    static ConvertFromObject($Value)
+    static [user] ConvertFromObject($Value)
     {
-        $user= [user]::new()
+        $user = [user]::new()
         $user.id = $Value.id
         $user.type = $Value.type
         $user.name = $Value.name

@@ -10,5 +10,4 @@ class ColumnList : Block
         $ColumnList.column_list = [block]::ConvertFromObject($Value.column_list)
         return $ColumnList
     }
-    
 }
