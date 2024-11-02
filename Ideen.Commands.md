@@ -15,11 +15,11 @@ New-TSNotionDatabase
 
 ``` PowerShell
 Add-TSNotionBlock -PageId                       # Adds a block to the page
-Add-TSNotionPage -PageId|-Database (alias)      # Adds a page to the page (childpage) or database ("database row")
-Add-TSNotionDatabase -PageId                    # Adda a block of type ChildDatabase (= database) to a page
+Add-TSNotionPage -PageId|-Database (alias)      # Adds a page to the page (child_page) or database ("database row")
+Add-TSNotionDatabase -PageId                    # Adda a block of type child_database (= database) to a page
 Add-TSNotionPageProperties -PageId              # Adds the given property to the page
 
-Add-TSNotionDatabase -PageId                    # Adds an Block:ChildDatabase to the page, including an database object
+Add-TSNotionDatabase -PageId                    # Adds an Block:child_database to the page, including an database object
 ```
 
 ## Remove- commands

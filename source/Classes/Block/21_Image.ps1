@@ -1,13 +1,8 @@
-class Image : Block
+class Image : notion_file
 # https://developers.notion.com/reference/block#image
 {
     [blocktype] $type = "image"
-    $image = @{
-        "type"     = "external"
-        "external" = @{
-            "url" = $null
-        }
-    }
+    
     
     # static [Image] ConvertFromObject($Value)
     # {

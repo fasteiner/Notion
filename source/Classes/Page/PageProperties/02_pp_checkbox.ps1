@@ -1,7 +1,7 @@
 class pp_checkbox : PageProperties
 # https://developers.notion.com/reference/page-property-values#checkbox
 {
-    [bool] $checkbox
+    [bool] $checkbox = $false
 
     pp_checkbox($checkbox)
     {

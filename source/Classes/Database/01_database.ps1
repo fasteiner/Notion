@@ -17,6 +17,8 @@ class database
     [boolean] $in_trash
     [boolean] $is_inline
     [string] $public_url
+    # Relation property (only mentioned in release notes, not in API docu)
+    # [relation_type] $db_relation
 
     database()
     {

@@ -11,5 +11,6 @@ class Quote : Block
         $quote = [quote]::new()
         $quote.rich_text = [rich_text]::ConvertFromObject($Value.rich_text)
         $quote.color = $Value.color
+        return $quote
     }
 }

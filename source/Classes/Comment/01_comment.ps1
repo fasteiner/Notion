@@ -24,6 +24,7 @@ class comment
 
     static [comment] ConvertfromObject($Value)
     {
+        $comment = [comment]::new()
         $comment.id = $Value.id
         $comment.parent = $Value.parent
         $comment.discussion_id = $Value.discussion_id

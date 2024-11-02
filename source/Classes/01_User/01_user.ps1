@@ -31,5 +31,6 @@ class user
         $user.type = $Value.type
         $user.name = $Value.name
         $user.avatar_url = $Value.avatar_url
+        return $user
     }
 }

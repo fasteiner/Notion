@@ -11,9 +11,7 @@ class pp_rich_text : PageProperties
 
     add($text)
     {
-        #TODO
-        $rich_text += [rich_text]::new($text)
-        return $rich_text
+        $this.rich_text += [rich_text]::new($text)
     }
 
     static [pp_rich_text] ConvertFromObject($Value)
@@ -24,12 +22,13 @@ class pp_rich_text : PageProperties
         }
         if ($Value -is [object[]])
         {
-            $rich_text = @()
+            $rich_text_list = @()
             foreach ($text in $Value)
             {
-                $rich_text += [rich_text]::new($text)
+                $rich_text_list += [rich_text]::new($text)
             }
-            return [pp_rich_text]::new($rich_text)
+            return [pp_rich_text]::new($rich_text_list)
         }
+        return $null
     }
 }

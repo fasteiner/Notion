@@ -3,6 +3,14 @@ class Divider : Block
 {
     [blocktype] $type = "divider"
     [string] $url = $null
+
+    divider(){
+
+    }
+
+    divider([string] $url){
+        $this.url = $url
+    }
     
     static [Divider] ConvertFromObject($Value)
     {

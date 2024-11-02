@@ -116,12 +116,12 @@ function ConvertTo-TSNotionObject
                         }
                         "child_database"
                         {
-                            "ChildDatabase" | Add-TSNotionLogToFile -Level DEBUG
+                            "child_database" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "child_page"
                         {
-                            "ChildPage" | Add-TSNotionLogToFile -Level DEBUG
+                            "child_page" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "code"
@@ -209,7 +209,7 @@ function ConvertTo-TSNotionObject
                         }
                         "synced_block"
                         {
-                            "SyncedBlock" | Add-TSNotionLogToFile -Level DEBUG
+                            "synced_block" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         "table"
@@ -225,7 +225,7 @@ function ConvertTo-TSNotionObject
                         }
                         "table_of_contents"
                         {
-                            "TableOfContents" | Add-TSNotionLogToFile -Level DEBUG
+                            "table_of_contents" | Add-TSNotionLogToFile -Level DEBUG
                             break
                         }
                         # template ???

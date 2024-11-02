@@ -5,6 +5,20 @@ class numbered_list_item : Block
     [rich_text[]] $rich_text
     [notion_color] $color = "default"
 
+    numbered_list_item()
+    {
+    }
+
+    numbered_list_item([rich_text[]] $rich_text)
+    {
+        $this.rich_text = $rich_text
+    }
+    numbered_list_item([rich_text[]] $rich_text, [notion_color] $color)
+    {
+        $this.rich_text = $rich_text
+        $this.color = $color
+    }
+
 
     static [numbered_list_item] ConvertFromObject($Value)
     {
