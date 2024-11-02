@@ -81,92 +81,92 @@ class Block
         {
             "bookmark"
             {
-                $block =  [bookmark]::ConvertfromObject($value.bookmark)
+                $block = [bookmark]::ConvertfromObject($value.bookmark)
                 break
             }
             "breadcrumb"
             {
-                $block =  [breadcrumb]::ConvertfromObject($value.breadcrumb)
+                $block = [breadcrumb]::ConvertfromObject($value.breadcrumb)
                 break
             }
             "bulleted_list_item"
             {
-                $block =  [bulleted_list_item]::ConvertfromObject($value.bulleted_list_item)
+                $block = [bulleted_list_item]::ConvertfromObject($value.bulleted_list_item)
                 break
             }
             "callout"
             {
-                $block =  [Callout]::ConvertfromObject($value.callout)
+                $block = [Callout]::ConvertfromObject($value.callout)
                 break
             }
             "child_database"
             {
-                $block =  [child_database]::ConvertfromObject($value.child_database)
+                $block = [child_database]::ConvertfromObject($value.child_database)
                 break
             }
             "child_page"
             {
-                $block =  [child_page]::ConvertfromObject($value.child_page)
+                $block = [child_page]::ConvertfromObject($value.child_page)
                 break
             }
             "code"
             {
-                $block =  [Code]::ConvertfromObject($value.code)
+                $block = [Code]::ConvertfromObject($value.code)
                 break
             }
             "column"
             {
-                $block =  [column]::ConvertfromObject($value.column)
+                $block = [column]::ConvertfromObject($value.column)
                 break
             }
             "column_list"
             {
-                $block =  [column_list]::ConvertfromObject($value.column_list)
+                $block = [column_list]::ConvertfromObject($value.column_list)
                 break
             }
             "divider"
             {
-                $block =  [Divider]::ConvertfromObject($value.divider)
+                $block = [Divider]::ConvertfromObject($value.divider)
                 break
             }
             "embed"
             {
-                $block =  [Embed]::ConvertfromObject($value.embed)
+                $block = [Embed]::ConvertfromObject($value.embed)
                 break
             }
             "equation"
             {
-                $block =  [equation]::ConvertfromObject($value.equation)
+                $block = [equation]::ConvertfromObject($value.equation)
                 break
             }
             "file"
             {
-                $block =  [notion_file]::ConvertfromObject($value.file)
+                $block = [notion_file]::ConvertfromObject($value.file)
                 break
             }
             "heading_1"
             {
-                $block =  [heading]::ConvertfromObject($value)
+                $block = [heading]::ConvertfromObject($value)
                 break
             }
             "heading_2"
             {
-                $block =  [heading]::ConvertfromObject($value)
+                $block = [heading]::ConvertfromObject($value)
                 break
             }
             "heading_3"
             {
-                $block =  [heading]::ConvertfromObject($value)
+                $block = [heading]::ConvertfromObject($value)
                 break
             }
             "image"
             {
-                $block =  [Image]::ConvertfromObject($value.image)
+                $block = [Image]::ConvertfromObject($value.image)
                 break
             }
             "link_preview"
             {
-                $block =  [link_preview]::ConvertfromObject($value.link_preview)
+                $block = [link_preview]::ConvertfromObject($value.link_preview)
                 break
             }
             #Mention ??
@@ -177,32 +177,32 @@ class Block
 
             "numbered_list_item"
             {
-                $block =  [numbered_list_item]::ConvertfromObject($value.numbered_list_item)
+                $block = [numbered_list_item]::ConvertfromObject($value.numbered_list_item)
                 break
             }
             "paragraph"
             {
-                $block =  [paragraph]::ConvertfromObject($value.paragraph)
+                $block = [paragraph]::ConvertfromObject($value.paragraph)
                 break
             }
             "pdf"
             {
-                $block =  [PDF]::ConvertfromObject($value.pdf)
+                $block = [PDF]::ConvertfromObject($value.pdf)
                 break
             }
             "quote"
             {
-                $block =  [quote]::ConvertfromObject($value.quote)
+                $block = [quote]::ConvertfromObject($value.quote)
                 break
             }
             "synced_block"
             {
-                $block =  [synced_block]::ConvertfromObject($value.synced_block)
+                $block = [synced_block]::ConvertfromObject($value.synced_block)
                 break
             }
             "table"
             {
-                $block =  [table]::ConvertfromObject($value.table) 
+                $block = [table]::ConvertfromObject($value.table) 
                 break
             }
             # "table_row"
@@ -212,21 +212,22 @@ class Block
             # }
             "table_of_contents"
             {
-                $block =  [table_of_contents]::ConvertfromObject($value.table_of_contents)
+                $block = [table_of_contents]::ConvertfromObject($value.table_of_contents)
                 break
             }
-            "template" {
+            "template"
+            {
                 Write-Error "Block type $($Value.type) is not supported anymore since 27.03.2023" -Category NotImplemented
                 break
             }
             "to_do"
             {
-                $block =  [to_do]::ConvertfromObject($value.to_do)
+                $block = [to_do]::ConvertfromObject($value.to_do)
                 break
             }
             "toggle"
             {
-                $block =  [toggle]::ConvertfromObject($value.toggle)
+                $block = [toggle]::ConvertfromObject($value.toggle)
                 break
             }
             # "unsupported"
@@ -236,22 +237,26 @@ class Block
             # }
             "video"
             {
-                $block =  [video]::ConvertfromObject($value.video)
+                $block = [video]::ConvertfromObject($value.video)
                 break
             }
             Default
             {
                 $type = $null
-                if([System.Enum]::TryParse([blocktype], $Value.type, [ref]$type)){
+                if ([System.Enum]::TryParse([blocktype], $Value.type, [ref]$type))
+                {
                     Write-Error "Block type $($Value.type) not implemented yet" -Category NotImplemented -RecommendedAction "Please create a Github issue to request this feature"
                 }
-                else{
+                else
+                {
                     Write-Error "Unknown block type: $($Value.type)" -Category InvalidData -TargetObject $Value -RecommendedAction "Please provide a valid block type"
                 }
             }
         
         }
         $Block.id = $Value.id
+        #TODO: real parent object
+        $Block.parent = [parent]::ConvertFromObject($Value.parent)
         $Block.created_time = $Value.created_time
         $Block.created_by = [user]::ConvertFromObject($Value.created_by)
         $Block.last_edited_time = $Value.last_edited_time

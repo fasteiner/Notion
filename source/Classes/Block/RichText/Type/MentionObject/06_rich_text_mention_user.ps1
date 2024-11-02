@@ -21,7 +21,7 @@ class rich_text_mention_user : rich_text_mention_base
     static [rich_text_mention_user] ConvertFromObject($value)
     {
         $rich_text_mention_user = [rich_text_mention_user]::new()
-        $rich_text_mention_user.user = [user]::ConvertFromObject($value.user)
+        $rich_text_mention_user.user = [user]::ConvertFromObject($value)
         return $rich_text_mention_user
     }
 }

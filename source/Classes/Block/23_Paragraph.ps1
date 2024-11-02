@@ -1,7 +1,7 @@
 class Paragraph : Block
 # https://developers.notion.com/reference/block#paragraph
 {
-    #[blocktype] $type = "paragraph"
+    [blocktype] $type = "paragraph"
     [rich_text[]] $rich_text
     [notion_color] $color = "default"
 

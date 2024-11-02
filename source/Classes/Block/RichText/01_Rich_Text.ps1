@@ -18,7 +18,8 @@ class rich_text
         $this.type = [Enum]::Parse([rich_text_type], $type)
     }
 
-    rich_text([rich_text_type] $type){
+    rich_text([rich_text_type] $type)
+    {
         $this.type = $type
     }
 
@@ -47,21 +48,25 @@ class rich_text
     static [rich_text] ConvertFromObject($Value)
     {
         $rich_text = $null
-        switch($Value.type)
+        switch ($Value.type)
         {
-            "text" {
+            "text"
+            {
                 $rich_text = [rich_text_text]::ConvertFromObject($Value)
                 break
             }
-            "mention" {
+            "mention"
+            {
                 $rich_text = [rich_text_mention]::ConvertFromObject($Value)
                 break
             }
-            "equation" {
+            "equation"
+            {
                 $rich_text = [rich_text_equation]::ConvertFromObject($Value)
                 break
             }
-            default {
+            default
+            {
                 Write-Error "Unknown rich text type: $($Value.type)" -Category InvalidData -TargetObject $Value -RecommendedAction "Please provide a valid rich text type (text, mention or equation)"
             }
         }
