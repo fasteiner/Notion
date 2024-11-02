@@ -72,7 +72,7 @@ class Heading : Block
 
     [void] addRichText([string] $text)
     {
-        $this.rich_text += [rich_text]::new($text)
+        $this.rich_text += [rich_text_text]::new($text)
     }
 
     [string] ToJson([bool]$compress = $false)
@@ -90,7 +90,7 @@ class Heading : Block
     {
         $local:type = $Value.type
         $heading = [Heading]::new($level)
-        $heading.rich_text = [rich_text]::ConvertFromObject($Value."$local:type".rich_text)
+        $heading.rich_text = $Value."$local:type".rich_text.ForEach({[rich_text]::ConvertFromObject($_)})
         $heading.color = [Enum]::Parse([notion_color], $Value.$local:type.color)
         $heading.is_toggleable = $Value.$local:type.is_toggleable
         return $heading

@@ -13,7 +13,12 @@ class rich_text
     {
 
     }
-    richt_text([rich_text_type] $type){
+    rich_text([string] $type)
+    {
+        $this.type = [Enum]::Parse([rich_text_type], $type)
+    }
+
+    rich_text([rich_text_type] $type){
         $this.type = $type
     }
 

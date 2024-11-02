@@ -64,22 +64,22 @@ class rich_text_mention : rich_text{
         
         switch ($Value.type) {
             "database" { 
-                $rich_text.mention = [rich_text_mention_database]::ConvertFromObject($Value.database)
+                $rich_text.mention = [rich_text_mention_database]::ConvertFromObject($Value.mention.database)
              }
             "date" { 
-                $rich_text.mention = [rich_text_mention_date]::ConvertFromObject($Value.date)
+                $rich_text.mention = [rich_text_mention_date]::ConvertFromObject($Value.mention.date)
              }
             "link_preview" { 
-                $rich_text.mention = [rich_text_mention_link_preview]::ConvertFromObject($Value.link_preview)
+                $rich_text.mention = [rich_text_mention_link_preview]::ConvertFromObject($Value.mention.link_preview)
              }
             "page" { 
-                $rich_text.mention = [rich_text_mention_page]::ConvertFromObject($Value.page)
+                $rich_text.mention = [rich_text_mention_page]::ConvertFromObject($Value.mention.page)
              }
             "template_mention" { 
-                $rich_text.mention = [rich_text_mention_template_mention]::ConvertFromObject($Value.template_mention)
+                $rich_text.mention = [rich_text_mention_template_mention]::ConvertFromObject($Value.mention.template_mention)
              }
             "user" { 
-                $rich_text.mention = [rich_text_mention_template_mention]::ConvertFromObject($Value.user)
+                $rich_text.mention = [rich_text_mention_user]::ConvertFromObject($Value.mention.user)
              }
             Default {}
         }

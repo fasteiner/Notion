@@ -8,13 +8,13 @@ class Heading1 : Heading
 
     # Generates a heading1 block with content
     # [Heading1]::new("Hallo")
-    Heading1([string] $content) : base(1, $content)
+    Heading1([string] $text) : base(1, [string]$text)
     {
     }
 
     # Generates a heading1 block with content and toggleable option
     # [Heading1]::new("Hallo", $true)
-    Heading1([string] $content, [bool] $is_toggleable) : base(1, $content, $is_toggleable)
+    Heading1([string] $text, [bool] $is_toggleable) : base(1, $text, $is_toggleable)
     {
     }
 

@@ -9,7 +9,7 @@ class Toggle : Block
     static [Toggle] ConvertFromObject($Value)
     {
         $toggle = [Toggle]::new()
-        $toggle.rich_text = [rich_text]::ConvertFromObject($Value.rich_text)
+        $toggle.rich_text = $Value.rich_text.ForEach({[rich_text]::ConvertFromObject($_)})
         $toggle.color = [Enum]::Parse([notion_color], $Value.color)
         return $toggle
     }

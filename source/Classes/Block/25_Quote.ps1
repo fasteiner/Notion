@@ -9,7 +9,7 @@ class Quote : Block
     static [Quote] ConvertFromObject($Value)
     {
         $quote = [quote]::new()
-        $quote.rich_text = [rich_text]::ConvertFromObject($Value.rich_text)
+        $quote.rich_text = $Value.rich_text.ForEach({[rich_text]::ConvertFromObject($_)})
         $quote.color = $Value.color
         return $quote
     }

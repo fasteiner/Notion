@@ -14,7 +14,7 @@ class Paragraph : Block
     static [Paragraph] ConvertFromObject($Value)
     {
         $Paragraph = [Paragraph]::new()
-        $Paragraph.rich_text = [rich_text]::ConvertFromObject($Value.rich_text)
+        $Paragraph.rich_text = $Value.rich_text.ForEach({[rich_text]::ConvertFromObject($_)})
         return $Paragraph
     }
 }

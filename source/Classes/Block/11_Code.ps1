@@ -48,12 +48,12 @@ class Code : Block
     static [Code] ConvertFromObject($Value)
     {
         $Code = [Code]::new()
-        $Code.caption = [rich_text]::ConvertFromObject($Value.code.caption)
-        $Code.rich_text = [rich_text]::ConvertFromObject($Value.code.rich_text)
-        if (-not [Code]::IsValidLanguage($Value.code.language)) {
-            throw "Invalid language: $($Value.code.language)"
+        $Code.caption = $Value.caption.ForEach({[rich_text]::ConvertFromObject($_)})
+        $Code.rich_text = $Value.rich_text.ForEach({[rich_text]::ConvertFromObject($_)})
+        if (-not [Code]::IsValidLanguage($Value.language)) {
+            throw "Invalid language: $($Value.language)"
         }
-        $Code.language = $Value.code.language
+        $Code.language = $Value.language
         return $Code
     }
 

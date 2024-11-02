@@ -33,7 +33,7 @@ class comment
         $comment.last_edited_time = Get-Date -Format "yyyy-MM-ddTHH:mm:ss.fffZ" $Value.last_edited_time
         $comment.created_by = $Value.created_by
         #TODO: Convert rich_text to class [rich_text]::new()
-        $comment.rich_text = [rich_text]::new($Value.rich_text)
+        $comment.rich_text = $Value.rich_text.ForEach({[rich_text]::ConvertFromObject($_)})
         return $comment
     }
 }
