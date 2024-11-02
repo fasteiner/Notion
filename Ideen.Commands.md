@@ -42,6 +42,11 @@ Set-/Update-TSNotionDatabaseContent
 Import-TSNotionDatabaseContent                  # imports an array of objects into the given database
 ```
 
+## Search- commands
+``` PowerShell
+Search-TSNotion [-Page|-Database] -Query        # Searches pages or databases for the query string
+```
+
 ### Classes
 
 ``` PowerShell

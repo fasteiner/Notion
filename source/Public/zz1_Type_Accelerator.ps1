@@ -18,7 +18,8 @@ $ExportableTypes = @(
     [bot_owner_type]
     [notion_color]
     [icontype]
-    [rich_type_mention_type]
+    [rich_text_mention_type]
+    [template_mention_date]
     # classes
     [annotation]
     [Block]

@@ -75,6 +75,17 @@ class Heading : Block
         $this.rich_text += [rich_text]::new($text)
     }
 
+    [string] ToJson([bool]$compress = $false)
+    {
+        $json = @{
+            type = $this.type
+            rich_text = $this.rich_text.ToJson()
+            color = $this.color
+            is_toggleable = $this.is_toggleable
+        }
+        return $json | ConvertTo-Json -Compress:$compress -EnumsAsStrings
+    }
+
     static [Heading] ConvertFromObject($Value, $level)
     {
         $local:type = $Value.type

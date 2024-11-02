@@ -36,14 +36,28 @@ class annotation : rich_text
         $this.color = $color
     }
 
-    #BUG: color is not working
-    #([notion_color].GetEnumNames()) {
-    #            {"blue" -or "blue_background" -or "brown" -or "brown_background" -or "default" -or "gray" -or "gray_background" -or "green" -or "green_background" -or "orange" -or "orange_background" -or "yellow" -or "pink" -or "pink_background" -or "purple" -or "purple_background" -or "red" -or "red_background" -or "yellow_background"} {
-    #                $this.color = [notion_color]$_
-    #            }
+    [string] ToJson([bool]$compress = $false)
+    {
+        $json = @{
+            bold = $this.bold
+            italic = $this.italic
+            strikethrough = $this.strikethrough
+            underline = $this.underline
+            code = $this.code
+            color = $this.color.ToString()
+        }
+        return $json | ConvertTo-Json -Compress:$compress -EnumsAsStrings
+    }
 
     static [annotation] ConvertFromObject($Value)
     {
-        return [annotation]::new($Value)
+        $annotation = [annotation]::new()
+        $annotation.bold = $Value.bold
+        $annotation.italic = $Value.italic
+        $annotation.strikethrough = $Value.strikethrough
+        $annotation.underline = $Value.underline
+        $annotation.code = $Value.code
+        $annotation.color = [Enum]::Parse([notion_color], $Value.color)
+        return $annotation
     }
 }
