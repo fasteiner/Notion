@@ -1,20 +1,39 @@
-class Embed : Block
-# https://developers.notion.com/reference/block#embed
+class embed_structure
 {
-    [blocktype] $type = "embed"
     [string] $url = $null
-
-    embed(){
+    
+    embed_structure()
+    {
 
     }
-    embed([string] $url){
+    embed_structure([string] $url)
+    {
         $this.url = $url
     }
     
-    static [Embed] ConvertFromObject($Value)
+    static [embed_structure] ConvertFromObject($Value)
     {
-        $Embed = [Embed]::new()
-        $Embed.url = $Value.url
-        return $Embed
+        $embed_structure = [embed]::new()
+        $embed_structure.url = $Value.url
+        return $embed_structure
+    }
+}
+class embed : Block
+# https://developers.notion.com/reference/block#embed
+{
+    [blocktype] $type = "embed"
+    [embed_structure] $embed
+
+    embed(){
+        $this.embed = [embed_structure]::new()
+    }
+    embed([string] $url){
+        $this.embed = [embed_structure]::new($url)
+    }
+    
+    static [embed] ConvertFromObject($Value)
+    {
+        $embedObj = [embed_structure]::ConvertFromObject($Value.embed)
+        return $embedObj
     }
 }

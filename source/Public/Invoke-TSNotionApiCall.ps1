@@ -64,7 +64,7 @@ function Invoke-TSNotionApiCall
         $fileName,
         [Parameter(HelpMessage = "The number of items from the full list desired in the response. Maximum: 100")]
         [ValidateRange(1, 100)]
-        [int]$pageSize = 100,
+        [int]$pageSize,
         [Parameter(HelpMessage = "The number of items returned from the first page in the response")]
         $first
     )
@@ -84,8 +84,9 @@ function Invoke-TSNotionApiCall
             throw $ErrorRecord
         }
         $APIKey ??= $Global:TSNotionAPIKey
-        $queryParameters = @{
-            "page_size" = $pageSize
+        $queryParameters = @{}
+        if ($PSBoundParameters.ContainsKey("pageSize") -and $pageSize -gt 0) {
+            $queryParameters["page_size"] = $pageSize
         }
         if ($uri -notlike "$global:TSNotionApiUri*")
         {
@@ -138,7 +139,7 @@ function Invoke-TSNotionApiCall
                     if ($filteredEndpoint )
                     {
                         Write-Debug "Paging: Endpoint: $endpoint supports paging using page_size $first"
-                        if (-not $queryParameters.page_size)
+                        if (-not $queryParameters.page_size -and $first -gt 0)
                         {
                             $queryParameters.Add("page_size", $first)
                         }

@@ -1,4 +1,4 @@
-class user
+class user : System.IComparable, System.IEquatable[object]
 {
     # https://developers.notion.com/reference/user
     [string]$object = "user"
@@ -22,6 +22,36 @@ class user
     user([string]$id)
     {
         $this.id = $id
+    }
+
+    [int] CompareTo([object]$other)
+    {
+        if ($null -eq $other)
+        {
+            return 1
+        }
+        if ($other -isnot [user])
+        {
+            throw [System.ArgumentException]::new("The argument must be a user object.")
+        }
+        # Compare this instance with other based on id, name, type and avatar_url
+        if ($this.id -eq $other.id -and $this.name -eq $other.name -and $this.type -eq $other.type -and $this.avatar_url -eq $other.avatar_url)
+        {
+            return 0
+        }
+        else
+        {
+            return -1
+        }
+    }
+    [bool] Equals([object]$other)
+    {
+        # Check if the other object is a user and if it is equal to this instance
+        if ($other -is [user])
+        {
+            return $this.CompareTo($other) -eq 0
+        }
+        return $false
     }
 
     static [user] ConvertFromObject($Value)

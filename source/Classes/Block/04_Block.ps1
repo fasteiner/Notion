@@ -10,15 +10,18 @@ class Block
     [user]$created_by
     [string]$last_edited_time
     [user]$last_edited_by
-    [bool]$archived
-    [bool]$in_trash
-    $has_children = $false
+    [bool]$archived = $false
+    [bool]$in_trash = $false
+    [bool]$has_children = $false
 
     
     Block()
     {
         #$this.id = [guid]::NewGuid().ToString()
+        $this.last_edited_time = [datetime]::Now.ToString("yyyy-MM-ddTHH:mm:ssZ")
+        $this.created_time = $this.last_edited_time
     }
+
     # Block with array of children
     # [block]::new(@($block1,$block2))
     Block([array] $children)
@@ -82,63 +85,62 @@ class Block
         {
             "bookmark"
             {
-                $block = [bookmark]::ConvertfromObject($value.bookmark)
+                $block = [bookmark]::ConvertfromObject($value)
                 break
             }
             "breadcrumb"
             {
-                $block = [breadcrumb]::ConvertfromObject($value.breadcrumb)
+                $block = [breadcrumb]::ConvertfromObject($value)
                 break
             }
             "bulleted_list_item"
             {
-                $block = [bulleted_list_item]::ConvertfromObject($value.bulleted_list_item)
+                $block = [bulleted_list_item]::ConvertfromObject($value)
                 break
             }
             "callout"
             {
-                $block = [Callout]::ConvertfromObject($value.callout)
+                $block = [Callout]::ConvertfromObject($value)
                 break
             }
             "child_database"
             {
-                $block = [child_database]::ConvertfromObject($value.child_database)
+                $block = [child_database]::ConvertfromObject($value)
                 break
             }
             "child_page"
             {
-                $block = [child_page]::ConvertfromObject($value.child_page)
+                $block = [child_page]::ConvertfromObject($value)
                 break
             }
             "code"
             {
-                #$block = [Code]::ConvertfromObject($value.code)
-                $Block | Add-Member -MemberType NoteProperty -Name "code" -Value ([Code]::ConvertfromObject($value.code))
+                $block = [Code]::ConvertfromObject($value)
                 break
             }
             "column"
             {
-                $block = [column]::ConvertfromObject($value.column)
+                $block = [column]::ConvertfromObject($value)
                 break
             }
             "column_list"
             {
-                $block = [column_list]::ConvertfromObject($value.column_list)
+                $block = [column_list]::ConvertfromObject($value)
                 break
             }
             "divider"
             {
-                $block = [Divider]::ConvertfromObject($value.divider)
+                $block = [Divider]::ConvertfromObject($value)
                 break
             }
             "embed"
             {
-                $block = [Embed]::ConvertfromObject($value.embed)
+                $block = [Embed]::ConvertfromObject($value)
                 break
             }
             "equation"
             {
-                $block = [equation]::ConvertfromObject($value.equation)
+                $block = [equation]::ConvertfromObject($value)
                 break
             }
             "file"

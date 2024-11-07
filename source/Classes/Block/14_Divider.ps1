@@ -1,21 +1,14 @@
-class Divider : Block
+class divider : Block
 # https://developers.notion.com/reference/block#divider
 {
     [blocktype] $type = "divider"
-    [string] $url = $null
+    [object] $divider = @{}
 
     divider(){
-
-    }
-
-    divider([string] $url){
-        $this.url = $url
     }
     
-    static [Divider] ConvertFromObject($Value)
+    static [divider] ConvertFromObject($Value)
     {
-        $Divider = [Divider]::new()
-        $Divider.url = $Value.url
-        return $Divider
+        return [divider]::new()
     }
 }

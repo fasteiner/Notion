@@ -4,6 +4,11 @@ class emoji
     [icontype]$type = "emoji"
     [string]$emoji
 
+    emoji()
+    {
+        $this.emoji = $null
+    }
+
     emoji($emoji)
     {
         # if ($emoji.Length -ne 1)

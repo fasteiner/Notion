@@ -13,7 +13,7 @@ class people
     # static [people] ConvertFromObject($Value)
     # {
     #     $people.person = [user]::new($value)
-    #     $people.person.email = $Value.??
+    #     $people.person.email = $Value.email
     #     return $people
     # }
 }

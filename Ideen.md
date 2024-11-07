@@ -119,3 +119,6 @@ Anwesend        : @{id=ch%3Di; type=checkbox; checkbox=True}
 E-Mail          : @{id=dBvC; type=email; email=hansi.huber@gmail.com}
 Bezahlstatus    : @{id=lqUd; type=select; select=}
 Vorname         : @{id=title; type=title; title=System.Object[]}
+# Tests
+
+## Test Connect-TSNotion with BearerToken, notionUri, and ApiKey

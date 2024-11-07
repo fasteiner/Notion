@@ -47,6 +47,7 @@ $ExportableTypes = @(
     [Heading2]
     [Heading3]
     [Image]
+    [link_preview]
     [notion_file]
     [notion_hosted_file]
     [numbered_list_item]

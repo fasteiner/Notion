@@ -9,7 +9,7 @@ function Get-TSNotionUser
         to the Notion API's `/v1/users/{user_id}` endpoint, utilizing the `Invoke-TSNotionApiCall` function.
     
     .PARAMETER UserId
-        The unique identifier of the Notion user. This is a required parameter.
+        The unique identifier of the Notion user. Possible values: '`$null' (list all users) or 'me' (the API User) or a user ID.
     
     .EXAMPLE
         $userId = "12345-67890-abcd-efgh"
@@ -26,8 +26,9 @@ function Get-TSNotionUser
     #>
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false, HelpMessage = "Possible values: '`$null' or 'me' or a user ID.")]
         [Alias("Id")]
+        [ValidatePattern("^(me|[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})?$")]
         [string]$UserId
     )
 
@@ -40,7 +41,7 @@ function Get-TSNotionUser
         $response = Invoke-TSNotionApiCall -uri $url -method "GET"
 
         # Return the response to the caller
-        return $response
+        return $response.foreach({[user]::ConvertFromObject($_)})
     }
     catch
     {
