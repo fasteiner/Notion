@@ -1,4 +1,4 @@
-class table_of_contents : Block
+class table_of_contents : block
 # https://developers.notion.com/reference/block#table-of-contents
 {
     [blocktype] $type = "table_of_contents"

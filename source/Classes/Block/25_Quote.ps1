@@ -1,4 +1,4 @@
-class Quote : Block
+class Quote : block
 # https://developers.notion.com/reference/block#quote
 {
     [blocktype] $type = "quote"

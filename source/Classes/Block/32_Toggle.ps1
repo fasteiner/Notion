@@ -1,4 +1,4 @@
-class Toggle : Block
+class Toggle : block
 # https://developers.notion.com/reference/block#toggle-blocks
 {
     [blocktype] $type = "toggle"

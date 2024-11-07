@@ -155,17 +155,17 @@ function ConvertTo-TSNotionObject
                         }
                         "heading_1"
                         {
-                            "Heading1" | Add-TSNotionLogToFile -Level INFO 
+                            "heading_1" | Add-TSNotionLogToFile -Level INFO 
                             break
                         }
                         "heading_2"
                         {
-                            "Heading2" | Add-TSNotionLogToFile -Level INFO 
+                            "heading_2" | Add-TSNotionLogToFile -Level INFO 
                             break
                         }
                         "heading_3"
                         {
-                            "Heading3" | Add-TSNotionLogToFile -Level INFO 
+                            "heading_3" | Add-TSNotionLogToFile -Level INFO 
                             break
                         }
                         "image"

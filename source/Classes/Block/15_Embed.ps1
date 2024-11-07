@@ -18,7 +18,7 @@ class embed_structure
         return $embed_structure
     }
 }
-class embed : Block
+class embed : block
 # https://developers.notion.com/reference/block#embed
 {
     [blocktype] $type = "embed"

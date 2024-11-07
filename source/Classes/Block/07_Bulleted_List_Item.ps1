@@ -31,7 +31,7 @@ class bulleted_list_item_structure
 }
 
 
-class bulleted_list_item : Block
+class bulleted_list_item : block
 # https://developers.notion.com/reference/block#bulleted-list-item
 {
     [blocktype] $type = "bulleted_list_item"

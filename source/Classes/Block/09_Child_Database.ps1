@@ -18,7 +18,7 @@ class child_database_structure
         return $child_database_structure
     }
 }
-class child_database : Block
+class child_database : block
 # https://developers.notion.com/reference/block#child-database
 {
     [blocktype] $type = "child_database"

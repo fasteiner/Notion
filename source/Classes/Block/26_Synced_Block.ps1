@@ -1,4 +1,4 @@
-class synced_block : Block
+class synced_block : block
 # https://developers.notion.com/reference/block#synced-block
 {
     [blocktype] $type = "synced_block"

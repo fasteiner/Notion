@@ -1,4 +1,4 @@
-class Paragraph : Block
+class Paragraph : block
 # https://developers.notion.com/reference/block#paragraph
 {
     [blocktype] $type = "paragraph"

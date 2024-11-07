@@ -1,4 +1,4 @@
-class column : Block
+class column : block
 # https://developers.notion.com/reference/block#column
 {
     [blocktype] $type = "column"

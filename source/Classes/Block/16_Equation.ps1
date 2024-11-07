@@ -16,7 +16,7 @@ class equation_structure
         return $equation_structure
     }
 }
-class equation : Block
+class equation : block
 # https://developers.notion.com/reference/block#equation
 {
     [blocktype] $type = "equation"

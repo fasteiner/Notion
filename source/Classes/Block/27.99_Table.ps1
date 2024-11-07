@@ -1,4 +1,4 @@
-class Table : Block
+class Table : block
 # https://developers.notion.com/reference/block#table
 {
     $type = "table"

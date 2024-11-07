@@ -1,4 +1,4 @@
-class numbered_list_item : Block
+class numbered_list_item : block
 # https://developers.notion.com/reference/block#numbered-list-item
 {
     [blocktype] $type = "numbered_list_item"

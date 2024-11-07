@@ -19,7 +19,7 @@ class child_page_structure
         return $child_page_structure
     }
 }
-class child_page : Block
+class child_page : block
 # https://developers.notion.com/reference/block#child-page
 {
     [blocktype] $type = "child_page"

@@ -25,7 +25,7 @@ class bookmark_structure
 }
 
 
-class bookmark : Block
+class bookmark : block
 # https://developers.notion.com/reference/block#bookmark
 {
     [blocktype] $type = "bookmark"

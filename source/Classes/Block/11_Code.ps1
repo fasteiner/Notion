@@ -74,7 +74,7 @@ class code_structure
         return $code_structure
     }
 }
-class code : Block
+class code : block
 # https://developers.notion.com/reference/block#code
 {
     [blocktype] $type = "code"

@@ -1,4 +1,4 @@
-class Block
+class block
 # https://developers.notion.com/reference/block
 {
     $object = "block"
@@ -15,16 +15,16 @@ class Block
     [bool]$has_children = $false
 
     
-    Block()
+    block()
     {
         #$this.id = [guid]::NewGuid().ToString()
         $this.last_edited_time = [datetime]::Now.ToString("yyyy-MM-ddTHH:mm:ssZ")
         $this.created_time = $this.last_edited_time
     }
 
-    # Block with array of children
+    # block with array of children
     # [block]::new(@($block1,$block2))
-    Block([array] $children)
+    block([array] $children)
     {
         #$this.id = [guid]::NewGuid().ToString()
         $this.children = $children
@@ -33,9 +33,9 @@ class Block
             $this.has_children = $true
         }
     }
-    # Block with array of children and parent id
+    # block with array of children and parent id
     # [block]::new(@($block1,$block2), $parent)
-    Block([array] $children, [string] $parent)
+    block([array] $children, [string] $parent)
     {
         #$this.id = [guid]::NewGuid().ToString()
         $this.children = $children
@@ -76,10 +76,9 @@ class Block
         }
     }
 
-    static [Block] ConvertFromObject($Value)
+    static [block] ConvertFromObject($Value)
     {
-        #$Block = $null
-        $Block = [Block]::new()
+        $block = $null
         switch ($Value.type)
         # https://developers.notion.com/reference/block#block-type-objects
         {
@@ -221,7 +220,7 @@ class Block
             }
             "template"
             {
-                Write-Error "Block type $($Value.type) is not supported anymore since 27.03.2023" -Category NotImplemented
+                Write-Error "block type $($Value.type) is not supported anymore since 27.03.2023" -Category NotImplemented
                 break
             }
             "to_do"
@@ -249,7 +248,7 @@ class Block
                 $type = $null
                 if ([System.Enum]::TryParse([blocktype], $Value.type, [ref]$type))
                 {
-                    Write-Error "Block type $($Value.type) not implemented yet" -Category NotImplemented -RecommendedAction "Please create a Github issue to request this feature"
+                    Write-Error "block type $($Value.type) not implemented yet" -Category NotImplemented -RecommendedAction "Please create a Github issue to request this feature"
                 }
                 else
                 {
@@ -258,16 +257,16 @@ class Block
             }
         
         }
-        $Block.id = $Value.id
+        $block.id = $Value.id
         #TODO: real parent object
-        $Block.parent = [parent]::ConvertFromObject($Value.parent)
-        $Block.created_time = $Value.created_time
-        $Block.created_by = [user]::ConvertFromObject($Value.created_by)
-        $Block.last_edited_time = $Value.last_edited_time
-        $Block.last_edited_by = [user]::ConvertFromObject($Value.last_edited_by)
-        $Block.archived = $Value.archived
-        $Block.in_trash = $Value.in_trash
-        $Block.has_children = $Value.has_children
-        return $Block
+        $block.parent = [parent]::ConvertFromObject($Value.parent)
+        $block.created_time = $Value.created_time
+        $block.created_by = [user]::ConvertFromObject($Value.created_by)
+        $block.last_edited_time = $Value.last_edited_time
+        $block.last_edited_by = [user]::ConvertFromObject($Value.last_edited_by)
+        $block.archived = $Value.archived
+        $block.in_trash = $Value.in_trash
+        $block.has_children = $Value.has_children
+        return $block
     }
 }

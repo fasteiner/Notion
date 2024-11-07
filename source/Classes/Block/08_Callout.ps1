@@ -57,7 +57,7 @@ class callout_structure
         return $callout_structure
     }
 }
-class callout : Block
+class callout : block
 # https://developers.notion.com/reference/block#callout
 {
     [blocktype] $type = "callout"

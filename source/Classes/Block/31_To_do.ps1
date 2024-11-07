@@ -1,4 +1,4 @@
-class To_do : Block
+class To_do : block
 # https://developers.notion.com/reference/block#to-do
 {
     [blocktype] $type = "to_do"

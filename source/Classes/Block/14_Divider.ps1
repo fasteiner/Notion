@@ -1,4 +1,4 @@
-class divider : Block
+class divider : block
 # https://developers.notion.com/reference/block#divider
 {
     [blocktype] $type = "divider"
