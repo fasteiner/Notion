@@ -78,7 +78,7 @@ class Table : Block
         {
             $this.rows += [TableRow]::new($cells)
         }
-        write-host "Rows :$($this.rows.count)"
+        Write-Host "Rows :$($this.rows.count)"
     }
 
     #Table with rowarray
@@ -132,7 +132,8 @@ class Table : Block
     # Aus ShopWare kommt ein Array of CustomObjects
     static [table] ConvertFromObject($Value)
     {
-        $table = [Table]::new()
+        $table = [table]::new()
+        $table.has_children = $Value.has_children
         $table.table_width = $Value.table.table_width
         $table.has_column_header = $Value.table.has_column_header
         $table.has_row_header = $Value.table.has_row_header

@@ -75,7 +75,8 @@ class Block
 
     static [Block] ConvertFromObject($Value)
     {
-        $Block = $null
+        #$Block = $null
+        $Block = [Block]::new()
         switch ($Value.type)
         # https://developers.notion.com/reference/block#block-type-objects
         {
@@ -111,7 +112,8 @@ class Block
             }
             "code"
             {
-                $block = [Code]::ConvertfromObject($value.code)
+                #$block = [Code]::ConvertfromObject($value.code)
+                $Block | Add-Member -MemberType NoteProperty -Name "code" -Value ([Code]::ConvertfromObject($value.code))
                 break
             }
             "column"
