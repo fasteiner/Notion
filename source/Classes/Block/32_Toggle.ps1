@@ -1,16 +1,34 @@
+class Toggle_structure
+{
+    [rich_text[]] $rich_text
+    [notion_color] $color = "default"
+    [block[]] $children = @()
+    #TODO: Implement addchildren
+
+    Toggle_structure([rich_text[]] $rich_text, [notion_color] $color = "default")
+    {
+        $this.rich_text = @($rich_text)
+        $this.color = $color
+    }
+
+    static [Toggle_structure] ConvertFromObject($Value)
+    {
+        return [Toggle_structure]::new($Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) }), $Value.color)
+    }
+}
 class Toggle : block
 # https://developers.notion.com/reference/block#toggle-blocks
 {
     [blocktype] $type = "toggle"
-    [rich_text[]] $rich_text
-    [notion_color] $color = "default"
+    [Toggle_structure] $toggle
 
+    Toggle([rich_text[]] $rich_text, [notion_color] $color = "default")
+    {
+        $this.toggle = [Toggle_structure]::new($rich_text, $color)
+    }
 
     static [Toggle] ConvertFromObject($Value)
     {
-        $toggle = [Toggle]::new()
-        $toggle.rich_text = $Value.rich_text.ForEach({[rich_text]::ConvertFromObject($_)})
-        $toggle.color = [Enum]::Parse([notion_color], $Value.color)
-        return $toggle
+        return [Toggle_structure]::ConvertFromObject($Value.toggle)
     }
 }  
