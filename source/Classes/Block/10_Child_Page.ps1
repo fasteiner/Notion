@@ -26,16 +26,20 @@ class child_page : block
     [child_page_structure] $child_page
 
 
-    child_page(){
+    child_page()
+    {
         $this.child_page = [child_page_structure]::new()
     }
 
-    child_page([string] $title){
+    child_page([string] $title)
+    {
         $this.child_page = [child_page_structure]::new($title)
     }
 
     static [child_page] ConvertFromObject($Value)
     {
-        return [child_page_structure]::ConvertFromObject($Value.child_page)
+        $child_page_Obj = [child_page]::new()
+        $child_page_Obj.child_page = [child_page_structure]::new($Value.child_page)
+        return $child_page_Obj
     }
 }

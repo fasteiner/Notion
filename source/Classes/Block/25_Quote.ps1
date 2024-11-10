@@ -33,6 +33,8 @@ class Quote : block
 
     static [Quote] ConvertFromObject($Value)
     {
-        return [Quote_structure]::ConvertFromObject($Value.quote)
+        $Quote_Obj = [Quote]::new()
+        $Quote_Obj.quote = [Quote_structure]::ConvertFromObject($Value.quote)
+        return $Quote_Obj
     }
 }

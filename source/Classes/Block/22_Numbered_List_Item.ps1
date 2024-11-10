@@ -32,7 +32,7 @@ class numbered_list_item : block
 # https://developers.notion.com/reference/block#numbered-list-item
 {
     [blocktype] $type = "numbered_list_item"
-    [numbered_list_item_structure] $numbered_list_item_structure
+    [numbered_list_item_structure] $numbered_list_item
 
     numbered_list_item()
     {
@@ -40,11 +40,13 @@ class numbered_list_item : block
 
     numbered_list_item([rich_text[]] $rich_text)
     {
-        $this.numbered_list_item_structure = [numbered_list_item_structure]::new($rich_text)
+        $this.numbered_list_item = [numbered_list_item_structure]::new($rich_text)
     }
 
     static [numbered_list_item] ConvertFromObject($Value)
     {
-        return [numbered_list_item]::ConvertFromObject($Value.numbered_list_item_structure)
+        $numbered_list_item_Obj = [numbered_list_item]::new()
+        $numbered_list_item_Obj.numbered_list_item = [numbered_list_item_structure]::ConvertFromObject($Value.numbered_list_item)
+        return $numbered_list_item_Obj
     }
 }

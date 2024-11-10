@@ -4,12 +4,14 @@ class column : block
     [blocktype] $type = "column"
     [object] $column = @{}
     
-    column() { }
+    column()
+    { 
+    }
 
     static [Column] ConvertFromObject($Value)
     {
-        $ColumnObj = [Column]::new()
-        $ColumnObj.column = $Value.column
-        return $ColumnObj
+        $Column_Obj = [Column]::new()
+        $Column_Obj.column = $Value.column
+        return $Column_Obj
     }
 }

@@ -24,16 +24,19 @@ class embed : block
     [blocktype] $type = "embed"
     [embed_structure] $embed
 
-    embed(){
+    embed()
+    {
         $this.embed = [embed_structure]::new()
     }
-    embed([string] $url){
+    embed([string] $url)
+    {
         $this.embed = [embed_structure]::new($url)
     }
     
     static [embed] ConvertFromObject($Value)
     {
-        $embedObj = [embed_structure]::ConvertFromObject($Value.embed)
-        return $embedObj
+        $embed_Obj = [embed]::new()
+        $embed_Obj.embed = [embed_structure]::ConvertFromObject($Value.embed)
+        return $embed_Obj
     }
 }

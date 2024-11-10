@@ -31,6 +31,8 @@ class synced_block : block
 
     static [synced_block] ConvertFromObject($Value)
     {
-        return [Synced_Block_structure]::ConvertFromObject($Value.synced_block)
+        $synced_block_Obj = [synced_block]::new()
+        $synced_block_Obj.synced_block = [Synced_Block_structure]::ConvertFromObject($Value.synced_block)
+        return $synced_block_Obj
     }
 }

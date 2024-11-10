@@ -49,6 +49,8 @@ class Video : notion_file
 
     static [Video] ConvertFromObject($Value)
     {
-        return [Video_structure]::ConvertFromObject($Value.video)
+        $Video_Obj = [Video]::new()
+        $Video_Obj.video = [Video_structure]::ConvertFromObject($Value.video)
+        return $Video_Obj
     }
 }

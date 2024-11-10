@@ -80,7 +80,8 @@ class code : block
     [blocktype] $type = "code"
     [code_structure] $code
 
-    code(){
+    code()
+    {
         $this.code = [code_structure]::new()
     }
 
@@ -94,12 +95,15 @@ class code : block
         $this.code = [code_structure]::new($text, $language, $color)
     }
 
-    [string] getLanguage() {
+    [string] getLanguage()
+    {
         return $this.code.getLanguage()
     }
     
-    setLanguage([string] $language) {
-        if (-not [code]::IsValidLanguage($language)) {
+    setLanguage([string] $language)
+    {
+        if (-not [code_structure]::IsValidLanguage($language))
+        {
             throw "Invalid language: $language"
         }
         $this.code.setLanguage($language)
@@ -107,8 +111,8 @@ class code : block
 
     static [code] ConvertFromObject($Value)
     {
-        $codeObj = [code]::new()
-        $codeObj.code = [code_structure]::ConvertFromObject($Value.code)
-        return $codeObj
+        $code_Obj = [code]::new()
+        $code_Obj.code = [code_structure]::ConvertFromObject($Value.code)
+        return $code_Obj
     }
 }

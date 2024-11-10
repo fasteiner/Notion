@@ -4,6 +4,7 @@ class Paragraph_structure
     [notion_color] $color = "default"
     [block[]] $children = @()
     #TODO: Implement addchildren
+    
 
     paragraph_structure()
     {
@@ -49,6 +50,8 @@ class Paragraph : block
 
     static [Paragraph] ConvertFromObject($Value)
     {
-        return [Paragraph_structure]::ConvertFromObject($Value.paragraph)
+        $Paragraph_Obj = [Paragraph]::new()
+        $Paragraph_Obj.paragraph = [Paragraph_structure]::ConvertFromObject($Value.paragraph)
+        return $Paragraph_Obj
     }
 }

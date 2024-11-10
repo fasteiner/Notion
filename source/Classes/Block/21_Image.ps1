@@ -27,6 +27,8 @@ class Image : notion_file
     
     static [Image] ConvertFromObject($Value)
     {
-        return [Image_structure]::new($Value.image)
+        $Imge_Obj = [Image]::new()
+        $Imge_Obj.image = [Image_structure]::ConvertFromObject($Value.image)
+        return $Imge_Obj
     }
 }

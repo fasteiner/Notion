@@ -4,6 +4,12 @@ class bookmark_structure
     [rich_text[]] $caption = @()
     [string] $url = $null
 
+    bookmark_structure([string] $url)
+    {
+        $this.url = $url
+    }
+    
+    
     bookmark_structure([object]$bookmark)
     {
         $this.caption = $bookmark.caption
@@ -32,10 +38,11 @@ class bookmark : block
     [bookmark_structure] $bookmark
     
 
-    bookmark()
+    bookmark([string]$url)
     {
+        $this.bookmark = [bookmark_structure]::new($url)
     }
-
+    
     bookmark([bookmark_structure]$bookmark)
     {
         $this.bookmark = [bookmark_structure]::new($bookmark)
@@ -54,8 +61,8 @@ class bookmark : block
 
     static [bookmark] ConvertFromObject($Value)
     {
-        $bookmarkObj = [bookmark]::new()
-        $bookmarkObj.bookmark = [bookmark_structure]::new($Value.bookmark)
-        return $bookmarkObj
+        $bookmark_Obj = [bookmark]::new()
+        $bookmark_Obj.bookmark = [bookmark_structure]::new($Value.bookmark)
+        return $bookmark_Obj
     }
 }

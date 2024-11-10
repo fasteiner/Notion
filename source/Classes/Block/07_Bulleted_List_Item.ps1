@@ -4,6 +4,10 @@ class bulleted_list_item_structure
     [notion_color] $color = "default"
     [block[]] $children = @()
 
+    bulleted_list_item_structure()
+    {
+    }
+    
     bulleted_list_item_structure([object] $bulleted_list_item)
     {
         $this.rich_text = $bulleted_list_item.rich_text
@@ -24,7 +28,7 @@ class bulleted_list_item_structure
     static [bulleted_list_item_structure] ConvertFromObject($Value)
     {
         $bulleted_list_item_structure_obj = [bulleted_list_item_structure]::new()
-        $bulleted_list_item_structure_obj.rich_text = $Value.rich_text.ForEach({[rich_text]::ConvertFromObject($_)})
+        $bulleted_list_item_structure_obj.rich_text = $Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
         $bulleted_list_item_structure_obj.color = [Enum]::Parse([notion_color], $Value.color)
         return $bulleted_list_item_structure_obj
     }
@@ -37,15 +41,18 @@ class bulleted_list_item : block
     [blocktype] $type = "bulleted_list_item"
     [bulleted_list_item_structure] $bulleted_list_item
 
-    bulleted_list_item() { 
+    bulleted_list_item()
+    { 
         $this.bulleted_list_item = [bulleted_list_item_structure]::new()
     }
 
-    bulleted_list_item([string] $text, [notion_color] $color = "default") {
+    bulleted_list_item([string] $text, [notion_color] $color = "default")
+    {
         $this.bulleted_list_item = [bulleted_list_item_structure]::new($text, $color)
     }
 
-    bulleted_list_item([rich_text[]] $rich_text, [notion_color] $color = "default") {
+    bulleted_list_item([rich_text[]] $rich_text, [notion_color] $color = "default")
+    {
         $this.bulleted_list_item = [bulleted_list_item_structure]::new($rich_text, $color)
     }
 

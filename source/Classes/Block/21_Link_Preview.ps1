@@ -17,13 +17,15 @@ class link_preview_structure
     }
 }
 
-class link_preview 
+class link_preview : Block
 # https://developers.notion.com/reference/block#link-preview
 {
     [blocktype] $type = "link_preview"
     [link_preview_structure] $link_preview
 
-    link_preview() { }
+    link_preview()
+    { 
+    }
 
     link_preview($url)
     {
@@ -32,7 +34,9 @@ class link_preview
 
     static [link_preview] ConvertFromObject ($value)
     {
-        return [link_preview]::new($value.link_preview.url)
+        $link_preview_obj = [link_preview]::new()
+        $link_preview_obj.link_preview = [link_preview_structure]::ConvertFromObject($value.link_preview)
+        return $link_preview_obj
     }
 
 }

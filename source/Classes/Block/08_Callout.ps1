@@ -11,7 +11,8 @@ class callout_structure
         $this.rich_text = @([rich_text]::new())
     }
 
-    callout_structure([string] $text){
+    callout_structure([string] $text)
+    {
         $this.rich_text = @([rich_text_text]::new($text))
         $this.icon = [emoji]::new()
         $this.color = [notion_color]::default
@@ -80,8 +81,8 @@ class callout : block
 
     static [callout] ConvertFromObject($Value)
     {
-        $calloutObj = [callout]::new()
-        $calloutObj.callout = [callout_structure]::ConvertFromObject($Value.callout)
-        return $calloutObj
+        $callout_Obj = [callout]::new()
+        $callout_Obj.callout = [callout_structure]::ConvertFromObject($Value.callout)
+        return $callout_Obj
     }
 }

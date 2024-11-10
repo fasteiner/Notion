@@ -25,6 +25,8 @@ class table_of_contents : block
 
     static [table_of_contents] ConvertFromObject($Value)
     {
-        return [Table_Of_Contents_structure]::ConvertFromObject($Value.table_of_contents)
+        $table_of_contents_Obj = [table_of_contents]::new()
+        $table_of_contents_Obj.table_of_contents = [Table_Of_Contents_structure]::ConvertFromObject($Value.table_of_contents)
+        return $table_of_contents_Obj
     }
 }

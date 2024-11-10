@@ -39,7 +39,8 @@ class child_database : block
 
     static [child_database] ConvertFromObject($Value)
     {
-        $child_database_obj = [child_database_structure]::new($Value.child_database)
-        return $child_database_obj
+        $child_database_Obj = [child_database]::new()
+        $child_database_Obj.child_database = [child_database_structure]::new($Value.child_database)
+        return $child_database_Obj
     }
 }

@@ -4,7 +4,8 @@ class divider : block
     [blocktype] $type = "divider"
     [object] $divider = @{}
 
-    divider(){
+    divider()
+    {
     }
     
     static [divider] ConvertFromObject($Value)

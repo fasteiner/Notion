@@ -63,6 +63,8 @@ class PDF : notion_file
 
     static [PDF] ConvertFromObject($Value)
     {
-        return [PDF_structure]::ConvertFromObject($Value.pdf)
+        $PDF_obj = [PDF]::new()
+        $PDF_obj.pdf = [PDF_structure]::ConvertFromObject($Value.pdf)
+        return $PDF_obj
     }
 }

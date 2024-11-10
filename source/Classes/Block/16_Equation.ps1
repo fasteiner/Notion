@@ -2,7 +2,9 @@ class equation_structure
 {
     [string] $expression = $null
 
-    equation_structure() { }
+    equation_structure()
+    { 
+    }
 
     equation_structure([string] $expression)
     {
@@ -11,7 +13,7 @@ class equation_structure
 
     static [equation_structure] ConvertFromObject($Value)
     {
-        $equation_structure = [equation]::new()
+        $equation_structure = [equation_structure]::new()
         $equation_structure.expression = $Value.expression
         return $equation_structure
     }
@@ -22,7 +24,8 @@ class equation : block
     [blocktype] $type = "equation"
     [string] $equation
     
-    equation() { 
+    equation()
+    { 
         $this.equation = [equation_structure]::new()
     }
 
@@ -33,6 +36,8 @@ class equation : block
     
     static [equation] ConvertFromObject($Value)
     {
-        return [equation_structure]::ConvertFromObject($Value.equation)
+        $equation_Obj = [equation]::new()
+        $equation_Obj.equation = [equation_structure]::ConvertFromObject($Value.equation)
+        return $equation_Obj
     }
 }

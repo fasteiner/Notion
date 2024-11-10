@@ -31,6 +31,8 @@ class To_do : block
 
     static [To_do] ConvertFromObject ($Value)
     {
-        return [To_do_structure]::ConvertFromObject($Value.to_do)
+        $To_do_Obj = [To_do]::new()
+        $To_do_Obj.to_do = [To_do_structure]::ConvertFromObject($Value.to_do)
+        return $To_do_Obj
     }
 }

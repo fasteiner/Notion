@@ -29,6 +29,8 @@ class Toggle : block
 
     static [Toggle] ConvertFromObject($Value)
     {
-        return [Toggle_structure]::ConvertFromObject($Value.toggle)
+        $Toggle_Obj = [Toggle]::new()
+        $Toggle_Obj.toggle = [Toggle_structure]::ConvertFromObject($Value.toggle)
+        return $Toggle_Obj
     }
 }  

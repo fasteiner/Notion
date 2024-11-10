@@ -40,6 +40,7 @@ $ExportableTypes = @(
     [Divider]
     [Embed]
     [emoji]
+    [custom_emoji]
     [Equation]
     [external_file]
     [heading_1]
