@@ -1,9 +1,38 @@
 
+BeforeDiscovery {
+    $projectPath = "$($PSScriptRoot)\..\.." | Convert-Path
+
+    <#
+        If the QA tests are run outside of the build script (e.g with Invoke-Pester)
+        the parent scope has not set the variable $ProjectName.
+    #>
+    if (-not $ProjectName)
+    {
+        # Assuming project folder name is project name.
+        $ProjectName = Get-SamplerProjectName -BuildRoot $projectPath
+    }
+
+    $script:moduleName = $ProjectName
+
+    Remove-Module -Name $script:moduleName -Force -ErrorAction SilentlyContinue
+
+    $mut = Get-Module -Name $script:moduleName -ListAvailable |
+        Select-Object -First 1 |
+            Import-Module -Force -ErrorAction Stop -PassThru
+}
+
+BeforeAll {
+    #Import-Module -Name "$PSScriptRoot\..\..\..\output\TSNotion.psd1" -Force
+    $standardOutput = [System.IO.StringWriter]::new()
+    $BearerToken = $env:NOTION_BEARER_TOKEN | ConvertTo-SecureString -AsPlainText -Force
+}
+
 Describe "Connect-TSNotion" {
     Context "When providing valid Bearer token and URL" {
         It "Should connect to the Notion API" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            $standardOutput.GetStringBuilder().Clear() | Out-Null
+            
             $notionURL = "https://api.notion.com/v1"
             $expectedResult = @{
                 url     = $notionURL
@@ -11,17 +40,18 @@ Describe "Connect-TSNotion" {
             }
 
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
+            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL > $standardOutput
 
             # Assert
-            $result | Should Be $expectedResult
+            $result | Should -Be $expectedResult
+            $standardOutput | Should -Contain "Successfully connected to Notion API."
         }
     }
 
     Context "When not providing the API version" {
         It "Should use the default API version" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            
             $notionURL = "https://api.notion.com/v1"
             $expectedResult = @{
                 url     = $notionURL
@@ -32,7 +62,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
 
             # Assert
-            $result | Should Be $expectedResult
+            $result | Should -Be $expectedResult
         }
     }
 
@@ -46,14 +76,14 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
 
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
 
     Context "When not providing the API version" {
         It "Should use the default API version" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            
             $notionURL = "https://api.notion.com/v1"
             $expectedResult = @{
                 url     = $notionURL
@@ -64,7 +94,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $expectedResult
+            $result | Should -Be $expectedResult
         }
     }
     
@@ -78,7 +108,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
     
@@ -92,7 +122,7 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
     
@@ -106,49 +136,49 @@ Describe "Connect-TSNotion" {
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
     
     Context "When providing an invalid URL" {
         It "Should fail to connect to the Notion API" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            
             $notionURL = "invalidURL"
     
             # Act
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
     
     Context "When providing a null URL" {
         It "Should fail to connect to the Notion API" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            
             $notionURL = $null
     
             # Act
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
     
     Context "When providing an empty URL" {
         It "Should fail to connect to the Notion API" {
             # Arrange
-            $BearerToken = "validBearerToken"
+            
             $notionURL = ""
     
             # Act
             $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should Be $null
+            $result | Should -Be $null
         }
     }
 }

@@ -7,12 +7,18 @@
 - Get-TSNotionPage
 - Get-TSNotionPageContent (Get-TSNotionBlockChildren)
 
-
 - https://github.com/makenotion/notion-sdk-js/blob/main/examples/intro-to-notion-api/intermediate/2-add-page-to-database.js
-
 
 Invoke-TSNotionWebrequest
 
+# Naming Convention
+To prevent name conflicts, use the NoClobber or Prefix parameters of the Import-Module cmdlet. The Prefix parameter adds a prefix to the names of imported commands so that they're unique in the session. The NoClobber parameter doesn't import any commands that would hide or replace existing commands in the session.
+
+You can also use the Alias, Cmdlet, Function, and Variable parameters of Import-Module to select only the commands that you want to import, and you can exclude commands that cause name conflicts in your session.
+
+Module authors can prevent name conflicts by using the DefaultCommandPrefix property of the module manifest to add a default prefix to all command names. The value of the Prefix parameter takes precedence over the value of DefaultCommandPrefix.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # ConvertTo-TSNotionObject
 ## Top-level resources have an "object" property. This property can be used to determine the type of the resource (e.g. "database", "user", etc.)
 ## https://developers.notion.com/reference/intro
@@ -77,3 +83,42 @@ type             : paragraph
 paragraph        : @{rich_text=System.Object[]; color=default}
 
 [...]
+
+# Exporting classes with type accelerators
+https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_classes?view=powershell-7.4#exporting-classes-with-type-accelerators
+By default, PowerShell modules don't automatically export classes and enumerations defined in PowerShell. The custom types aren't available outside of the module without calling a using module statement.
+
+
+## Wie befüllen wir das Array der exportierbaren Classes?
+(Sampler Q&A: Exporting classes with type accelerators)[https://github.com/gaelcolas/Sampler/discussions/493]
+  $ExportableTypes =@(
+      [plane]
+  )
+
+
+  [ ] New-TSNotionBlock
+
+
+# PageProperties
+Page Properties müssen im Zuge der [Page]::ConvertFromObject mitberücksichtig und in echte Klassen konvertiert werden!!! (Dort sind in der DB die Daten drinnen)
+
+
+## DB Row = Page, Properties = Daten
+$pageClass3.properties
+
+Ordernumber     : @{id=C%3E%3FU; type=number; number=10000}
+Comment         : @{id=EuKy; type=rich_text; rich_text=System.Object[]}
+Tags            : @{id=G%7CXt; type=multi_select; multi_select=System.Object[]}
+Telefon         : @{id=INcy; type=phone_number; phone_number=+43 1 234567890}
+Bestellvariante : @{id=MTPa; type=select; select=}
+ArtikelNummer   : @{id=Zv%5By; type=rich_text; rich_text=System.Object[]}
+Orderdate       : @{id=%5Byc%3C; type=date; date=}
+Geschlecht      : @{id=%5CEp%7D; type=select; select=}
+Nachname        : @{id=%5Dt%7Cy; type=rich_text; rich_text=System.Object[]}
+Anwesend        : @{id=ch%3Di; type=checkbox; checkbox=True}
+E-Mail          : @{id=dBvC; type=email; email=hansi.huber@gmail.com}
+Bezahlstatus    : @{id=lqUd; type=select; select=}
+Vorname         : @{id=title; type=title; title=System.Object[]}
+# Tests
+
+## Test Connect-TSNotion with BearerToken, notionUri, and ApiKey

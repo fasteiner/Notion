@@ -1,16 +1,21 @@
-#############################################################################################################
-# Title: 01_emoji
-# Description: 
-# 07/2024 Thomas.Subotitsch@base-IT.at
-# Minimum Powershell Version: 7
-#Requires -Version "7"
-#############################################################################################################
-class emoji {
-    [string]$object = "emoji"
+class emoji
+# https://developers.notion.com/reference/emoji-object
+{
+    [icontype]$type = "emoji"
     [string]$emoji
+
+    emoji()
+    {
+        $this.emoji = $null
+    }
 
     emoji($emoji)
     {
         $this.emoji = $emoji
+    }
+
+    static [emoji] ConvertFromObject($Value)
+    {
+        return [emoji]::new($Value.emoji)
     }
 }

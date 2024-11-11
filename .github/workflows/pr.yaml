@@ -1,0 +1,22 @@
+name: 🔍 Build & Verify
+on: [
+  pull_request
+]
+defaults:
+  run:
+    shell: pwsh
+jobs:
+  test:
+    name: 🌿 Branch Verify
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: 📤 Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: 🧪 build
+        env:
+          NOTION_BEARER_TOKEN: ${{ secrets.NOTION_BEARER_TOKEN }}
+        run: |
+          ./build.ps1 -ResolveDependency -UseModuleFast

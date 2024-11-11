@@ -1,48 +1,82 @@
-#############################################################################################################
-# Title: ConvertTo-TSNotionObject
-# Description: 
-# 07/2024 Thomas.Subotitsch@base-IT.at
-# Minimum Powershell Version: 7
-#Requires -Version "7"
-#############################################################################################################
 function ConvertTo-TSNotionObject
 {
+    <#
+    .SYNOPSIS
+    Converts an object to a TypeScript Notion object.
+    
+    .DESCRIPTION
+    This function takes an object and converts it to a TypeScript Notion object.
+    
+    .PARAMETER InputObject
+    The object to be converted.
+
+    .PARAMETER Object
+    The object to be converted. (Alias for InputObject)
+    
+    .OUTPUTS
+    The converted Notion object.
+    
+    .EXAMPLE
+    $object = @{ object = "block"; type = "code" }
+    $convertedObject = ConvertTo-TSNotionObject -Object $object
+
+    Returns an block object of type "code".
+
+    .EXAMPLE
+    $object = @{ object = "list"; results = @(@{ object = "block"; type = "paragraph" }, @{ object = "block"; type = "heading_1" }) }
+    $object | ConvertTo-TSNotionObject
+
+    Returns a list object with two block objects of type "paragraph" and "heading_1".
+
+    .EXAMPLE
+    $object = @{ object = "block"; type = "bookmark" }
+    ConvertTo-TSNotionObject -InputObject $object
+
+    Returns a block object of type "bookmark".    
+    #>
     [CmdletBinding()]
     param (
         [Parameter(Position = 0, Mandatory = $true, ValueFromPipeline = $true, HelpMessage = "The input object to convert to a Notion object based on classes")]
-        $Value
+        [Alias("Object")]
+        $InputObject
     )
     
 
     begin
     {
-        # if ($_) { $Value = $_ }
-        # $Value.GetType().BaseType
-        # if (!(($Value -is [System.Object]) -or ($Value -is [System.Array])))
+        # if ($_) { $InputObject = $_ }
+        # $InputObject.GetType().BaseType
+        # if (!(($InputObject -is [System.Object]) -or ($InputObject -is [System.Array])))
         # {
-        #     $Type = $Value.GetType().BaseType
+        #     $Type = $InputObject.GetType().BaseType
         #     "Input is not an array or object (is $Type)" | Add-TSNotionLogToFile -Level ERROR
         #     Break
         # }
+        $output = @()
     }
     process
     {
-        foreach ($item in $Value)
+        foreach ($item in $InputObject)
         {
+            if ($item.template)
+            {
+                "Template - not implemented yet" | Add-TSNotionLogToFile -Level WARN
+                return
+            }
+
         
-        
-        ("Object: {0} Type: {1} " -f $Value.object, $Value.Type) | Add-TSNotionLogToFile -Level INFO
-            "Object", $Value | Add-TSNotionLogToFile -Level DEBUG
-            #TODO: Constructor für jede Klasse erstellen .ConvertfromObject() -> $Object = [NotionObject]::new().ConvertfromObject($Value)
-            switch ($Value.object)
+        ("Object: {0} Type: {1}" -f $item.object, $item.Type) | Add-TSNotionLogToFile -Level DEBUG
+            "Object", $item | Add-TSNotionLogToFile -Level DEBUG
+            #TODO: Constructor für jede Klasse erstellen .ConvertfromObject() -> $Object = [NotionObject]::new().ConvertfromObject($item)
+            switch ($item.object)
             {
                 "list"
                 {  
-                    "List" | Add-TSNotionLogToFile -Level INFO 
-                    #TODO: Gibt's einen Block Type List?
-                    if  ($Value.results -is [array])
+                    "List" | Add-TSNotionLogToFile -Level DEBUG
+                    #TODO: Gibt's einen Object Type List?
+                    if ($item.results -is [array])
                     {
-                        foreach ($result in $Value.results)
+                        foreach ($result in $item.results)
                         {
                             $result | ConvertTo-TSNotionObject
                         }
@@ -54,105 +88,56 @@ function ConvertTo-TSNotionObject
 
                 "block"
                 {
-                    "Block" | Add-TSNotionLogToFile -Level INFO 
-                    switch ($value.type) {
-                        "paragraph"
-                        {
-                            "Paragraph" | Add-TSNotionLogToFile -Level INFO 
-                            break
-                        }
-                        "heading_1"
-                        {
-                            "Heading1" | Add-TSNotionLogToFile -Level INFO 
-                            break
-                        }
-                        "heading_2"
-                        {
-                            "Heading2" | Add-TSNotionLogToFile -Level INFO 
-                            break
-                        }
-                        "heading_3"
-                        {
-                            "Heading3" | Add-TSNotionLogToFile -Level INFO 
-                            break
-                        }
-                        "bulleted_list_item"
-                        {
-                            "BulletedListItem" | Add-TSNotionLogToFile -Level INFO 
-                            break
-                        }
-                        "numbered_list_item"
-                        {
-                            "NumberedListItem" | Add-TSNotionLogToFile -Level INFO 
-                            break
-                        }
-                        "to_do"
-                        {
-                            "ToDo" | Add-TSNotionLogToFile -Level INFO 
-                            break
-                        }
-                        "toggle"
-                        {
-                            "Toggle" | Add-TSNotionLogToFile -Level INFO 
-                            break
-                        }
-                        "child_page"
-                        {
-                            "ChildPage" | Add-TSNotionLogToFile -Level INFO 
-                            break
-                        }
-                        "unsupported"
-                        {
-                            "Unsupported" | Add-TSNotionLogToFile -Level INFO 
-                            break
-                        }
-                        Default
-                        {
-                            "Unsupported" | Add-TSNotionLogToFile -Level WARN
-                        }
-                    
-                    }
+                    # https://developers.notion.com/reference/block
+                    "Block" | Add-TSNotionLogToFile -Level DEBUG
+                    $output += [block]::ConvertFromObject($item)
                 }
         
                 "comment"
                 {  
-                    "Comment" | Add-TSNotionLogToFile -Level INFO 
+                    "Comment" | Add-TSNotionLogToFile -Level DEBUG
+                    $output += [comment]::ConvertfromObject($item)
                 }
         
                 "database"
-                {  
-                    "Database" | Add-TSNotionLogToFile -Level INFO 
+                {
+                    # https://developers.notion.com/reference/database
+                    "Database" | Add-TSNotionLogToFile -Level DEBUG
                 }
         
                 "page"
-                {  
-                    "Page" | Add-TSNotionLogToFile -Level INFO 
-                    [page]::ConvertfromObject($value)
+                {
+                    # https://developers.notion.com/reference/page
+                    "Page" | Add-TSNotionLogToFile -Level DEBUG
+                    $output += [page]::ConvertfromObject($item)
                 }
         
                 "page_or_database"
                 {  
-                    "PageOrDatabase" | Add-TSNotionLogToFile -Level INFO 
+                    "PageOrDatabase" | Add-TSNotionLogToFile -Level DEBUG
                 }
         
                 "property_item"
                 {  
-                    "PropertyItem" | Add-TSNotionLogToFile -Level INFO 
+                    "PropertyItem" | Add-TSNotionLogToFile -Level DEBUG
                 }
         
                 "user"
-                {  
-                    "User" | Add-TSNotionLogToFile -Level INFO 
+                {
+                    # https://developers.notion.com/reference/user
+                    "User" | Add-TSNotionLogToFile -Level DEBUG
+                    $output += [user]::ConvertFromObject($item)
                 }
                 Default
                 {
+                    "Object: $($item.object) not recognized" | Add-TSNotionLogToFile -Level WARN
                 }
             }
-            "-" * 50
-            Break
+            #Break
         }
     }
     end
     {
+        return $output
     }
 }

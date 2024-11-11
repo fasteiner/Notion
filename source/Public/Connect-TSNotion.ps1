@@ -1,10 +1,3 @@
-# #############################################################################################################
-# Title: Connect-TSNotion
-# Description: Connects to the Notion API using the provided Bearer token and URL
-# 07/2024 Fabian Steiner, Thomas Subotitsch
-# # Minimum Powershell Version: 7
-# #Requires -Version "7"
-# #############################################################################################################
 function Connect-TSNotion
 {
     <#
@@ -48,12 +41,9 @@ function Connect-TSNotion
         [Parameter(Mandatory = $false, HelpMessage = "The API version '2022-02-22' or '2022-06-28'")]
         [string]$APIVersion = '2022-06-28'
     )
-    $global:TSNotionAPIKey = $BearerToken
-    $global:TSNotionApiUri = $notionURL
-    $global:TSNotionAPIVersion = $APIVersion
-
+    
     # Test connection
-    $result = Invoke-TSNotionApiCall "/search" -first 1 -method POST -body @{
+    $result = Invoke-TSNotionApiCall "$notionURL/search" -APIKey $BearerToken -APIVersion $APIVersion -first 1 -method POST -body @{
         "query" = ""
         filter  = @{
             "property" = "object"
@@ -69,6 +59,9 @@ function Connect-TSNotion
         Write-Error "Failed to connect to Notion API." -RecommendedAction "Please check your Bearer token and URL." -Category ConnectionError
         return
     }
+    $global:TSNotionAPIKey = $BearerToken
+    $global:TSNotionApiUri = $notionURL
+    $global:TSNotionAPIVersion = $APIVersion
     Write-Host "Successfully connected to Notion API." -ForegroundColor Green
 
     return @{
