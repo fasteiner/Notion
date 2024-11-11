@@ -46,7 +46,7 @@ Describe "notion_file_block Tests" {
             $url = "http://example.com/file"
             $block = [notion_file_block]::new($name, $caption, $url)
             
-            $block.file | Should -BeOfType "external_file"
+            $block.file | Should -BeOfType "notion_external_file"
             $block.file.name | Should -Be $name
             $block.file.caption[0].plain_text | Should -Be $caption
             $block.file.external.url | Should -Be $url
