@@ -1,15 +1,60 @@
-class Table : block
-# https://developers.notion.com/reference/block#table
+class Table_structure
 {
-    $type = "table"
     [int] $table_width = $null
     [bool] $has_column_header = $false
     [bool] $has_row_header = $false
 
+    Table_structure()
+    {
+    }
+
+    Table_structure ([int] $table_width)
+    {
+        $this.table_width = $table_width
+    }
+
+    Table_structure ([int] $table_width, [bool] $has_column_header, [bool] $has_row_header)
+    {
+        $this.table_width = $table_width
+        $this.has_column_header = $has_column_header
+        $this.has_row_header = $has_row_header
+    }
+
+    Table_structure ([pscustomobject[]] $TableData, [bool] $has_column_header, [bool] $has_row_header)
+    {
+        $this.table_width = $TableData[0].psobject.properties.name.Count
+        $this.has_column_header = $has_column_header
+        $this.has_row_header = $has_row_header
+    }
+
+    # Table_structure ([int] $table_width, [int] $table_height)
+    # {
+    #     $this.table_width = $table_width
+    # }
+
+    # Table_structure ([TableRow[]] $rows, [bool] $has_column_header, [bool] $has_row_header)
+    # {
+    # }
+
+    static [Table_structure] ConvertFromObject($Value)
+    {
+        $Table_structure_Obj = [Table_structure]::new()
+        $Table_structure_Obj.table_width = $Value.table.table_width
+        $Table_structure_Obj.has_column_header = $Value.table.has_column_header
+        $Table_structure_Obj.has_row_header = $Value.table.has_row_header
+        return $Table_structure_Obj
+    }
+}
+class Table : block
+# https://developers.notion.com/reference/block#table
+{
+    [blocktype] $type = "table"
+    [Table_structure] $table
+
     #Table with 1 row and 1 column
     Table()
     {
-        $this.table_width = 1
+        $this.table = [Table_structure]::new()
     }
 
     #Table with 1 row and $table_width columns
@@ -129,22 +174,28 @@ class Table : block
         $this.has_row_header = $true
     }
 
-    # Aus ShopWare kommt ein Array of CustomObjects
+    # # Aus ShopWare kommt ein Array of CustomObjects
+    # static [table] ConvertFromObject($Value)
+    # {
+    #     $table = [table]::new()
+    #     $table.has_children = $Value.has_children
+    #     $table.table_width = $Value.table.table_width
+    #     $table.has_column_header = $Value.table.has_column_header
+    #     $table.has_row_header = $Value.table.has_row_header
+    #     $table.id = $Value.id
+    #     $table.parent = $value.parent
+    #     $table.created_time = $value.created_time
+    #     $table.last_edited_time = $value.last_edited_time
+    #     $table.created_by = [user]::ConvertFromObject($Value.created_by)
+    #     $table.last_edited_by = [user]::ConvertFromObject($Value.last_edited_by)
+    #     $table.archived = $Value.archived
+    #     $table.in_trash = $Value.in_trash
+    #     return $table
+    # }
     static [table] ConvertFromObject($Value)
     {
-        $table = [table]::new()
-        $table.has_children = $Value.has_children
-        $table.table_width = $Value.table.table_width
-        $table.has_column_header = $Value.table.has_column_header
-        $table.has_row_header = $Value.table.has_row_header
-        $table.id = $Value.id
-        $table.parent = $value.parent
-        $table.created_time = $value.created_time
-        $table.last_edited_time = $value.last_edited_time
-        $table.created_by = [user]::ConvertFromObject($Value.created_by)
-        $table.last_edited_by = [user]::ConvertFromObject($Value.last_edited_by)
-        $table.archived = $Value.archived
-        $table.in_trash = $Value.in_trash
-        return $table
+        $Table_Obj = [table]::new()
+        $Table_Obj.table = [Table_structure]::ConvertFromObject($Value.table)
+        return $Table_Obj
     }
 }

@@ -6,13 +6,13 @@ class pp_title : PageProperties
     # Constructor
     pp_title($value)
     {
-        $this.title = [rich_text]::new($Value)
+        $this.title = [rich_text]::new("text", $null, $Value)
         
     }
     #Methods
     add($value)
     {
-        $this.title += [rich_text]::new($Value)
+        $this.title += [rich_text]::new("text", $null, $Value)
     }
 
     #TODO Array of rich_text?
