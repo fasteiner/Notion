@@ -51,7 +51,12 @@ class annotation
 
     static [annotation] ConvertFromObject($Value)
     {
+        Write-Verbose "[annotation]::ConvertFromObject($($Value | ConvertTo-Json))"
         $annotation = [annotation]::new()
+        if(!$Value)
+        {
+            return $annotation
+        }
         $annotation.bold = $Value.bold
         $annotation.italic = $Value.italic
         $annotation.strikethrough = $Value.strikethrough
