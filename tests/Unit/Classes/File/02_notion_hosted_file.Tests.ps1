@@ -79,6 +79,6 @@ Describe "notion_hosted_file" {
         $instance.name | Should -Be $obj.name
         $instance.caption[0].plain_text | Should -Be $obj.caption[0].text.content
         $instance.file.url | Should -Be $obj.file.url
-        $instance.file.expiry_time | Should -Be (Get-Date $obj.file.expiry_time).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+        $instance.file.expiry_time | Should -Be (Get-Date $obj.file.expiry_time).ToString("yyyy-MM-ddTHH:mm:ssZ")
     }
 }
