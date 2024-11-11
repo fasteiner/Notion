@@ -16,6 +16,12 @@ class notion_file
         $this.type = $type
     }
 
+    notion_file([notion_filetype]$type, [string]$name)
+    {
+        $this.type = $type
+        $this.name = $name
+    }
+
     #string caption (optional)
     notion_file([notion_filetype]$type, [string]$name, [string]$caption = "")
     {
@@ -27,11 +33,27 @@ class notion_file
         }
     }
 
-    notion_file([notion_filetype]$type, [string]$name, [rich_text[]] $caption)
+    notion_file([notion_filetype]$type, [string]$name, [object[]] $caption)
     {
+        Write-Verbose "[notion_file]::new($type, $name, $($caption | ConvertTo-Json))"
         $this.type = $type
         $this.name = $name
-        $this.caption = $caption
+        $this.caption = @()
+        foreach($item in $caption)
+        {
+            if($item -is [string])
+            {
+                $this.caption += [rich_text_text]::new($item)
+            }
+            elseif($item -is [rich_text])
+            {
+                $this.caption += $item
+            }
+            else
+            {
+                $this.caption += [rich_text]::ConvertFromObject($item)
+            }
+        }
     }
 
 
@@ -45,10 +67,10 @@ class notion_file
         }
         else
         {
-            $fileObject = [external_file]::ConvertFromObject($Value)
+            $fileObject = [notion_external_file]::ConvertFromObject($Value)
         }
         $fileObject.type = $Value.type
-        $fileObject.caption = [rich_text]::ConvertFromObject($Value.caption)
+        $fileObject.caption = $Value.caption.ForEach({[rich_text]::ConvertFromObject($_)})
         $fileObject.name = $Value.name
         return $fileObject
     }

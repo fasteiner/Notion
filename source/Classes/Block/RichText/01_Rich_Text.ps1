@@ -76,7 +76,7 @@ class rich_text
             }
         }
         $rich_text.annotations = [annotation]::ConvertFromObject($Value.annotations)
-        $rich_text.plain_text = $Value.plain_text
+        $rich_text.plain_text ??= $Value.plain_text
         $rich_text.href = $Value.href
         return $rich_text
     }

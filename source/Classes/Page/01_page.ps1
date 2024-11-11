@@ -110,7 +110,7 @@ class page
             {
                 "external"
                 {
-                    $page.cover = [external_file]::new($Value.cover.external.url) 
+                    $page.cover = [notion_external_file]::new($Value.cover.external.url) 
                 }
             }
             # https://developers.notion.com/reference/page-property-values#paginated-page-properties
