@@ -24,9 +24,16 @@ class page
     {
         $this.id = [guid]::NewGuid().ToString()
         $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
-
     }
-    
+
+    page([string]$title)
+    {
+        $this.id = [guid]::NewGuid().ToString()
+        $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+        $this.properties = [pp_title]::new($title)
+    }
+
+
     page([System.Object]$parent, $properties)
     {
         $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
@@ -40,12 +47,6 @@ class page
         $this.properties = $properties
     }
 
-    page([string] $id)
-    {
-        $this.id = $id
-    }
-    
-    
     #Methods
     addChild($child, [string] $type)
     {
@@ -112,6 +113,7 @@ class page
                     $page.cover = [external_file]::new($Value.cover.external.url) 
                 }
             }
+            # https://developers.notion.com/reference/page-property-values#paginated-page-properties
             #TODO Konvertierung aller Properties in Klassen
             #$page.properties = [PageProperties]::ConvertFromObject($Value.properties)
             $page.properties = $Value.properties
@@ -144,6 +146,3 @@ class page
     #     return (Get-Date $date -Format "yyyy-MM-ddTHH:mm:ss.fffZ" )
     # }
 }
-
-# https://developers.notion.com/reference/page-property-values#paginated-page-properties
-# TODO: Müssen die auch alle extra Klassen sein?
