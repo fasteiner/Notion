@@ -29,7 +29,7 @@ Describe "notion_file_block Tests" {
             $name = "Test File"
             $caption = "Test Caption"
             $url = "http://example.com/file"
-            $expiry_time = "15.11.2023 12:00:00"
+            $expiry_time = get-date
             $block = [notion_file_block]::new($name, $caption, $url, $expiry_time)
             
             $block.file | Should -BeOfType "notion_hosted_file"
