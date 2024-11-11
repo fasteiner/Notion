@@ -77,7 +77,7 @@ Describe "notion_file_block Tests" {
             $convertedBlock = [block]::ConvertFromObject($object)
             
             $convertedBlock.getType().Name | Should -Be "notion_file_block"
-            $convertedBlock.file.getType().Name  | Should -Be "external_file"
+            $convertedBlock.file.getType().Name  | Should -Be "notion_external_file"
             $convertedBlock.file.external.url | Should -Be "http://example.com/file"
             $convertedBlock.file.name | Should -Be "Test File"
         }
