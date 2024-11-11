@@ -1,6 +1,6 @@
 
 BeforeDiscovery {
-    $projectPath = "$($PSScriptRoot)\..\.." | Convert-Path
+    $projectPath = "$($PSScriptRoot)/../.." | Convert-Path
 
     <#
         If the QA tests are run outside of the build script (e.g with Invoke-Pester)
@@ -16,13 +16,11 @@ BeforeDiscovery {
 
     Remove-Module -Name $script:moduleName -Force -ErrorAction SilentlyContinue
 
-    $mut = Get-Module -Name $script:moduleName -ListAvailable |
-        Select-Object -First 1 |
-            Import-Module -Force -ErrorAction Stop -PassThru
+    $mut = Import-Module -Name "$projectPath/output/module/$ProjectName" -Force -ErrorAction Stop -PassThru
 }
 
 BeforeAll {
-    #Import-Module -Name "$PSScriptRoot\..\..\..\output\TSNotion.psd1" -Force
+    #Import-Module -Name "$PSScriptRoot/../../..\output\TSNotion.psd1" -Force
     $standardOutput = [System.IO.StringWriter]::new()
     $BearerToken = $env:NOTION_BEARER_TOKEN | ConvertTo-SecureString -AsPlainText -Force
 }

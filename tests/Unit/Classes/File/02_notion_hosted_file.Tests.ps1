@@ -5,7 +5,7 @@
 Import-Module Pester
 
 BeforeDiscovery {
-    $projectPath = "$($PSScriptRoot)\..\..\..\.." | Convert-Path
+    $projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
 
     <#
         If the QA tests are run outside of the build script (e.g with Invoke-Pester)
@@ -21,9 +21,8 @@ BeforeDiscovery {
 
     Remove-Module -Name $global:moduleName -Force -ErrorAction SilentlyContinue
 
-    $mut = Get-Module -Name $global:moduleName -ListAvailable |
-        Select-Object -First 1 |
-            Import-Module -Force -ErrorAction Stop -PassThru
+    $mut = Import-Module -Name "$projectPath/output/module/$ProjectName" -Force -ErrorAction Stop -PassThru
+
 }
 
 Describe "notion_hosted_file" {
