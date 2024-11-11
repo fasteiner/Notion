@@ -42,7 +42,7 @@ Describe "notion_hosted_file" {
         $instance.name | Should -Be $name
         $instance.caption[0].plain_text | Should -Be $caption
         $instance.file.url | Should -Be $url
-        $instance.file.expiry_time | Should -Be (Get-Date $expiry_time).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+        $instance.file.expiry_time | Should -Be (Get-Date $expiry_time).ToString("yyyy-MM-ddTHH:mm:ssZ")
     }
 
     It "should create an instance with rich_text caption" {
@@ -54,7 +54,7 @@ Describe "notion_hosted_file" {
         $instance.name | Should -Be $name
         $instance.caption[0].plain_text | Should -Be $caption.plain_text
         $instance.file.url | Should -Be $url
-        $instance.file.expiry_time | Should -Be (Get-Date $expiry_time).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+        $instance.file.expiry_time | Should -Be (Get-Date $expiry_time).ToString("yyyy-MM-ddTHH:mm:ssZ")
     }
 
     It "should convert from object" {

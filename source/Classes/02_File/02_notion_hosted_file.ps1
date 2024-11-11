@@ -13,7 +13,7 @@ class notion_hosted_file_structure
         $this.url = $url
         if(-not [string]::IsNullOrEmpty($expiry_time))
         {
-            $this.expiry_time = Get-Date $expiry_time -Format "yyyy-MM-ddTHH:mm:ss.fffZ"
+            $this.expiry_time = Get-Date $expiry_time -Format "yyyy-MM-ddTHH:mm:ssZ"
         }
         else{
             $this.expiry_time = $null
@@ -25,7 +25,7 @@ class notion_hosted_file_structure
         $this.url = $Value.url
         if(-not [string]::IsNullOrEmpty($value.expiry_time))
         {
-            $this.expiry_time = Get-Date $value.expiry_time -Format "yyyy-MM-ddTHH:mm:ss.fffZ"
+            $this.expiry_time = Get-Date $value.expiry_time -Format "yyyy-MM-ddTHH:mm:ssZ"
         }
         else{
             $this.expiry_time = $null

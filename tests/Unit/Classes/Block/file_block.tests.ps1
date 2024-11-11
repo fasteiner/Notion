@@ -37,7 +37,7 @@ Describe "notion_file_block Tests" {
             $block.file.caption[0].plain_text | Should -Be $caption
             $block.file.caption[0].type | Should -Be "text"
             $block.file.file.url | Should -Be $url
-            $block.file.file.expiry_time | Should -Be (get-date $expiry_time).ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+            $block.file.file.expiry_time | Should -Be (get-date $expiry_time).ToString("yyyy-MM-ddTHH:mm:ssZ")
         }
 
         It "Should create a notion_file_block with notion_external_file" {
