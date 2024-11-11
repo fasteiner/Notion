@@ -22,7 +22,7 @@ class equation : block
 # https://developers.notion.com/reference/block#equation
 {
     [blocktype] $type = "equation"
-    [string] $equation
+    [equation_structure] $equation
     
     equation()
     { 
