@@ -62,11 +62,11 @@ class notion_hosted_file : notion_file
     static [notion_hosted_file] ConvertFromObject($Value)
     {
         Write-Verbose "[notion_hosted_file]::ConvertFromObject($($Value | ConvertTo-Json))"
-        $notionFileOb = [notion_hosted_file]::new()
-        $notionFileOb.file = [notion_hosted_file_structure]::ConvertFromObject($Value.file)
-        $notionFileOb.type = $Value.type
-        $notionFileOb.caption = $Value.caption.ForEach({[rich_text]::ConvertFromObject($_)})
-        $notionFileOb.name = $Value.name
-        return $notionFileOb
+        $notion_file_obj = [notion_hosted_file]::new()
+        $notion_file_obj.file = [notion_hosted_file_structure]::ConvertFromObject($Value.file)
+        $notion_file_obj.type = $Value.type
+        $notion_file_obj.caption = $Value.caption.ForEach({[rich_text]::ConvertFromObject($_)})
+        $notion_file_obj.name = $Value.name
+        return $notion_file_obj
     }
 }
