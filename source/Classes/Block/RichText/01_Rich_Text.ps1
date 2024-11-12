@@ -3,7 +3,7 @@ class rich_text
 {
     [rich_text_type] $type
     # object: text / mention / equation
-    [annotation] $annotations = [annotation]::new()
+    [annotation] $annotations
     [string] $plain_text = $null
     $href = $null
 
@@ -47,6 +47,11 @@ class rich_text
 
     static [rich_text] ConvertFromObject($Value)
     {
+        Write-Verbose "[rich_text]::ConvertFromObject($($Value | ConvertTo-Json))"
+        if(!$Value.type)
+        {
+            return $null
+        }
         $rich_text = $null
         switch ($Value.type)
         {
@@ -71,7 +76,7 @@ class rich_text
             }
         }
         $rich_text.annotations = [annotation]::ConvertFromObject($Value.annotations)
-        $rich_text.plain_text = $Value.plain_text
+        $rich_text.plain_text ??= $Value.plain_text
         $rich_text.href = $Value.href
         return $rich_text
     }

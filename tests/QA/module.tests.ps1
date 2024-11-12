@@ -1,5 +1,5 @@
 BeforeDiscovery {
-    $projectPath = "$($PSScriptRoot)\..\.." | Convert-Path
+    $projectPath = "$($PSScriptRoot)/../.." | Convert-Path
 
     <#
         If the QA tests are run outside of the build script (e.g with Invoke-Pester)
@@ -22,7 +22,7 @@ BeforeDiscovery {
 
 BeforeAll {
     # Convert-Path required for PS7 or Join-Path fails
-    $projectPath = "$($PSScriptRoot)\..\.." | Convert-Path
+    $projectPath = "$($PSScriptRoot)/../.." | Convert-Path
 
     <#
         If the QA tests are run outside of the build script (e.g with Invoke-Pester)
@@ -213,4 +213,3 @@ Describe 'Help for module' -Tags 'helpQuality' {
         }
     }
 }
-

@@ -78,6 +78,7 @@ class Block
 
     static [Block] ConvertFromObject($Value)
     {
+        Write-Verbose "[Block]::ConvertFromObject($($Value | ConvertTo-Json))"
         $Block = $null
         switch ($Value.type)
         # https://developers.notion.com/reference/block#block-type-objects
@@ -144,7 +145,7 @@ class Block
             }
             "file"
             {
-                $Block = [notion_file]::ConvertfromObject($value.file)
+                $Block = [notion_file_block]::ConvertfromObject($value)
                 break
             }
             "heading_1"

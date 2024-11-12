@@ -1,53 +1,77 @@
+
+
+
 class notion_file
 # https://developers.notion.com/reference/file-object
+# https://developers.notion.com/reference/block#file
 {
     [notion_filetype]$type
-    [string]$file
+    #caption and name are only used in block/file
+    [rich_text[]] $caption = @()
+    [string] $name
 
-    notion_file()
+
+    notion_file([notion_filetype]$type)
     {
+        $this.type = $type
     }
 
-    notion_file($url, $expiry_time)
+    notion_file([notion_filetype]$type, [string]$name)
     {
-        $this.type = "file"
-        $this.file = [notion_hosted_file]::new($url, $expiry_time)
-    }
-    
-    notion_file($url)
-    {
-        $this.type = "external"
-        $this | Add-Member -MemberType NoteProperty -Name "external" -Value ([external_file]::new($url))
+        $this.type = $type
+        $this.name = $name
     }
 
-    ## generic constructor
-    notion_file([notion_filetype]$filetype, $url, $expiry_time)
+    #string caption (optional)
+    notion_file([notion_filetype]$type, [string]$name, [string]$caption = "")
     {
-        $this.type = $filetype
-        if ($filetype -eq "file")
+        $this.type = $type
+        $this.name = $name
+        if([string]::IsNullOrEmpty($caption) -eq $false)
         {
-            $this.file = [notion_hosted_file]::new($url, $expiry_time)
-        }
-        else
-        {
-            $this | Add-Member -MemberType NoteProperty -Name "external" -Value ([external_file]::new($url))
+            $this.caption = @([rich_text_text]::new($caption))
         }
     }
+
+    notion_file([notion_filetype]$type, [string]$name, [object[]] $caption)
+    {
+        Write-Verbose "[notion_file]::new($type, $name, $($caption | ConvertTo-Json))"
+        $this.type = $type
+        $this.name = $name
+        $this.caption = @()
+        foreach($item in $caption)
+        {
+            if($item -is [string])
+            {
+                $this.caption += [rich_text_text]::new($item)
+            }
+            elseif($item -is [rich_text])
+            {
+                $this.caption += $item
+            }
+            else
+            {
+                $this.caption += [rich_text]::ConvertFromObject($item)
+            }
+        }
+    }
+
 
     static [notion_file] ConvertFromObject($Value)
     {
-        $notionFile = [notion_file]::new()
-        $notionFile.type = $Value.type
-
+        Write-Verbose "[notion_file]::ConvertFromObject($($Value | ConvertTo-Json))"
+        $fileObject = $null
         if ($Value.type -eq "file")
         {
-            $notionFile.file = [notion_hosted_file]::new($Value.url, $Value.expiry_time)
+            $fileObject = [notion_hosted_file]::ConvertFromObject($Value)
         }
         else
         {
-            $notionFile | Add-Member -MemberType NoteProperty -Name "external" -Value ([external_file]::new($Value.url))
+            $fileObject = [notion_external_file]::ConvertFromObject($Value)
         }
-
-        return $notionFile
+        $fileObject.type = $Value.type
+        $fileObject.caption = $Value.caption.ForEach({[rich_text]::ConvertFromObject($_)})
+        $fileObject.name = $Value.name
+        return $fileObject
     }
 }

@@ -83,6 +83,7 @@ class rich_text_text : rich_text {
     static [rich_text_text] ConvertFromObject($Value) {
         $rich_text = [rich_text_text]::new()
         $rich_text.text = [rich_text_text_structure]::ConvertFromObject($Value.text)
+        $rich_text.plain_text = $Value.plain_text ?? $Value.text.content
         return $rich_text
     }
 }
