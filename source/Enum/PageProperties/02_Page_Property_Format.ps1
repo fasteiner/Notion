@@ -1,4 +1,4 @@
-enum format
+enum notion_page_property_format
 {
     number
     number_with_commas

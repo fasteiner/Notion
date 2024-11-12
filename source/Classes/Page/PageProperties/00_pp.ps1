@@ -7,9 +7,12 @@ class PageProperties
     {
     }
 
-    addproperty([string]$PropertyName, $Property)
+    addproperty([string]$PropertyName, [object] $Property)
     {
-        $this."$PropertyName" = 1#["$property"]::new($Property)
+        if($Property -is [PageProperties]){
+            $this."$PropertyName" = $Property
+        }
+        $this."$PropertyName" = $Property
     }
 
     # "Ordernumber": {

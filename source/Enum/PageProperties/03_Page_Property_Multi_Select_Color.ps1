@@ -1,4 +1,4 @@
-enum multi_select_color
+enum notion_page_property_color
 {
     default
     gray

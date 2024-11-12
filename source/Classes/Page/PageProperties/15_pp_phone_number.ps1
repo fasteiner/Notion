@@ -1,15 +1,15 @@
-class pp_phone_number : PageProperties
+class notion_phone_number_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#phone-number
 {
     [string] $phone_number
 
-    pp_phone_number($phone_number)
+    notion_phone_number_page_property($phone_number) : base("phone_number")
     {
         $this.phone_number = $phone_number
     }
 
-    static [pp_phone_number] ConvertFromObject($Value)
+    static [notion_phone_number_page_property] ConvertFromObject($Value)
     {
-        return [pp_phone_number]::new($Value.phone_number)
+        return [notion_phone_number_page_property]::new($Value.phone_number)
     }   
 }

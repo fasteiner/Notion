@@ -1,15 +1,15 @@
-class pp_email : PageProperties
+class notion_email_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#email
 {
     [string] $email
 
-    pp_email($email)
+    notion_email_page_property($email) : base("email")
     {
         $this.email = $email
     }
 
-    static [pp_email] ConvertFromObject($Value)
+    static [notion_email_page_property] ConvertFromObject($Value)
     {
-        return [pp_email]::new($Value.email)
+        return [notion_email_page_property]::new($Value.email)
     }
 }

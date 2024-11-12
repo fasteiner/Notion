@@ -1,4 +1,4 @@
-enum rollup_function
+enum notion_page_rollup_function
 {
     count_all
     count_values

@@ -1,4 +1,4 @@
-enum rollup_type
+enum notion_page_property_rollup_type
 {
     array
     date

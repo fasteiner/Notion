@@ -11,8 +11,7 @@ class page
     [bool]       $in_trash
     [page_icon]      $icon
     [notion_file]    $cover
-    #[PageProperties] $properties
-    [object] $properties
+    [PageProperties] $properties = @{}
     [page_parent]    $parent
     [string]     $url
     [string]     $public_url

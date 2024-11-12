@@ -1,31 +1,39 @@
-class pp_relation : PageProperties
+class notion_relation_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#relation
 {
     [bool] $has_more        # If a relation has more than 25 references, then the has_more value for the relation in the response object is true. If a relation doesn’t exceed the limit, then has_more is false.
-    [array] $relation
+    [notion_page_reference[]] $relation
 
 
     #TODO Stimmt das so?
-    pp_relation($relation)
+    notion_relation_page_property($relation) : base("relation")
     {
         $this.relation = @()
+        $this.has_more = $false
+        $counter = 0
         foreach ($relation_item in $relation)
         {
-            $this.relation += [pp_relation]::ConvertFromObject($relation_item)
-        }
-        if ($this.relation.count -gt 25 )
-        {
-            $this.has_more = 1
-        }
-        else
-        {
-            $this.has_more = 0
-        }        
+            $this.relation += [notion_relation_page_property]::ConvertFromObject($relation_item)
+            $counter++
+            if ($counter -gt 25 )
+            {
+                $this.has_more = $true
+            }
+        }     
     }
 
-    static [pp_relation] ConvertFromObject($Value)
+    notion_relation_page_property($relation, $has_more) : base("relation")
     {
-        $pp_relation = [pp_relation]::new($Value.relation)
-        return $pp_relation
+        $this.relation = @()
+        $this.has_more = $has_more
+        foreach ($relation_item in $relation)
+        {
+            $this.relation += [notion_relation_page_property]::ConvertFromObject($relation_item)
+        }     
+    }
+
+    static [notion_relation_page_property] ConvertFromObject($Value)
+    {
+        return [notion_relation_page_property]::new($Value.relation, $Value.has_more)
     }
 }

@@ -1,23 +1,46 @@
-class pp_unique_id : PageProperties
+class notion_unique_id
 # https://developers.notion.com/reference/page-property-values#unique-id
 {
     [int] $number
-    [string] $type = "unique_id"
     [string] $prefix = $null
 
-    pp_unique_id($number)
+    notion_unique_id_page_property($number)
     {
         $this.number = $number
     }
     
-    pp_unique_id($number, $prefix)
+    notion_unique_id_page_property($number, $prefix)
     {
         $this.number = $number
         $this.prefix = $prefix
     }
 
-    static [pp_unique_id] ConvertFromObject($Value)
+    static [notion_unique_id_page_property] ConvertFromObject($Value)
     {
-        return [pp_unique_id]::new($Value)
+        return [notion_unique_id_page_property]::new($Value.number, $Value.prefix)
+    }
+}
+
+class notion_unique_id_page_property : PagePropertiesBase{
+    [notion_unique_id] $unique_id
+
+    notion_unique_id_page_property() : base("unique_id")
+    {
+        $this.unique_id = [notion_unique_id]::new()
+    }
+
+    notion_unique_id_page_property($number) : base("unique_id")
+    {
+        $this.unique_id = [notion_unique_id]::new($number)
+    }
+
+    notion_unique_id_page_property($number, $prefix) : base("unique_id")
+    {
+        $this.unique_id = [notion_unique_id]::new($number, $prefix)
+    }
+
+    static [notion_unique_id_page_property] ConvertFromObject($Value)
+    {
+        return [notion_unique_id_page_property]::new($Value.unique_id.number, $Value.unique_id.prefix)
     }
 }

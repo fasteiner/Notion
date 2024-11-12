@@ -1,12 +1,22 @@
-class pp_rich_text : PageProperties
+class notion_rich_text_page_property : PagePropertiesBase
 {
     # $type = "rich_text"
     [rich_text[]] $rich_text
     
-    pp_rich_text($text)
+    notion_rich_text_page_property([object[]]$text)
     {
-        #TODO: Stimmt das? (vor allem mit Arrays)
-        $this.rich_text = [rich_text]::new($text)
+        $this.rich_text = @()
+        foreach ($t in $text)
+        {
+            if($t -is [rich_text])
+            {
+                $this.rich_text += $t
+            }
+            else
+            {
+                $this.rich_text += [rich_text]::ConvertFromObject($t)
+            }
+        }
     }
 
     add($text)
@@ -14,21 +24,8 @@ class pp_rich_text : PageProperties
         $this.rich_text += [rich_text]::new($text)
     }
 
-    static [pp_rich_text] ConvertFromObject($Value)
+    static [notion_rich_text_page_property] ConvertFromObject($Value)
     {
-        if ($Value -is [string])
-        {
-            return [pp_rich_text]::new($Value)
-        }
-        if ($Value -is [object[]])
-        {
-            $rich_text_list = @()
-            foreach ($text in $Value)
-            {
-                $rich_text_list += [rich_text]::new($text)
-            }
-            return [pp_rich_text]::new($rich_text_list)
-        }
-        return $null
+        return [notion_rich_text_page_property]::new($Value.rich_text)
     }
 }

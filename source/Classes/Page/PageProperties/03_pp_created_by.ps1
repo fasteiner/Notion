@@ -1,16 +1,27 @@
-class pp_created_by : PageProperties
+class notion_created_by_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#created-by
 {
     [user] $created_by
     
-    pp_created_by($created_by)
+    notion_created_by_page_property($created_by) : base("created_by")
     {
-        $this.created_by = [user]::ConvertFromObject($created_by)
+        if($created_by -eq $null)
+        {
+            $this.created_by = $null
+            return
+        }
+        if($created_by -is [user])
+        {
+            $this.created_by = $created_by
+        }
+        else{
+            $this.created_by = [user]::ConvertFromObject($created_by)
+        }
     }
 
-    static [pp_created_by] ConvertFromObject($Value)
+    static [notion_created_by_page_property] ConvertFromObject($Value)
     {
-        $pp_created_by = [pp_created_by]::new($Value.created_by)
-        return $pp_created_by
+        $created_by_obj = [notion_created_by_page_property]::new($Value.created_by)
+        return $created_by_obj
     }
 }

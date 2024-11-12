@@ -1,22 +1,22 @@
-class pp_multi_select_item : PageProperties
+class notion_multi_select_item_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#multi-select
 # If the type of a page property value is "multi_select", then the property value contains a "multi_select" array.
 {
-    [multi_select_color] $color
+    [notion_page_property_color] $color
     [string] $id
     [string] $name
 
-    pp_multi_select_item($color, $name)
+    notion_multi_select_item_page_property($color, $name) : base("multi_select")
     {
-        $this.color = [Enum]::Parse([multi_select_color], $color)
+        $this.color = [Enum]::Parse([notion_page_property_color], $color)
         $this.id = [guid]::NewGuid().ToString()
         $this.name = $name
     }
 
-    static [pp_multi_select_item] ConvertFromObject($Value)
+    static [notion_multi_select_item_page_property] ConvertFromObject($Value)
     {
-        $pp_multi_select_item = [multi_select_color]::new($Value.color, $Value.name)
-        $pp_multi_select_item.id = $Value.id
-        return $pp_multi_select_item
+        $notion_multi_select_item_page_property = [notion_page_property_color]::new($Value.color, $Value.name)
+        $notion_multi_select_item_page_property.id = $Value.id
+        return $notion_multi_select_item_page_property
     }       
 }

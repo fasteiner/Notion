@@ -1,26 +1,24 @@
-class pp_people : PageProperties
+class notion_people_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#people
 {
-    [user[]] $people
+    [people[]] $people
 
-    pp_people($people)
+    notion_people_page_property([object[]]$people) : base("people")
     {
-        if ($people -is [array])
+        foreach($person in $people)
         {
-            foreach ($person in $people)
+            if($person -is [people])
             {
-                $this.people += [user]::ConvertFromObject($person)
+                $this.people += $person
             }
-        }
-        else
-        {
-            $this.people = [user]::ConvertFromObject($people)
+            else{
+                $this.people += [people]::ConvertFromObject($person)
+            }
         }
     }
 
-    static [pp_people] ConvertFromObject($Value)
+    static [notion_people_page_property] ConvertFromObject($Value)
     {
-        $pp_people = [pp_people]::new($Value.people)
-        return $pp_people
+        return [notion_people_page_property]::new($Value.people)
     }
 }

@@ -1,34 +1,24 @@
-class pp_multi_select : pp_multi_select_item
+class notion_multi_select_page_property : notion_multi_select_item_page_property
 # https://developers.notion.com/reference/page-property-values#multi-select
 {
-    [pp_multi_select_item[]] $multi_select
+    [notion_multi_select_item_page_property[]] $multi_select
 
-    pp_multi_select($color, $name)
+    notion_multi_select_page_property($color, $name) : base($color, $name)
     {
-        $this.multi_select = [pp_multi_select_item]::new($color, $name)
+        $this.multi_select = [notion_multi_select_item_page_property]::new($color, $name)
     }
 
     add($color, $name)
     {
-        $this.multi_select += [pp_multi_select_item]::new($color, $name)
+        $this.multi_select += [notion_multi_select_item_page_property]::new($color, $name)
     }
 
-    static [pp_multi_select] ConvertFromObject($Value)
+    static [notion_multi_select_page_property] ConvertFromObject($Value)
     {
-        if ($Value -is [string])
-        {
-            return [pp_multi_select]::new($Value)
+        $multi_select_obj = [notion_multi_select_page_property]::new()
+        $multi_select_obj.multi_select = $Value.multi_select.options.foreach{
+            [notion_multi_select_item_page_property]::ConvertFromObject($_)
         }
-        if ($Value -is [object[]])
-        {
-            $pp_multi_select = @()
-            foreach ($item in $Value)
-            {
-                $pp_multi_select += [pp_multi_select_item]::new($item.color, $item.name)
-            }
-            return [pp_multi_select]::new($pp_multi_select)
-        }
-        # Not all code path returns value within method.
-        return [pp_multi_select]::new($Value)
+        return $multi_select_obj
     }
 }

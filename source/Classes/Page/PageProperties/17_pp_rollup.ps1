@@ -1,20 +1,19 @@
-class pp_rollup : PageProperties
+class notion_rollup_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#rollup
 {
     [rollup_function] $function
-    [rollup_type] $type
+    [notion_page_property_rollup_type] $type
 
 
-    pp_rollup ($type_value, $function, $type)
+    notion_rollup_page_property ($type_value, $function, $type) : base("rollup")
     {
         $this.$type = $type_value
         $this.function = [Enum]::Parse([rollup_function], $function)
-        $this.type = [Enum]::Parse([rollup_type], $type)
+        $this.type = [Enum]::Parse([notion_page_property_rollup_type], $type)
     }
 
-    static [pp_rollup] ConvertFromObject($Value)
+    static [notion_rollup_page_property] ConvertFromObject($Value)
     {
-        $pp_rollup = [pp_rollup]::new($Value.type, $Value.function, $Value.type)
-        return $pp_rollup
+        return [notion_rollup_page_property]::new($Value.type, $Value.function, $Value.type)
     }
 }

@@ -1,17 +1,22 @@
-class pp_created_time : PageProperties
+class notion_created_time_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#created-time
 {
     [string] $created_time
 
-    pp_created_time()
+    notion_created_time_page_property() : base("created_time")
     {
         $this.created_time = Get-Date -Format "yyyy-MM-ddTHH:mm:ss.fffZ" -AsUTC
     }
 
-    static [pp_created_time] ConvertFromObject($Value)
+    notion_created_time_page_property([string]$created_time) : base("created_time")
     {
-        $pp_created_time = [pp_created_time]::new()
-        $pp_created_time.created_time = $Value.created_time
-        return $pp_created_time
+        $this.created_time = Get-Date $created_time -Format "yyyy-MM-ddTHH:mm:ss.fffZ" -AsUTC
+    }
+
+    static [notion_created_time_page_property] ConvertFromObject($Value)
+    {
+        $created_time_obj = [notion_created_time_page_property]::new()
+        $created_time_obj.created_time = $Value.created_time
+        return $created_time_obj
     }
 }

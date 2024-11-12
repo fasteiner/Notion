@@ -1,17 +1,17 @@
-class pp_checkbox : PageProperties
+class notion_checkbox_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#checkbox
 {
     [bool] $checkbox = $false
 
-    pp_checkbox($checkbox)
+    notion_checkbox_page_property([bool]$checkbox) : base("checkbox")
     {
         $this.checkbox = $checkbox
     }
 
 
-    static [pp_checkbox] ConvertFromObject($Value)
+    static [notion_checkbox_page_property] ConvertFromObject($Value)
     {
-        $pp_checkbox = [pp_checkbox]::new($Value.checkbox)
-        return $pp_checkbox
+        $notion_checkbox_page_property = [notion_checkbox_page_property]::new($Value.checkbox)
+        return $notion_checkbox_page_property
     }
 }

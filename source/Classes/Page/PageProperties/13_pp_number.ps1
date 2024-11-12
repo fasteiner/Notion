@@ -1,15 +1,15 @@
-class pp_number : PageProperties
+class notion_number_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#number
 {
     [double] $number
 
-    pp_number($number)
+    notion_number_page_property($number) : base("number")
     {
         $this.number = [double]$number
     }
 
-    static [pp_number] ConvertFromObject($Value)
+    static [notion_number_page_property] ConvertFromObject($Value)
     {
-        return [pp_number]::new($Value.number)
+        return [notion_number_page_property]::new($Value.number)
     }
 }
