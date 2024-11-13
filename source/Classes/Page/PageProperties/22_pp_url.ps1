@@ -1,15 +1,15 @@
-class notion_url_page_proerty : PagePropertiesBase
+class notion_url_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#url
 {
     [string] $url
 
-    notion_url_page_proerty($url)
+    notion_url_page_property($url)
     {
         $this.url = $url
     }
 
-    static [notion_url_page_proerty] ConvertFromObject($Value)
+    static [notion_url_page_property] ConvertFromObject($Value)
     {
-        return [notion_url_page_proerty]::new($Value.url)
+        return [notion_url_page_property]::new($Value.url)
     }
 }

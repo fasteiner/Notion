@@ -1,7 +1,7 @@
 class PageProperties
 # https://developers.notion.com/reference/page-property-values
 {
-    #[PagePropertyType] $Type
+    #[notion_page_property_type] $Type
 
     PageProperties()
     {
@@ -9,7 +9,8 @@ class PageProperties
 
     addproperty([string]$PropertyName, [object] $Property)
     {
-        if($Property -is [PageProperties]){
+        if ($Property -is [PageProperties])
+        {
             $this."$PropertyName" = $Property
         }
         $this."$PropertyName" = $Property

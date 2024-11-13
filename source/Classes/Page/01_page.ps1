@@ -29,7 +29,7 @@ class page
     {
         $this.id = [guid]::NewGuid().ToString()
         $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
-        $this.properties = [pp_title]::new($title)
+        $this.properties = [notion_title_page_property]::new($title)
     }
 
 
