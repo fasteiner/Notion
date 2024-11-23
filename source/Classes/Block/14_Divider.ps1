@@ -1,15 +1,15 @@
-class divider : block
+class notion_divider_block : notion_block
 # https://developers.notion.com/reference/block#divider
 {
-    [blocktype] $type = "divider"
+    [notion_blocktype] $type = "divider"
     [object] $divider = @{}
 
-    divider()
+    notion_divider_block()
     {
     }
     
-    static [divider] ConvertFromObject($Value)
+    static [notion_divider_block] ConvertFromObject($Value)
     {
-        return [divider]::new()
+        return [notion_divider_block]::new()
     }
 }

@@ -1,16 +1,16 @@
-class column : block
+class notion_column_block : notion_block
 # https://developers.notion.com/reference/block#column
 {
-    [blocktype] $type = "column"
+    [notion_blocktype] $type = "column"
     [object] $column = @{}
     
-    column()
+    notion_column_block()
     { 
     }
 
-    static [Column] ConvertFromObject($Value)
+    static [notion_column_block] ConvertFromObject($Value)
     {
-        $Column_Obj = [Column]::new()
+        $Column_Obj = [notion_column_block]::new()
         $Column_Obj.column = $Value.column
         return $Column_Obj
     }

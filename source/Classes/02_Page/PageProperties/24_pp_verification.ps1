@@ -2,21 +2,21 @@ class notion_verification
 # https://developers.notion.com/reference/page-property-values#verification
 {
     [notion_page_verification_state] $state
-    [user] $verified_by
+    [notion_user] $verified_by
     [string] $date
 
     #Constructors
     notion_verification_page_property($Value)
     {
         $this.state = [Enum]::Parse([notion_page_verification_state], $Value.state)
-        $this.verified_by = [user]::new($Value.verified_by)
+        $this.verified_by = [notion_user]::new($Value.verified_by)
         $this.date = Get-Date $Value.date -Format "yyyy-MM-ddTHH:mm:ss.fffZ"
     }
 
     notion_verification_page_property($state, $verified_by, $date)
     {
         $this.state = [Enum]::Parse([notion_page_verification_state], $state)
-        $this.verified_by = [user]::new($verified_by)
+        $this.verified_by = [notion_user]::new($verified_by)
         $this.date = Get-Date $date -Format "yyyy-MM-ddTHH:mm:ss.fffZ"
     }
 

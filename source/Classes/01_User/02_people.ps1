@@ -1,19 +1,19 @@
-class people
+class notion_people_user : notion_user
 {
     # https://developers.notion.com/reference/user#people
     [string]$person
     [string]$person_email
 
-    people()
+    notion_people_user()
     {
-        Write-Warning "This object is for display only."
     }
 
-    #TODO person
-    # static [people] ConvertFromObject($Value)
-    # {
-    #     $people.person = [user]::new($value)
-    #     $people.person.email = $Value.email
-    #     return $people
-    # }
+    
+    static [notion_people_user] ConvertFromObject($Value)
+    {
+        # $people.person = [notion_people_user]::new($value)
+        # $people.person.email = $Value.email
+        # return $people
+        return $null
+    }
 }

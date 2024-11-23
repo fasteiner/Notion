@@ -4,9 +4,9 @@ class database
     [string] $object = "database"
     [string] $id
     [string] $created_time
-    [user] $created_by
+    [notion_user] $created_by
     [string] $last_edited_time
-    [user] $last_edited_by
+    [notion_user] $last_edited_by
     [rich_text[]] $title
     $icon
     $cover

@@ -18,10 +18,10 @@ class equation_structure
         return $equation_structure
     }
 }
-class equation : block
+class notion_equation_block : notion_block
 # https://developers.notion.com/reference/block#equation
 {
-    [blocktype] $type = "equation"
+    [notion_blocktype] $type = "equation"
     [equation_structure] $equation
     
     equation()
@@ -34,9 +34,9 @@ class equation : block
         $this.equation = [equation_structure]::new([string] $expression)
     }
     
-    static [equation] ConvertFromObject($Value)
+    static [notion_equation_block] ConvertFromObject($Value)
     {
-        $equation_Obj = [equation]::new()
+        $equation_Obj = [notion_equation_block]::new()
         $equation_Obj.equation = [equation_structure]::ConvertFromObject($Value.equation)
         return $equation_Obj
     }

@@ -1,16 +1,16 @@
-class Breadcrumb : block
+class notion_breadcrumb_block : notion_block
 # https://developers.notion.com/reference/block#breadcrumb
 {
-    [blocktype] $type = "breadcrumb"
+    [notion_blocktype] $type = "breadcrumb"
     [object] $breadcrumb = @{}
 
-    breadcrumb()
+    notion_breadcrumb_block()
     {
     }
 
 
-    static [Breadcrumb] ConvertFromObject($Value)
+    static [notion_breadcrumb_block] ConvertFromObject($Value)
     {
-        return [Breadcrumb]::new()
+        return [notion_breadcrumb_block]::new()
     }
 }

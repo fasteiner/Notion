@@ -18,5 +18,7 @@ jobs:
       - name: 🧪 build
         env:
           NOTION_BEARER_TOKEN: ${{ secrets.NOTION_BEARER_TOKEN }}
+          TEST_PAGE_BLOCK: ${{ vars.TEST_PAGE_BLOCK }}
+          TEST_PAGE_PAGE_PROPERTIES: ${{ vars.TEST_PAGE_PAGE_PROPERTIES }}
         run: |
           ./build.ps1 -ResolveDependency -UseModuleFast

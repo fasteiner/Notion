@@ -5,7 +5,7 @@ class notion_last_edited_time_page_property : PagePropertiesBase
 
     notion_last_edited_time_page_property($value) : base("last_edited_time")
     {
-        $this.last_edited_time = $value
+        $this.last_edited_time = ConvertTo-TSNotionFormattedDateTime -InputDate $value -fieldName "last_edited_time"
     }
 
     static [notion_last_edited_time_page_property] ConvertFromObject($Value)

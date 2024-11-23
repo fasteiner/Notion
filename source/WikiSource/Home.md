@@ -32,8 +32,8 @@ end of 2024 like e.g. template)
 
 The charm of Notion classes are thies simple use while creating objects.
 ```
-[block]::new() # creates an empty block object
-[page]::new()  # creates a new page object
+[notion_block]::new() # creates an empty block object
+[notion_page]::new()  # creates a new page object
 ```
 If you receive items from the API, TSNotion will automatically convert it into Notion objects 
 (based on the classes) so that the can be used.

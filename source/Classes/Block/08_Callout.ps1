@@ -1,9 +1,9 @@
 class callout_structure
 {
-    [blocktype] $type = "callout"
+    [notion_blocktype] $type = "callout"
     [rich_text[]] $rich_text
     # icon: emoji or file
-    $icon = [emoji]::new("")
+    $icon = [notion_emoji]::new("")
     [notion_color] $color = "default"
 
     callout_structure()
@@ -14,25 +14,25 @@ class callout_structure
     callout_structure([string] $text)
     {
         $this.rich_text = @([rich_text_text]::new($text))
-        $this.icon = [emoji]::new()
+        $this.icon = [notion_emoji]::new()
         $this.color = [notion_color]::default
     }
 
     callout_structure([rich_text[]] $rich_text, [string] $icon, [notion_color] $color = [notion_color]::default)
     {
         $this.rich_text = $rich_text.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
-        $this.icon = [emoji]::new($icon)
+        $this.icon = [notion_emoji]::new($icon)
         $this.color = $color
     }
 
-    callout_structure([rich_text[]] $rich_text, [emoji] $icon, [notion_color] $color = [notion_color]::default)
+    callout_structure([rich_text[]] $rich_text, [notion_emoji] $icon, [notion_color] $color = [notion_color]::default)
     {
         $this.rich_text = $rich_text.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
         $this.icon = $icon
         $this.color = $color
     }
 
-    callout_structure([string] $text, [emoji] $icon, [notion_color] $color = [notion_color]::default)
+    callout_structure([string] $text, [notion_emoji] $icon, [notion_color] $color = [notion_color]::default)
     {
         $this.rich_text = @([rich_text_text]::new($text))
         $this.icon = $icon
@@ -47,7 +47,7 @@ class callout_structure
         {
             "emoji"
             {
-                $callout_structure.icon = [emoji]::new($Value.icon.emoji.emoji) 
+                $callout_structure.icon = [notion_emoji]::new($Value.icon.emoji.emoji) 
             }
             "file"
             {
@@ -58,30 +58,30 @@ class callout_structure
         return $callout_structure
     }
 }
-class callout : block
+class notion_callout_block : notion_block
 # https://developers.notion.com/reference/block#callout
 {
-    [blocktype] $type = "callout"
+    [notion_blocktype] $type = "callout"
     [callout_structure] $callout
 
-    callout()
+    notion_callout_block()
     {
         $this.callout = [callout_structure]::new()
     }
 
-    callout([rich_text[]] $rich_text, [string] $icon, [notion_color] $color)
+    notion_callout_block([rich_text[]] $rich_text, [string] $icon, [notion_color] $color)
     {
         $this.callout = [callout_structure]::new($rich_text, $icon, $color)
     }
 
-    callout([rich_text[]] $rich_text, [emoji] $icon, [notion_color] $color)
+    notion_callout_block([rich_text[]] $rich_text, [notion_emoji] $icon, [notion_color] $color)
     {
         $this.callout = [callout_structure]::new($rich_text, $icon, $color)
     }
 
-    static [callout] ConvertFromObject($Value)
+    static [notion_callout_block] ConvertFromObject($Value)
     {
-        $callout_Obj = [callout]::new()
+        $callout_Obj = [notion_callout_block]::new()
         $callout_Obj.callout = [callout_structure]::ConvertFromObject($Value.callout)
         return $callout_Obj
     }

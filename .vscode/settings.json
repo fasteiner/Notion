@@ -1,4 +1,5 @@
 {
+    "editor.wordWrap": "on",
     "powershell.codeFormatting.openBraceOnSameLine": false,
     "powershell.codeFormatting.newLineAfterOpenBrace": true,
     "powershell.codeFormatting.newLineAfterCloseBrace": true,

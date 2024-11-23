@@ -14,20 +14,20 @@ class Image_structure
         return [Image_structure]::new($Value.image)
     }
 }
-class Image : notion_file
+class notion_image_block : notion_file
 # https://developers.notion.com/reference/block#image
 {
-    [blocktype] $type = "image"
+    [notion_blocktype] $type = "image"
     [Image_structure] $image
 
-    Image([notion_file] $file)
+    notion_image_block([notion_file] $file)
     {
         $this.image = [Image_structure]::new($file)
     }
     
-    static [Image] ConvertFromObject($Value)
+    static [notion_image_block] ConvertFromObject($Value)
     {
-        $Image_Obj = [Image]::new()
+        $Image_Obj = [notion_image_block]::new()
         $Image_Obj.image = [Image_structure]::ConvertFromObject($Value.image)
         return $Image_Obj
     }

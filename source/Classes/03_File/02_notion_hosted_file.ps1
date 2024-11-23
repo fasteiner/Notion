@@ -8,28 +8,16 @@ class notion_hosted_file_structure
     {
     }
 
-    notion_hosted_file_structure([string]$url, [string]$expiry_time)
+    notion_hosted_file_structure([string]$url, $expiry_time)
     {
         $this.url = $url
-        if(-not [string]::IsNullOrEmpty($expiry_time))
-        {
-            $this.expiry_time = Get-Date $expiry_time -Format "yyyy-MM-ddTHH:mm:ssZ"
-        }
-        else{
-            $this.expiry_time = $null
-        }
+        $this.expiry_time = ConvertTo-TSNotionFormattedDateTime -InputDate $expiry_time -fieldName "expiry_time"
     }
 
     notion_hosted_file_structure([System.Object]$Value)
     {
         $this.url = $Value.url
-        if(-not [string]::IsNullOrEmpty($value.expiry_time))
-        {
-            $this.expiry_time = Get-Date $value.expiry_time -Format "yyyy-MM-ddTHH:mm:ssZ"
-        }
-        else{
-            $this.expiry_time = $null
-        }    
+        $this.expiry_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.expiry_time -fieldName "expiry_time"
     }
 
     static [notion_hosted_file_structure] ConvertFromObject($Value)
@@ -47,13 +35,13 @@ class notion_hosted_file : notion_file
     {
     }
 
-    notion_hosted_file([string]$name, [string]$caption="",[string]$url, [string]$expiry_time):base("file", $name, $caption)
+    notion_hosted_file([string]$name, [string]$caption="",[string]$url, $expiry_time):base("file", $name, $caption)
     {
         Write-Verbose "[notion_hosted_file]::new($name, $caption, $url, $expiry_time)"
         $this.file = [notion_hosted_file_structure]::new($url, $expiry_time)
     }
 
-    notion_hosted_file([string]$name, [object[]]$caption, [string]$url, [string]$expiry_time):base("file", $name, $caption)
+    notion_hosted_file([string]$name, [object[]]$caption, [string]$url, $expiry_time):base("file", $name, $caption)
     {
         Write-Verbose "[notion_hosted_file]::new($name, $($caption | ConvertTo-Json), $url, $expiry_time)"
         $this.file = [notion_hosted_file_structure]::new($url, $expiry_time)

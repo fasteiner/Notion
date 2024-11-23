@@ -50,13 +50,13 @@ results     : {@{object=block; id=f0e66433-9fc3-4e09-b232-a970081b03fe; parent=;
               id=6a9ed790-d777-4ed9-8db6-5e7c25356e5d; parent=; created_time=25.10.2023 19:49:00; last_edited_time=25.10.2023 19:49:00; created_by=; last_edited_by=; has_children=False; archived=False; in_trash=False; type=paragraph; paragraph=}…}
 next_cursor : 
 has_more    : False
-type        : block
+type        : notion_block
 block       : 
 request_id  : 414efe1f-72a4-4592-83fb-a73aabe30134
 
 #### $result.results
 
-object           : block
+object           : notion_block
 id               : f0e66433-9fc3-4e09-b232-a970081b03fe
 parent           : @{type=page_id; page_id=5158893e-ac8b-4f71-9c8b-49b99596adb7}
 created_time     : 25.10.2023 18:57:00
@@ -69,7 +69,7 @@ in_trash         : False
 type             : table
 table            : @{table_width=2; has_column_header=True; has_row_header=False}
 
-object           : block
+object           : notion_block
 id               : 7bd1d45f-5139-4840-93e5-1bd2f3833d83
 parent           : @{type=page_id; page_id=5158893e-ac8b-4f71-9c8b-49b99596adb7}
 created_time     : 25.10.2023 19:04:00
@@ -100,7 +100,7 @@ By default, PowerShell modules don't automatically export classes and enumeratio
 
 
 # PageProperties
-Page Properties müssen im Zuge der [Page]::ConvertFromObject mitberücksichtig und in echte Klassen konvertiert werden!!! (Dort sind in der DB die Daten drinnen)
+Page Properties müssen im Zuge der [notion_page]::ConvertFromObject mitberücksichtig und in echte Klassen konvertiert werden!!! (Dort sind in der DB die Daten drinnen)
 
 
 ## DB Row = Page, Properties = Daten

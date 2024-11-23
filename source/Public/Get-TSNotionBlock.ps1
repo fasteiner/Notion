@@ -2,7 +2,7 @@ function Get-TSNotionBlock() {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, HelpMessage = "The block to get the children from", ParameterSetName = "Object")]
-        [Block] $Block,
+        [notion_block] $Block,
         [Parameter(Mandatory = $true, HelpMessage = "The block Id to get the children from", ParameterSetName = "ID")]
         [string] $BlockId,
         $maxDepth = 5
@@ -13,7 +13,7 @@ function Get-TSNotionBlock() {
             $BlockId = $Block.id
         }
         $block = Invoke-TSNotionApiCall -Uri "/blocks/$BlockId" -Method GET
-        $block = [block]::ConvertFromObject($block)
+        $block = [notion_block]::ConvertFromObject($block)
         if($block.has_children -and $maxDepth -gt 0)
         {
             $objects = Get-TSNotionBlockChildren -Block $block

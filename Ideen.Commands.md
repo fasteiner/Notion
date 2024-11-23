@@ -50,7 +50,7 @@ Search-TSNotion [-Page|-Database] -Query        # Searches pages or databases fo
 ### Classes
 
 ``` PowerShell
-[block]::new()
+[notion_block]::new()
 ```
 
 # Commands by type (Object= Block, Page, PageProperties, Database, DatabaseProperties)

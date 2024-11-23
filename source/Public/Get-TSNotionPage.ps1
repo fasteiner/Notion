@@ -48,7 +48,7 @@ function Get-TSNotionPage
         $response = Invoke-TSNotionApiCall -uri $url -method "GET"
 
         # Return the response to the caller
-        $pageObj = [page]::ConvertFromObject($response)
+        $pageObj = [notion_page]::ConvertFromObject($response)
         $blocks = Get-TSNotionBlockChildren -BlockId $pageObj.id
         # $children = $blocks | Get-TSNotionBlockChildren -maxDepth ($maxDepth - 1)
         # $pageObj.addChildren($children)

@@ -1,7 +1,7 @@
 class notion_last_edited_by_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#last-edited-by
 {
-    [user] $last_edited_by
+    [notion_user] $last_edited_by
 
     notion_last_edited_by_page_property($value) : base("last_edited_by")
     {
@@ -10,12 +10,12 @@ class notion_last_edited_by_page_property : PagePropertiesBase
             $this.last_edited_by = $null
             return
         }
-        if($value -is [user])
+        if($value -is [notion_user])
         {
             $this.last_edited_by = $value
         }
         else{
-            $this.last_edited_by = [user]::ConvertFromObject($value)
+            $this.last_edited_by = [notion_user]::ConvertFromObject($value)
         }
     }
 
