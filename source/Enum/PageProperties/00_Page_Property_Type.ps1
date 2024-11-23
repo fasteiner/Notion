@@ -15,8 +15,8 @@ enum notion_page_property_type
     people
     phone_number
     relation
-    rollup
     rich_text
+    rollup
     select
     status
     title

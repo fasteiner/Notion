@@ -1,4 +1,4 @@
-class notion_select : PagePropertiesBase
+class notion_select
 # https://developers.notion.com/reference/page-property-values#select
 {
     [notion_color] $color
@@ -11,20 +11,20 @@ class notion_select : PagePropertiesBase
     }
 
 
-    notion_select_page_property ($color, $id, $name)
+    notion_select ($color, $id, $name)
     {
         $this.color = [Enum]::Parse([notion_color], $color)
         $this.id = $id
         $this.name = $name
     }
 
-    static [notion_select_page_property] ConvertFromObject($Value)
+    static [notion_select] ConvertFromObject($Value)
     {
-        return [notion_select_page_property]::new($Value.color, $Value.id, $Value.name)
+        return [notion_select]::new($Value.color, $Value.id, $Value.name)
     }
 }
 
-class notion_select_page_property : PagePropertiesBase{
+class notion_select_page_property : PagePropertiesBase {
     [notion_select] $select
 
     notion_select_page_property() : base("select")

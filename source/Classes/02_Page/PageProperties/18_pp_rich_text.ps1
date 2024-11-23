@@ -3,7 +3,7 @@ class notion_rich_text_page_property : PagePropertiesBase
     # $type = "rich_text"
     [rich_text[]] $rich_text
     
-    notion_rich_text_page_property([object[]]$text)
+    notion_rich_text_page_property([object[]]$text) : base("rich_text")
     {
         $this.rich_text = @()
         foreach ($t in $text)

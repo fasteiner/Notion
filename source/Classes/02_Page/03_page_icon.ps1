@@ -10,15 +10,15 @@ class notion_page_icon
                 # not supported according to the documentation, but it is returned by the API
                 "file"
                 {
-                    $icon_obj = [notion_hosted_file]::ConvertFromObject($Value.file)
+                    $icon_obj = [notion_hosted_file]::ConvertFromObject($Value)
                 }
                 "external"
                 {
-                    $icon_obj = [notion_external_file]::ConvertFromObject($Value.external)
+                    $icon_obj = [notion_external_file]::ConvertFromObject($Value)
                 }
                 "emoji"
                 {
-                    $icon_obj = [notion_emoji]::new($Value.emoji) 
+                    $icon_obj = [notion_emoji]::new($Value) 
                 }
                 default
                 {

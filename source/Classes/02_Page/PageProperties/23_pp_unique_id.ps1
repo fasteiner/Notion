@@ -4,20 +4,25 @@ class notion_unique_id
     [int] $number
     [string] $prefix = $null
 
-    notion_unique_id_page_property($number)
+    notion_unique_id()
+    {
+        $this.number = 0
+    }
+
+    notion_unique_id($number)
     {
         $this.number = $number
     }
     
-    notion_unique_id_page_property($number, $prefix)
+    notion_unique_id($number, $prefix)
     {
         $this.number = $number
         $this.prefix = $prefix
     }
 
-    static [notion_unique_id_page_property] ConvertFromObject($Value)
+    static [notion_unique_id] ConvertFromObject($Value)
     {
-        return [notion_unique_id_page_property]::new($Value.number, $Value.prefix)
+        return [notion_unique_id]::new($Value.number, $Value.prefix)
     }
 }
 

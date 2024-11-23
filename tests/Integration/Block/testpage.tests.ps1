@@ -1,7 +1,7 @@
 Import-Module Pester
 
 BeforeDiscovery {
-    $projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
+    $projectPath = "$($PSScriptRoot)/../../.." | Convert-Path
 
     <#
         If the QA tests are run outside of the build script (e.g with Invoke-Pester)
@@ -21,8 +21,7 @@ BeforeDiscovery {
 
 }
 
-BeforeAll
- {
+BeforeAll {
     if (-not $env:NOTION_BEARER_TOKEN) {
         $BearerTokenFile = ".\BearerToken.$((whoami).split('\')[1]).local.xml"
         #Create Credentials

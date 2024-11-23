@@ -16,16 +16,16 @@ class notion_parent
     {
         $parent_obj = $null
         switch ($Value.type) {
-            "database" {
+            "database_id" {
                 $parent_obj = [notion_database_parent]::ConvertFromObject($Value)
             }
-            "page" {
+            "page_id" {
                 $parent_obj = [notion_page_parent]::ConvertFromObject($Value)
             }
-            "workspace" {
+            "workspace_id" {
                 $parent_obj = [notion_workspace_parent]::ConvertFromObject($Value)
             }
-            "block" {
+            "block_id" {
                 $parent_obj = [notion_block_parent]::ConvertFromObject($Value)
             }
             default {

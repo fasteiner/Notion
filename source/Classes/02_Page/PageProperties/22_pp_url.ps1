@@ -3,7 +3,7 @@ class notion_url_page_property : PagePropertiesBase
 {
     [string] $url
 
-    notion_url_page_property($url)
+    notion_url_page_property($url) : base("url")
     {
         $this.url = $url
     }

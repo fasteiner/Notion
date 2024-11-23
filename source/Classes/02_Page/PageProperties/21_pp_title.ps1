@@ -1,22 +1,36 @@
 class notion_title_page_property : PagePropertiesBase
 # https://developers.notion.com/reference/page-property-values#title
 {
-    [rich_text[]] $title = @()
+    [rich_text[]] $title
+
+    notion_title_page_property() : base("title")
+    {
+        $this.title = @()
+    }
 
     # Constructor
-    notion_title_page_property([object[]]$value)
+    notion_title_page_property([object]$value) : base("title")
     {
-        foreach($item in $value)
+        $this.title = @()
+        if($value -is [array])
         {
-            if($item -is [rich_text])
+            foreach($item in $value)
             {
-                $this.title += $item
-            }
-            else
-            {
-                $this.title += [rich_text]::ConvertFromObject($item)
+                if($item -is [rich_text])
+                {
+                    $this.title += $item
+                }
+                else
+                {
+                    $this.title += [rich_text]::ConvertFromObject($item)
+                }
             }
         }
+        else
+        {
+            $this.title += [rich_text]::ConvertFromObject($value)
+        }
+        
         
     }
     #Methods
@@ -28,6 +42,7 @@ class notion_title_page_property : PagePropertiesBase
     #TODO Array of rich_text?
     static [notion_title_page_property] ConvertFromObject($Value)
     {
-        return [notion_title_page_property]::new($Value)
+        Write-Verbose "[notion_title_page_property]::ConvertFromObject($($Value | ConvertTo-Json -Depth 10))"
+        return [notion_title_page_property]::new($Value.title)
     }
 }

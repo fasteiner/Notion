@@ -12,7 +12,7 @@ class notion_page
     [notion_page_icon]      $icon
     [notion_file]    $cover
     [notion_pageproperties] $properties = @{}
-    [notion_page_parent]    $parent
+    [notion_parent]    $parent
     [string]     $url
     [string]     $public_url
     [string]     $request_id
@@ -36,13 +36,13 @@ class notion_page
     notion_page([System.Object]$parent, $properties)
     {
         $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
-        if($parent -is [notion_page_parent])
+        if($parent -is [notion_parent])
         {
             $this.parent = $parent
         }
         else
         {
-            $this.parent = [notion_page_parent]::ConvertFromObject($parent)
+            $this.parent = [notion_parent]::ConvertFromObject($parent)
         }
         $this.properties = $properties
     }
@@ -89,9 +89,9 @@ class notion_page
             $page = [notion_page]::new()
             $page.id = $Value.id
             $page.created_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
-            $page.created_by = [notion_user]::new($Value.created_by)
+            $page.created_by = [notion_user]::ConvertFromObject($Value.created_by)
             $page.last_edited_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
-            $page.last_edited_by = [notion_user]::new($Value.last_edited_by)
+            $page.last_edited_by = [notion_user]::ConvertFromObject($Value.last_edited_by)
             $page.archived = $Value.archived
             $page.in_trash = $Value.in_trash
             #$page.icon = $Value.icon
@@ -100,14 +100,13 @@ class notion_page
             $page.cover = [notion_file]::ConvertFromObject($Value.cover) 
             # https://developers.notion.com/reference/page-property-values#paginated-page-properties
             #TODO Konvertierung aller Properties in Klassen
-            #$page.properties = [notion_pageproperties]::ConvertFromObject($Value.properties)
-            $page.properties = $Value.properties
+            $page.properties = [notion_pageproperties]::ConvertFromObject($Value.properties)
+            # $page.properties = $Value.properties
             $page.parent = [notion_parent]::ConvertFromObject($Value.parent)
             $page.url = $Value.url
             $page.public_url = $Value.public_url
             $page.archived = $Value.archived ? $Value.archived : $false
             $page.in_trash = $Value.in_trash ? $Value.in_trash : $false
-            #BUG warum wird das nicht befüllt?
             $page.request_id = $Value.request_id ? $Value.request_id : $null
             return $page
         }

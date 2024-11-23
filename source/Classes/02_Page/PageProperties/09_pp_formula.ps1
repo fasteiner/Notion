@@ -5,6 +5,22 @@ class notion_formula{
     {
         $this.type = $type
     }
+
+    static [notion_formula] ConvertFromObject($Value)
+    {
+        $notion_fomula_obj = $null
+        switch($Value.type)
+        {
+            "boolean" { $notion_fomula_obj = [notion_formula_boolean]::ConvertFromObject($Value) }
+            "date" { $notion_fomula_obj = [notion_formula_date]::ConvertFromObject($Value) }
+            "number" { $notion_fomula_obj = [notion_formula_number]::ConvertFromObject($Value) }
+            "string" { $notion_fomula_obj = [notion_formula_string]::ConvertFromObject($Value) }
+            default { 
+                Write-Error "Unknown formula type: $($Value.type)" -Category InvalidData -RecommendedAction "Check the formula type and try again. Supported types are boolean, date, number, and string."
+             }
+        }
+        return $notion_fomula_obj
+    }
 }
 
 class notion_formula_boolean : notion_formula
@@ -91,15 +107,8 @@ class notion_formula_page_property : PagePropertiesBase
 
     static [notion_formula_page_property] ConvertFromObject($Value)
     {
-        $formula_obj = $null
-        switch($Value.type)
-        {
-            "boolean" { $formula_obj = [notion_formula_boolean]::ConvertFromObject($Value) }
-            "date" { $formula_obj = [notion_formula_date]::ConvertFromObject($Value) }
-            "number" { $formula_obj = [notion_formula_number]::ConvertFromObject($Value) }
-            "string" { $formula_obj = [notion_formula_string]::ConvertFromObject($Value) }
-            default { $formula_obj = [notion_formula]::new($Value.type) }
-        }
-        return [notion_formula_page_property]::new($formula_obj)
+        $formula_obj = [notion_formula_page_property]::new()
+        $formula_obj.formula = [notion_formula]::ConvertFromObject($Value.formula)
+        return $formula_obj
     }
 }
