@@ -1,4 +1,4 @@
-class comment
+class notion_comment
 #https://developers.notion.com/reference/comment-object
 {
     [string]$object = "comment"
@@ -10,21 +10,21 @@ class comment
     [notion_user]$created_by
     [rich_text]$rich_text
 
-    comment()
+    notion_comment()
     {
         $this.id = [guid]::NewGuid().ToString()
         $this.created_time = Get-Date -Format "yyyy-MM-ddTHH:mm:ss.fffZ" -AsUTC
     }
     
-    comment([string] $id)
+    notion_comment([string] $id)
     {
         $this.id = $id
         $this.created_time = Get-Date -Format "yyyy-MM-ddTHH:mm:ss.fffZ" -AsUTC
     }
 
-    static [comment] ConvertfromObject($Value)
+    static [notion_comment] ConvertfromObject($Value)
     {
-        $comment = [comment]::new()
+        $comment = [notion_comment]::new()
         $comment.id = $Value.id
         $comment.parent = $Value.parent
         $comment.discussion_id = $Value.discussion_id
