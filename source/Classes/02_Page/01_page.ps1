@@ -11,7 +11,7 @@ class notion_page
     [bool]       $in_trash
     [notion_page_icon]      $icon
     [notion_file]    $cover
-    [PageProperties] $properties = @{}
+    [notion_pageproperties] $properties = @{}
     [notion_page_parent]    $parent
     [string]     $url
     [string]     $public_url
@@ -100,7 +100,7 @@ class notion_page
             $page.cover = [notion_file]::ConvertFromObject($Value.cover) 
             # https://developers.notion.com/reference/page-property-values#paginated-page-properties
             #TODO Konvertierung aller Properties in Klassen
-            #$page.properties = [PageProperties]::ConvertFromObject($Value.properties)
+            #$page.properties = [notion_pageproperties]::ConvertFromObject($Value.properties)
             $page.properties = $Value.properties
             $page.parent = [notion_parent]::ConvertFromObject($Value.parent)
             $page.url = $Value.url

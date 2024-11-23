@@ -1,15 +1,15 @@
-class PageProperties
+class notion_pageproperties
 # https://developers.notion.com/reference/page-property-values
 {
     #[notion_page_property_type] $Type
 
-    PageProperties()
+    notion_pageproperties()
     {
     }
 
     addproperty([string]$PropertyName, [object] $Property)
     {
-        if ($Property -is [PageProperties])
+        if ($Property -is [PagePropertiesBase])
         {
             $this."$PropertyName" = $Property
         }
@@ -49,9 +49,9 @@ class PageProperties
     #     }
     # }
     
-    # static [PageProperties] ConvertFromObject($Properties)
+    # static [notion_pageproperties] ConvertFromObject($Properties)
     # {
-    #     $PageProperties = [PageProperties]::new()
+    #     $PageProperties = [notion_pageproperties]::new()
 
     #     #TODO - BUG - Baustelle
     #     foreach ($PropertyName in $Properties.properties.psobject.properties.name)

@@ -35,7 +35,7 @@ class notion_custom_emoji
         $this.custom_emoji = $null
     }
 
-    notion_custom_emoji([custom_emoji]$custom_emoji)
+    notion_custom_emoji([notion_custom_emoji]$custom_emoji)
     {
         $this.custom_emoji = $custom_emoji
     }
