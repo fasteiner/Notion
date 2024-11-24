@@ -10,6 +10,10 @@ class pp_multi_select : pp_multi_select_item
 
     add($color, $name)
     {
+        if ($multi_select.Count -ge 100)
+        {
+            throw [System.ArgumentException]::new("The multi_select property must have 100 items or less.")
+        }
         $this.multi_select += [pp_multi_select_item]::new($color, $name)
     }
 

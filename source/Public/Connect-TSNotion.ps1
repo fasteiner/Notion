@@ -6,6 +6,16 @@ function Connect-TSNotion
     
     .DESCRIPTION
     The Connect-TSNotion function is used to establish a connection to the Notion API. It requires a Bearer token and the URL to the Notion API. Optionally, you can specify the API version.
+
+    How to obtain an Bearer Token / Notion API Key / Integration Key?
+    1. Register a new account at [https://notion.com](https://notion.com)
+    2. [https://developers.notion.com](https://developers.notion.com) -> Click "View my integrations"
+    3. At "My integrations" click Add (**+**)
+    4. Select the name, workspace, type and logo - Click "Save"
+    5. Click on "Configure"
+    6. Secret -> Click on "Show"
+    7. Click on "Copy"
+    8. That's your Bearer Token / API Key / Integration Token
     
     .PARAMETER BearerToken
     The Bearer token (aka APIKey) used for authentication. This parameter is mandatory.

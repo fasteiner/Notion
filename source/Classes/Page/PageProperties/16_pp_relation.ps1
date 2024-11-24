@@ -23,6 +23,9 @@ class pp_relation : PageProperties
         }        
     }
 
+    #TODO: Limit to max 100 releations
+    # https://developers.notion.com/reference/request-limits#limits-for-property-values
+
     static [pp_relation] ConvertFromObject($Value)
     {
         $pp_relation = [pp_relation]::new($Value.relation)
