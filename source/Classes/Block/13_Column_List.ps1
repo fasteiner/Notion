@@ -1,14 +1,14 @@
-class column_list : block
+class notion_column_list_block : notion_block
 # https://developers.notion.com/reference/block#column-list-and-column
 {
-    [blocktype] $type = "column_list"
-    [column[]] $column_list = [column[]]@()
+    [notion_blocktype] $type = "column_list"
+    [notion_column_block[]] $column_list = [notion_column_block[]]@()
 
-    column_list()
+    notion_column_list_block()
     {
     }
 
-    column_list([column] $column_list)
+    column_list([notion_column_list_block] $column_list)
     {
         $this.column_list = $column_list
     }
@@ -18,10 +18,10 @@ class column_list : block
         $this.column_list += $column
     }
     
-    static [column_list] ConvertFromObject($Value)
+    static [notion_column_list_block] ConvertFromObject($Value)
     {
-        $column_list_obj = [column_list]::new()
-        $column_list_obj.column_list = add([column]::ConvertFromObject($Value.column_list))
+        $column_list_obj = [notion_column_list_block]::new()
+        $column_list_obj.column_list = add([notion_column_block]::ConvertFromObject($Value.column_list))
         return $column_list_obj
     }
 }

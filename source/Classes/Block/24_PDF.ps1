@@ -22,24 +22,24 @@ class PDF_structure
     }
 
 }
-class PDF : notion_file
+class notion_PDF_block : notion_file
 # https://developers.notion.com/reference/block#pdf
 {
-    [blocktype] $type = "pdf"
+    [notion_blocktype] $type = "pdf"
     [PDF_structure] $pdf
     
-    PDF()   
+    notion_PDF_block()   
     {
         $this.pdf = [PDF_structure]::new()
         
     }
 
-    PDF([notion_file] $file)
+    notion_PDF_block([notion_file] $file)
     {
         $this.pdf = [PDF_structure]::new($file)
     }
 
-    PDF([rich_text[]] $caption, [notion_file] $file)
+    notion_PDF_block([rich_text[]] $caption, [notion_file] $file)
     {
         $this.pdf = [PDF_structure]::new($caption, $file)
     }
@@ -61,9 +61,9 @@ class PDF : notion_file
     #     $this.caption = $caption
     # }
 
-    static [PDF] ConvertFromObject($Value)
+    static [notion_PDF_block] ConvertFromObject($Value)
     {
-        $PDF_obj = [PDF]::new()
+        $PDF_obj = [notion_PDF_block]::new()
         $PDF_obj.pdf = [PDF_structure]::ConvertFromObject($Value.pdf)
         return $PDF_obj
     }

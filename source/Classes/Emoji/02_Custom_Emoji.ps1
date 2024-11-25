@@ -24,25 +24,25 @@ class custom_emoji_structure
     }
 
 }   
-class custom_emoji
+class notion_custom_emoji
 # https://developers.notion.com/reference/emoji-object#custom-emoji
 {
     [icontype]$type = "custom_emoji"
     [string]$custom_emoji
 
-    custom_emoji()
+    notion_custom_emoji()
     {
         $this.custom_emoji = $null
     }
 
-    custom_emoji([custom_emoji]$custom_emoji)
+    notion_custom_emoji([notion_custom_emoji]$custom_emoji)
     {
         $this.custom_emoji = $custom_emoji
     }
 
-    static [custom_emoji] ConvertFromObject($Value)
+    static [notion_custom_emoji] ConvertFromObject($Value)
     {
-        $custom_emojiObj = [custom_emoji]::new()
+        $custom_emojiObj = [notion_custom_emoji]::new()
         $custom_emojiObj.custom_emoji = [custom_emoji_structure]::ConvertFromObject($Value.custom_emoji)
         return $custom_emojiObj
     }

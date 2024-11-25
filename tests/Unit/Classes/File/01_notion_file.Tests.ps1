@@ -70,6 +70,7 @@ Describe "notion_file Class Tests" {
     }
 
     Context "Static Method Tests" {
+
         It "should convert from object to notion_file" {
             $type = "file"
             $name = "Test File"
@@ -81,11 +82,42 @@ Describe "notion_file Class Tests" {
                 }
                 plain_text = "Test Caption"
             }
+            $file = @{
+                url = "https://example.com/file"
+                expiry_time = ([datetime]::UtcNow).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
+            }
             )
             $value = @{
                 type = $type
                 name = $name
                 caption = $caption
+                file = $file
+            }
+            $file = [notion_file]::ConvertFromObject($value)
+            $file.type | Should -Be $type
+            $file.name | Should -Be $name
+            $file.caption[0].plain_text | Should -Be $caption[0].plain_text
+        }
+        It "should convert from object to notion_external_file" {
+            $type = "external"
+            $name = "Test File"
+            $caption = @(@{
+                type = "text"
+                text = @{
+                    content = "Test Caption"
+                    link = $null
+                }
+                plain_text = "Test Caption"
+            }
+            $file = @{
+                url = "https://example.com/file"
+            }
+            )
+            $value = @{
+                type = $type
+                name = $name
+                caption = $caption
+                external = $file
             }
             $file = [notion_file]::ConvertFromObject($value)
             $file.type | Should -Be $type

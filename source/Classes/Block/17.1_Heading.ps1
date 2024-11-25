@@ -1,8 +1,8 @@
-class Heading : Block
+class Heading : notion_block
 # https://developers.notion.com/reference/block#headings
 {
     [int] $level
-    [blocktype] $type
+    [notion_blocktype] $type
     [rich_text[]] $rich_text
     [notion_color] $color = "default"
     [boolean] $is_toggleable

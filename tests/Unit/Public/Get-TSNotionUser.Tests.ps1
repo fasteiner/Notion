@@ -53,34 +53,34 @@ Describe "Get-TSNotionUser Tests" {
         It "Should return user information for a valid user ID" {
             # Arrange
             $userId = "e79a0b74-3aba-4149-9f74-0bb5791a6ee6"
-            $localResponse = [user]::ConvertFromObject($global:expectedResponses[0])
+            $localResponse = [notion_user]::ConvertFromObject($global:expectedResponses[0])
 
             # Act
             $result = Get-TSNotionUser -UserId $userId
 
             # Assert
             $result | Should -Be $localResponse
-            $result | Should -BeOfType [user]
+            $result | Should -BeOfType [notion_user]
         }
 
         It "Should return user information for 'me'" {
             # Arrange
             $userId = "me"
 
-            $localResponse = [user]::ConvertFromObject($global:expectedResponses[1])
+            $localResponse = [notion_user]::ConvertFromObject($global:expectedResponses[1])
 
             # Act
             $result = Get-TSNotionUser -UserId $userId
 
             # Assert
             $result | Should -Be $localResponse
-            $result | Should -BeOfType [user]
+            $result | Should -BeOfType [notion_user]
         }
 
         It "Should return all users when UserId is null" {
             # Arrange
 
-            $localResponses = $global:expectedResponses.ForEach({ [user]::ConvertFromObject($_) })
+            $localResponses = $global:expectedResponses.ForEach({ [notion_user]::ConvertFromObject($_) })
 
             # Act
             $result = Get-TSNotionUser
@@ -89,7 +89,7 @@ Describe "Get-TSNotionUser Tests" {
             for($i = 0; $i -lt $result.Count; $i++){
                 $result[$i] | Should -Be $localResponses[$i]
             }
-            $result | Should -BeOfType [user]
+            $result | Should -BeOfType [notion_user]
             $result.Count | Should -Be $expectedResponses.Count
         }
     }

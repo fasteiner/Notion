@@ -41,7 +41,7 @@ function Get-TSNotionUser
         $response = Invoke-TSNotionApiCall -uri $url -method "GET"
 
         # Return the response to the caller
-        return $response.foreach({[user]::ConvertFromObject($_)})
+        return $response.foreach({[notion_user]::ConvertFromObject($_)})
     }
     catch
     {

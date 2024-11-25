@@ -3,9 +3,9 @@ function Add-TSNotionBlockToPage
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, HelpMessage = "The parent page to add the block to")]
-        [Page] $Page,
+        [notion_page] $Page,
         [Parameter(Mandatory = $true, HelpMessage = "The block to add to the page")]
-        [Block[]] $Block
+        [notion_block[]] $Block
     )
     
     process

@@ -1,18 +1,18 @@
-class notion_file_block : block {
+class notion_file_block : notion_block {
     #https://developers.notion.com/reference/block#file
-    [blocktype] $type = "file"
+    [notion_blocktype] $type = "file"
     [notion_file]$file
 
     notion_file_block()
     {
     }
     
-    notion_file_block([string]$name, [string]$caption="",[string]$url, [string]$expiry_time)
+    notion_file_block([string]$name, [string]$caption="",[string]$url, $expiry_time)
     {
         $this.file = [notion_hosted_file]::new($name, $caption, $url, $expiry_time)
     }
 
-    notion_file_block([string]$name, [rich_text[]]$caption, [string]$url, [string]$expiry_time)
+    notion_file_block([string]$name, [rich_text[]]$caption, [string]$url, $expiry_time)
     {
         $this.file = [notion_hosted_file]::new($name, $caption, $url, $expiry_time)
     }

@@ -81,7 +81,7 @@ function ConvertTo-TSNotionObject
                             $result | ConvertTo-TSNotionObject
                         }
                     }
-                    #TODO: $out = [Block]::new()
+                    #TODO: $out = [notion_block]::new()
                     # Block vom Typ List erstellen
                     # Children aus den Einzelobjekten hinzufügen
                 }
@@ -90,13 +90,13 @@ function ConvertTo-TSNotionObject
                 {
                     # https://developers.notion.com/reference/block
                     "Block" | Add-TSNotionLogToFile -Level DEBUG
-                    $output += [block]::ConvertFromObject($item)
+                    $output += [notion_block]::ConvertFromObject($item)
                 }
         
                 "comment"
                 {  
                     "Comment" | Add-TSNotionLogToFile -Level DEBUG
-                    $output += [comment]::ConvertfromObject($item)
+                    $output += [notion_comment]::ConvertfromObject($item)
                 }
         
                 "database"
@@ -109,7 +109,7 @@ function ConvertTo-TSNotionObject
                 {
                     # https://developers.notion.com/reference/page
                     "Page" | Add-TSNotionLogToFile -Level DEBUG
-                    $output += [page]::ConvertfromObject($item)
+                    $output += [notion_page]::ConvertfromObject($item)
                 }
         
                 "page_or_database"
@@ -126,7 +126,7 @@ function ConvertTo-TSNotionObject
                 {
                     # https://developers.notion.com/reference/user
                     "User" | Add-TSNotionLogToFile -Level DEBUG
-                    $output += [user]::ConvertFromObject($item)
+                    $output += [notion_user]::ConvertFromObject($item)
                 }
                 Default
                 {

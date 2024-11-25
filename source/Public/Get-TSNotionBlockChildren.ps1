@@ -3,7 +3,7 @@ function Get-TSNotionBlockChildren {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, ParameterSetName = "Block" , HelpMessage = "The block to get the children from")]
-        [Block] $Block,
+        [notion_block] $Block,
         [Parameter(Mandatory = $true, ParameterSetName = "Id" , HelpMessage = "The block Id to get the children from")]
         [string] $BlockId,
         [int] $maxDepth = 5

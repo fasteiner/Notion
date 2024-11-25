@@ -1,8 +1,8 @@
-class Paragraph_structure
+class paragraph_structure
 {
     [rich_text[]] $rich_text
     [notion_color] $color = "default"
-    [block[]] $children = @()
+    [notion_block[]] $children = @()
     #TODO: Implement addchildren
     
 
@@ -20,25 +20,25 @@ class Paragraph_structure
         $this.rich_text += $richtext
     }
 
-    static [Paragraph] ConvertFromObject($Value)
+    static [paragraph_structure] ConvertFromObject($Value)
     {
-        $Paragraph = [Paragraph]::new()
+        $Paragraph = [paragraph_structure]::new()
         $Paragraph.rich_text = $Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
         return $Paragraph
     }
 }
-class Paragraph : block
+class notion_paragraph_block : notion_block
 # https://developers.notion.com/reference/block#paragraph
 {
-    [blocktype] $type = "paragraph"
+    [notion_blocktype] $type = "paragraph"
     [Paragraph_structure] $paragraph
 
-    paragraph()
+    notion_paragraph_block()
     {
         $this.paragraph = [Paragraph_structure]::new(@())
     }
 
-    paragraph([rich_text] $richtext)
+    notion_paragraph_block([rich_text] $richtext)
     {
         $this.paragraph = [Paragraph_structure]::new(@($richtext))
     }
@@ -48,9 +48,9 @@ class Paragraph : block
         $this.paragraph = [Paragraph_structure]::addRichText($richtext)
     }
 
-    static [Paragraph] ConvertFromObject($Value)
+    static [notion_paragraph_block] ConvertFromObject($Value)
     {
-        $Paragraph_Obj = [Paragraph]::new()
+        $Paragraph_Obj = [notion_paragraph_block]::new()
         $Paragraph_Obj.paragraph = [Paragraph_structure]::ConvertFromObject($Value.paragraph)
         return $Paragraph_Obj
     }

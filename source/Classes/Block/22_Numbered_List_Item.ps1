@@ -22,30 +22,30 @@ class numbered_list_item_structure
 
     static [numbered_list_item_structure] ConvertFromObject($Value)
     {
-        $numbered_list_item_structure = [numbered_list_item]::new()
+        $numbered_list_item_structure = [numbered_list_item_structure]::new()
         $numbered_list_item_structure.rich_text = $Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
         $numbered_list_item_structure.color = $Value.color
         return $numbered_list_item_structure
     }
 }
-class numbered_list_item : block
+class notion_numbered_list_item_block : notion_block
 # https://developers.notion.com/reference/block#numbered-list-item
 {
-    [blocktype] $type = "numbered_list_item"
+    [notion_blocktype] $type = "numbered_list_item"
     [numbered_list_item_structure] $numbered_list_item
 
-    numbered_list_item()
+    notion_numbered_list_item_block()
     {
     }
 
-    numbered_list_item([rich_text[]] $rich_text)
+    notion_numbered_list_item_block([rich_text[]] $rich_text)
     {
         $this.numbered_list_item = [numbered_list_item_structure]::new($rich_text)
     }
 
-    static [numbered_list_item] ConvertFromObject($Value)
+    static [notion_numbered_list_item_block] ConvertFromObject($Value)
     {
-        $numbered_list_item_Obj = [numbered_list_item]::new()
+        $numbered_list_item_Obj = [notion_numbered_list_item_block]::new()
         $numbered_list_item_Obj.numbered_list_item = [numbered_list_item_structure]::ConvertFromObject($Value.numbered_list_item)
         return $numbered_list_item_Obj
     }

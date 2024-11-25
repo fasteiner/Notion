@@ -11,7 +11,7 @@ function Add-TSNotionHeaderToBlock
         [Parameter(Mandatory = $true, ParameterSetName = "Params", HelpMessage = "Is the Header toggleable")]
         [boolean]  $is_toggleable,
         [Parameter(Mandatory = $true, HelpMessage = "The parent block to add the header to")]
-        [Block] $Parent,
+        [notion_block] $Parent,
         [Parameter(Mandatory = $true, ParameterSetName = "Object")]
         [Alias("Object")]
         [Heading] $InputObject

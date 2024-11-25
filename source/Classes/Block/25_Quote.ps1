@@ -2,7 +2,7 @@ class Quote_structure
 {
     [rich_text[]] $rich_text
     [notion_color] $color = "default"
-    [block[]] $children = @()
+    [notion_block[]] $children = @()
 
     #TODO: Implement addchildren
     Quote_structure([rich_text[]] $rich_text, [notion_color] $color = "default")
@@ -17,23 +17,23 @@ class Quote_structure
     }
 }
 
-class Quote : block
+class notion_quote_block : notion_block
 # https://developers.notion.com/reference/block#quote
 {
-    [blocktype] $type = "quote"
+    [notion_blocktype] $type = "quote"
     [Quote_structure] $quote
 
-    Quote ()
+    notion_quote_block()
     {}
 
-    Quote([rich_text[]] $rich_text, [notion_color] $color)
+    notion_quote_block([rich_text[]] $rich_text, [notion_color] $color)
     {
         $this.quote = [Quote_structure]::new($rich_text, $color)
     }
 
-    static [Quote] ConvertFromObject($Value)
+    static [notion_quote_block] ConvertFromObject($Value)
     {
-        $Quote_Obj = [Quote]::new()
+        $Quote_Obj = [notion_quote_block]::new()
         $Quote_Obj.quote = [Quote_structure]::ConvertFromObject($Value.quote)
         return $Quote_Obj
     }

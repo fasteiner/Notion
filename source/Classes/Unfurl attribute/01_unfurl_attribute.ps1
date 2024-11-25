@@ -1,4 +1,4 @@
-class unfurl_attribute
+class notion_unfurl_attribute
 # https://developers.notion.com/reference/unfurl-attribute-object
 {
     [string]$id
