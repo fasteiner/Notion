@@ -15,6 +15,10 @@ class notion_multi_select_page_property : PagePropertiesBase
 
     add($color, $name)
     {
+        if ($multi_select.Count -ge 100)
+        {
+            throw [System.ArgumentException]::new("The multi_select property must have 100 items or less.")
+        }
         $this.multi_select += [notion_multi_select_item_page_property]::new($color, $name)
     }
 
