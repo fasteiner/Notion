@@ -1,5 +1,4 @@
 name: Publish PowerShell Module
-
 on:
   push:
     tags:
