@@ -1,8 +1,8 @@
-function Add-TSNotionLogToFile
+function Add-NotionLogToFile
 {
     <#
     .SYNOPSIS
-    Add-TSNotionLogToFile -filename <filename> -level <DEBUG | INFO | WARNING |ERROR> -message <string|array|object>
+    Add-NotionLogToFile -filename <filename> -level <DEBUG | INFO | WARNING |ERROR> -message <string|array|object>
 
     .DESCRIPTION
     Long description
@@ -38,16 +38,16 @@ function Add-TSNotionLogToFile
     If the message is an object, it will be expanded to all properties
 
     .EXAMPLE
-    Add-TSNotionLogToFile -filename $log -level INFO  -message "someting was successful"
+    Add-NotionLogToFile -filename $log -level INFO  -message "someting was successful"
 
     .EXAMPLE
-    Add-TSNotionLogToFile -filename $log -level DEBUG -message "try to ADD Member: $($MEMBER)..."
+    Add-NotionLogToFile -filename $log -level DEBUG -message "try to ADD Member: $($MEMBER)..."
 
     .EXAMPLE
-    $Error | Add-TSNotionLogToFile -filename $log -level ERROR
+    $Error | Add-NotionLogToFile -filename $log -level ERROR
 
     .EXAMPLE
-    "Some text", $object | Add-TSNotionLogToFile -filename $log -level ERROR
+    "Some text", $object | Add-NotionLogToFile -filename $log -level ERROR
 
     #>
     [CmdletBinding()]
@@ -133,7 +133,7 @@ function Add-TSNotionLogToFile
         }
         if (-not [string]::IsNullOrEmpty($filename))
         {
-            $mutex = New-Object System.Threading.Mutex($false, "Global\Add-TSNotionLogToFile")
+            $mutex = New-Object System.Threading.Mutex($false, "Global\Add-NotionLogToFile")
             $mutex.WaitOne() | Out-Null
                 (Get-Date).ToString() + " - " + $level + " - " + $message >> $filename
             #json log

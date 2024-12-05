@@ -1,4 +1,4 @@
-# Import the module containing the Get-TSNotionUser function
+# Import the module containing the Get-NotionUser function
 Import-Module Pester
 
 BeforeDiscovery {
@@ -36,7 +36,7 @@ Describe "notion_file_block Tests" {
             $block.file.caption[0].plain_text | Should -Be $caption
             $block.file.caption[0].type | Should -Be "text"
             $block.file.file.url | Should -Be $url
-            $block.file.file.expiry_time | Should -Be (get-date $expiry_time).ToString("yyyy-MM-ddTHH:mm:ssZ")
+            $block.file.file.expiry_time | Should -Be (get-date $expiry_time).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
         }
 
         It "Should create a notion_file_block with notion_external_file" {
@@ -64,6 +64,10 @@ Describe "notion_file_block Tests" {
             $object = @{
                 type = "file"
                 object = "block"
+                parent = @{
+                    type = "page_id"
+                    page_id = "4711"
+                }
                 file = @{
                     type = "external"
                     external = @{
@@ -73,7 +77,7 @@ Describe "notion_file_block Tests" {
                 }
                 created_time = "2021-08-17T07:00:00.000Z"
             }
-            $convertedBlock = [block]::ConvertFromObject($object)
+            $convertedBlock = [notion_block]::ConvertFromObject($object)
             
             $convertedBlock.getType().Name | Should -Be "notion_file_block"
             $convertedBlock.file.getType().Name  | Should -Be "notion_external_file"

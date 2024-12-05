@@ -17,24 +17,24 @@ class link_preview_structure
     }
 }
 
-class link_preview : Block
+class notion_link_preview_block : notion_block
 # https://developers.notion.com/reference/block#link-preview
 {
-    [blocktype] $type = "link_preview"
+    [notion_blocktype] $type = "link_preview"
     [link_preview_structure] $link_preview
 
-    link_preview()
+    notion_link_preview_block()
     { 
     }
 
-    link_preview($url)
+    notion_link_preview_block($url)
     {
         $this.link_preview = [link_preview_structure]::new($url)
     }
 
-    static [link_preview] ConvertFromObject ($value)
+    static [notion_link_preview_block] ConvertFromObject ($value)
     {
-        $link_preview_obj = [link_preview]::new()
+        $link_preview_obj = [notion_link_preview_block]::new()
         $link_preview_obj.link_preview = [link_preview_structure]::ConvertFromObject($value.link_preview)
         return $link_preview_obj
     }

@@ -1,21 +1,21 @@
-class emoji
-# https://developers.notion.com/reference/emoji-object
+class notion_emoji : notion_page_icon
+# https://developers.notion.com/reference/notion_emoji-object
 {
     [icontype]$type = "emoji"
     [string]$emoji
 
-    emoji()
+    notion_emoji()
     {
         $this.emoji = $null
     }
 
-    emoji($emoji)
+    notion_emoji($emoji)
     {
         $this.emoji = $emoji
     }
 
-    static [emoji] ConvertFromObject($Value)
+    static [notion_emoji] ConvertFromObject($Value)
     {
-        return [emoji]::new($Value.emoji)
+        return [notion_emoji]::new($Value.emoji)
     }
 }

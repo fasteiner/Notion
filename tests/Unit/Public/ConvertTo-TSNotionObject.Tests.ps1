@@ -1,12 +1,12 @@
 #############################################################################################################
-# Title: ConvertTo-TSNotionObject.Tests
+# Title: ConvertTo-NotionObject.Tests
 # Description: 
 # 08/2024 Thomas.Subotitsch@base-IT.at
 # Minimum Powershell Version: 7
 #Requires -Version "7"
 #############################################################################################################
 
-Describe "ConvertTo-TSNotionObject" {
+Describe "ConvertTo-NotionObject" {
     It "should convert a list object correctly" {
         $input = @{
             object  = "list"
@@ -15,7 +15,7 @@ Describe "ConvertTo-TSNotionObject" {
                 @{ object = "block"; type = "heading_1" }
             )
         }
-        $result = $input | ConvertTo-TSNotionObject
+        $result = $input | ConvertTo-NotionObject
         $result | Should -Not -BeNullOrEmpty
     }
 
@@ -24,7 +24,7 @@ Describe "ConvertTo-TSNotionObject" {
     #         object = "block"
     #         type   = "paragraph"
     #     }
-    #     $result = $input | ConvertTo-TSNotionObject
+    #     $result = $input | ConvertTo-NotionObject
     #     $result | Should -Not -BeNullOrEmpty
     # }
 
@@ -33,7 +33,7 @@ Describe "ConvertTo-TSNotionObject" {
     #         object = "block"
     #         type   = "heading_1"
     #     }
-    #     $result = $input | ConvertTo-TSNotionObject
+    #     $result = $input | ConvertTo-NotionObject
     #     $result | Should -Not -BeNullOrEmpty
     # }
 
@@ -41,7 +41,7 @@ Describe "ConvertTo-TSNotionObject" {
         $input = @{
             object = "page"
         }
-        $result = $input | ConvertTo-TSNotionObject
+        $result = $input | ConvertTo-NotionObject
         $result | Should -Not -BeNullOrEmpty
     }
 
@@ -49,7 +49,7 @@ Describe "ConvertTo-TSNotionObject" {
     #     $input = @{
     #         object = "unsupported_object"
     #     }
-    #     $result = $input | ConvertTo-TSNotionObject
+    #     $result = $input | ConvertTo-NotionObject
     #     $result | Should -BeNullOrEmpty
     # }
 }

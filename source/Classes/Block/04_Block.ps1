@@ -1,4 +1,4 @@
-class Block
+class notion_block
 # https://developers.notion.com/reference/block
 {
     $object = "block"
@@ -7,15 +7,15 @@ class Block
     #$after = ""
     $children = @()
     [string]$created_time
-    [user]$created_by
+    [notion_user]$created_by
     [string]$last_edited_time
-    [user]$last_edited_by
+    [notion_user]$last_edited_by
     [bool]$archived = $false
     [bool]$in_trash = $false
     [bool]$has_children = $false
 
     
-    Block()
+    notion_block()
     {
         #$this.id = [guid]::NewGuid().ToString()
         $this.last_edited_time = [datetime]::Now.ToString("yyyy-MM-ddTHH:mm:ssZ")
@@ -23,8 +23,8 @@ class Block
     }
 
     # Block with array of children
-    # [Block]::new(@($block1,$block2))
-    Block([array] $children)
+    # [notion_block]::new(@($block1,$block2))
+    notion_block([array] $children)
     {
         #$this.id = [guid]::NewGuid().ToString()
         $this.children = $children
@@ -34,8 +34,8 @@ class Block
         }
     }
     # Block with array of children and parent id
-    # [Block]::new(@($block1,$block2), $parent)
-    Block([array] $children, [string] $parent)
+    # [notion_block]::new(@($block1,$block2), $parent)
+    notion_block([array] $children, [string] $parent)
     {
         #$this.id = [guid]::NewGuid().ToString()
         $this.children = $children
@@ -76,147 +76,147 @@ class Block
         }
     }
 
-    static [Block] ConvertFromObject($Value)
+    static [notion_block] ConvertFromObject($Value)
     {
-        Write-Verbose "[Block]::ConvertFromObject($($Value | ConvertTo-Json))"
-        $Block = $null
+        Write-Verbose "[notion_block]::ConvertFromObject($($Value | ConvertTo-Json))"
+        $notion_block = $null
         switch ($Value.type)
         # https://developers.notion.com/reference/block#block-type-objects
         {
             "bookmark"
             {
-                $Block = [bookmark]::ConvertfromObject($value)
+                $notion_block = [notion_bookmark_block]::ConvertfromObject($value)
                 break
             }
             "breadcrumb"
             {
-                $Block = [breadcrumb]::ConvertfromObject($value)
+                $notion_block = [notion_breadcrumb_block]::ConvertfromObject($value)
                 break
             }
             "bulleted_list_item"
             {
-                $Block = [bulleted_list_item]::ConvertfromObject($value)
+                $notion_block = [notion_bulleted_list_item_block]::ConvertfromObject($value)
                 break
             }
             "callout"
             {
-                $Block = [Callout]::ConvertfromObject($value)
+                $notion_block = [notion_callout_block]::ConvertfromObject($value)
                 break
             }
             "child_database"
             {
-                $Block = [child_database]::ConvertfromObject($value)
+                $notion_block = [notion_child_database_block]::ConvertfromObject($value)
                 break
             }
             "child_page"
             {
-                $Block = [child_page]::ConvertfromObject($value)
+                $notion_block = [notion_child_page_block]::ConvertfromObject($value)
                 break
             }
             "code"
             {
-                $Block = [Code]::ConvertfromObject($value)
+                $notion_block = [notion_code_block]::ConvertfromObject($value)
                 break
             }
             "column"
             {
-                $Block = [column]::ConvertfromObject($value)
+                $notion_block = [notion_column_block]::ConvertfromObject($value)
                 break
             }
             "column_list"
             {
-                $Block = [column_list]::ConvertfromObject($value)
+                $notion_block = [notion_column_list_block]::ConvertfromObject($value)
                 break
             }
             "divider"
             {
-                $Block = [Divider]::ConvertfromObject($value)
+                $notion_block = [notion_divider_block]::ConvertfromObject($value)
                 break
             }
             "embed"
             {
-                $Block = [Embed]::ConvertfromObject($value)
+                $notion_block = [notion_embed_block]::ConvertfromObject($value)
                 break
             }
             "equation"
             {
-                $Block = [equation]::ConvertfromObject($value)
+                $notion_block = [notion_equation_block]::ConvertfromObject($value)
                 break
             }
             "file"
             {
-                $Block = [notion_file_block]::ConvertfromObject($value)
+                $notion_block = [notion_file_block]::ConvertfromObject($value)
                 break
             }
             "heading_1"
             {
-                $Block = [heading]::ConvertfromObject($value)
+                $notion_block = [heading]::ConvertfromObject($value)
                 break
             }
             "heading_2"
             {
-                $Block = [heading]::ConvertfromObject($value)
+                $notion_block = [heading]::ConvertfromObject($value)
                 break
             }
             "heading_3"
             {
-                $Block = [heading]::ConvertfromObject($value)
+                $notion_block = [heading]::ConvertfromObject($value)
                 break
             }
             "image"
             {
-                $Block = [Image]::ConvertfromObject($value.image)
+                $notion_block = [notion_image_block]::ConvertfromObject($value.image)
                 break
             }
             "link_preview"
             {
-                $Block = [link_preview]::ConvertfromObject($value.link_preview)
+                $notion_block = [notion_link_preview_block]::ConvertfromObject($value.link_preview)
                 break
             }
             #Mention ??
             "mention"
             {
-                # $Block = [??]
+                # $notion_block = [??]
             }
 
             "numbered_list_item"
             {
-                $Block = [numbered_list_item]::ConvertfromObject($value.numbered_list_item)
+                $notion_block = [notion_numbered_list_item_block]::ConvertfromObject($value.numbered_list_item)
                 break
             }
             "paragraph"
             {
-                $Block = [paragraph]::ConvertfromObject($value.paragraph)
+                $notion_block = [notion_paragraph_block]::ConvertfromObject($value.paragraph)
                 break
             }
             "pdf"
             {
-                $Block = [PDF]::ConvertfromObject($value.pdf)
+                $notion_block = [notion_pdf_block]::ConvertfromObject($value.pdf)
                 break
             }
             "quote"
             {
-                $Block = [quote]::ConvertfromObject($value.quote)
+                $notion_block = [notion_quote_block]::ConvertfromObject($value.quote)
                 break
             }
             "synced_block"
             {
-                $Block = [synced_block]::ConvertfromObject($value.synced_block)
+                $notion_block = [notion_synced_block]::ConvertfromObject($value.synced_block)
                 break
             }
             "table"
             {
-                $Block = [table]::ConvertfromObject($value.table) 
+                $notion_block = [table]::ConvertfromObject($value.table) 
                 break
             }
             # "table_row"
             # {
-            #     $Block =  [table_row]::ConvertfromObject($value.table_row)
+            #     $notion_block =  [table_row]::ConvertfromObject($value.table_row)
             #     break
             # }
             "table_of_contents"
             {
-                $Block = [table_of_contents]::ConvertfromObject($value.table_of_contents)
+                $notion_block = [notion_table_of_contents_block]::ConvertfromObject($value.table_of_contents)
                 break
             }
             "template"
@@ -226,28 +226,28 @@ class Block
             }
             "to_do"
             {
-                $Block = [to_do]::ConvertfromObject($value.to_do)
+                $notion_block = [notion_to_do_block]::ConvertfromObject($value.to_do)
                 break
             }
             "toggle"
             {
-                $Block = [toggle]::ConvertfromObject($value.toggle)
+                $notion_block = [notion_toggle_block]::ConvertfromObject($value.toggle)
                 break
             }
             # "unsupported"
             # {
-            #     $block =  [unsupported]::ConvertfromObject($value.unsupported)
+            #     $notion_block =  [unsupported]::ConvertfromObject($value.unsupported)
             #     break
             # }
             "video"
             {
-                $Block = [video]::ConvertfromObject($value.video)
+                $notion_block = [notion_video_block]::ConvertfromObject($value.video)
                 break
             }
             Default
             {
                 $type = $null
-                if ([System.Enum]::TryParse([blocktype], $Value.type, [ref]$type))
+                if ([System.Enum]::TryParse([notion_blocktype], $Value.type, [ref]$type))
                 {
                     Write-Error "Block type $($Value.type) not implemented yet" -Category NotImplemented -RecommendedAction "Please create a Github issue to request this feature"
                 }
@@ -258,16 +258,20 @@ class Block
             }
         
         }
-        $Block.id = $Value.id
+        $notion_block.id = $Value.id
         #TODO: real parent object
-        $Block.parent = [parent]::ConvertFromObject($Value.parent)
-        $Block.created_time = $Value.created_time
-        $Block.created_by = [user]::ConvertFromObject($Value.created_by)
-        $Block.last_edited_time = $Value.last_edited_time
-        $Block.last_edited_by = [user]::ConvertFromObject($Value.last_edited_by)
-        $Block.archived = $Value.archived
-        $Block.in_trash = $Value.in_trash
-        $Block.has_children = $Value.has_children
-        return $Block
+        $notion_block.parent = [notion_parent]::ConvertFromObject($Value.parent)
+        if($Value.created_time){
+            $notion_block.created_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
+        }
+        $notion_block.created_by = [notion_user]::ConvertFromObject($Value.created_by)
+        if($value.last_edited_time){
+            $notion_block.last_edited_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
+        }
+        $notion_block.last_edited_by = [notion_user]::ConvertFromObject($Value.last_edited_by)
+        $notion_block.archived = $Value.archived
+        $notion_block.in_trash = $Value.in_trash
+        $notion_block.has_children = $Value.has_children
+        return $notion_block
     }
 }

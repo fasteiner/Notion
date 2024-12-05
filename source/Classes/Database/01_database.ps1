@@ -1,12 +1,12 @@
-class database
+class notion_database
 # https://developers.notion.com/reference/database
 {
     [string] $object = "database"
     [string] $id
     [string] $created_time
-    [user] $created_by
+    [notion_user] $created_by
     [string] $last_edited_time
-    [user] $last_edited_by
+    [notion_user] $last_edited_by
     [rich_text[]] $title
     $icon
     $cover
@@ -20,7 +20,7 @@ class database
     # Relation property (only mentioned in release notes, not in API docu)
     # [relation_type] $db_relation
 
-    database()
+    notion_database()
     {
         $this.id = [guid]::NewGuid().ToString()
         $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")

@@ -45,10 +45,10 @@ class Table_structure
         return $Table_structure_Obj
     }
 }
-class Table : block
+class Table : notion_block
 # https://developers.notion.com/reference/block#table
 {
-    [blocktype] $type = "table"
+    [notion_blocktype] $type = "table"
     [Table_structure] $table
 
     #Table with 1 row and 1 column
@@ -184,10 +184,10 @@ class Table : block
     #     $table.has_row_header = $Value.table.has_row_header
     #     $table.id = $Value.id
     #     $table.parent = $value.parent
-    #     $table.created_time = $value.created_time
-    #     $table.last_edited_time = $value.last_edited_time
-    #     $table.created_by = [user]::ConvertFromObject($Value.created_by)
-    #     $table.last_edited_by = [user]::ConvertFromObject($Value.last_edited_by)
+    #     $table.created_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
+    #     $table.last_edited_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
+    #     $table.created_by = [notion_user]::ConvertFromObject($Value.created_by)
+    #     $table.last_edited_by = [notion_user]::ConvertFromObject($Value.last_edited_by)
     #     $table.archived = $Value.archived
     #     $table.in_trash = $Value.in_trash
     #     return $table

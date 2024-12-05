@@ -1,4 +1,4 @@
-class user : System.IComparable, System.IEquatable[object]
+class notion_user : System.IComparable, System.IEquatable[object]
 {
     # https://developers.notion.com/reference/user
     [string]$object = "user"
@@ -7,11 +7,11 @@ class user : System.IComparable, System.IEquatable[object]
     [string]$name
     [string]$avatar_url
 
-    user()
+    notion_user()
     {
     }
 
-    user([object]$user)
+    notion_user([object]$user)
     {
         $this.id = $user.id
         $this.type = $user.type
@@ -19,7 +19,7 @@ class user : System.IComparable, System.IEquatable[object]
         $this.avatar_url = $user.avatar_url
     }
 
-    user([string]$id)
+    notion_user([string]$id)
     {
         $this.id = $id
     }
@@ -30,7 +30,7 @@ class user : System.IComparable, System.IEquatable[object]
         {
             return 1
         }
-        if ($other -isnot [user])
+        if ($other -isnot [notion_user])
         {
             throw [System.ArgumentException]::new("The argument must be a user object.")
         }
@@ -47,16 +47,16 @@ class user : System.IComparable, System.IEquatable[object]
     [bool] Equals([object]$other)
     {
         # Check if the other object is a user and if it is equal to this instance
-        if ($other -is [user])
+        if ($other -is [notion_user])
         {
             return $this.CompareTo($other) -eq 0
         }
         return $false
     }
 
-    static [user] ConvertFromObject($Value)
+    static [notion_user] ConvertFromObject($Value)
     {
-        $user = [user]::new()
+        $user = [notion_user]::new()
         $user.id = $Value.id
         $user.type = $Value.type
         $user.name = $Value.name

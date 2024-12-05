@@ -1,4 +1,4 @@
-class DatabaseProperties
+class notion_databaseproperties
 # https://developers.notion.com/reference/property-object
 {
     [string] $Id
@@ -6,7 +6,7 @@ class DatabaseProperties
     [string] $description
     [DatabasePropertyType] $type
 
-    # DatabaseProperties($Id, $name, $description, $type)
+    # notion_databaseproperties($Id, $name, $description, $type)
     # {
     #     $this.Id          = $Id
     #     $this.name        = $name
@@ -14,8 +14,8 @@ class DatabaseProperties
     #     $this.type        = $type
     # }
 
-    # static [DatabaseProperties] ConvertFromObject($Value)
+    # static [notion_databaseproperties] ConvertFromObject($Value)
     # {
-    #     return [DatabaseProperties]::new($Value.id, $Value.name, $Value.description, [DatabasePropertyType]::ConvertFromObject($Value.type))
+    #     return [notion_databaseproperties]::new($Value.id, $Value.name, $Value.description, [DatabasePropertyType]::ConvertFromObject($Value.type))
     # }
 }

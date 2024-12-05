@@ -1,0 +1,35 @@
+name: Publish PowerShell Module
+on:
+  push:
+    tags:
+      - 'v*.*.*' # Trigger on version tags (e.g., v1.0.0)
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 4: Build the Module
+      - name: Build Module
+        run: |
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task Build
+
+      # # Step 5: Validate the Module
+      # - name: Validate Module
+      #   run: |
+      #     pwsh -Command Invoke-Build -Task Test
+
+      # Step 6: Publish to PowerShell Gallery
+      - name: Publish Module
+        env:
+          PSGalleryApiKey: ${{ secrets.PSGALLERY_API_KEY }}
+        run: |
+          ./publish.ps1

@@ -1,5 +1,6 @@
-enum parent_type {
-    page_id
-    block_id
+enum notion_parent_type {
     database_id
+    page_id
+    workspace_id
+    block_id
 }

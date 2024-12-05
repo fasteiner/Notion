@@ -1,4 +1,4 @@
-enum blocktype
+enum notion_blocktype
 {
     bookmark
     breadcrumb

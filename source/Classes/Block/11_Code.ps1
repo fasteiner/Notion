@@ -13,7 +13,7 @@ class code_structure
 
     code_structure([string] $text, [string] $language)
     {
-        if (-not [code]::IsValidLanguage($language))
+        if (-not [code_structure]::IsValidLanguage($language))
         {
             throw "Invalid language: $language"
         }
@@ -24,7 +24,7 @@ class code_structure
 
     code_structure([string] $text, [string] $language, [notion_color] $color)
     {
-        if (-not [code]::IsValidLanguage($language))
+        if (-not [code_structure]::IsValidLanguage($language))
         {
             throw "Invalid language: $language"
         }
@@ -54,7 +54,7 @@ class code_structure
     
     setLanguage([string] $language)
     {
-        if (-not [code]::IsValidLanguage($language))
+        if (-not [code_structure]::IsValidLanguage($language))
         {
             throw "Invalid language: $language"
         }
@@ -74,23 +74,23 @@ class code_structure
         return $code_structure
     }
 }
-class code : block
+class notion_code_block : notion_block
 # https://developers.notion.com/reference/block#code
 {
-    [blocktype] $type = "code"
+    [notion_blocktype] $type = "code"
     [code_structure] $code
 
-    code()
+    notion_code_block()
     {
         $this.code = [code_structure]::new()
     }
 
-    code([string] $text, [string] $language)
+    notion_code_block([string] $text, [string] $language)
     {
         $this.code = [code_structure]::new($text, $language)
     }
 
-    code([string] $text, [string] $language, [notion_color] $color)
+    notion_code_block([string] $text, [string] $language, [notion_color] $color)
     {
         $this.code = [code_structure]::new($text, $language, $color)
     }
@@ -109,9 +109,9 @@ class code : block
         $this.code.setLanguage($language)
     }
 
-    static [code] ConvertFromObject($Value)
+    static [notion_code_block] ConvertFromObject($Value)
     {
-        $code_Obj = [code]::new()
+        $code_Obj = [notion_code_block]::new()
         $code_Obj.code = [code_structure]::ConvertFromObject($Value.code)
         return $code_Obj
     }

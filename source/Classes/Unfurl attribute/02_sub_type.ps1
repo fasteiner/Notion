@@ -1,4 +1,4 @@
-class sub_type
+class notion_sub_type_unfurl_attribute
 # https://developers.notion.com/reference/unfurl-attribute-object#inline-sub_type-objects
 {
     $color
