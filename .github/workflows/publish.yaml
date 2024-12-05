@@ -20,7 +20,7 @@ jobs:
       # Step 4: Build the Module
       - name: Build Module
         run: |
-          pwsh -Command Invoke-Build -Task Build
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task Build
 
       # # Step 5: Validate the Module
       # - name: Validate Module
@@ -32,4 +32,4 @@ jobs:
         env:
           PSGalleryApiKey: ${{ secrets.PSGALLERY_API_KEY }}
         run: |
-          pwsh -Command Invoke-Build -Task Publish
+          ./publish.ps1
