@@ -12,7 +12,7 @@
     RootModule           = 'Notion.psm1'
 
     # Version number of this module.
-    ModuleVersion        = '0.1.1'
+    ModuleVersion        = '0.1.2'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -33,7 +33,7 @@
     Description          = 'Module for interaction with Notion based on classes'
 
     # Minimum version of the PowerShell engine required by this module
-    PowerShellVersion    = '5.0'
+    PowerShellVersion    = '7.0'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
