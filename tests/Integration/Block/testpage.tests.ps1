@@ -30,20 +30,20 @@ BeforeAll {
         "Importing BearerToken from $BearerTokenFile"
         $BearerToken = Import-Clixml -Path $BearerTokenFile -ErrorAction Stop
     }
-    Connect-TSNotion -BearerToken $BearerToken
+    Connect-Notion -BearerToken $BearerToken
     $global:TestPageID = $env:TEST_PAGE ?? "5158893eac8b4f719c8b49b99596adb7"
 }
 
 Describe "Iterate the testpage and check if all objects are converted correctly" {
     It "Should convert the page correctly" {
-        $childrenRaw = Invoke-TSNotionApiCall -Uri "/blocks/$global:TestPageID/children" -Method GET
+        $childrenRaw = Invoke-NotionApiCall -Uri "/blocks/$global:TestPageID/children" -Method GET
         foreach ($child in $childrenRaw) {
-            $childObj = $child | ConvertTo-TSNotionObject
+            $childObj = $child | ConvertTo-NotionObject
             $childObj.type | Should -Be $child.type
             $childObj | Should -BeOfType "notion_$($child.type)_block"
         }
     }
 }
 AfterAll{
-    Disconnect-TSNotion -Confirm:$false
+    Disconnect-Notion -Confirm:$false
 }

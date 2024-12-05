@@ -1,10 +1,10 @@
-function ConvertTo-TSNotionFormattedDateTime {
+function ConvertTo-NotionFormattedDateTime {
     <#
     .SYNOPSIS
         Converts an input date to a specified Notion formatted date-time string.
     
     .DESCRIPTION
-        The ConvertTo-TSNotionFormattedDateTime function takes an input date and converts it to a Notion formatted date-time string. 
+        The ConvertTo-NotionFormattedDateTime function takes an input date and converts it to a Notion formatted date-time string. 
         The input date can be a string or a datetime object. If the input is a string, the function attempts to parse it into a datetime object. 
         If the parsing fails, an error is logged.
     
@@ -15,7 +15,7 @@ function ConvertTo-TSNotionFormattedDateTime {
         The name of the field for logging purposes. This parameter is optional and defaults to "not_provided". This parameter is used for logging purposes.
     
     .EXAMPLE
-        ConvertTo-TSNotionFormattedDateTime -InputDate "2023-10-01T12:34:56Z"
+        ConvertTo-NotionFormattedDateTime -InputDate "2023-10-01T12:34:56Z"
         Converts the input string date to the default Notion formatted date-time string.
     
     .NOTES

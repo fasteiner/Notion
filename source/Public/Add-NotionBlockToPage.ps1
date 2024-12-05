@@ -1,4 +1,4 @@
-function Add-TSNotionBlockToPage
+function Add-NotionBlockToPage
 {
     [CmdletBinding()]
     param (
@@ -12,6 +12,6 @@ function Add-TSNotionBlockToPage
     {
         Write-Debug "Adding block(s) to page $($Page.id)"
         $blocks = $block | ConvertTo-Json -Depth 10 -EnumsAsStrings
-        return Invoke-TSNotionApiCall -Uri "/blocks/$($Page.id)/children" -Method PATCH -body $blocks
+        return Invoke-NotionApiCall -Uri "/blocks/$($Page.id)/children" -Method PATCH -body $blocks
     }
 }

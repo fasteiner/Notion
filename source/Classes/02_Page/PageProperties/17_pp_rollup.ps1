@@ -74,7 +74,7 @@ class notion_rollup_date_page_property_structure : notion_rollup_page_property_s
 
     notion_rollup_date_page_property_structure($date)
     {
-        $this.date = ConvertTo-TSNotionFormattedDateTime -InputDate $date -fieldName "date"
+        $this.date = ConvertTo-NotionFormattedDateTime -InputDate $date -fieldName "date"
     }
 
     static [notion_rollup_date_page_property_structure] ConvertFromObject($Value)

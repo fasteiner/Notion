@@ -63,7 +63,7 @@ body:
     attributes:
       label: Operating system the target node is running
       description: |
-        Please provide as much as possible about the node running TSNotion. _Will be automatically formatted as plain text._
+        Please provide as much as possible about the node running Notion. _Will be automatically formatted as plain text._
 
         To help with this information:
         - On a Linux distribution, please provide the distribution name, version, and release. The following command can help get this information: `cat /etc/*-release && cat /proc/version`
@@ -91,12 +91,11 @@ body:
     attributes:
       label: Module version used
       description: |
-        Please provide the version of the TSNotion module that was used. _Will be automatically formatted as plain text._
+        Please provide the version of the Notion module that was used. _Will be automatically formatted as plain text._
 
-        To help with this information, please run this command: `Get-Module -Name 'TSNotion' -ListAvailable | ft Name,Version,Path`
+        To help with this information, please run this command: `Get-Module -Name 'Notion' -ListAvailable | ft Name,Version,Path`
       placeholder: |
         Add module information here
       render: text
     validations:
       required: true
-

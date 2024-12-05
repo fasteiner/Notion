@@ -1,4 +1,4 @@
-# Import the module containing the Get-TSNotionUser function
+# Import the module containing the Get-NotionUser function
 Import-Module Pester
 
 BeforeDiscovery {

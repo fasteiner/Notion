@@ -11,13 +11,13 @@ class notion_hosted_file_structure
     notion_hosted_file_structure([string]$url, $expiry_time)
     {
         $this.url = $url
-        $this.expiry_time = ConvertTo-TSNotionFormattedDateTime -InputDate $expiry_time -fieldName "expiry_time"
+        $this.expiry_time = ConvertTo-NotionFormattedDateTime -InputDate $expiry_time -fieldName "expiry_time"
     }
 
     notion_hosted_file_structure([System.Object]$Value)
     {
         $this.url = $Value.url
-        $this.expiry_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.expiry_time -fieldName "expiry_time"
+        $this.expiry_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.expiry_time -fieldName "expiry_time"
     }
 
     static [notion_hosted_file_structure] ConvertFromObject($Value)

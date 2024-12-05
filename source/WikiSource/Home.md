@@ -1,11 +1,11 @@
-# Welcome to the TSNotion wiki
+# Welcome to the Notion wiki
 
-<sup>*TSNotion v#.#.#*</sup>
+<sup>*Notion v#.#.#*</sup>
 
-Here you will find all the information you need to use TSNOtion.
+Here you will find all the information you need to use Notion.
 
 Please leave comments, feature requests, and bug reports for this module in
-the [issues section](https://github.com/xxx/TSNotion/issues)
+the [issues section](https://github.com/xxx/Notion/issues)
 for this repository.
 
 ## Getting started
@@ -16,7 +16,7 @@ To get started either:
   following command:
 
 ```powershell
-Install-Module -Name TSNotion -Repository PSGallery
+Install-Module -Name Notion -Repository PSGallery
 ```
 
 ## Prerequisites
@@ -35,9 +35,9 @@ The charm of Notion classes are thies simple use while creating objects.
 [notion_block]::new() # creates an empty block object
 [notion_page]::new()  # creates a new page object
 ```
-If you receive items from the API, TSNotion will automatically convert it into Notion objects 
+If you receive items from the API, Notion will automatically convert it into Notion objects 
 (based on the classes) so that the can be used.
 
 ## Change log
 
-A full list of changes in each version can be found in the [change log](https://github.com/xxx/TSNotion/blob/main/CHANGELOG.md).
+A full list of changes in each version can be found in the [change log](https://github.com/xxx/Notion/blob/main/CHANGELOG.md).

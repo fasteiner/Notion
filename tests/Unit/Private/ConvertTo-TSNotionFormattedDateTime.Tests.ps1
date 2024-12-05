@@ -1,4 +1,4 @@
-# FILE: ConvertTo-TSNotionFormattedDateTime.Tests.ps1
+# FILE: ConvertTo-NotionFormattedDateTime.Tests.ps1
 Import-Module Pester
 
 BeforeDiscovery {
@@ -21,13 +21,13 @@ BeforeDiscovery {
     $mut = Import-Module -Name "$projectPath/output/module/$ProjectName" -Force -ErrorAction Stop -PassThru
 }
 
-Describe "ConvertTo-TSNotionFormattedDateTime" {
+Describe "ConvertTo-NotionFormattedDateTime" {
     InModuleScope $moduleName {
         # Test for valid datetime input
         It "should convert a valid datetime object to the specified format" {
             $inputDate = Get-Date "2023-10-01T12:34:56Z"
             $expected = "2023-10-01T12:34:56.000Z"
-            $result = ConvertTo-TSNotionFormattedDateTime -InputDate $inputDate
+            $result = ConvertTo-NotionFormattedDateTime -InputDate $inputDate
             $result | Should -BeExactly $expected
         }
     
@@ -35,24 +35,24 @@ Describe "ConvertTo-TSNotionFormattedDateTime" {
         It "should convert a valid string date to the specified format" {
             $inputDate = "2023-10-01T12:34:56Z"
             $expected = "2023-10-01T12:34:56.000Z"
-            $result = ConvertTo-TSNotionFormattedDateTime -InputDate $inputDate
+            $result = ConvertTo-NotionFormattedDateTime -InputDate $inputDate
             $result | Should -BeExactly $expected
         }
     
         # Test for invalid string input
         It "should return $null and log an error for an invalid string date" {
             $inputDate = "invalid-date"
-            $result = ConvertTo-TSNotionFormattedDateTime -InputDate $inputDate -ErrorAction SilentlyContinue
+            $result = ConvertTo-NotionFormattedDateTime -InputDate $inputDate -ErrorAction SilentlyContinue
             $result | Should -Be $null
-            {ConvertTo-TSNotionFormattedDateTime -InputDate $inputDate -ErrorAction Stop} | Should -Throw
+            {ConvertTo-NotionFormattedDateTime -InputDate $inputDate -ErrorAction Stop} | Should -Throw
         }
     
         # Test for unsupported input type
         It "should return $null and log an error for unsupported input type" {
             $inputDate = @{}
-            $result = ConvertTo-TSNotionFormattedDateTime -InputDate $inputDate -ErrorAction SilentlyContinue
+            $result = ConvertTo-NotionFormattedDateTime -InputDate $inputDate -ErrorAction SilentlyContinue
             $result | Should -Be $null
-            {ConvertTo-TSNotionFormattedDateTime -InputDate $inputDate -ErrorAction Stop} | Should -Throw
+            {ConvertTo-NotionFormattedDateTime -InputDate $inputDate -ErrorAction Stop} | Should -Throw
         }
     
     }

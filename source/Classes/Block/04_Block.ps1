@@ -262,11 +262,11 @@ class notion_block
         #TODO: real parent object
         $notion_block.parent = [notion_parent]::ConvertFromObject($Value.parent)
         if($Value.created_time){
-            $notion_block.created_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
+            $notion_block.created_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
         }
         $notion_block.created_by = [notion_user]::ConvertFromObject($Value.created_by)
         if($value.last_edited_time){
-            $notion_block.last_edited_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
+            $notion_block.last_edited_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
         }
         $notion_block.last_edited_by = [notion_user]::ConvertFromObject($Value.last_edited_by)
         $notion_block.archived = $Value.archived

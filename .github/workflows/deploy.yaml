@@ -1,0 +1,44 @@
+name: Publish PowerShell Module
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' # Trigger on version tags (e.g., v1.0.0)
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up PowerShell
+      - name: Setup PowerShell
+        uses: actions/setup-powershell@v2
+        with:
+          pwsh-version: '7.x'
+
+      # Step 3: Install Dependencies
+      - name: Install Dependencies
+        run: |
+          pwsh -Command Install-Module -Name Sampler -Scope CurrentUser -Force
+          pwsh -Command Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force
+
+      # Step 4: Build the Module
+      - name: Build Module
+        run: |
+          pwsh -Command Invoke-Build -Task Build
+
+      # # Step 5: Validate the Module
+      # - name: Validate Module
+      #   run: |
+      #     pwsh -Command Invoke-Build -Task Test
+
+      # Step 6: Publish to PowerShell Gallery
+      - name: Publish Module
+        env:
+          PSGalleryApiKey: ${{ secrets.PSGALLERY_API_KEY }}
+        run: |
+          pwsh -Command Invoke-Build -Task Publish

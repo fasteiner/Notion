@@ -10,7 +10,7 @@ class notion_created_time_page_property : PagePropertiesBase
 
     notion_created_time_page_property([string]$created_time) : base("created_time")
     {
-        $this.created_time = ConvertTo-TSNotionFormattedDateTime -InputDate $created_time -fieldName "created_time"
+        $this.created_time = ConvertTo-NotionFormattedDateTime -InputDate $created_time -fieldName "created_time"
     }
 
     static [notion_created_time_page_property] ConvertFromObject($Value)

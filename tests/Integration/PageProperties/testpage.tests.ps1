@@ -31,17 +31,17 @@ BeforeAll
         "Importing BearerToken from $BearerTokenFile"
         $BearerToken = Import-Clixml -Path $BearerTokenFile -ErrorAction Stop
     }
-    Connect-TSNotion -BearerToken $BearerToken
+    Connect-Notion -BearerToken $BearerToken
     $global:TestPageID = $env:TEST_PAGE ?? "55d8f8cf55a4447eb240b8c2a3391034"
 }
 
 Describe "Iterate the testpage and check if all objects are converted correctly" {
     It "Should convert the testpage to a notion_page object" {
-        $page = Invoke-TSNotionApiCall -uri "/pages/$global:TestPageID" -method GET
-        $pageObj = $page | ConvertTo-TSNotionObject
+        $page = Invoke-NotionApiCall -uri "/pages/$global:TestPageID" -method GET
+        $pageObj = $page | ConvertTo-NotionObject
         $page | Should -BeOfType [notion_page]
     }
 }
 AfterAll{
-    Disconnect-TSNotion -Confirm:$false
+    Disconnect-Notion -Confirm:$false
 }

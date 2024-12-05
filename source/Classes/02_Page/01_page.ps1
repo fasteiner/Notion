@@ -88,9 +88,9 @@ class notion_page
         {
             $page = [notion_page]::new()
             $page.id = $Value.id
-            $page.created_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
+            $page.created_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
             $page.created_by = [notion_user]::ConvertFromObject($Value.created_by)
-            $page.last_edited_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
+            $page.last_edited_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
             $page.last_edited_by = [notion_user]::ConvertFromObject($Value.last_edited_by)
             $page.archived = $Value.archived
             $page.in_trash = $Value.in_trash
@@ -114,11 +114,11 @@ class notion_page
         {
             if ($Value.Object -ne "page")
             {
-                "Provided value's object type is ""$($Value.Object)"" instead of ""page""" | Add-TSNotionLogToFile -Level ERROR
+                "Provided value's object type is ""$($Value.Object)"" instead of ""page""" | Add-NotionLogToFile -Level ERROR
             }
             else
             {
-                "Provided value is type [$($Value.GetType().Name)] instead of [object]" | Add-TSNotionLogToFile -Level ERROR
+                "Provided value is type [$($Value.GetType().Name)] instead of [object]" | Add-NotionLogToFile -Level ERROR
             }
             return $null
         }

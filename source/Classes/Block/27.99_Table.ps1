@@ -184,8 +184,8 @@ class Table : notion_block
     #     $table.has_row_header = $Value.table.has_row_header
     #     $table.id = $Value.id
     #     $table.parent = $value.parent
-    #     $table.created_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
-    #     $table.last_edited_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
+    #     $table.created_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
+    #     $table.last_edited_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
     #     $table.created_by = [notion_user]::ConvertFromObject($Value.created_by)
     #     $table.last_edited_by = [notion_user]::ConvertFromObject($Value.last_edited_by)
     #     $table.archived = $Value.archived
