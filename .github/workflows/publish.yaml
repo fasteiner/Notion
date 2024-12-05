@@ -4,6 +4,10 @@ on:
     tags:
       - 'v*.*.*' # Trigger on version tags (e.g., v1.0.0)
 
+defaults:
+  run:
+    shell: pwsh
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
@@ -12,18 +16,6 @@ jobs:
       # Step 1: Checkout the repository
       - name: Checkout Code
         uses: actions/checkout@v3
-
-      # Step 2: Set up PowerShell
-      - name: Setup PowerShell
-        uses: actions/setup-powershell@v2
-        with:
-          pwsh-version: '7.x'
-
-      # Step 3: Install Dependencies
-      - name: Install Dependencies
-        run: |
-          pwsh -Command Install-Module -Name Sampler -Scope CurrentUser -Force
-          pwsh -Command Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force
 
       # Step 4: Build the Module
       - name: Build Module
