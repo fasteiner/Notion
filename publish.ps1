@@ -1,3 +1,4 @@
+Import-Module -Name Sampler
 # Step 1: Define variables
 $ModulePath = "./output/module/Notion"  # Path to the built module
 $ApiKey = $env:PSGalleryApiKey    # PowerShell Gallery API Key from an environment variable
