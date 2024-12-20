@@ -1,5 +1,4 @@
 class PropertiesBase {
-    #https://developers.notion.com/reference/page-property-values
     [string] $id
     [notion_property_base_type] $type
 
