@@ -1,4 +1,4 @@
-class notion_emoji : notion_page_icon
+class notion_emoji : notion_icon
 # https://developers.notion.com/reference/notion_emoji-object
 {
     [icontype]$type = "emoji"

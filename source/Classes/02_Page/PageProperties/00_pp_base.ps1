@@ -1,9 +1,17 @@
 class PagePropertiesBase {
     #https://developers.notion.com/reference/page-property-values
+    [string] $id
+    [notion_page_property_type] $type
 
-    PagePropertiesBase() {
-        $this.id = $null
-        $this.type = $null
+    PagePropertiesBase([notion_page_property_type]$type)
+    {
+        $this.type = $type
+    }
+
+    PagePropertiesBase([string]$id, [notion_page_property_type]$type)
+    {
+        $this.id = $id
+        $this.type = $type
     }
 
     static [PagePropertiesBase] ConvertFromObject($Value)
@@ -37,8 +45,13 @@ class PagePropertiesBase {
                 Write-Error "Unknown property: $($Value.type)" -Category InvalidData -RecommendedAction "Check the type of the property"
             }
         }
-        $base_obj.id = $Value.id
-        $base_obj.type = $Value.type
+        try {
+            $base_obj.id = $Value.id
+            $base_obj.type = $Value.type
+        }
+        catch {
+            Write-Error "Error setting id and type" -Category InvalidData -RecommendedAction "Check the id and type" -TargetObject $Value
+        }
         return $base_obj
     }
 }

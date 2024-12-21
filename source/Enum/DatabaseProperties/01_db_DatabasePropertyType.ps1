@@ -20,4 +20,5 @@ enum notion_database_property_type
     status
     title
     url
+    unique_id
 }

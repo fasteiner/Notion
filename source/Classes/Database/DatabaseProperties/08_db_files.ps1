@@ -3,7 +3,7 @@ class notion_files_database_property : DatabasePropertiesBase
 {
     [hashtable] $files
 
-    notion_files_database_property([array]$files) : base("files")
+    notion_files_database_property() : base("files")
     {
         $this.files = @{}
     }

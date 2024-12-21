@@ -66,7 +66,7 @@ $ExportableTypes = @(
     [notion_number_page_property]
     [notion_numbered_list_item_block]
     [notion_page]
-    [notion_page_icon]
+    [notion_icon]
     [notion_page_parent]
     [notion_pageproperties]
     [notion_paragraph_block]

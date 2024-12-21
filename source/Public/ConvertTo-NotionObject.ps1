@@ -102,6 +102,7 @@ function ConvertTo-NotionObject
                 "database"
                 {
                     # https://developers.notion.com/reference/database
+                    $output += [notion_database]::ConvertFromObject($item)
                     "Database" | Add-NotionLogToFile -Level DEBUG
                 }
         

@@ -1,8 +1,8 @@
-class notion_page_icon
+class notion_icon
 {
     # https://developers.notion.com/reference/page
 
-    static [notion_page_icon] ConvertFromObject($Value)
+    static [notion_icon] ConvertFromObject($Value)
     {
         $icon_obj = $null
         switch ($Value.type)

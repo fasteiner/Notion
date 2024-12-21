@@ -9,7 +9,7 @@ class notion_page
     [notion_user]       $last_edited_by
     [bool]       $archived
     [bool]       $in_trash
-    [notion_page_icon]      $icon
+    [notion_icon]      $icon
     [notion_file]    $cover
     [notion_pageproperties] $properties = @{}
     [notion_parent]    $parent
@@ -95,7 +95,7 @@ class notion_page
             $page.archived = $Value.archived
             $page.in_trash = $Value.in_trash
             #$page.icon = $Value.icon
-            $page.icon = [notion_page_icon]::ConvertFromObject($Value.icon)
+            $page.icon = [notion_icon]::ConvertFromObject($Value.icon)
             
             $page.cover = [notion_file]::ConvertFromObject($Value.cover) 
             # https://developers.notion.com/reference/page-property-values#paginated-page-properties

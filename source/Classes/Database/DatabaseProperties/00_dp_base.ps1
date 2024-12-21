@@ -47,12 +47,18 @@ class DatabasePropertiesBase {
             "status" { $base_obj = [notion_status_database_property]::ConvertFromObject($Value); break }
             "title" { $base_obj = [notion_title_database_property]::ConvertFromObject($Value); break }
             "url" { $base_obj = [notion_url_database_property]::ConvertFromObject($Value); break }
+            "unique_id" { $base_obj = [notion_unique_id_database_property]::ConvertFromObject($Value); break }
             default {
                 Write-Error "Unknown property: $($Value.type)" -Category InvalidData -RecommendedAction "Check the type of the property"
             }
         }
-        $base_obj.id = $Value.id
-        $base_obj.type = $Value.type
+        try {
+            $base_obj.id = $Value.id
+            $base_obj.type = $Value.type
+        }
+        catch {
+            Write-Error "Error setting id and type" -Category InvalidData -RecommendedAction "Check the id and type" -TargetObject $Value
+        }
         return $base_obj
     }
 }

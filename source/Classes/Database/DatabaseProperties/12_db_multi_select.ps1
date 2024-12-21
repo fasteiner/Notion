@@ -25,8 +25,7 @@ class notion_multi_select_database_property : DatabasePropertiesBase
     static [notion_multi_select_database_property] ConvertFromObject($Value)
     {
         $multi_select_obj = [notion_multi_select_database_property]::new()
-        # the API reference says its in $Value.multi_select.options but it's actually in $Value.multi_select
-        $multi_select_obj.multi_select = $Value.multi_select.foreach{
+        $multi_select_obj.multi_select = $Value.multi_select.options.foreach{
             [notion_multi_select_item]::ConvertFromObject($_)
         }
         return $multi_select_obj

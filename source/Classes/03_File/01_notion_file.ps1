@@ -1,7 +1,7 @@
 
 
 
-class notion_file : notion_page_icon
+class notion_file : notion_icon
 # https://developers.notion.com/reference/file-object
 # https://developers.notion.com/reference/block#file
 {
