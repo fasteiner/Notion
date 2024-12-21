@@ -71,6 +71,8 @@ $ExportableTypes = @(
     [notion_pageproperties]
     [notion_paragraph_block]
     [notion_parent]
+    [notion_page_parent]
+    [notion_workspace_parent]
     [notion_PDF_block]
     [notion_people_page_property]
     [notion_people_user]

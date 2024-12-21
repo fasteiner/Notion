@@ -25,6 +25,7 @@ class rich_text
 
     # rich text object with content and annotations
     # [rich_text]::new("Hallo", [annotation]::new())
+    #BUG ?? sollte das nicht mit test moeglich sein ??
     rich_text([rich_text_type] $type, [annotation] $annotations)
     {
         $this.type = $type
