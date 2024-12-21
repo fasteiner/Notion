@@ -29,8 +29,8 @@ class notion_comment
         $comment.parent = $Value.parent
         $comment.discussion_id = $Value.discussion_id
         # "2022-07-15T21:46:00.000Z" -Format "yyyy-MM-ddTHH:mm:ss.fffZ"
-        $comment.created_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
-        $comment.last_edited_time = ConvertTo-TSNotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
+        $comment.created_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
+        $comment.last_edited_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
         $comment.created_by = $Value.created_by
         #TODO: Convert rich_text to class [rich_text]::new()
         $comment.rich_text = $Value.rich_text.ForEach({[rich_text]::ConvertFromObject($_)})

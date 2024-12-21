@@ -1,4 +1,4 @@
-function ConvertTo-TSNotionObject
+function ConvertTo-NotionObject
 {
     <#
     .SYNOPSIS
@@ -18,19 +18,19 @@ function ConvertTo-TSNotionObject
     
     .EXAMPLE
     $object = @{ object = "block"; type = "code" }
-    $convertedObject = ConvertTo-TSNotionObject -Object $object
+    $convertedObject = ConvertTo-NotionObject -Object $object
 
     Returns an block object of type "code".
 
     .EXAMPLE
     $object = @{ object = "list"; results = @(@{ object = "block"; type = "paragraph" }, @{ object = "block"; type = "heading_1" }) }
-    $object | ConvertTo-TSNotionObject
+    $object | ConvertTo-NotionObject
 
     Returns a list object with two block objects of type "paragraph" and "heading_1".
 
     .EXAMPLE
     $object = @{ object = "block"; type = "bookmark" }
-    ConvertTo-TSNotionObject -InputObject $object
+    ConvertTo-NotionObject -InputObject $object
 
     Returns a block object of type "bookmark".    
     #>
@@ -49,7 +49,7 @@ function ConvertTo-TSNotionObject
         # if (!(($InputObject -is [System.Object]) -or ($InputObject -is [System.Array])))
         # {
         #     $Type = $InputObject.GetType().BaseType
-        #     "Input is not an array or object (is $Type)" | Add-TSNotionLogToFile -Level ERROR
+        #     "Input is not an array or object (is $Type)" | Add-NotionLogToFile -Level ERROR
         #     Break
         # }
         $output = @()
@@ -60,25 +60,25 @@ function ConvertTo-TSNotionObject
         {
             if ($item.template)
             {
-                "Template - not implemented yet" | Add-TSNotionLogToFile -Level WARN
+                "Template - not implemented yet" | Add-NotionLogToFile -Level WARN
                 return
             }
 
         
-        ("Object: {0} Type: {1}" -f $item.object, $item.Type) | Add-TSNotionLogToFile -Level DEBUG
-            "Object", $item | Add-TSNotionLogToFile -Level DEBUG
+        ("Object: {0} Type: {1}" -f $item.object, $item.Type) | Add-NotionLogToFile -Level DEBUG
+            "Object", $item | Add-NotionLogToFile -Level DEBUG
             #TODO: Constructor für jede Klasse erstellen .ConvertfromObject() -> $Object = [NotionObject]::new().ConvertfromObject($item)
             switch ($item.object)
             {
                 "list"
                 {  
-                    "List" | Add-TSNotionLogToFile -Level DEBUG
+                    "List" | Add-NotionLogToFile -Level DEBUG
                     #TODO: Gibt's einen Object Type List?
                     if ($item.results -is [array])
                     {
                         foreach ($result in $item.results)
                         {
-                            $result | ConvertTo-TSNotionObject
+                            $result | ConvertTo-NotionObject
                         }
                     }
                     #TODO: $out = [notion_block]::new()
@@ -89,48 +89,48 @@ function ConvertTo-TSNotionObject
                 "block"
                 {
                     # https://developers.notion.com/reference/block
-                    "Block" | Add-TSNotionLogToFile -Level DEBUG
+                    "Block" | Add-NotionLogToFile -Level DEBUG
                     $output += [notion_block]::ConvertFromObject($item)
                 }
         
                 "comment"
                 {  
-                    "Comment" | Add-TSNotionLogToFile -Level DEBUG
+                    "Comment" | Add-NotionLogToFile -Level DEBUG
                     $output += [notion_comment]::ConvertfromObject($item)
                 }
         
                 "database"
                 {
                     # https://developers.notion.com/reference/database
-                    "Database" | Add-TSNotionLogToFile -Level DEBUG
+                    "Database" | Add-NotionLogToFile -Level DEBUG
                 }
         
                 "page"
                 {
                     # https://developers.notion.com/reference/page
-                    "Page" | Add-TSNotionLogToFile -Level DEBUG
+                    "Page" | Add-NotionLogToFile -Level DEBUG
                     $output += [notion_page]::ConvertfromObject($item)
                 }
         
                 "page_or_database"
                 {  
-                    "PageOrDatabase" | Add-TSNotionLogToFile -Level DEBUG
+                    "PageOrDatabase" | Add-NotionLogToFile -Level DEBUG
                 }
         
                 "property_item"
                 {  
-                    "PropertyItem" | Add-TSNotionLogToFile -Level DEBUG
+                    "PropertyItem" | Add-NotionLogToFile -Level DEBUG
                 }
         
                 "user"
                 {
                     # https://developers.notion.com/reference/user
-                    "User" | Add-TSNotionLogToFile -Level DEBUG
+                    "User" | Add-NotionLogToFile -Level DEBUG
                     $output += [notion_user]::ConvertFromObject($item)
                 }
                 Default
                 {
-                    "Object: $($item.object) not recognized" | Add-TSNotionLogToFile -Level WARN
+                    "Object: $($item.object) not recognized" | Add-NotionLogToFile -Level WARN
                 }
             }
             #Break

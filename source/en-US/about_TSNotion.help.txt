@@ -1,5 +1,5 @@
 TOPIC
-    about_TSNotion
+    about_Notion
 
 SHORT DESCRIPTION
     Module for interaction with the Notion API based on classes

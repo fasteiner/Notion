@@ -1,5 +1,5 @@
 
-function Invoke-TSNotionApiCall
+function Invoke-NotionApiCall
 {
     <#
     .SYNOPSIS
@@ -33,7 +33,7 @@ function Invoke-TSNotionApiCall
         The number of items returned from the first page in the response. Maximum: 100.
     
     .EXAMPLE
-        Invoke-TSNotionApiCall -uri "https://api.notion.com/v1/databases" -APIKey "YOUR_API_KEY" -APIVersion "2021-05-13" -method "GET" -pageSize 50
+        Invoke-NotionApiCall -uri "https://api.notion.com/v1/databases" -APIKey "YOUR_API_KEY" -APIVersion "2021-05-13" -method "GET" -pageSize 50
     
         This example invokes a GET API call to the Notion API to retrieve a list of databases. It specifies the API key, API version, and page size of 50.
     
@@ -55,7 +55,7 @@ function Invoke-TSNotionApiCall
         [Parameter(Mandatory = $false, HelpMessage = "The API key to authenticate the API call")]
         [securestring]$APIKey,
         [Parameter(Mandatory = $false, HelpMessage = "The version of the Notion API")]
-        [String]$APIVersion = $global:TSNotionAPIVersion,
+        [String]$APIVersion = $global:NotionAPIVersion,
         [Parameter(Mandatory = $false, HelpMessage = "The HTTP method to use for the API call")]
         [ValidateSet("GET", "POST", "PUT", "DELETE", "PATCH") ]
         $method = "GET",
@@ -72,10 +72,10 @@ function Invoke-TSNotionApiCall
 
     Process
     {
-        if ((-not $Global:TSNotionAPIKey) -and (-not $APIKey))
+        if ((-not $Global:NotionAPIKey) -and (-not $APIKey))
         {
             $ErrorRecord = New-Object System.Management.Automation.ErrorRecord (
-                [System.Management.Automation.RuntimeException]::new("API key is not set. Please use Connect-TSNotion to set the API key."),
+                [System.Management.Automation.RuntimeException]::new("API key is not set. Please use Connect-Notion to set the API key."),
                 "APIKeyNotSet",
                 [System.Management.Automation.ErrorCategory]::InvalidData,
                 $PSBoundParameters
@@ -83,14 +83,14 @@ function Invoke-TSNotionApiCall
 
             throw $ErrorRecord
         }
-        $APIKey ??= $Global:TSNotionAPIKey
+        $APIKey ??= $Global:NotionAPIKey
         $queryParameters = @{}
         if ($PSBoundParameters.ContainsKey("pageSize") -and $pageSize -gt 0) {
             $queryParameters["page_size"] = $pageSize
         }
-        if ($uri -notlike "$global:TSNotionApiUri*")
+        if ($uri -notlike "$global:NotionApiUri*")
         {
-            $uri = $global:TSNotionApiUri + $uri
+            $uri = $global:NotionApiUri + $uri
         }
         $Params = @{
             "URI"     = $uri
@@ -111,7 +111,7 @@ function Invoke-TSNotionApiCall
         #  GET requests accept parameters in the query string.
         #  POST requests receive parameters in the request body.
 
-        "Request params:", $Params | Add-TSNotionLogToFile -filename $fileName -level DEBUG
+        "Request params:", $Params | Add-NotionLogToFile -filename $fileName -level DEBUG
         :loop while ($true)
         {
             Try
@@ -218,7 +218,7 @@ function Invoke-TSNotionApiCall
                 }
                 return $output
                 # Convert the output to Notion objects
-                # return $output | ConvertTo-TSNotionObject
+                # return $output | ConvertTo-NotionObject
             }
             catch [Microsoft.PowerShell.Commands.HttpResponseException]
             {
@@ -232,8 +232,8 @@ function Invoke-TSNotionApiCall
                     RequestUri = $_.TargetObject.RequestUri
                     Headers    = $_.TargetObject.Headers
                 }
-                #$e | Add-TSNotionLogToFile -filename $fileName -level ERROR
-                "InvokeParams", $params | Add-TSNotionLogToFile -filename $fileName -level ERROR
+                #$e | Add-NotionLogToFile -filename $fileName -level ERROR
+                "InvokeParams", $params | Add-NotionLogToFile -filename $fileName -level ERROR
                 switch -wildcard ($e.Status)
                 {
                     400
@@ -343,7 +343,7 @@ function Invoke-TSNotionApiCall
             }
             catch
             {
-                "Invoke-NotionApiCall - Error in Invoke-RestMethod:", $error | Add-TSNotionLogToFile -filename $fileName -level ERROR
+                "Invoke-NotionApiCall - Error in Invoke-RestMethod:", $error | Add-NotionLogToFile -filename $fileName -level ERROR
                 $error.clear()
                 return $null
             }

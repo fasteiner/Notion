@@ -20,12 +20,12 @@ BeforeDiscovery {
 }
 
 BeforeAll {
-    #Import-Module -Name "$PSScriptRoot/../../..\output\TSNotion.psd1" -Force
+    #Import-Module -Name "$PSScriptRoot/../../..\output\Notion.psd1" -Force
     $standardOutput = [System.IO.StringWriter]::new()
     $BearerToken = $env:NOTION_BEARER_TOKEN | ConvertTo-SecureString -AsPlainText -Force
 }
 
-Describe "Connect-TSNotion" {
+Describe "Connect-Notion" {
     Context "When providing valid Bearer token and URL" {
         It "Should connect to the Notion API" {
             # Arrange
@@ -38,7 +38,7 @@ Describe "Connect-TSNotion" {
             }
 
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL > $standardOutput
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL > $standardOutput
 
             # Assert
             $result | Should -Be $expectedResult
@@ -57,7 +57,7 @@ Describe "Connect-TSNotion" {
             }
 
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
 
             # Assert
             $result | Should -Be $expectedResult
@@ -71,7 +71,7 @@ Describe "Connect-TSNotion" {
             $notionURL = "https://api.notion.com/v1"
 
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
 
             # Assert
             $result | Should -Be $null
@@ -89,7 +89,7 @@ Describe "Connect-TSNotion" {
             }
     
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
             $result | Should -Be $expectedResult
@@ -103,7 +103,7 @@ Describe "Connect-TSNotion" {
             $notionURL = "https://api.notion.com/v1"
     
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
             $result | Should -Be $null
@@ -117,7 +117,7 @@ Describe "Connect-TSNotion" {
             $notionURL = "https://api.notion.com/v1"
     
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
             $result | Should -Be $null
@@ -131,7 +131,7 @@ Describe "Connect-TSNotion" {
             $notionURL = "https://api.notion.com/v1"
     
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
             $result | Should -Be $null
@@ -145,7 +145,7 @@ Describe "Connect-TSNotion" {
             $notionURL = "invalidURL"
     
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
             $result | Should -Be $null
@@ -159,7 +159,7 @@ Describe "Connect-TSNotion" {
             $notionURL = $null
     
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
             $result | Should -Be $null
@@ -173,7 +173,7 @@ Describe "Connect-TSNotion" {
             $notionURL = ""
     
             # Act
-            $result = Connect-TSNotion -BearerToken $BearerToken -notionURL $notionURL
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
             $result | Should -Be $null

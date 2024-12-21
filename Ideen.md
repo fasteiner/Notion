@@ -1,15 +1,15 @@
  # Title
   Short Description 
  
-- [X] Connect-TSNotion -BearerToken -notionUri  -ApiKey
-- [ ] Connect-TSNotion -Profile
-- [ ] Connect-TSNotion Errorhandling/Output bei falschem Bearer Token
-- Get-TSNotionPage
-- Get-TSNotionPageContent (Get-TSNotionBlockChildren)
+- [X] Connect-Notion -BearerToken -notionUri  -ApiKey
+- [ ] Connect-Notion -Profile
+- [ ] Connect-Notion Errorhandling/Output bei falschem Bearer Token
+- Get-NotionPage
+- Get-NotionPageContent (Get-NotionBlockChildren)
 
 - https://github.com/makenotion/notion-sdk-js/blob/main/examples/intro-to-notion-api/intermediate/2-add-page-to-database.js
 
-Invoke-TSNotionWebrequest
+Invoke-NotionWebrequest
 
 # Naming Convention
 To prevent name conflicts, use the NoClobber or Prefix parameters of the Import-Module cmdlet. The Prefix parameter adds a prefix to the names of imported commands so that they're unique in the session. The NoClobber parameter doesn't import any commands that would hide or replace existing commands in the session.
@@ -19,7 +19,7 @@ You can also use the Alias, Cmdlet, Function, and Variable parameters of Import-
 Module authors can prevent name conflicts by using the DefaultCommandPrefix property of the module manifest to add a default prefix to all command names. The value of the Prefix parameter takes precedence over the value of DefaultCommandPrefix.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# ConvertTo-TSNotionObject
+# ConvertTo-NotionObject
 ## Top-level resources have an "object" property. This property can be used to determine the type of the resource (e.g. "database", "user", etc.)
 ## https://developers.notion.com/reference/intro
 
@@ -96,7 +96,7 @@ By default, PowerShell modules don't automatically export classes and enumeratio
   )
 
 
-  [ ] New-TSNotionBlock
+  [ ] New-NotionBlock
 
 
 # PageProperties
@@ -121,4 +121,4 @@ Bezahlstatus    : @{id=lqUd; type=select; select=}
 Vorname         : @{id=title; type=title; title=System.Object[]}
 # Tests
 
-## Test Connect-TSNotion with BearerToken, notionUri, and ApiKey
+## Test Connect-Notion with BearerToken, notionUri, and ApiKey

@@ -1,5 +1,5 @@
-function Get-TSNotionBlockChildren {
-    [alias("Get-TSNotionPageChildren")]
+function Get-NotionBlockChildren {
+    [alias("Get-NotionPageChildren")]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, ParameterSetName = "Block" , HelpMessage = "The block to get the children from")]
@@ -14,15 +14,15 @@ function Get-TSNotionBlockChildren {
             $BlockId = $Block.id
         }
 
-        $childrenRaw = Invoke-TSNotionApiCall -Uri "/blocks/$BlockId/children" -Method GET
-        $children = $childrenRaw | ConvertTo-TSNotionObject
+        $childrenRaw = Invoke-NotionApiCall -Uri "/blocks/$BlockId/children" -Method GET
+        $children = $childrenRaw | ConvertTo-NotionObject
         if($maxDepth -gt 0)
         {
             foreach($child in $children)
             {
                 if($child.has_children)
                 {
-                    $child.addChildren((Get-TSNotionBlockChildren -Block $child -maxDepth ($maxDepth - 1)))
+                    $child.addChildren((Get-NotionBlockChildren -Block $child -maxDepth ($maxDepth - 1)))
                 }
             }
         }

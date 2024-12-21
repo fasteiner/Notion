@@ -1,4 +1,4 @@
-function Copy-TSNotionVariable
+function Copy-NotionVariable
 {
     <#
     .SYNOPSIS
@@ -14,7 +14,7 @@ function Copy-TSNotionVariable
     If set, the variable will be converted to a hashtable
 
     .EXAMPLE
-    Copy-TSNotionVariable -Variable $Variable
+    Copy-NotionVariable -Variable $Variable
     #>
     param (
         [Parameter(Mandatory = $true)]

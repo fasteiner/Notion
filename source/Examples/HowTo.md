@@ -3,8 +3,8 @@
 
 ### How to get started?
 * [How to obtain an Bearer Token / Notion API Key / Integration Key?](# How to obtain an Bearer Token / Notion API Key / Integration Key?)
-* ```Install-Module TSNotion```
-* ```Import-Module TSNotion```
+* ```Install-Module Notion```
+* ```Import-Module Notion```
 * [How to connect for the first time?](# How to connect for the first time?)
 
 
@@ -22,21 +22,21 @@
 
 ```
 $BearerToken = Read-Host -Prompt "Enter your Bearer token" | ConvertTo-Securestring -AsPlainText
-Connect-TSNotion -BearerToken $BearerToken
+Connect-Notion -BearerToken $BearerToken
 ```
 
 ## How to get an existing page content?
 
     1. Browse to you Notion page (e.g. https://www.notion.so/My-TestPage-0123456789A1234567890)
     2. Copy the Id of the page (the alphanumerical part after the page name e.g. 0123456789A1234567890)
-    3. ```Get-TSNotionPage -PageId 0123456789A1234567890```
+    3. ```Get-NotionPage -PageId 0123456789A1234567890```
     4. You will receive an Notion object containing the blocks of the page
 
 ## How to get an existing page properties?
 
     1. Browse to you Notion page (e.g. https://www.notion.so/My-TestPage-0123456789A1234567890)
     2. Copy the Id of the page (the alphanumerical part after the page name e.g. 0123456789A1234567890)
-    3. ```Get-TSNotionPageProperties -PageId 0123456789A1234567890```
+    3. ```Get-NotionPageProperties -PageId 0123456789A1234567890```
 
 ## How to list existing pages?
 

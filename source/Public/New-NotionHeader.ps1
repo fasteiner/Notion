@@ -1,4 +1,4 @@
-function New-TSNotionHeader
+function New-NotionHeader
 {
     [CmdletBinding()]
     param (

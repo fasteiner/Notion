@@ -1,4 +1,4 @@
-function Add-TSNotionHeaderToBlock
+function Add-NotionHeaderToBlock
 {
     [CmdletBinding()]
     param (
@@ -27,10 +27,10 @@ function Add-TSNotionHeaderToBlock
         else
         {
             $PSBoundParameters.Remove("Parent") | Out-Null
-            $heading = New-TSNotionHeader @PSBoundParameters
+            $heading = New-NotionHeader @PSBoundParameters
         }
         $Parent.addChild($heading)
         #also accepts a page ID
-        return Invoke-TSNotionApiCall -Uri "/blocks/$($Parent.id)/children" -Method PATCH -body $Parent
+        return Invoke-NotionApiCall -Uri "/blocks/$($Parent.id)/children" -Method PATCH -body $Parent
     }
 }

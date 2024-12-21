@@ -1,4 +1,4 @@
-function Get-TSNotionBlock() {
+function Get-NotionBlock() {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, HelpMessage = "The block to get the children from", ParameterSetName = "Object")]
@@ -12,12 +12,12 @@ function Get-TSNotionBlock() {
         if ($PSCmdlet.ParameterSetName -eq "Object") {
             $BlockId = $Block.id
         }
-        $block = Invoke-TSNotionApiCall -Uri "/blocks/$BlockId" -Method GET
+        $block = Invoke-NotionApiCall -Uri "/blocks/$BlockId" -Method GET
         $block = [notion_block]::ConvertFromObject($block)
         if($block.has_children -and $maxDepth -gt 0)
         {
-            $objects = Get-TSNotionBlockChildren -Block $block
-            $children = $objects | Get-TSNotionBlock -maxDepth ($maxDepth - 1)
+            $objects = Get-NotionBlockChildren -Block $block
+            $children = $objects | Get-NotionBlock -maxDepth ($maxDepth - 1)
             $block.addChildren($children)
         }
         return $block

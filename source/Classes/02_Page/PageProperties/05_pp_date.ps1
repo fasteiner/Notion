@@ -11,11 +11,11 @@ class notion_date_page_property_structure
 
     notion_date_page_property_structure($start, $end)
     {
-        $this.start = ConvertTo-TSNotionFormattedDateTime -InputDate $start -fieldName "start"
+        $this.start = ConvertTo-NotionFormattedDateTime -InputDate $start -fieldName "start"
         #end is optional
         if($end)
         {
-            $this.end = ConvertTo-TSNotionFormattedDateTime -InputDate $end -fieldName "end"
+            $this.end = ConvertTo-NotionFormattedDateTime -InputDate $end -fieldName "end"
         }
     }
 

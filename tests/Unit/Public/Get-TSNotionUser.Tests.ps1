@@ -1,4 +1,4 @@
-# Import the module containing the Get-TSNotionUser function
+# Import the module containing the Get-NotionUser function
 Import-Module Pester
 
 BeforeDiscovery {
@@ -21,7 +21,7 @@ BeforeDiscovery {
     $mut = Import-Module -Name "$projectPath/output/module/$ProjectName" -Force -ErrorAction Stop -PassThru
 }
 
-Describe "Get-TSNotionUser Tests" {
+Describe "Get-NotionUser Tests" {
     BeforeAll {
         $global:expectedResponses = @(@{
             id = "e79a0b74-3aba-4149-9f74-0bb5791a6ee6"
@@ -39,7 +39,7 @@ Describe "Get-TSNotionUser Tests" {
     }
     Context "When UserId is provided" {
         BeforeAll{
-            Mock -ModuleName $global:moduleName Invoke-TSNotionApiCall {
+            Mock -ModuleName $global:moduleName Invoke-NotionApiCall {
                 $userID = $uri.split("/")[-1]
                 if($userId -eq "me"){
                     return $global:expectedResponses[1]
@@ -56,7 +56,7 @@ Describe "Get-TSNotionUser Tests" {
             $localResponse = [notion_user]::ConvertFromObject($global:expectedResponses[0])
 
             # Act
-            $result = Get-TSNotionUser -UserId $userId
+            $result = Get-NotionUser -UserId $userId
 
             # Assert
             $result | Should -Be $localResponse
@@ -70,7 +70,7 @@ Describe "Get-TSNotionUser Tests" {
             $localResponse = [notion_user]::ConvertFromObject($global:expectedResponses[1])
 
             # Act
-            $result = Get-TSNotionUser -UserId $userId
+            $result = Get-NotionUser -UserId $userId
 
             # Assert
             $result | Should -Be $localResponse
@@ -83,7 +83,7 @@ Describe "Get-TSNotionUser Tests" {
             $localResponses = $global:expectedResponses.ForEach({ [notion_user]::ConvertFromObject($_) })
 
             # Act
-            $result = Get-TSNotionUser
+            $result = Get-NotionUser
 
             # Assert
             for($i = 0; $i -lt $result.Count; $i++){
@@ -101,7 +101,7 @@ Describe "Get-TSNotionUser Tests" {
             $userId = "invalid-user-id"
 
             # Act
-            { Get-TSNotionUser -UserId $userId } | Should -Throw
+            { Get-NotionUser -UserId $userId } | Should -Throw
         }
     }
 }

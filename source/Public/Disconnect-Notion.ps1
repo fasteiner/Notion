@@ -1,17 +1,17 @@
-function Disconnect-TSNotion
+function Disconnect-Notion
 {
     <#
     .SYNOPSIS
     Disconnects from the Notion API by clearing the global variables.
     
     .DESCRIPTION
-    The Disconnect-TSNotion function is used to disconnect from the Notion API. It clears the global variables used to store the connection information. The function uses ShouldProcess to confirm the action with the user.
+    The Disconnect-Notion function is used to disconnect from the Notion API. It clears the global variables used to store the connection information. The function uses ShouldProcess to confirm the action with the user.
   
     .PARAMETER Confirm
     Prompts the user to confirm the disconnection from the Notion API.
     
     .EXAMPLE
-    Disconnect-TSNotion
+    Disconnect-Notion
     
     Prompts the user to confirm the disconnection from the Notion API and clears the connection information if confirmed.
     
@@ -21,9 +21,9 @@ function Disconnect-TSNotion
     
     if ($PSCmdlet.ShouldProcess("Notion API connection", "Disconnect"))
     {
-        Remove-Variable -Name TSNotionAPIKey -Scope Global -ErrorAction SilentlyContinue
-        Remove-Variable -Name TSNotionApiUri -Scope Global -ErrorAction SilentlyContinue
-        Remove-Variable -Name TSNotionAPIVersion -Scope Global -ErrorAction SilentlyContinue
+        Remove-Variable -Name NotionAPIKey -Scope Global -ErrorAction SilentlyContinue
+        Remove-Variable -Name NotionApiUri -Scope Global -ErrorAction SilentlyContinue
+        Remove-Variable -Name NotionAPIVersion -Scope Global -ErrorAction SilentlyContinue
         Write-Host "Disconnected from the Notion API." -ForegroundColor Green
     }
     else

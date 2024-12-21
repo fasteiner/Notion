@@ -1,4 +1,4 @@
-function Connect-TSNotion
+function Connect-Notion
 {
     <#
     .SYNOPSIS
@@ -27,12 +27,12 @@ function Connect-TSNotion
     The version of the Notion API to use. Valid values are '2022-02-22' and '2022-06-28'. This parameter is optional and defaults to '2022-06-28'.
     
     .EXAMPLE
-    Connect-TSNotion -BearerToken $secureToken -notionURL "https://api.notion.com/v1" -APIVersion '2022-06-28'
+    Connect-Notion -BearerToken $secureToken -notionURL "https://api.notion.com/v1" -APIVersion '2022-06-28'
     
     Connects to the Notion API using the specified Bearer token, URL, and API version.
     .EXAMPLE
     $BearerToken = Read-Host -Prompt "Enter your Bearer token" | ConvertTo-Securestring -AsPlainText
-    Connect-TSNotion -BearerToken $BearerToken
+    Connect-Notion -BearerToken $BearerToken
 
     Asks for the API token and connects to the Notion API.
     
@@ -53,7 +53,7 @@ function Connect-TSNotion
     )
     
     # Test connection
-    $result = Invoke-TSNotionApiCall "$notionURL/search" -APIKey $BearerToken -APIVersion $APIVersion -first 1 -method POST -body @{
+    $result = Invoke-NotionApiCall "$notionURL/search" -APIKey $BearerToken -APIVersion $APIVersion -first 1 -method POST -body @{
         "query" = ""
         filter  = @{
             "property" = "object"
@@ -69,13 +69,13 @@ function Connect-TSNotion
         Write-Error "Failed to connect to Notion API." -RecommendedAction "Please check your Bearer token and URL." -Category ConnectionError
         return
     }
-    $global:TSNotionAPIKey = $BearerToken
-    $global:TSNotionApiUri = $notionURL
-    $global:TSNotionAPIVersion = $APIVersion
+    $global:NotionAPIKey = $BearerToken
+    $global:NotionApiUri = $notionURL
+    $global:NotionAPIVersion = $APIVersion
     Write-Host "Successfully connected to Notion API." -ForegroundColor Green
 
     return @{
-        url     = $global:TSNotionApiUri
-        version = $global:TSNotionAPIVersion
+        url     = $global:NotionApiUri
+        version = $global:NotionAPIVersion
     }
 }
