@@ -55,6 +55,7 @@ class DatabasePropertiesBase {
         try {
             $base_obj.id = $Value.id
             $base_obj.type = $Value.type
+            $base_obj.name = $Value.name
         }
         catch {
             Write-Error "Error setting id and type" -Category InvalidData -RecommendedAction "Check the id and type" -TargetObject $Value

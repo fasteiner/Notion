@@ -12,6 +12,11 @@ class notion_parent
         $this.type = $type
     }
 
+    notion_parent([notion_parent_type]$type, [string]$id)
+    {
+        $this = $this::ConvertFromObject(@{type=$type; id=$id})
+    }
+
     static [notion_parent] ConvertFromObject($Value)
     {
         $parent_obj = $null

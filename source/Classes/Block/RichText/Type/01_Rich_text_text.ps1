@@ -2,10 +2,12 @@
 class rich_text_text_structure
 {
     [string] $content = ""
-    [string] $link = $null
+    $link
 
     rich_text_text_structure()
     {
+        $this.content = ""
+        $this.link = $null
     }
     
     rich_text_text_structure([string]$content )
@@ -15,18 +17,9 @@ class rich_text_text_structure
     }
 
     
-    rich_text_text_structure([string]$content = "", [string]$link = $null) {
+    rich_text_text_structure([string]$content, [string]$link) {
         $this.content = $content
         $this.link = $link
-    }
-
-    [string] ToJson([bool]$compress = $false)
-    {
-        $json = @{
-            content = $this.content
-            link = $this.link
-        }
-        return $json | ConvertTo-Json -Compress:$compress
     }
 
     static [rich_text_text_structure] ConvertFromObject($Value)
@@ -69,16 +62,16 @@ class rich_text_text : rich_text {
         $this.text = [rich_text_text_structure]::new($content)
     }
 
-    [string] ToJson([bool]$compress = $false) {
-        $json = @{
-            type = $this.type
-            text = $this.text.ToJson()
-            annotations = $this.annotations.ToJson()
-            plain_text = $this.plain_text
-            href = $this.href
-        }
-        return $json | ConvertTo-Json -Compress:$compress
-    }
+    # [string] ToJson([bool]$compress = $false) {
+    #     $json = @{
+    #         type = $this.type
+    #         text = $this.text.ToJson()
+    #         annotations = $this.annotations.ToJson()
+    #         plain_text = $this.plain_text
+    #         href = $this.href
+    #     }
+    #     return $json | ConvertTo-Json -Compress:$compress
+    # }
 
     static [rich_text_text] ConvertFromObject($Value) {
         $rich_text = [rich_text_text]::new()

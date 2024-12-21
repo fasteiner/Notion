@@ -1,33 +1,56 @@
-class notion_multi_select_database_property : DatabasePropertiesBase
-# https://developers.notion.com/reference/property-object#multi-select
-{
-    [notion_multi_select_item[]] $multi_select
+class notion_multi_select_database_property_structure{
+    [notion_multi_select_item[]] $options
 
-    notion_multi_select_database_property() : base("multi_select")
+    notion_multi_select_database_property_structure()
     {
-        $this.multi_select = @()
-    }
-
-    notion_multi_select_database_property([notion_property_color]$color, $name) : base("multi_select")
-    {
-        $this.multi_select = @([notion_multi_select_item]::new($color, $name))
+        $this.options = @()
     }
 
     add([notion_property_color]$color, $name)
     {
-        if ($this.multi_select.Count -ge 100)
+        if ($this.options.Count -ge 100)
         {
             throw [System.ArgumentException]::new("The multi_select property must have 100 items or less.")
         }
-        $this.multi_select += [notion_multi_select_item]::new($color, $name)
+        $this.options += [notion_multi_select_item]::new($color, $name)
+    }
+
+    static [notion_multi_select_database_property_structure] ConvertFromObject($Value)
+    {
+        Write-Verbose "[notion_multi_select_database_property_structure]::ConvertFromObject($($Value | Convertto-json -depth 20))"
+        $notion_multi_select_database_property_structure_obj = [notion_multi_select_database_property_structure]::new()
+        $notion_multi_select_database_property_structure_obj.options = $Value.options.ForEach({[notion_multi_select_item]::ConvertFromObject($_)})
+        return $notion_multi_select_database_property_structure_obj
+    }
+
+}
+
+
+class notion_multi_select_database_property : DatabasePropertiesBase
+# https://developers.notion.com/reference/property-object#multi-select
+{
+    [notion_multi_select_database_property_structure] $multi_select
+
+    notion_multi_select_database_property() : base("multi_select")
+    {
+        $this.multi_select = [notion_multi_select_database_property_structure]::new()
+    }
+
+    notion_multi_select_database_property([notion_property_color]$color, $name) : base("multi_select")
+    {
+        $this.multi_select = @([notion_multi_select_database_property_structure]::new($color, $name))
+    }
+
+    add([notion_property_color]$color, $name)
+    {
+        $this.multi_select.add($color, $name)
     }
 
     static [notion_multi_select_database_property] ConvertFromObject($Value)
     {
-        $multi_select_obj = [notion_multi_select_database_property]::new()
-        $multi_select_obj.multi_select = $Value.multi_select.options.foreach{
-            [notion_multi_select_item]::ConvertFromObject($_)
-        }
-        return $multi_select_obj
+        Write-Verbose "[notion_multi_select_database_property]::ConvertFromObject($($Value | Convertto-json -depth 20))"
+        $notion_multi_select_database_property_obj = [notion_multi_select_database_property]::new()
+        $notion_multi_select_database_property_obj.multi_select = [notion_multi_select_database_property_structure]::ConvertFromObject($Value.multi_select)
+        return $notion_multi_select_database_property_obj
     }
 }

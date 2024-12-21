@@ -18,10 +18,15 @@ class notion_multi_select_item
         $this.name = $name
     }
 
+    notion_multi_select_item($id,[notion_property_color]$color, $name)
+    {
+        $this.color = [Enum]::Parse([notion_property_color], $color)
+        $this.id = $id
+        $this.name = $name
+    }
+
     static [notion_multi_select_item] ConvertFromObject($Value)
     {
-        $notion_multi_select_item_obj= [notion_multi_select_item]::new($Value.color, $Value.name)
-        $notion_multi_select_item_obj.id = $Value.id
-        return $notion_multi_select_item_obj
+        return [notion_multi_select_item]::new($Value.id, $Value.color, $Value.name)
     }       
 }

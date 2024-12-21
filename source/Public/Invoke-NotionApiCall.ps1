@@ -104,7 +104,7 @@ function Invoke-NotionApiCall
         }
         if ($body)
         {
-            $Params.Add("Body", ($body | ConvertTo-Json))
+            $Params.Add("Body", ($body | ConvertTo-Json -EnumsAsStrings -Depth 20))
         }
         # https://developers.notion.com/reference/intro
         # Parameter location varies by endpoint
@@ -194,7 +194,7 @@ function Invoke-NotionApiCall
                         $value = $queryParameters[$key]
                         $body | Add-Member -MemberType NoteProperty -Name $key -Value $value -Force
                     }
-                    $Params["Body"] = ($body | ConvertTo-Json)
+                    $Params["Body"] = ($body | ConvertTo-Json -EnumsAsStrings -Depth 20)
                 }
                 Write-Debug "$method $($Params["URI"])"
                 $content = Invoke-RestMethod @Params
@@ -233,7 +233,10 @@ function Invoke-NotionApiCall
                     Headers    = $_.TargetObject.Headers
                 }
                 #$e | Add-NotionLogToFile -filename $fileName -level ERROR
-                "InvokeParams", $params | Add-NotionLogToFile -filename $fileName -level ERROR
+                $outputParams = $Params.Clone()
+                $outputParams.Headers.Authorization = "Bearer *****"
+                "InvokeParams", $outputParams | Add-NotionLogToFile -filename $fileName -level ERROR
+                "Body", $outputParams.body | Add-NotionLogToFile -filename $fileName -level ERROR
                 switch -wildcard ($e.Status)
                 {
                     400
