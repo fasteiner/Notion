@@ -22,7 +22,7 @@ class notion_parent
             "page_id" {
                 $parent_obj = [notion_page_parent]::ConvertFromObject($Value)
             }
-            "workspace_id" {
+            "workspace" {
                 $parent_obj = [notion_workspace_parent]::ConvertFromObject($Value)
             }
             "block_id" {

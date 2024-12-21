@@ -60,6 +60,10 @@ class notion_file : notion_icon
     static [notion_file] ConvertFromObject($Value)
     {
         Write-Verbose "[notion_file]::ConvertFromObject($($Value | ConvertTo-Json))"
+        if($null -eq $Value)
+        {
+            return $null
+        }
         $fileObject = $null
         if ($Value.type -eq "file")
         {

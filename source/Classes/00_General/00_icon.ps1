@@ -4,6 +4,10 @@ class notion_icon
 
     static [notion_icon] ConvertFromObject($Value)
     {
+        if($null -eq $Value)
+        {
+            return $null
+        }
         $icon_obj = $null
         switch ($Value.type)
             {
