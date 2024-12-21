@@ -1,19 +1,16 @@
-class notion_checkbox_database_property : checkbox_property_base
+class notion_checkbox_database_property : DatabasePropertiesBase
 # https://developers.notion.com/reference/property-object#checkbox
 {
-    #[bool] $checkbox = $false
-    [string] $Name
-    [string] $description
+    [hashtable] $checkbox
 
-    notion_checkbox_page_property([bool]$checkbox) : base($checkbox)
+    notion_checkbox_database_property() : base("checkbox")
     {
-        $this.checkbox = $checkbox
+        $this.checkbox = @{}
     }
 
 
-    static [notion_checkbox_page_property] ConvertFromObject($Value)
+    static [notion_checkbox_database_property] ConvertFromObject($Value)
     {
-        $notion_checkbox_page_property = [notion_checkbox_page_property]::new($Value.checkbox)
-        return $notion_checkbox_page_property
+        return [notion_checkbox_database_property]::new()
     }
 }
