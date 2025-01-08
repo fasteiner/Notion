@@ -31,6 +31,7 @@ function Get-NotionPage
         https://developers.notion.com/reference/retrieve-a-page-property-item
     #>
     [CmdletBinding()]
+    [OutputType([notion_page])]
     param (
         [Parameter(Mandatory = $true)]
         [Alias("Id")]
@@ -42,23 +43,14 @@ function Get-NotionPage
     # Construct the API endpoint URL
     $url = "/pages/$PageId"
 
-    try
-    {
-        # Make the API call using the Invoke-NotionApiCall function
-        $response = Invoke-NotionApiCall -uri $url -method "GET"
+    # Make the API call using the Invoke-NotionApiCall function
+    $response = Invoke-NotionApiCall -uri $url -method "GET"
 
-        # Return the response to the caller
-        $pageObj = [notion_page]::ConvertFromObject($response)
-        $blocks = Get-NotionBlockChildren -BlockId $pageObj.id
-        # $children = $blocks | Get-NotionBlockChildren -maxDepth ($maxDepth - 1)
-        # $pageObj.addChildren($children)
-        return @($pageObj, $blocks)
-    }
-    catch
-    {
-        # Handle any errors that occur during the API call
-
-        # Write-Error "Failed to retrieve the page property."
-        Get-Error
-    }
+    # Return the response to the caller
+    $pageObj = [notion_page]::ConvertFromObject($response)
+    #TODO: add children
+    #$blocks = Get-NotionBlockChildren -BlockId $pageObj.id
+    # $children = $blocks | Get-NotionBlockChildren -maxDepth ($maxDepth - 1)
+    # $pageObj.addChildren($children)
+    return $pageObj
 }

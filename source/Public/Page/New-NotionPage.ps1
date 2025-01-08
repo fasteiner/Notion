@@ -98,7 +98,7 @@ function New-NotionPage
     }
     try
     {
-        Write-Host ($body | ConvertTo-Json)
+        $body = $body | Remove-NullValuesFromObject
         $response = Invoke-NotionAPICall -Method POST -uri "/pages" -Body $body
         return [notion_page]::ConvertFromObject($response)
     }

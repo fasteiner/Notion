@@ -105,7 +105,7 @@ function Invoke-NotionApiCall
         }
         if ($body)
         {
-            $Params.Add("Body", ($body | Remove-NullValuesFromObject | ConvertTo-Json -EnumsAsStrings -Depth 20))
+            $Params.Add("Body", ($body | ConvertTo-Json -EnumsAsStrings -Depth 20))
         }
         # https://developers.notion.com/reference/intro
         # Parameter location varies by endpoint
@@ -196,7 +196,7 @@ function Invoke-NotionApiCall
                         $body | Add-Member -MemberType NoteProperty -Name $key -Value $value -Force
                     }
                     Write-Debug "Body: $($body | ConvertTo-Json -EnumsAsStrings -Depth 20)"
-                    $Params["Body"] = ($body | Remove-NullValuesFromObject | ConvertTo-Json -EnumsAsStrings -Depth 20)
+                    $Params["Body"] = ($body | ConvertTo-Json -EnumsAsStrings -Depth 20)
                 }
                 Write-Debug "$method $($Params["URI"])"
                 $content = Invoke-RestMethod @Params

@@ -27,7 +27,7 @@ The ConfirmImpact is set to 'High' due to the potential impact of removing a pag
     $body = @{
         in_trash = $true
     }
-
+    $body = $body | Remove-NullValuesFromObject
     if ($PSCmdlet.ShouldProcess($PageId)) {
         $response = Invoke-NotionApiCall -method PATCH -uri "/pages/$PageId" -body $body
         return [notion_database]::ConvertFromObject($response)
