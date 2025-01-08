@@ -39,8 +39,10 @@ function New-NotionDatabase {
 
     $body = @{
         parent = $parent_obj
-        title = $title
         properties = $properties
+    }
+    if($title){
+        $body.title = $title
     }
 
     $response = Invoke-NotionAPICall -Method POST -uri "/databases" -Body $body

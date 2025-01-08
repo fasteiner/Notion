@@ -58,10 +58,11 @@ class rich_text
         $this.href = $href
     }
 
+
     static [rich_text] ConvertFromObject($Value)
     {
         Write-Verbose "[rich_text]::ConvertFromObject($($Value | ConvertTo-Json))"
-        if(!$Value.type)
+        if (!$Value.type)
         {
             return $null
         }
@@ -88,7 +89,11 @@ class rich_text
                 Write-Error "Unknown rich text type: $($Value.type)" -Category InvalidData -TargetObject $Value -RecommendedAction "Please provide a valid rich text type (text, mention or equation)"
             }
         }
-        $rich_text.annotations = [annotation]::ConvertFromObject($Value.annotations)
+        $local:annotations = [annotation]::ConvertFromObject($Value.annotations)
+        if ($local:annotations)
+        {
+            $rich_text.annotations = $local:annotations
+        }
         $rich_text.plain_text ??= $Value.plain_text
         $rich_text.href = $Value.href
         return $rich_text
