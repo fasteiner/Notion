@@ -50,6 +50,6 @@ function Get-NotionPageProperty
 
     $PropertiesRaw = Invoke-NotionApiCall -Uri "/pages/$PageId/properties/$PropertyID" -Method GET
     #TODO: Implement conversion to object
-    #$Properties = [notion_pageproperties]::ConvertFromObject($PropertiesRaw)
+    $Properties = [notion_pageproperties]::ConvertFromObject($PropertiesRaw)
     return $PropertiesRaw
 }
