@@ -1,4 +1,4 @@
-enum DatabasePropertyType
+enum notion_database_property_type
 {
     checkbox
     created_by
@@ -20,4 +20,5 @@ enum DatabasePropertyType
     status
     title
     url
+    unique_id
 }

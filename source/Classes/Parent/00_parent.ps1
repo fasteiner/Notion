@@ -12,6 +12,11 @@ class notion_parent
         $this.type = $type
     }
 
+    notion_parent([notion_parent_type]$type, [string]$id)
+    {
+        $this = $this::ConvertFromObject(@{type=$type; id=$id})
+    }
+
     static [notion_parent] ConvertFromObject($Value)
     {
         $parent_obj = $null
@@ -22,7 +27,7 @@ class notion_parent
             "page_id" {
                 $parent_obj = [notion_page_parent]::ConvertFromObject($Value)
             }
-            "workspace_id" {
+            "workspace" {
                 $parent_obj = [notion_workspace_parent]::ConvertFromObject($Value)
             }
             "block_id" {

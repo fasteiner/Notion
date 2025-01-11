@@ -28,9 +28,12 @@ class notion_relation_page_property : PagePropertiesBase
         $this.has_more = $has_more
         foreach ($relation_item in $relation)
         {
-            $this.relation += [notion_relation_page_property]::ConvertFromObject($relation_item)
+            $this.relation += [notion_page_reference]::ConvertFromObject($relation_item)
         }     
     }
+
+    #TODO: Limit to max 100 releations
+    # https://developers.notion.com/reference/request-limits#limits-for-property-values
 
     static [notion_relation_page_property] ConvertFromObject($Value)
     {

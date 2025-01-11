@@ -22,13 +22,34 @@ class notion_title_page_property : PagePropertiesBase
                 }
                 else
                 {
-                    $this.title += [rich_text]::ConvertFromObject($item)
+                    if($value -is [string])
+                    {
+                        $this.title += [rich_text_text]::new($value)
+                    }
+                    else
+                    {
+                        $this.title += [rich_text]::ConvertFromObject($value)
+                    }
                 }
             }
         }
         else
         {
-            $this.title += [rich_text]::ConvertFromObject($value)
+            if($value -is [rich_text])
+            {
+                $this.title += $value
+            }
+            else
+            {
+                if($value -is [string])
+                {
+                    $this.title += [rich_text_text]::new($value)
+                }
+                else
+                {
+                    $this.title += [rich_text]::ConvertFromObject($value)
+                }
+            }
         }
         
         

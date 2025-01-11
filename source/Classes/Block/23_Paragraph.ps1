@@ -3,7 +3,6 @@ class paragraph_structure
     [rich_text[]] $rich_text
     [notion_color] $color = "default"
     [notion_block[]] $children = @()
-    #TODO: Implement addchildren
     
 
     paragraph_structure()
@@ -24,6 +23,7 @@ class paragraph_structure
     {
         $Paragraph = [paragraph_structure]::new()
         $Paragraph.rich_text = $Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
+        $Paragraph.color = [Enum]::Parse([notion_color], ($Value.color ?? "default"))
         return $Paragraph
     }
 }

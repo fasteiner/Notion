@@ -85,7 +85,8 @@ function Invoke-NotionApiCall
         }
         $APIKey ??= $Global:NotionAPIKey
         $queryParameters = @{}
-        if ($PSBoundParameters.ContainsKey("pageSize") -and $pageSize -gt 0) {
+        if ($PSBoundParameters.ContainsKey("pageSize") -and $pageSize -gt 0)
+        {
             $queryParameters["page_size"] = $pageSize
         }
         if ($uri -notlike "$global:NotionApiUri*")
@@ -104,7 +105,7 @@ function Invoke-NotionApiCall
         }
         if ($body)
         {
-            $Params.Add("Body", ($body | ConvertTo-Json))
+            $Params.Add("Body", ($body | ConvertTo-Json -EnumsAsStrings -Depth 20))
         }
         # https://developers.notion.com/reference/intro
         # Parameter location varies by endpoint
@@ -180,7 +181,7 @@ function Invoke-NotionApiCall
                 if ($method -eq "GET")
                 {
                     $Params["URI"] = $uri 
-                    if($queryParameters.Count -gt 0)
+                    if ($queryParameters.Count -gt 0)
                     {
                         $Params["URI"] += "?" + ($queryParameters.GetEnumerator() | ForEach-Object { "{0}={1}" -f $_.Key, $_.Value }) -join "&"
                     }
@@ -194,7 +195,8 @@ function Invoke-NotionApiCall
                         $value = $queryParameters[$key]
                         $body | Add-Member -MemberType NoteProperty -Name $key -Value $value -Force
                     }
-                    $Params["Body"] = ($body | ConvertTo-Json)
+                    Write-Debug "Body: $($body | ConvertTo-Json -EnumsAsStrings -Depth 20)"
+                    $Params["Body"] = ($body | ConvertTo-Json -EnumsAsStrings -Depth 20)
                 }
                 Write-Debug "$method $($Params["URI"])"
                 $content = Invoke-RestMethod @Params
@@ -233,7 +235,10 @@ function Invoke-NotionApiCall
                     Headers    = $_.TargetObject.Headers
                 }
                 #$e | Add-NotionLogToFile -filename $fileName -level ERROR
-                "InvokeParams", $params | Add-NotionLogToFile -filename $fileName -level ERROR
+                $outputParams = $Params.Clone()
+                $outputParams.Headers.Authorization = "Bearer *****"
+                "InvokeParams", $outputParams | Add-NotionLogToFile -filename $fileName -level ERROR
+                "Body", $outputParams.body | Add-NotionLogToFile -filename $fileName -level ERROR
                 switch -wildcard ($e.Status)
                 {
                     400

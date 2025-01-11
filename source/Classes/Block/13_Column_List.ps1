@@ -21,7 +21,8 @@ class notion_column_list_block : notion_block
     static [notion_column_list_block] ConvertFromObject($Value)
     {
         $column_list_obj = [notion_column_list_block]::new()
-        $column_list_obj.column_list = add([notion_column_block]::ConvertFromObject($Value.column_list))
+        #$column_list_obj.add([notion_column_block]::ConvertFromObject($Value.column_list))
+        # actual data is in the children (GET /block/{block_id}/children)
         return $column_list_obj
     }
 }

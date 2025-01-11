@@ -55,7 +55,7 @@ class annotation
         $annotation = [annotation]::new()
         if(!$Value)
         {
-            return $annotation
+            return $null
         }
         $annotation.bold = $Value.bold
         $annotation.italic = $Value.italic
