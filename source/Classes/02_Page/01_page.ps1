@@ -16,7 +16,6 @@ class notion_page
     [string]     $url
     [string]     $public_url
     [string]     $request_id
-    $children = @()
 
     #Constructors
     notion_page()
@@ -47,41 +46,6 @@ class notion_page
         $this.properties = $properties
     }
 
-    #Methods
-    addChild($child, [string] $type)
-    {
-        $out = $child
-        if ($child.type)
-        {
-            $out = $out | Select-Object -ExcludeProperty "type"
-        }
-        $this.children += @{
-            "type"  = $type
-            "$type" = $out
-        }
-    }
-    addChild($child)
-    {
-        $out = $child
-        $type = $child.type
-        # remove type propety from child object
-        if ($child.type)
-        {
-            $out = $out | Select-Object -ExcludeProperty "type"
-        }
-        $this.children += @{
-            "type"  = $type
-            "$type" = $out
-        }
-    }
-    addChildren($children)
-    {
-        foreach ($child in $children)
-        {
-            $this.addChild($child)
-        }
-    }
-    #TODO: Wie kann man verhindern, dass diese Methode mit falschen Objekten aufgerufen wird? Oder mit einem Array of Objects?
     static [notion_page] ConvertFromObject($Value)
     {
         if (($Value -is [System.Object]) -and !($Value -is [string]) -and !($Value -is [int]) -and !($Value -is [bool]) -and $Value.Object -and ($Value.Object -eq "page"))

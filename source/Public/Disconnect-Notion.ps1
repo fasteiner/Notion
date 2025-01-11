@@ -19,7 +19,7 @@ function Disconnect-Notion
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     param ()
     
-    if ($PSCmdlet.ShouldProcess("Notion API connection", "Disconnect"))
+    if ($PSCmdlet.ShouldProcess("Notion API connection"))
     {
         Remove-Variable -Name NotionAPIKey -Scope Global -ErrorAction SilentlyContinue
         Remove-Variable -Name NotionApiUri -Scope Global -ErrorAction SilentlyContinue

@@ -26,6 +26,8 @@ function Get-NotionPage
     .NOTES
         - Ensure that the Notion API integration has access to the page.
         - The API token and version are handled within the `Invoke-NotionApiCall` function.
+
+        - If you need the page content use [Get-NotionPageChildren](./Get-NotionPageChildren.ps1) to get the children of the page.
     
     .LINK
         https://developers.notion.com/reference/retrieve-a-page-property-item
@@ -48,9 +50,5 @@ function Get-NotionPage
 
     # Return the response to the caller
     $pageObj = [notion_page]::ConvertFromObject($response)
-    #TODO: add children
-    #$blocks = Get-NotionBlockChildren -BlockId $pageObj.id
-    # $children = $blocks | Get-NotionBlockChildren -maxDepth ($maxDepth - 1)
-    # $pageObj.addChildren($children)
     return $pageObj
 }

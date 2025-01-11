@@ -1,1 +1,3 @@
-# Creates a new DB property
+function New-NotionDatabasePropertyObject{
+    # eventualy implement
+}

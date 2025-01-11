@@ -25,7 +25,7 @@ function Restore-NotionDatabase
     Ensure you have the necessary permissions to modify the database in Notion.
 
     .LINK
-    https://developers.notion.com/docs
+    https://developers.notion.com/reference/update-a-database
     #>
 
     [OutputType([notion_database])]
@@ -38,6 +38,7 @@ function Restore-NotionDatabase
 
     $body = @{
         in_trash = $false
+        archived = $false
     }
     $body = $body | Remove-NullValuesFromObject
 

@@ -6,6 +6,10 @@ class notion_to_do
     [notion_block[]] $children = @()
     # TODO: Implement addchildren
 
+    notion_to_do()
+    {
+    }
+
     notion_to_do([rich_text[]] $rich_text, [bool] $checked = $false, [notion_color] $color = "default")
     {
         $this.rich_text = $rich_text.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
@@ -15,7 +19,11 @@ class notion_to_do
 
     static [notion_to_do] ConvertFromObject ($Value)
     {
-        return [notion_to_do]::new($Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) }), $Value.checked, [Enum]::Parse([notion_color], $Value.color))
+        $notion_to_do_obj = [notion_to_do]::new()
+        $notion_to_do_obj.rich_text = $Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
+        $notion_to_do_obj.checked = $Value.checked
+        $notion_to_do_obj.color = [Enum]::Parse([notion_color], $Value.color ?? "default")
+        return $notion_to_do_obj
     }
 }
 class notion_to_do_block : notion_block
@@ -24,7 +32,11 @@ class notion_to_do_block : notion_block
     [notion_blocktype] $type = "to_do"
     [notion_to_do] $to_do
 
-    notion_to_do_block([rich_text[]] $rich_text, [bool] $checked = $false, [notion_color] $color = "default")
+    notion_to_do_block() : base("to_do")
+    {
+    }
+
+    notion_to_do_block([rich_text[]] $rich_text, [bool] $checked = $false, [notion_color] $color = "default") : base("to_do")
     {
         $this.to_do = [notion_to_do]::new($rich_text, $checked, $color)
     }

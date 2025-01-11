@@ -5,10 +5,6 @@
 New-NotionBlock
 New-NotionBlock -Type
 
-New-NotionPage                                # TODO: destination teamspaces or private???
-
-New-NotionDatabase
-
 ```
 
 ## Add- commands

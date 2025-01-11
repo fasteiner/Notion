@@ -117,4 +117,7 @@ $ExportableTypes = @(
     [rich_text_text]
     [rich_text_text]
     [rich_text_text_structure]
+
+    # TODO: remove before release
+    [PagePropertiesBase]
 )

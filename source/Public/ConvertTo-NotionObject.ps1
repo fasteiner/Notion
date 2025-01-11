@@ -121,6 +121,7 @@ function ConvertTo-NotionObject
                 "property_item"
                 {  
                     "PropertyItem" | Add-NotionLogToFile -Level DEBUG
+                    $output += [PagePropertiesBase]::ConvertFromObject($item)
                 }
         
                 "user"

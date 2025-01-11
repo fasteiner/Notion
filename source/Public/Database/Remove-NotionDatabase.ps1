@@ -27,6 +27,8 @@ function Remove-NotionDatabase
     Requires the `Invoke-NotionAPICall` function and appropriate API authentication to be configured.
     This function does not permanently delete the database but marks it as "in trash."
     Ensure you have appropriate permissions to modify the database in Notion.
+    
+    Attention: Only pages can be restored via the GUI. Databases can only be restored via the API.
 
     .LINK
     https://developers.notion.com/reference/database (in_trash = true)

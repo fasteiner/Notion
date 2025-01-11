@@ -4,6 +4,7 @@ function Add-NotionBlockToPage
     param (
         [Parameter(Mandatory = $true, HelpMessage = "The parent page to add the block to")]
         [notion_page] $Page,
+        #TODO: Add support for PageId
         [Parameter(Mandatory = $true, HelpMessage = "The block to add to the page")]
         [notion_block[]] $Block
     )

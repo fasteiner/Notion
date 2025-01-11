@@ -24,7 +24,7 @@ class numbered_list_item_structure
     {
         $numbered_list_item_structure = [numbered_list_item_structure]::new()
         $numbered_list_item_structure.rich_text = $Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
-        $numbered_list_item_structure.color = $Value.color
+        $numbered_list_item_structure.color = [Enum]::Parse([notion_color], ($Value.color ?? "default"))
         return $numbered_list_item_structure
     }
 }
@@ -34,11 +34,11 @@ class notion_numbered_list_item_block : notion_block
     [notion_blocktype] $type = "numbered_list_item"
     [numbered_list_item_structure] $numbered_list_item
 
-    notion_numbered_list_item_block()
+    notion_numbered_list_item_block() : base("numbered_list_item")
     {
     }
 
-    notion_numbered_list_item_block([rich_text[]] $rich_text)
+    notion_numbered_list_item_block([rich_text[]] $rich_text) : base("numbered_list_item")
     {
         $this.numbered_list_item = [numbered_list_item_structure]::new($rich_text)
     }

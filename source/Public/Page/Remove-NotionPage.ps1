@@ -19,8 +19,10 @@ The ConfirmImpact is set to 'High' due to the potential impact of removing a pag
 
 #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
+    [OutputType([notion_page])]
     param(
-        [Parameter(Mandatory = $true, HelpMessage = "The ID of the page to remove")]
+        [Parameter(Mandatory = $true, Position=0, HelpMessage = "The ID of the page to remove")]
+        [Alias("Id")]
         [string]$PageId
     )
 
@@ -30,8 +32,8 @@ The ConfirmImpact is set to 'High' due to the potential impact of removing a pag
     $body = $body | Remove-NullValuesFromObject
     if ($PSCmdlet.ShouldProcess($PageId)) {
         $response = Invoke-NotionApiCall -method PATCH -uri "/pages/$PageId" -body $body
-        return [notion_database]::ConvertFromObject($response)
+        return [notion_page]::ConvertFromObject($response)
     } else {
         return $null
-    }    
+    }
 }

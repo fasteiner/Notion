@@ -78,7 +78,7 @@ class notion_block
 
     static [notion_block] ConvertFromObject($Value)
     {
-        Write-Verbose "[notion_block]::ConvertFromObject($($Value | ConvertTo-Json))"
+        # Write-Verbose "[notion_block]::ConvertFromObject($($Value | ConvertTo-Json -Depth 10 ))"
         $notion_block = $null
         switch ($Value.type)
         # https://developers.notion.com/reference/block#block-type-objects
@@ -165,12 +165,12 @@ class notion_block
             }
             "image"
             {
-                $notion_block = [notion_image_block]::ConvertfromObject($value.image)
+                $notion_block = [notion_image_block]::ConvertfromObject($value)
                 break
             }
             "link_preview"
             {
-                $notion_block = [notion_link_preview_block]::ConvertfromObject($value.link_preview)
+                $notion_block = [notion_link_preview_block]::ConvertfromObject($value)
                 break
             }
             #Mention ??
@@ -181,32 +181,32 @@ class notion_block
 
             "numbered_list_item"
             {
-                $notion_block = [notion_numbered_list_item_block]::ConvertfromObject($value.numbered_list_item)
+                $notion_block = [notion_numbered_list_item_block]::ConvertfromObject($value)
                 break
             }
             "paragraph"
             {
-                $notion_block = [notion_paragraph_block]::ConvertfromObject($value.paragraph)
+                $notion_block = [notion_paragraph_block]::ConvertfromObject($value)
                 break
             }
             "pdf"
             {
-                $notion_block = [notion_pdf_block]::ConvertfromObject($value.pdf)
+                $notion_block = [notion_pdf_block]::ConvertfromObject($value)
                 break
             }
             "quote"
             {
-                $notion_block = [notion_quote_block]::ConvertfromObject($value.quote)
+                $notion_block = [notion_quote_block]::ConvertfromObject($value)
                 break
             }
             "synced_block"
             {
-                $notion_block = [notion_synced_block]::ConvertfromObject($value.synced_block)
+                $notion_block = [notion_synced_block]::ConvertfromObject($value)
                 break
             }
             "table"
             {
-                $notion_block = [table]::ConvertfromObject($value.table) 
+                $notion_block = [table]::ConvertfromObject($value) 
                 break
             }
             # "table_row"
@@ -216,7 +216,7 @@ class notion_block
             # }
             "table_of_contents"
             {
-                $notion_block = [notion_table_of_contents_block]::ConvertfromObject($value.table_of_contents)
+                $notion_block = [notion_table_of_contents_block]::ConvertfromObject($value)
                 break
             }
             "template"
@@ -226,12 +226,12 @@ class notion_block
             }
             "to_do"
             {
-                $notion_block = [notion_to_do_block]::ConvertfromObject($value.to_do)
+                $notion_block = [notion_to_do_block]::ConvertfromObject($value)
                 break
             }
             "toggle"
             {
-                $notion_block = [notion_toggle_block]::ConvertfromObject($value.toggle)
+                $notion_block = [notion_toggle_block]::ConvertfromObject($value)
                 break
             }
             # "unsupported"
@@ -241,7 +241,7 @@ class notion_block
             # }
             "video"
             {
-                $notion_block = [notion_video_block]::ConvertfromObject($value.video)
+                $notion_block = [notion_video_block]::ConvertfromObject($value)
                 break
             }
             Default
