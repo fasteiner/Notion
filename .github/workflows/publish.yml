@@ -6,6 +6,10 @@ on:
       - main
       - Dev
 
+defaults:
+  run:
+    shell: pwsh
+
 jobs:
   publish-and-tag:
     runs-on: ubuntu-latest
