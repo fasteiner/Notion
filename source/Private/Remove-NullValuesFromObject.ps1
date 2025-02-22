@@ -2,7 +2,7 @@
 function Remove-NullValuesFromObject
 {
     [CmdletBinding()]
-    [outputtype([PSCustomObject])]
+    [OutputType([PSCustomObject])]
     param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [object]$InputObject

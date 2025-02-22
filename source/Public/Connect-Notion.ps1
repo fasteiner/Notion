@@ -5,7 +5,7 @@ function Connect-Notion
     Connects to the Notion API using the provided Bearer token and URL.
     
     .DESCRIPTION
-    The Connect-TSNotion function is used to establish a connection to the Notion API. It requires a Bearer token and the URL to the Notion API. Optionally, you can specify the API version.
+    The Connect-Notion function is used to establish a connection to the Notion API. It requires a Bearer token and the URL to the Notion API. Optionally, you can specify the API version.
 
     How to obtain an Bearer Token / Notion API Key / Integration Key?
     1. Register a new account at [https://notion.com](https://notion.com)

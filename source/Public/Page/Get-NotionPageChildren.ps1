@@ -1,4 +1,5 @@
-function Get-NotionPageChildren {
+function Get-NotionPageChildren 
+{
     <#
     .SYNOPSIS
     Retrieves the children blocks of a Notion page.

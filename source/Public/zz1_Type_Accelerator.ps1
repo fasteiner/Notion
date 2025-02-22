@@ -115,7 +115,6 @@ $ExportableTypes = @(
     [rich_text_mention_template_mention_template_mention_user_structure]
     [rich_text_mention_user]
     [rich_text_text]
-    [rich_text_text]
     [rich_text_text_structure]
 
     # TODO: remove before release

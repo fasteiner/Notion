@@ -12,7 +12,7 @@
     RootModule           = 'Notion.psm1'
 
     # Version number of this module.
-    ModuleVersion        = '0.1.2'
+    ModuleVersion        = '0.1.3'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -33,7 +33,7 @@
     Description          = 'Module for interaction with Notion based on classes'
 
     # Minimum version of the PowerShell engine required by this module
-    PowerShellVersion    = '7.0'
+    PowerShellVersion    = '7.5'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
@@ -95,16 +95,16 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            # Tags = @()
+            Tags = @('Notion', 'API', 'Classes')
 
             # A URL to the license for this module.
             # LicenseUri = ''
 
             # A URL to the main website for this project.
-            # ProjectUri = ''
+            ProjectUri = 'https://github.com/fasteiner/Notion'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            IconUri      = 'https://github.com/fasteiner/Notion/blob/main/TSNotion.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = ''

@@ -1,4 +1,4 @@
-# TSNotion - A class-based PowerShell module for interacting with Notion
+# Notion - A class-based PowerShell module for interacting with Notion
 
 (Notion)[https://notion.com], is an online knowledge management tool in which you can structure your requirements yourself or be inspired by countless templates and formats. Unfortunately, there was PowerShell module that offers the full power of the API.
 

@@ -154,9 +154,9 @@ param
     before Invoke-Build can run the tasks if the parameter ResolveDependency (or
     parameter alias Bootstrap) is specified.
 #>
-
 process
 {
+    Set-Alias -Name gitversion -Value dotnet-gitversion -Scope Global
     if ($MyInvocation.ScriptName -notLike '*Invoke-Build.ps1')
     {
         # Only run the process block through InvokeBuild (look at the Begin block at the bottom of this script).
