@@ -1,43 +1,44 @@
-name: Tag and Publish PowerShell Module
+name: Tag on Merge & Publish
+
 on:
   push:
     branches:
       - main
-      - dev
-
-defaults:
-  run:
-    shell: powershell
+      - Dev
 
 jobs:
-  tag-and-publish:
+  publish-and-tag:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write  # Required to push tags
+    outputs:
+      tag: ${{ steps.gitversion.outputs.SemVer }}  # Store the generated version
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Ensures all commits and tags are fetched
+          fetch-depth: 0  # Required for GitVersion
 
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.1
+        uses: GitTools/actions/gitversion/setup@v0
+        with:
+          versionSpec: '5.x'
 
-      - name: Determine Version
+      - name: Determine version
         id: gitversion
-        uses: gittools/actions/gitversion/execute@v0
-
-      - name: Create and Push Tag
-        run: |
-          TAG="v${{ steps.gitversion.outputs.SemVer }}"
-          git tag "$TAG"
-          git push origin "$TAG"
-
-      - name: Set execute permissions for build.ps1
-        run: chmod +x ./build.ps1
+        uses: GitTools/actions/gitversion/execute@v0
+      
+      - name: chmod build.ps1
+        run: chmod +x build.ps1
 
       - name: Package Module
         run: |
           ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
+
+      - name: Create and push tag
+        run: |
+          git tag v${{ steps.gitversion.outputs.SemVer }}
+          git push origin v${{ steps.gitversion.outputs.SemVer }}
 
       - name: Publish Module
         env:
