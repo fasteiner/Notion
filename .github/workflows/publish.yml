@@ -1,4 +1,4 @@
-name: Tag on Merge & Publish
+name: Publish
 
 on:
   push:
@@ -11,12 +11,8 @@ defaults:
     shell: pwsh
 
 jobs:
-  publish-and-tag:
+  build-and-publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # Required to push tags
-    outputs:
-      tag: ${{ steps.gitversion.outputs.SemVer }}  # Store the generated version
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -27,10 +23,6 @@ jobs:
         uses: GitTools/actions/gitversion/setup@v0
         with:
           versionSpec: '5.x'
-
-      - name: Determine version
-        id: gitversion
-        uses: GitTools/actions/gitversion/execute@v0
       
       - name: chmod build.ps1
         run: chmod +x build.ps1
@@ -38,11 +30,6 @@ jobs:
       - name: Package Module
         run: |
           ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
-
-      - name: Create and push tag
-        run: |
-          git tag v${{ steps.gitversion.outputs.SemVer }}
-          git push origin v${{ steps.gitversion.outputs.SemVer }}
 
       - name: Publish Module
         env:
