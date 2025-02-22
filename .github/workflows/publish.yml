@@ -1,51 +1,39 @@
-name: Tag on Merge & Publish
-
+name: Tag and Publish PowerShell Module
 on:
   push:
     branches:
       - main
       - dev
 
+defaults:
+  run:
+    shell: powershell
+
 jobs:
-  versioning:
+  tag-and-publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # Required to push tags
-    outputs:
-      tag: ${{ steps.gitversion.outputs.SemVer }}  # Store the generated version
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Required for GitVersion
+          fetch-depth: 0  # Ensures all commits and tags are fetched
 
       - name: Install GitVersion
-        uses: GitTools/actions/gitversion/setup@v0
-        with:
-          versionSpec: '5.x'
+        uses: gittools/actions/gitversion/setup@v0.9.1
 
-      - name: Determine version
+      - name: Determine Version
         id: gitversion
-        uses: GitTools/actions/gitversion/execute@v0
+        uses: gittools/actions/gitversion/execute@v0
 
-      - name: Create and push tag
+      - name: Create and Push Tag
         run: |
-          git tag v${{ steps.gitversion.outputs.SemVer }}
-          git push origin v${{ steps.gitversion.outputs.SemVer }}
+          TAG="v${{ steps.gitversion.outputs.SemVer }}"
+          git tag "$TAG"
+          git push origin "$TAG"
 
-  build-and-publish:
-    runs-on: ubuntu-latest
-    needs: versioning  # Waits for versioning job to finish
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Required for GitVersion
-
-      - name: Install GitVersion
-        uses: GitTools/actions/gitversion/setup@v0
-        with:
-          versionSpec: '5.x'
+      - name: Set execute permissions for build.ps1
+        run: chmod +x ./build.ps1
 
       - name: Package Module
         run: |
