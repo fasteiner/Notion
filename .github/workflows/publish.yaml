@@ -20,7 +20,9 @@ jobs:
 
       # Step 2: Install GitVersion
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.1
+        uses: GitTools/actions/gitversion/setup@v0
+        with:
+          versionSpec: '5.x'
 
       # Step 3: Package Module
       - name: Package Module
