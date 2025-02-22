@@ -29,5 +29,5 @@ jobs:
 
       - name: Create and push tag
         run: |
-          git tag ${{ steps.gitversion.outputs.SemVer }}
-          git push origin ${{ steps.gitversion.outputs.SemVer }}
+          git tag v${{ steps.gitversion.outputs.SemVer }}
+          git push origin v${{ steps.gitversion.outputs.SemVer }}
