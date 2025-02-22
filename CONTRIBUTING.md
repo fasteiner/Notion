@@ -5,7 +5,13 @@ Please check out common DSC Community [contributing guidelines](https://dsccommu
 ## Running the Tests
 
 If want to know how to run this module's tests you can look at the [Testing Guidelines](https://dsccommunity.org/guidelines/testing-guidelines/#running-tests)
-
+```mermaid
+flowchart TD
+    B[Dev] --> |Release|A[main]
+    C[Features] --> |PreRelease|B
+    D[Hotfix] --> |Release|A
+    E[Bugfix] --> |PreRelease|B
+```
 ## GitVersion install
 
 ```powershell
