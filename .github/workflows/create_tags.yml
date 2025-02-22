@@ -1,0 +1,33 @@
+name: Tag on Merge
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  versioning:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required to push tags
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for GitVersion
+
+      - name: Install GitVersion
+        uses: GitTools/actions/gitversion/setup@v0
+        with:
+          versionSpec: '5.x'
+
+      - name: Determine version
+        id: gitversion
+        uses: GitTools/actions/gitversion/execute@v0
+
+      - name: Create and push tag
+        run: |
+          git tag ${{ steps.gitversion.outputs.SemVer }}
+          git push origin ${{ steps.gitversion.outputs.SemVer }}
