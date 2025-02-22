@@ -40,6 +40,21 @@ The charm of Notion classes are thies simple use while creating objects.
 If you receive items from the API, Notion will automatically convert it into Notion objects
 (based on the classes) so that the can be used.
 
+## Notion Objects
+There are several type of Notion object for different purposes.
+* Block
+* Page
+* Database
+* Parent
+* User
+* Comment
+* Unfurl attribute
+* File
+* Emoji
+
+Each of the objects 
+
+
 ## Change log
 
 A full list of changes in each version can be found in the [change log](https://github.com/fasteiner/Notion/blob/main/CHANGELOG.md).
