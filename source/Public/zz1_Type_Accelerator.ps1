@@ -97,6 +97,7 @@ $ExportableTypes = @(
     [notion_verification_page_property]
     [notion_video_block]
 
+    #rich text
     [rich_text]
     [rich_text_equation]
     [rich_text_equation_structure]

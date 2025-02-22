@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Add-NotionHeaderToBlock: fix parameter types
 - block: fix ConvertFrom-Object
 - Column List: fix ConvertFrom-Object
 - Numbered List item: Fix constructors and color conversion to enum

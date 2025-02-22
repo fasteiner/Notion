@@ -1,4 +1,5 @@
-function Get-NotionBlockChildren {
+function Get-NotionBlockChildren 
+{
     <#
     .SYNOPSIS
     Retrieves the children blocks of a specified Notion block.
@@ -47,8 +48,8 @@ function Get-NotionBlockChildren {
     
     #>
 
-    [CmdletBinding()]
     [OutputType([notion_block[]])]
+    [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, ParameterSetName = "Block" , HelpMessage = "The block to get the children from")]
         [notion_block] $Block,
