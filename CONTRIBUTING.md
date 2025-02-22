@@ -14,3 +14,8 @@ If want to know how to run this module's tests you can look at the [Testing Guid
 
     dotnet tool install --global GitVersion.Tool --version 5.12.0
 ```
+
+## Branches
+
+- main    - Dev
+    - Feature
