@@ -1,17 +1,9 @@
 # Step 1: Define variables
 $ModulePath = "./output/module/Notion"  # Path to the built module
 $ApiKey = $env:PSGalleryApiKey    # PowerShell Gallery API Key from an environment variable
-$projectPath = "$($PSScriptRoot)" | Convert-Path
 
-if (-not $ProjectName)
-{
-    # Assuming project folder name is project name.
-    $ProjectName = Get-SamplerProjectName -BuildRoot $projectPath
-}
-Write-Debug "ProjectName: $ProjectName"
-$moduleName = $ProjectName
 
-$ModulePath = "./output/module/$moduleName"
+$ModulePath = "./output/module/Notion"
 
 # Step 2: Validate the module path
 if (-Not (Test-Path -Path $ModulePath)) {

@@ -42,6 +42,11 @@ class notion_date_page_property : PagePropertiesBase
 
     static [notion_date_page_property] ConvertFromObject($Value)
     {
+        Write-Verbose "[notion_date_page_property]::ConvertFromObject($($Value | ConvertTo-Json -Depth 10))"
+        if($Value.date -eq $null)
+        {
+            return [notion_date_page_property]::new()
+        }
         return [notion_date_page_property]::new($Value.date.start, $Value.date.end)
     }
     

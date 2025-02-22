@@ -1,7 +1,7 @@
 class notion_workspace_parent : notion_parent{
     [bool] $workspace = $true
 
-    notion_workspace_parent() : base("workspace_id")
+    notion_workspace_parent() : base("workspace")
     {
     }
 
