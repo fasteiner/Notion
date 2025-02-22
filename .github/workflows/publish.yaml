@@ -2,8 +2,8 @@ name: Publish PowerShell Module
 on:
   push:
     tags:
-      - 'v*.*.*' # Trigger on version tags (e.g., v1.0.0)
-      - "v*.*.*-preview.*" # Trigger on preview version tags (e.g., v1.0.0-preview1)
+      - 'v[0-9]+.[0-9]+.[0-9]+' # Trigger on version tags (e.g., v1.0.0)
+      - 'v[0-9]+.[0-9]+.[0-9]+-preview.[0-9]+' # Trigger on preview version tags (e.g., v1.0.0-preview1)
 
 defaults:
   run:
