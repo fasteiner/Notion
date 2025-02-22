@@ -1,4 +1,4 @@
-name: Tag on Merge
+name: Tag on Merge & Publish
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - Dev
 
 jobs:
-  versioning:
+  tag-and-publish:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Required to push tags
@@ -31,3 +31,14 @@ jobs:
         run: |
           git tag v${{ steps.gitversion.outputs.SemVer }}
           git push origin v${{ steps.gitversion.outputs.SemVer }}
+
+      - name: Package Module
+        run: |
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
+
+      - name: Publish Module
+        env:
+          GalleryApiToken: ${{ secrets.PSGALLERY_API_KEY }}
+          GitHubToken: ${{ secrets.GH_TOKEN }}
+        run: |
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task publish

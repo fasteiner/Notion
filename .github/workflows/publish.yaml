@@ -1,38 +1,38 @@
-name: Publish PowerShell Module
-on:
-  push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+' # Trigger on version tags (e.g., v1.0.0)
-      - 'v[0-9]+.[0-9]+.[0-9]+-preview.[0-9]+' # Trigger on preview version tags (e.g., v1.0.0-preview1)
+# name: Publish PowerShell Module
+# on:
+#   push:
+#     tags:
+#       - 'v[0-9]+.[0-9]+.[0-9]+' # Trigger on version tags (e.g., v1.0.0)
+#       - 'v[0-9]+.[0-9]+.[0-9]+-preview.[0-9]+' # Trigger on preview version tags (e.g., v1.0.0-preview1)
 
-defaults:
-  run:
-    shell: pwsh
+# defaults:
+#   run:
+#     shell: pwsh
 
-jobs:
-  build-and-publish:
-    runs-on: ubuntu-latest
+# jobs:
+#   build-and-publish:
+#     runs-on: ubuntu-latest
 
-    steps:
-      # Step 1: Checkout the repository
-      - name: Checkout Code
-        uses: actions/checkout@v3
+#     steps:
+#       # Step 1: Checkout the repository
+#       - name: Checkout Code
+#         uses: actions/checkout@v3
 
-      # Step 2: Install GitVersion
-      - name: Install GitVersion
-        uses: GitTools/actions/gitversion/setup@v0
-        with:
-          versionSpec: '5.x'
+#       # Step 2: Install GitVersion
+#       - name: Install GitVersion
+#         uses: GitTools/actions/gitversion/setup@v0
+#         with:
+#           versionSpec: '5.x'
 
-      # Step 3: Package Module
-      - name: Package Module
-        run: |
-          ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
+#       # Step 3: Package Module
+#       - name: Package Module
+#         run: |
+#           ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
 
-      # Step 6: Publish to PowerShell Gallery and GitHub
-      - name: Publish Module
-        env:
-          GalleryApiToken: ${{ secrets.PSGALLERY_API_KEY }}
-          GitHubToken: ${{ secrets.GH_TOKEN }}
-        run: |
-          ./build.ps1 -ResolveDependency -UseModuleFast -Task publish
+#       # Step 6: Publish to PowerShell Gallery and GitHub
+#       - name: Publish Module
+#         env:
+#           GalleryApiToken: ${{ secrets.PSGALLERY_API_KEY }}
+#           GitHubToken: ${{ secrets.GH_TOKEN }}
+#         run: |
+#           ./build.ps1 -ResolveDependency -UseModuleFast -Task publish
