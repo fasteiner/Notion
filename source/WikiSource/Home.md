@@ -8,21 +8,6 @@ Please leave comments, feature requests, and bug reports for this module in
 the [issues section](https://github.com/fasteiner/Notion/issues)
 for this repository.
 
-## Getting started
-
-To get started either:
-
-- Install from the PowerShell Gallery using PowerShellGet by running the
-  following command:
-
-```PowerShell
-Install-Module -Name Notion -Repository PSGallery
-```
-
-## Prerequisites
-
-- PowerShell 7.5 or higher
-
 ## Idea behind a class based Notion module
 
 There are several attepts to talkto the Notion API out there, but most of them din't take care of the correct
@@ -55,46 +40,62 @@ There are several type of Notion object for different purposes.
 - Emoji
 
 Each of the objects have got individual CmdLets to deal with.
+<div style="display: flex;">
 
-|Object: Block|
-|--|
-|Add-NotionBlockToPage|
-|Get-NotionBlock|
-|Get-NotionBlockChildren|
+  <table>
+  <tr><th>Object: Block</th></tr>
+  <tr><td>Add-NotionBlockToPage</td></tr>
+  <tr><td>Get-NotionBlock</td></tr>
+  <tr><td>Get-NotionBlockChildren</td></tr>
+  </table>
 
-|Object: Database|
-|-|
-|Add-NotionPageToDatabase|
-|Edit-NotionDatabase|
-|Get-NotionDatabase|
-|Move-NotionDatabaseToArchive|
-|New-NotionDatabase|
-|Remove-NotionDatabase|
-|Restore-NotionDatabase|
+  <table>
+  <tr><th>Object: Database</th></tr>
+  <tr><td>Add-NotionPageToDatabase</td></tr>
+  <tr><td>Edit-NotionDatabase</td></tr>
+  <tr><td>Get-NotionDatabase</td></tr>
+  <tr><td>Move-NotionDatabaseToArchive</td></tr>
+  <tr><td>New-NotionDatabase</td></tr>
+  <tr><td>Remove-NotionDatabase</td></tr>
+  <tr><td>Restore-NotionDatabase</td></tr>
+  </table>
 
-|Object: DatabaseProperties|
-|-|
-|Add-NotionDatabaseProperty|
-|New-NotionDatabaseProperty|
-|Remove-NotionDatabaseProperty|
+  <table>
+  <tr><th>Object: DatabaseProperties</th></tr>
+  <tr><td>Add-NotionDatabaseProperty</td></tr>
+  <tr><td>New-NotionDatabaseProperty</td></tr>
+  <tr><td>Remove-NotionDatabaseProperty</td></tr>
+  </table>
 
-|Object: Page|
-|-|
-|Get-NotionPage|
-|Get-NotionPageChildren|
-|Move-NotionPageToArchive|
-|New-NotionPage|
-|Remove-NotionPage|
-|Restore-NotionPage|
+</div>
 
-|Object: PageProperties|
-|-|
-|Get-NotionPageProperty|
-|Update-NotionPageProperty|
+<div style="display: flex;">
 
-|Object: User|
-|-|
-|Get-NotionUser|
+  <table>
+  <tr><th>Object: Page</th></tr>
+  <tr><td>Get-NotionPage</td></tr>
+  <tr><td>Get-NotionPageChildren</td></tr>
+  <tr><td>Move-NotionPageToArchive</td></tr>
+  <tr><td>New-NotionPage</td></tr>
+  <tr><td>Remove-NotionPage</td></tr>
+  <tr><td>Restore-NotionPage</td></tr>
+  </table>
+
+  <table>
+  <tr><th>Object: PageProperties</th></tr>
+  <tr><td>Get-NotionPageProperty</td></tr>
+  <tr><td>Update-NotionPageProperty</td></tr>
+  </table>
+</div>
+
+<div style="display: flex;">
+
+  <table>
+  <tr><th>Object: User</th></tr>
+  <tr><td>Get-NotionUser</td></tr>
+  </table>
+
+</div>
 
 ## Classes and Enums
 
@@ -216,7 +217,6 @@ The enumerations (enums) are predefined values which are valid for a certain pro
 - `[rich_text_mention_user]`
 - `[rich_text_text]`
 - `[rich_text_text_structure]`
-
 
 ## Change log
 

@@ -3,6 +3,7 @@ on:
   push:
     tags:
       - 'v*.*.*' # Trigger on version tags (e.g., v1.0.0)
+      - "v*.*.*-preview*" # Trigger on preview version tags (e.g., v1.0.0-preview1)
 
 defaults:
   run:
@@ -26,7 +27,7 @@ jobs:
         run: |
           ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
 
-      # Step 6: Publish to PowerShell Gallery
+      # Step 6: Publish to PowerShell Gallery and GitHub
       - name: Publish Module
         env:
           GalleryApiToken: ${{ secrets.PSGALLERY_API_KEY }}
