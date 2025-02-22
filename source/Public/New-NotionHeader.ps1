@@ -1,4 +1,35 @@
+<#
+.SYNOPSIS
+Creates a new Notion header.
+
+.DESCRIPTION
+The New-NotionHeader function creates a new header for a Notion page with specified text, color, level, and toggleable option.
+
+.PARAMETER Text
+The text of the header. This parameter is mandatory.
+
+.PARAMETER Color
+The color of the header. This parameter is optional and defaults to "default".
+
+.PARAMETER Level
+The level of the header (1-3). This parameter is mandatory.
+
+.PARAMETER is_toggleable
+Specifies if the header is toggleable. This parameter is optional.
+
+.EXAMPLE
+PS> New-NotionHeader -Text "My Header" -Level 1
+
+Creates a level 1 header with the text "My Header" and default color.
+
+.EXAMPLE
+PS> New-NotionHeader -Text "My Header" -Color "blue" -Level 2 -is_toggleable $true
+
+Creates a level 2 header with the text "My Header", blue color, and toggleable option enabled.
+
+#>
 function New-NotionHeader
+
 {
     [CmdletBinding()]
     param (

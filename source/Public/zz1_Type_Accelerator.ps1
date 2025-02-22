@@ -97,6 +97,7 @@ $ExportableTypes = @(
     [notion_verification_page_property]
     [notion_video_block]
 
+    #rich text
     [rich_text]
     [rich_text_equation]
     [rich_text_equation_structure]
@@ -114,7 +115,6 @@ $ExportableTypes = @(
     [rich_text_mention_template_mention_template_mention_date_structure]
     [rich_text_mention_template_mention_template_mention_user_structure]
     [rich_text_mention_user]
-    [rich_text_text]
     [rich_text_text]
     [rich_text_text_structure]
 

@@ -3,6 +3,7 @@ on:
   push:
     tags:
       - 'v*.*.*' # Trigger on version tags (e.g., v1.0.0)
+      - "v*.*.*-preview*" # Trigger on preview version tags (e.g., v1.0.0-preview1)
 
 defaults:
   run:
@@ -17,19 +18,19 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 4: Build the Module
-      - name: Build Module
+      # Step 2: Install GitVersion
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.1
+
+      # Step 3: Package Module
+      - name: Package Module
         run: |
-          ./build.ps1 -ResolveDependency -UseModuleFast -Task Build
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
 
-      # # Step 5: Validate the Module
-      # - name: Validate Module
-      #   run: |
-      #     pwsh -Command Invoke-Build -Task Test
-
-      # Step 6: Publish to PowerShell Gallery
+      # Step 6: Publish to PowerShell Gallery and GitHub
       - name: Publish Module
         env:
-          PSGalleryApiKey: ${{ secrets.PSGALLERY_API_KEY }}
+          GalleryApiToken: ${{ secrets.PSGALLERY_API_KEY }}
+          GitHubToken: ${{ secrets.GH_TOKEN }}
         run: |
-          ./publish.ps1
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task publish

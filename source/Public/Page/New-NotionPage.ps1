@@ -1,8 +1,43 @@
 function New-NotionPage
 {
+    <#
+    .SYNOPSIS
+        Creates a new Notion page.
+
+    .DESCRIPTION
+        The New-NotionPage function creates a new Notion page with specified properties, children blocks, icon, and cover image.
+        If no parent object is provided, the page will be created at the root (workspace) level.
+
+    .PARAMETER parent_obj
+        The parent object of the page. If empty, the page will be created at the root (workspace) level.
+
+    .PARAMETER properties
+        The properties of the page. This should be a hashtable.
+
+    .PARAMETER children
+        An array of blocks within this page.
+
+    .PARAMETER icon
+        The icon of the page.
+
+    .PARAMETER cover
+        The cover image of the page (see notion_file).
+
+    .PARAMETER title
+        The title of the page. This will overwrite the title property if it exists.
+
+    .EXAMPLE
+        New-NotionPage -parent_obj $parent -properties @{Property1="Value1"} -title "New Page Title"
+
+    .NOTES
+        This function requires the Invoke-NotionApiCall function to be defined.
+
+    .LINK
+        https://developers.notion.com/reference/post-page
+    #>
     [CmdletBinding()]
     [OutputType([notion_page])]
-    param(
+    param (
         [Parameter(HelpMessage = "The parent object of the page, if empty it will be created at the root (workspace) level")]
         [object] $parent_obj,
         [Parameter(HelpMessage = "The properties of the page")]

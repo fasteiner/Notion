@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Documentation to all PSCmdlets
+- prepared automatic Wiki Generation
 - Add-NotionPageToDatabase, Move-NotionPageToArchive: prepared
 - Get-NotionPageProperty: prepared and partly tested
 - Update-NotionPageProperty: prepared
@@ -18,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Module Manifest: Added Metadata
+- Filenames: changed to match the cmdlet names
 - ConvertTo-NotionObject: include property_item
 - Disconnect-Notion: improve Confirm message
 - Restore-NotionPage, Restore-NotionDatabase: add archived = $false, to ensure restore is possible from both trash and archive
@@ -35,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Add-NotionHeaderToBlock: fix parameter types
 - block: fix ConvertFrom-Object
 - Column List: fix ConvertFrom-Object
 - Numbered List item: Fix constructors and color conversion to enum

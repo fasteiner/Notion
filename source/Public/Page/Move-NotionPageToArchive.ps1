@@ -1,4 +1,5 @@
-function Move-NotionPageToArchive {
+function Move-NotionPageToArchive 
+{
     <#
     .SYNOPSIS
     Moves a Notion page to the archive.
