@@ -17,10 +17,19 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Step 2: Install GitVersion
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.1
+
+      # Step 3: Package Module
+      - name: Package Module
+        run: |
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
+
       # Step 6: Publish to PowerShell Gallery
       - name: Publish Module
         env:
-          SAMPLER_API_TOKEN: ${{ secrets.PSGALLERY_API_KEY }}
+          GalleryApiToken: ${{ secrets.PSGALLERY_API_KEY }}
           GitHubToken: ${{ secrets.GH_TOKEN }}
         run: |
-          ./build.ps1 -ResolveDependency -UseModuleFast -Task release
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task publish

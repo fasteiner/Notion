@@ -98,7 +98,10 @@ Each of the objects have got individual CmdLets to deal with.
 
 ## Classes and Enums
 
-An easy way to genrate new blocks is to instantiate them from predefined classes via '[classname`]::new().
+An easy way to genrate new blocks is to instantiate them from predefined classes via `[classname]::new()`.
+On the querying side the API returns a nacked object with properties. The module automatically turns those answers into proper Notion objects (derived from classes)
+
+The enumerations (enums) are predefined values which are valid for a certain properties. e.g. colors
 
 ### Enums
 - `[rich_text_type]`
