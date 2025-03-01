@@ -26,3 +26,18 @@ flowchart TD
 
     dotnet tool install --global GitVersion.Tool --version 5.12.0
 ```
+
+## Manual Build, Import & Connect
+
+```powershell
+    # Clone the repository
+    ./build.ps1 -Tasks build
+    $version = (dotnet-gitversion.exe /showvariable MajorMinorPatch)
+    $ModuleFile = ".\output\module\Notion\$version\Notion.psd1"
+    Import-Module $ModuleFile
+    # Import-Module Microsoft.PowerShell.PlatyPS -Force
+    # New-MarkdownCommandHelp -ModuleInfo (Get-Module Notion) -OutputFolder .\docs -WithModulePage -HelpVersion "$version" -Force
+    $BearerToken = Read-Host -Prompt "Enter your Notion Bearer Token" -AsSecureString
+
+    Connect-Notion -BearerToken $BearerToken
+```
