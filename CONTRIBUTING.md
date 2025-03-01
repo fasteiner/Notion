@@ -26,9 +26,3 @@ flowchart TD
 
     dotnet tool install --global GitVersion.Tool --version 5.12.0
 ```
-
-## Branches
-
-- main    
-  - Dev
-    - Feature
