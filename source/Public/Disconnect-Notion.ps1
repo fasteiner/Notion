@@ -21,9 +21,9 @@ function Disconnect-Notion
     
     if ($PSCmdlet.ShouldProcess("Notion API connection"))
     {
-        Remove-Variable -Name NotionAPIKey -Scope Global -ErrorAction SilentlyContinue
-        Remove-Variable -Name NotionApiUri -Scope Global -ErrorAction SilentlyContinue
-        Remove-Variable -Name NotionAPIVersion -Scope Global -ErrorAction SilentlyContinue
+        Remove-Variable -Name NotionAPIKey -Scope Script -ErrorAction SilentlyContinue
+        Remove-Variable -Name NotionApiUri -Scope Script -ErrorAction SilentlyContinue
+        Remove-Variable -Name NotionAPIVersion -Scope Script -ErrorAction SilentlyContinue
         Write-Host "Disconnected from the Notion API." -ForegroundColor Green
     }
     else

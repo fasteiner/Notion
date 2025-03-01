@@ -28,9 +28,13 @@ function New-NotionHeader
     PS> New-NotionHeader -Text "My Header" -Color "blue" -Level 2 -is_toggleable $true
     
     Creates a level 2 header with the text "My Header", blue color, and toggleable option enabled.
+
+    .OUTPUTS
+    [notion_heading_block] object
     
     #>
     [CmdletBinding()]
+    [OutputType([notion_heading_block])]
     param (
         [Parameter(Mandatory = $true, HelpMessage = "Text of the Header")]
         [string] $Text,

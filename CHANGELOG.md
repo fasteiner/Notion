@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add-NotionDatabaseProperty, Remove-NotionDatabaseProperty, Move-NotionPageToArchive: prepared 
 - Add-NotionBlockToPage: prepared
 - Get-NotionPageChildren: implemented
+- Remove-NotionBlock: function to remove / trash a block
+- Update-NotionBlock: function to update a block
 
 ### Changed
 
@@ -28,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - For changes in existing functionality.
 - Remove-NotionPage: specify output type, fix code
 - Get-NotionBlockChildren: refactored
+- API Variables: switch from global to script scope
 
 ### Deprecated
 
@@ -40,12 +43,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Add-NotionHeaderToBlock: fix parameter types
+- New-NotionHeader: switch to factory method of notion_heading_block
 - block: fix ConvertFrom-Object
 - Column List: fix ConvertFrom-Object
 - Numbered List item: Fix constructors and color conversion to enum
 - paragraph: added color in ConvertFrom-Object
 - to_do: Fixed ConvertFrom-Object, added default constructor
 - Heading: Adjusted implementation to match API Schema
+- Remove-NullValuesFromObject: fix DateTime objects and remove empty arrays
 
 ### Security
 
