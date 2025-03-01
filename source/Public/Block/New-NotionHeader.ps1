@@ -45,7 +45,7 @@ function New-NotionHeader
     
     process
     {
-        $Header = [notion_heading_block]::Create(1, "test", $color, $is_toggleable)
+        $Header = [notion_heading_block]::Create($Level, $Text, $color, $is_toggleable)
         return $Header
     }
 }
