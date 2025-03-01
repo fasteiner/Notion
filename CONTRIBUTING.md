@@ -5,6 +5,11 @@ Please check out common DSC Community [contributing guidelines](https://dsccommu
 ## Running the Tests
 
 If want to know how to run this module's tests you can look at the [Testing Guidelines](https://dsccommunity.org/guidelines/testing-guidelines/#running-tests)
+
+### Branch Model
+
+The branch model is based on the [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) model.
+
 ```mermaid
 flowchart TD
     B[Dev] --> |Release|A[main]
@@ -12,6 +17,7 @@ flowchart TD
     D[Hotfix] --> |Release|A
     E[Bugfix] --> |PreRelease|B
 ```
+
 ## GitVersion install
 
 ```powershell
@@ -23,5 +29,6 @@ flowchart TD
 
 ## Branches
 
-- main    - Dev
+- main    
+  - Dev
     - Feature
