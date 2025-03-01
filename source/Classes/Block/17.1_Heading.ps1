@@ -1,6 +1,6 @@
 class Heading_structure
-# https://developers.notion.com/reference/block#Heading_structures
 {
+    #https://developers.notion.com/reference/block#headings
     [rich_text[]] $rich_text
     [notion_color] $color = "default"
     [boolean] $is_toggleable
