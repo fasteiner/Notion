@@ -23,12 +23,18 @@ function Remove-NullValuesFromObject
             if ($null -ne $property.Value)
             {
                 Write-Debug "Processing property: $($property.Name): $($property.Value) `<$($property.value.GetType().Name)]"
-                if (($property.value -is [int]) -or ($property.value -is [int64]) -or ($property.value -is [double]) -or ($property.value -is [float]) -or ($property.value -is [string]) -or ($property.value -is [bool]))
+                if (($property.value -is [int]) -or ($property.value -is [int64]) -or ($property.value -is [double]) -or ($property.value -is [float]) -or ($property.value -is [string]) -or ($property.value -is [bool]) -or ($property.value -is [DateTime]))
                 {
                     $outputObject | Add-Member -MemberType NoteProperty -Name $property.Name -Value $property.Value
                 }
+
                 elseif ($property.Value -is [array])
                 {
+                    if ($property.Value.Count -eq 0)
+                    {
+                        # Skip empty arrays
+                        continue :loop
+                    }
                     $cleanedArray = @()
                     foreach ($item in $property.Value)
                     {

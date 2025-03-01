@@ -1,9 +1,7 @@
  # Class Block
 
 ```mermaid
-
 classDiagram
-    note for notion_block "Object: Block"
     class notion_block {
         $object = "block"
         $id =  $null
@@ -20,13 +18,16 @@ classDiagram
         ConvertFromObject()
     }
    
+```
+## TODO Split in single files
 
+```mermaid
+classDiagram
    class bookmark_structure{
         [notion_blocktype] $type = "bookmark"
         [rich_text[]] $caption
         [string] $url = $null
    }
-
     class notion_bookmark_block {
         [notion_blocktype] $type = "bookmark"
         [bookmark_structure] $bookmark
@@ -35,13 +36,22 @@ classDiagram
     `bookmark_structure` <.. `notion_bookmark_block`:uses
     `notion_block` --|> `notion_bookmark_block`:inherits
 
+```
+
+```mermaid   
+classDiagram
+    class notion_block:::styleClass
+
     class notion_breadcrumb_block {
         [notion_blocktype] $type = "breadcrumb"
         [object] $breadcrumb 
         ConvertFromObject()
     }
     `notion_block` --|> `notion_breadcrumb_block`:inherits
+```
 
+```mermaid   
+classDiagram
     class bulleted_list_item_structure {
         [rich_text[]] $rich_text
         [notion_color] $color = "default"
@@ -76,7 +86,7 @@ class child_database_structure {
 }
 
 class notion_child_database_block {
-    link notion_child_database_block "https://developers.notion.com/reference/block#child-database"
+    link notion_child_database_block "https://developers.notion.com/reference/block#child-database" "Link"
     [notion_blocktype] $type = "child_database"
     [child_database_structure] $child_database
     ConvertFromObject()
@@ -84,6 +94,56 @@ class notion_child_database_block {
 `child_database_structure` <.. `notion_child_database_block`:uses
 `notion_block` --|> `notion_child_database_block`:inherits
 
+class child_page_structure {
+    [string] $title = $null
+}
 
+class notion_child_page_block {
+link notion_child_page_block "https://developers.notion.com/reference/block#child-page" "Link"
+    [notion_blocktype] $type = "child_page"
+    [child_page_structure] $child_page
+    ConvertFromObject()
+}
+`child_page_structure` <.. `notion_child_page_block`:uses
+`notion_block` --|> `notion_child_page_block`:inherits
+
+class code_structure {
+    [rich_text[]] $caption
+    [rich_text[]] $rich_text
+    [string] $private:language
+}
+
+class notion_code_block {
+link notion_code_block"https://developers.notion.com/reference/block#code" "Link"
+    [notion_blocktype] $type = "code"
+    [code_structure] $code
+    ConvertFromObject()
+}
+`code_structure` <.. `notion_code_block`:uses
+`notion_block` --|> `notion_code_block`:inherits
+
+class notion_column_block {
+link  notion_column_block "https://developers.notion.com/reference/block#column" "Link"
+    [notion_blocktype] $type = "column"
+    [object] $column
+    ConvertFromObject()
+}
+`notion_block` --|> `notion_column_block`:inherits
+
+class notion_column_list_block {
+    link notion_column_list_block "https://developers.notion.com/reference/block#column-list-and-column" "Link"
+    [notion_blocktype] $type = "column_list"
+    [notion_column_block[]] $column_list
+    ConvertFromObject()
+}
+`notion_block` --|> `notion_column_list_block`:inherits
+
+class notion_divider_block {
+    link notion_divider_block "https://developers.notion.com/reference/block#divider" "Link"
+    [notion_blocktype] $type = "divider"
+    [object] $divider
+    ConvertFromObject()
+}
+`notion_block` --|> `notion_divider_block`:inherits
 
 ```

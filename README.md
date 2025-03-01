@@ -21,13 +21,20 @@ Install-Module -Name Notion -Repository PSGallery
 
 # PowerShellGet 3.x
 Install-PSResource -Name Notion
+
+# Connect to Notion
+$BearerToken = Read-Host -Prompt "Enter your Notion Bearer Token" -AsSecureString
+Connect-Notion -BearerToken $BearerToken
 ```
 
 
 
 Or download it via the [Microsoft PowerShell Gallery](https://www.powershellgallery.com/packages/Notion)
+
 ## Documentation
+
 Documentation is available in the [Wiki](https://github.com/fasteiner/Notion/wiki).
+
 ## Issues
 
 Please open a github issue [here](https://github.com/fasteiner/Notion/issues).

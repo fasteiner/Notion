@@ -40,6 +40,7 @@ function Get-NotionBlock()
         [Parameter(Mandatory = $true, HelpMessage = "The block to get the children from", ParameterSetName = "Object")]
         [notion_block] $Block,
         [Parameter(Mandatory = $true, HelpMessage = "The block Id to get the children from", ParameterSetName = "ID")]
+        [alias("Id")]
         [string] $BlockId,
         $maxDepth = 5
     )
@@ -49,8 +50,8 @@ function Get-NotionBlock()
         {
             $BlockId = $Block.id
         }
-        $block = Invoke-NotionApiCall -Uri "/blocks/$BlockId" -Method GET
-        $block = [notion_block]::ConvertFromObject($block)
+        $response = Invoke-NotionApiCall -Uri "/blocks/$BlockId" -Method GET
+        $block = [notion_block]::ConvertFromObject($response)
         if ($block.has_children -and $maxDepth -gt 0)
         {
             $objects = Get-NotionBlockChildren -Block $block

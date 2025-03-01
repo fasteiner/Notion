@@ -69,13 +69,13 @@ function Connect-Notion
         Write-Error "Failed to connect to Notion API." -RecommendedAction "Please check your Bearer token and URL." -Category ConnectionError
         return
     }
-    $global:NotionAPIKey = $BearerToken
-    $global:NotionApiUri = $notionURL
-    $global:NotionAPIVersion = $APIVersion
+    $script:NotionAPIKey = $BearerToken
+    $script:NotionApiUri = $notionURL
+    $script:NotionAPIVersion = $APIVersion
     Write-Host "Successfully connected to Notion API." -ForegroundColor Green
 
     return @{
-        url     = $global:NotionApiUri
-        version = $global:NotionAPIVersion
+        url     = $script:NotionApiUri
+        version = $script:NotionAPIVersion
     }
 }
