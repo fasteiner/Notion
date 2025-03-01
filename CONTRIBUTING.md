@@ -6,7 +6,7 @@ Please check out common DSC Community [contributing guidelines](https://dsccommu
 
 If want to know how to run this module's tests you can look at the [Testing Guidelines](https://dsccommunity.org/guidelines/testing-guidelines/#running-tests)
 
-### Branch Model
+## Branch Model
 
 The branch model is based on the [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) model.
 
