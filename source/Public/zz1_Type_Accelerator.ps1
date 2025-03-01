@@ -23,9 +23,10 @@ $ExportableTypes = @(
     
     # classes
     [annotation]
-    [heading_1]
-    [heading_2]
-    [heading_3]
+    [notion_heading_block]
+    [notion_heading_1_block]
+    [notion_heading_2_block]
+    [notion_heading_3_block]
     
     [notion_block]
     [notion_bookmark_block]

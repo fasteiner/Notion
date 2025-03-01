@@ -50,7 +50,7 @@ function Add-NotionHeaderToBlock
         [notion_block] $Parent,
         [Parameter(Mandatory = $true, ParameterSetName = "Object")]
         [Alias("Object")]
-        [Heading] $InputObject
+        [notion_heading_block] $InputObject
     )
     
     process

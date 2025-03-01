@@ -45,7 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Numbered List item: Fix constructors and color conversion to enum
 - paragraph: added color in ConvertFrom-Object
 - to_do: Fixed ConvertFrom-Object, added default constructor
-- For any bug fix.
+- Heading: Adjusted implementation to match API Schema
 
 ### Security
 
