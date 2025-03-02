@@ -5,6 +5,11 @@ Please check out common DSC Community [contributing guidelines](https://dsccommu
 ## Running the Tests
 
 If want to know how to run this module's tests you can look at the [Testing Guidelines](https://dsccommunity.org/guidelines/testing-guidelines/#running-tests)
+
+## Branch Model
+
+The branch model is based on the [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) model.
+
 ```mermaid
 flowchart TD
     B[Dev] --> |Release|A[main]
@@ -12,6 +17,7 @@ flowchart TD
     D[Hotfix] --> |Release|A
     E[Bugfix] --> |PreRelease|B
 ```
+
 ## GitVersion install
 
 ```powershell
@@ -21,7 +27,18 @@ flowchart TD
     dotnet tool install --global GitVersion.Tool --version 5.12.0
 ```
 
-## Branches
+## Manual Build, Import & Connect
 
-- main    - Dev
-    - Feature
+```powershell
+    # Clone the repository
+    #when running the first time you also need to resolve the dependencies
+    ./build.ps1 -Tasks build -ResolveDependency -UseModuleFast
+    $version = (dotnet-gitversion.exe /showvariable MajorMinorPatch)
+    $ModuleFile = ".\output\module\Notion\$version\Notion.psd1"
+    Import-Module $ModuleFile
+    # Import-Module Microsoft.PowerShell.PlatyPS -Force
+    # New-MarkdownCommandHelp -ModuleInfo (Get-Module Notion) -OutputFolder .\docs -WithModulePage -HelpVersion "$version" -Force
+    $BearerToken = Read-Host -Prompt "Enter your Notion Bearer Token" -AsSecureString
+
+    Connect-Notion -BearerToken $BearerToken
+```

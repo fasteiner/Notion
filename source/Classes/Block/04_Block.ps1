@@ -150,17 +150,17 @@ class notion_block
             }
             "heading_1"
             {
-                $notion_block = [heading]::ConvertfromObject($value)
+                $notion_block = [notion_heading_block]::ConvertfromObject($value)
                 break
             }
             "heading_2"
             {
-                $notion_block = [heading]::ConvertfromObject($value)
+                $notion_block = [notion_heading_block]::ConvertfromObject($value)
                 break
             }
             "heading_3"
             {
-                $notion_block = [heading]::ConvertfromObject($value)
+                $notion_block = [notion_heading_block]::ConvertfromObject($value)
                 break
             }
             "image"

@@ -55,7 +55,7 @@ function Invoke-NotionApiCall
         [Parameter(Mandatory = $false, HelpMessage = "The API key to authenticate the API call")]
         [securestring]$APIKey,
         [Parameter(Mandatory = $false, HelpMessage = "The version of the Notion API")]
-        [String]$APIVersion = $global:NotionAPIVersion,
+        [String]$APIVersion = $script:NotionAPIVersion,
         [Parameter(Mandatory = $false, HelpMessage = "The HTTP method to use for the API call")]
         [ValidateSet("GET", "POST", "PUT", "DELETE", "PATCH") ]
         $method = "GET",
@@ -72,7 +72,7 @@ function Invoke-NotionApiCall
 
     Process
     {
-        if ((-not $Global:NotionAPIKey) -and (-not $APIKey))
+        if ((-not $script:NotionAPIKey) -and (-not $APIKey))
         {
             $ErrorRecord = New-Object System.Management.Automation.ErrorRecord (
                 [System.Management.Automation.RuntimeException]::new("API key is not set. Please use Connect-Notion to set the API key."),
@@ -83,15 +83,15 @@ function Invoke-NotionApiCall
 
             throw $ErrorRecord
         }
-        $APIKey ??= $Global:NotionAPIKey
+        $APIKey ??= $script:NotionAPIKey
         $queryParameters = @{}
         if ($PSBoundParameters.ContainsKey("pageSize") -and $pageSize -gt 0)
         {
             $queryParameters["page_size"] = $pageSize
         }
-        if ($uri -notlike "$global:NotionApiUri*")
+        if ($uri -notlike "$script:NotionApiUri*")
         {
-            $uri = $global:NotionApiUri + $uri
+            $uri = $script:NotionApiUri + $uri
         }
         $Params = @{
             "URI"     = $uri

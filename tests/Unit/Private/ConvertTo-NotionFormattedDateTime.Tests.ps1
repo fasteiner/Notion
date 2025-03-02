@@ -2,7 +2,7 @@
 Import-Module Pester
 
 BeforeDiscovery {
-    $projectPath = "$($PSScriptRoot)/../../.." | Convert-Path
+    $script:projectPath = "$($PSScriptRoot)/../../.." | Convert-Path
 
     <#
         If the QA tests are run outside of the build script (e.g with Invoke-Pester)
@@ -11,14 +11,17 @@ BeforeDiscovery {
     if (-not $ProjectName)
     {
         # Assuming project folder name is project name.
-        $ProjectName = Get-SamplerProjectName -BuildRoot $projectPath
+        $ProjectName = Get-SamplerProjectName -BuildRoot $script:projectPath
     }
     Write-Debug "ProjectName: $ProjectName"
     $global:moduleName = $ProjectName
+    Set-Alias -Name gitversion -Value dotnet-gitversion
+    $script:version = (gitversion /showvariable MajorMinorPatch)
 
     Remove-Module -Name $global:moduleName -Force -ErrorAction SilentlyContinue
 
-    $mut = Import-Module -Name "$projectPath/output/module/$ProjectName" -Force -ErrorAction Stop -PassThru
+    $mut = Import-Module -Name "$script:projectPath/output/module/$ProjectName/$script:version/$ProjectName.psd1" -Force -ErrorAction Stop -PassThru
+
 }
 
 Describe "ConvertTo-NotionFormattedDateTime" {

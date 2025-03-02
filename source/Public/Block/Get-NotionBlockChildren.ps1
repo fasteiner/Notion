@@ -59,7 +59,8 @@ function Get-NotionBlockChildren
     )
 
     process {
-        if ($PSCmdlet.ParameterSetName -eq "Block") {
+        if ($PSCmdlet.ParameterSetName -eq "Block") 
+        {
             $BlockId = $Block.id
         }
 
