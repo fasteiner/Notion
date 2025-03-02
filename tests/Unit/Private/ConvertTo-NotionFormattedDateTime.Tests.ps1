@@ -2,7 +2,7 @@
 Import-Module Pester
 
 BeforeDiscovery {
-    $script:projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
+    $script:projectPath = "$($PSScriptRoot)/../../.." | Convert-Path
 
     <#
         If the QA tests are run outside of the build script (e.g with Invoke-Pester)
