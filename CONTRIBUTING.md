@@ -31,7 +31,8 @@ flowchart TD
 
 ```powershell
     # Clone the repository
-    ./build.ps1 -Tasks build
+    #when running the first time you also need to resolve the dependencies
+    ./build.ps1 -Tasks build -ResolveDependency -UseModuleFast
     $version = (dotnet-gitversion.exe /showvariable MajorMinorPatch)
     $ModuleFile = ".\output\module\Notion\$version\Notion.psd1"
     Import-Module $ModuleFile
