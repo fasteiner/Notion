@@ -124,7 +124,7 @@ class notion_table_block : notion_block
     notion_table_block ([notion_table_row_block[]] $rows)
     {
         $this.children = $rows
-        
+        $this.table = [Table_structure]::new($rows[0].table_row.cells.count)
     }
 
     #Table with rowarray and columnheader or rowheader
@@ -132,7 +132,7 @@ class notion_table_block : notion_block
     notion_table_block ([notion_table_row_block[]] $rows, [bool] $has_column_header, [bool] $has_row_header)
     {
         $this.children = $rows
-        $this.table = [Table_structure]::new($rows[0].cells.count, $has_column_header, $has_row_header)
+        $this.table = [Table_structure]::new($rows[0].table_row.cells.count, $has_column_header, $has_row_header)
     }
 
     # #adds a row to the table
