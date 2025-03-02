@@ -3,6 +3,7 @@ class Table_structure
     [int] $table_width = 0
     [bool] $has_column_header = $false
     [bool] $has_row_header = $false
+    [notion_table_row_block[]] $children
 
     Table_structure()
     {
@@ -21,14 +22,16 @@ class Table_structure
     }
 
 
-    # Table_structure ([int] $table_width, [int] $table_height)
-    # {
-    #     $this.table_width = $table_width
-    # }
+    addRow([notion_table_row_block] $row)
+    {
+        $this.children += $row
+    }
 
-    # Table_structure ([notion_table_row_block[]] $rows, [bool] $has_column_header, [bool] $has_row_header)
-    # {
-    # }
+    addRows([notion_table_row_block[]] $rows)
+    {
+        $this.children += $rows
+    }
+
 
     static [Table_structure] ConvertFromObject($Value)
     {
@@ -105,8 +108,8 @@ class notion_table_block : notion_block
     Create ([int] $table_width, [int] $table_height)
     {
         #Factory method to create a table with $table_height rows and $table_width columns
-        $this.table_width = $table_width
-        $this.rows = @()
+        $this.table = [Table_structure]::new($table_width)
+        $this.table.children = @()
         for ($i = 0; $i -lt $table_height; $i++)
         {
             $cells = @()
@@ -123,33 +126,23 @@ class notion_table_block : notion_block
     # notion_table_block::new(@([notion_table_row_block]::new(),[notion_table_row_block]::new()))
     notion_table_block ([notion_table_row_block[]] $rows)
     {
-        $this.children = $rows
         $this.table = [Table_structure]::new($rows[0].table_row.cells.count)
+        $this.table.children = $rows
     }
 
     #Table with rowarray and columnheader or rowheader
     # notion_table_block::new(@([notion_table_row_block]::new(),[notion_table_row_block]::new()), $true, $false)
     notion_table_block ([notion_table_row_block[]] $rows, [bool] $has_column_header, [bool] $has_row_header)
     {
-        $this.children = $rows
         $this.table = [Table_structure]::new($rows[0].table_row.cells.count, $has_column_header, $has_row_header)
+        $this.table.children = $rows
     }
 
-    # #adds a row to the table
-    # # notion_table_block::AddRow([notion_table_row_block]::new())
-    # AddRow ([notion_table_row_block] $row)
-    # {
-    #     $this.children += @{
-    #         "type"      = "table_row"
-    #         "table_row" = $row
-    #     }
-    # }
-    # #adds a the array of cells to a new row of the table
-    # # notion_table_block::AddRow(@([tablecell]::new(),[tablecell]::new()))
-    # AddRow ([rich_text[]] $cells)
-    # {
-    #     $this.AddRow([notion_table_row_block]::new($cells))
-    # }
+    addRow([notion_table_row_block] $row)
+    {
+        $this.table.children += $row
+    }
+
 
     static [notion_table_block] ConvertFromObject($Value)
     {

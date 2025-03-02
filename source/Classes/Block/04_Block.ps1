@@ -206,14 +206,14 @@ class notion_block
             }
             "table"
             {
-                $notion_block = notion_table_block::ConvertfromObject($value) 
+                $notion_block = [notion_table_block]::ConvertfromObject($value) 
                 break
             }
-            # "table_row"
-            # {
-            #     $notion_block =  [table_row]::ConvertfromObject($value.table_row)
-            #     break
-            # }
+            "table_row"
+            {
+                $notion_block =  [notion_table_row_block]::ConvertfromObject($value)
+                break
+            }
             "table_of_contents"
             {
                 $notion_block = [notion_table_of_contents_block]::ConvertfromObject($value)

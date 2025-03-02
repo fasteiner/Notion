@@ -1,6 +1,6 @@
 class TableRow_structure
 {
-    [rich_text[]]$cells = @()
+    [rich_text[][]]$cells = @()
 
     #OverloadDefinitions
     #new row with 1 cell
@@ -39,26 +39,23 @@ class TableRow_structure
 
     AddCell([object]$cellcontent)
     {
-        $this.AddCell($cellcontent, [annotation]::new())
-
-    }
-
-    AddCell([object]$cellcontent, [object]$annotations)
-    {
-        [annotation] $anno = [annotation]::new($annotations)
-        if($cellcontent -is [string])
+        [rich_text[]] $cell = @()
+        if($cellcontent -is [string] -or $cellcontent -is [int] -or $cellcontent -is [double] -or $cellcontent -is [bool] -or $cellcontent -is [datetime])
         {
-            $this.cells += [rich_text_text]::new($cellcontent, $anno)
+            $cell += [rich_text_text]::new($cellcontent.ToString())
         }
         elseif ($cellcontent -is [rich_text]) {
-            if($annotations.type -ne $null){
-                Write-Warning "Both annotations and rich_text object provided. Using only the rich_text object. Add the annotations to the rich_text object instead."
-            }
-            $this.cells += $cellcontent
+            $cell += $cellcontent
+        }
+        elseif ($cellcontent -is [array]) {
+            $cellcontent.foreach({
+                $cell += [rich_text]::ConvertFromObject($_)
+            })
         }
         else{
-            $this.cells += [rich_text_text]::new($cellcontent, $anno)
+            $cell += [rich_text]::ConvertFromObject($cellcontent)
         }
+        $this.cells += $cell
     }
 
     static [TableRow_structure] ConvertFromObject($Value)

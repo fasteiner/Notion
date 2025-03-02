@@ -52,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - paragraph: added color in ConvertFrom-Object
 - to_do: Fixed ConvertFrom-Object, added default constructor
 - Heading: Adjusted implementation to match API Schema
-- Remove-NullValuesFromObject: fix DateTime objects and remove empty arrays
+- Remove-NullValuesFromObject: fix DateTime objects and remove empty arrays, include handling for nested arrays
 - notion_table_block: implemented according to API Schema
 - notion_table_row_block: implemented according to API Schema
 - rich_text_text: handle primitive types correctly
