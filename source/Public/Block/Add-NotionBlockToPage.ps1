@@ -86,7 +86,7 @@ function Add-NotionBlockToPage
             children = @($Block)
         }
         $body = $body | Remove-NullValuesFromObject
-        $response =  Invoke-NotionApiCall -Uri "/blocks/$($Page.id)/children" -Method PATCH -body $body
+        $response =  Invoke-NotionApiCall -Uri "/blocks/$($pageID)/children" -Method PATCH -body $body
         return [notion_block[]]@($response.foreach({ [notion_block]::ConvertFromObject($_) }))
     }
 }
