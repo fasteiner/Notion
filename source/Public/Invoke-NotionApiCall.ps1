@@ -181,10 +181,16 @@ function Invoke-NotionApiCall
                 if ($method -eq "GET")
                 {
                     $Params["URI"] = $uri 
-                    if ($queryParameters.Count -gt 0)
-                    {
-                        $Params["URI"] += "?" + ($queryParameters.GetEnumerator() | ForEach-Object { "{0}={1}" -f $_.Key, $_.Value }) -join "&"
+                    if ($queryParameters.Count -gt 0){
+                        if ($Params["URI"] -notlike "*?*") {
+                            $Params["URI"] += "?"
+                        } else {
+                            $Params["URI"] += "&"
+                        } 
+                        $Params["URI"] += ($queryParameters.GetEnumerator() | ForEach-Object { "{0}={1}" -f $_.Key, $_.Value }) -join "&"
                     }
+                    $Params["URI"] += ($queryParameters.GetEnumerator() | ForEach-Object { "{0}={1}" -f $_.Key, $_.Value }) -join "&"
+                    
                 }
                 # Add parameter to the body
                 elseif ($method -eq "POST")

@@ -31,6 +31,9 @@ function New-NotionHeader
 
     .OUTPUTS
     [notion_heading_block] object
+
+    .LINK
+    https://developers.notion.com/reference/block#headings
     
     #>
     [CmdletBinding()]

@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update-NotionBlock: function to update a block
 - New-NotionTable: function to create a new table
 - New-NotionTableRow: function to create a new table row
+- New-NotionComment: function to create a new comment
+- Add-NotionComment: function to add a comment to a object
+- Get-NotionComment: function to get a comment
 
 ### Changed
 
@@ -32,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - For changes in existing functionality.
 - Remove-NotionPage: specify output type, fix code
 - Get-NotionBlockChildren: refactored
+- Invoke-NotionApiCall: add the possibility to pass query parameters other than `page_size` and `start_cursor`
 
 ### Deprecated
 

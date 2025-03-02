@@ -3,12 +3,12 @@ class notion_comment
 {
     [string]$object = "comment"
     [string]$id
-    [object]$parent
+    [notion_parent]$parent
     [string]$discussion_id
     [string]$created_time
     [string]$last_edited_time
     [notion_user]$created_by
-    [rich_text]$rich_text
+    [rich_text[]]$rich_text = @()
 
     notion_comment()
     {
@@ -20,6 +20,44 @@ class notion_comment
     {
         $this.id = $id
         $this.created_time = Get-Date -Format "yyyy-MM-ddTHH:mm:ss.fffZ" -AsUTC
+    }
+
+    notion_comment([object] $parent, [string] $discussion_id, [string] $created_time, [string] $last_edited_time, [notion_user] $created_by, $rich_text)
+    {
+        $this.parent = ($parent -is [notion_parent] ? ($parent) : ([notion_parent]::ConvertFromObject($parent)))
+        $this.discussion_id = $discussion_id
+        $this.created_time = Get-Date -Format "yyyy-MM-ddTHH:mm:ss.fffZ" -AsUTC
+        $this.last_edited_time = $this.created_time
+        $this.created_by = $created_by
+        if($rich_text -is [rich_text])
+        {
+            $this.rich_text = $rich_text
+        }
+        else
+        {
+            if($rich_text -is [string] -or $rich_text -is [datetime] -or $rich_text -is [int] -or $rich_text -is [double] -or $rich_text -is [bool])
+            {
+                $this.rich_text += [rich_text_text]::new($rich_text)
+            }
+            elseif ($rich_text -is [array]) {
+                $this.rich_text += $rich_text.ForEach({[rich_text]::ConvertFromObject($_)})
+            }
+            else
+            {
+                $this.rich_text += [rich_text]::ConvertFromObject($rich_text)
+            }
+        }
+    }
+
+    notion_comment([string] $id, [object] $parent, [string] $discussion_id, [string] $created_time, [string] $last_edited_time, [notion_user] $created_by, [rich_text] $rich_text)
+    {
+        $this.id = $id
+        $this.parent = $parent
+        $this.discussion_id = $discussion_id
+        $this.created_time = $created_time
+        $this.last_edited_time = $last_edited_time
+        $this.created_by = $created_by
+        $this.rich_text = $rich_text
     }
 
     static [notion_comment] ConvertfromObject($Value)
