@@ -5,14 +5,14 @@ class TableRow_structure
     #OverloadDefinitions
     #new row with 1 cell
     # [tablerow]::new()
-    TableRow()
+    TableRow_structure()
     {
 
     }
     #new row with array of cells
     # [tablerow]::new( @( [tablecell]::new("a") , [tablecell]::new("b") ) )|convertto-json -EnumsAsStrings -Depth 5
 
-    TableRow ([object] $object)
+    TableRow_structure ([object] $object)
     {
         # for each property add a cell
         # if not a list
@@ -59,6 +59,15 @@ class TableRow_structure
         else{
             $this.cells += [rich_text_text]::new($cellcontent, $anno)
         }
+    }
+
+    static [TableRow_structure] ConvertFromObject($Value)
+    {
+        $table_row_Obj = [TableRow_structure]::new()
+        $Value.cells.foreach({
+            $table_row_Obj.AddCell($_)
+        })
+        return $table_row_Obj
     }
 }
 

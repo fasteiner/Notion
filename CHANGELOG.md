@@ -53,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove-NullValuesFromObject: fix DateTime objects and remove empty arrays
 - notion_table_block: implemented according to API Schema
 - notion_table_row_block: implemented according to API Schema
+- rich_text_text: handle primitive types correctly
 
 ### Security
 

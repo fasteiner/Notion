@@ -56,6 +56,10 @@ class rich_text_text : rich_text
             $this.text = [rich_text_text_structure]::new($content)
             $this.plain_text = $content
         }
+        elseif ($content -is [datetime] -or $content -is [int] -or $content -is [double] -or $content -is [bool]) {
+            $this.text = [rich_text_text_structure]::new($content.ToString())
+            $this.plain_text = $content.ToString()
+        }
         elseif ($content -is [rich_text_text_structure])
         {
             $this.text = $content
