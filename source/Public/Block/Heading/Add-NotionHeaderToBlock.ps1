@@ -37,7 +37,7 @@ function Add-NotionHeaderToBlock
     This example creates a new header object and then adds it to the specified parent block using the InputObject parameter.
     #>
     [CmdletBinding()]
-    [Alias("Add-NotionHeaderToPage")]
+    [Alias("Add-NotionHeaderToPage", "Add-NotionHeadingToBlock", "Add-NotionHeadingToPage")]
     param (
         [Parameter(Mandatory = $true, ParameterSetName = "Params", HelpMessage = "Text of the Header")]
         [string] $Text,

@@ -34,6 +34,7 @@ function New-NotionHeader
     
     #>
     [CmdletBinding()]
+    [Alias("New-NotionHeading")]
     [OutputType([notion_heading_block])]
     param (
         [Parameter(Mandatory = $true, HelpMessage = "Text of the Header")]
