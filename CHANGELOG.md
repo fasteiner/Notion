@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Get-NotionPageChildren: implemented
 - Remove-NotionBlock: function to remove / trash a block
 - Update-NotionBlock: function to update a block
+- New-NotionTable: function to create a new table
+- New-NotionTableRow: function to create a new table row
 
 ### Changed
 
