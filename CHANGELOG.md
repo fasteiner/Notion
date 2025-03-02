@@ -30,7 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - For changes in existing functionality.
 - Remove-NotionPage: specify output type, fix code
 - Get-NotionBlockChildren: refactored
-- API Variables: switch from global to script scope
 
 ### Deprecated
 
@@ -39,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - page, Get-NotionPage: remove children
+- TableCell: was only a wrongly implemented wrapper for rich_text
 
 ### Fixed
 
@@ -51,7 +51,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - to_do: Fixed ConvertFrom-Object, added default constructor
 - Heading: Adjusted implementation to match API Schema
 - Remove-NullValuesFromObject: fix DateTime objects and remove empty arrays
+- notion_table_block: implemented according to API Schema
+- notion_table_row_block: implemented according to API Schema
 
 ### Security
 
-- In case of vulnerabilities.
+- API Variables: switch from global to script scope

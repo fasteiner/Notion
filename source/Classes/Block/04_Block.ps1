@@ -206,7 +206,7 @@ class notion_block
             }
             "table"
             {
-                $notion_block = [table]::ConvertfromObject($value) 
+                $notion_block = notion_table_block::ConvertfromObject($value) 
                 break
             }
             # "table_row"

@@ -1,6 +1,6 @@
-class TableRow
+class TableRow_structure
 {
-    $cells = @()
+    [rich_text[]]$cells = @()
 
     #OverloadDefinitions
     #new row with 1 cell
@@ -16,12 +16,13 @@ class TableRow
     {
         # for each property add a cell
         # if not a list
-        if ($object -isnot [System.Array])
+        if($object -is [TableRow_structure] -and $object.cells){
+            $this.cells = $object.cells
+        }
+        if ($object -isnot [System.Array] -and $object.cells)
         {
-            foreach ($property in $object.psobject.properties)
-            {
-                $this.AddCell($property.value)
-                Write-Debug "Added cell $($this.cells[0].count) content: $($property.value)"
+            $object.cells.foreach{
+                $this.AddCell($_)
             }
         }
         else
@@ -35,19 +36,62 @@ class TableRow
         }
     }
     # Overloaded AddCell methods
-    AddCell()
-    {
-        $this.cells += , ([System.Collections.ArrayList](, ([TableCell]::new())))
-    }
 
-    AddCell([string]$cellcontent)
+    AddCell([object]$cellcontent)
     {
-        $this.cells += , ([System.Collections.ArrayList](, ([TableCell]::new($cellcontent))))
+        $this.AddCell($cellcontent, [annotation]::new())
 
     }
 
-    AddCell($cellcontent, [annotation]$annotations)
+    AddCell([object]$cellcontent, [object]$annotations)
     {
-        $this.cells += , ([System.Collections.ArrayList](, ([TableCell]::new($cellcontent, $annotations))))
+        [annotation] $anno = [annotation]::new($annotations)
+        if($cellcontent -is [string])
+        {
+            $this.cells += [rich_text_text]::new($cellcontent, $anno)
+        }
+        elseif ($cellcontent -is [rich_text]) {
+            if($annotations.type -ne $null){
+                Write-Warning "Both annotations and rich_text object provided. Using only the rich_text object. Add the annotations to the rich_text object instead."
+            }
+            $this.cells += $cellcontent
+        }
+        else{
+            $this.cells += [rich_text_text]::new($cellcontent, $anno)
+        }
+    }
+}
+
+class notion_table_row_block : notion_block
+{
+    [notion_blocktype] $type = "table_row"
+    [TableRow_structure] $table_row
+
+    notion_table_row_block()
+    {
+        $this.table_row = [TableRow_structure]::new()
+    }
+
+    notion_table_row_block([object] $object)
+    {
+        if($object -is [array])
+        {
+            # if array of cells
+            $this.table_row = [TableRow_structure]::new($object)
+        }
+        else
+        {
+            # if object with properties (full object)
+            $this.table_row = [TableRow_structure]::ConvertFromObject($object)
+        }
+    }
+
+    
+
+    static [notion_table_row_block] ConvertFromObject($Value)
+    {
+        $table_row_Obj = [notion_table_row_block]::new()
+        $table_row_Obj.table_row = [TableRow_structure]::new($Value.cells)
+        return $table_row_Obj
     }
 }

@@ -1,5 +1,6 @@
 class Table_Of_Contents_structure
 {
+    #https://developers.notion.com/reference/block#table-of-contents
     [notion_color] $color = "default"
 
     Table_Of_Contents_structure([notion_color] $color = "default")
@@ -13,8 +14,8 @@ class Table_Of_Contents_structure
 }
 
 class notion_table_of_contents_block : notion_block
-# https://developers.notion.com/reference/block#table-of-contents
 {
+    # https://developers.notion.com/reference/block#table-of-contents
     [notion_blocktype] $type = "table_of_contents"
     [Table_Of_Contents_structure] $table_of_contents
 

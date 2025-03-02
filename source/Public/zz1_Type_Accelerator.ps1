@@ -89,6 +89,8 @@ $ExportableTypes = @(
     [notion_sub_type_unfurl_attribute]
     [notion_synced_block]
     [notion_table_of_contents_block]
+    [notion_table_row_block]
+    [notion_table_block]
     [notion_title_page_property]
     [notion_to_do_block]
     [notion_toggle_block]
