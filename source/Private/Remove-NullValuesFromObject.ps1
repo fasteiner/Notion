@@ -11,7 +11,8 @@ function Remove-NullValuesFromObject
     process
     {
         # Ensure enums are serialized as strings
-        $InputObject = $InputObject | ConvertTo-Json -Depth 20 -EnumsAsStrings | ConvertFrom-Json
+        #$InputObject = $InputObject | ConvertTo-Json -Depth 20 -EnumsAsStrings | ConvertFrom-Json
+        $InputObject = $InputObject | Select-Object *
         $outputObject = [PSCustomObject]@{}
         # Remove null properties from the input object
         :loop foreach ($property in $InputObject.PSObject.Properties)
@@ -23,7 +24,7 @@ function Remove-NullValuesFromObject
             if ($null -ne $property.Value)
             {
                 Write-Debug "Processing property: $($property.Name): $($property.Value) `<$($property.value.GetType().Name)]"
-                if (($property.value -is [int]) -or ($property.value -is [int64]) -or ($property.value -is [double]) -or ($property.value -is [float]) -or ($property.value -is [string]) -or ($property.value -is [bool]) -or ($property.value -is [DateTime]))
+                if (($property.value -is [int]) -or ($property.value -is [int64]) -or ($property.value -is [double]) -or ($property.value -is [float]) -or ($property.value -is [string]) -or ($property.value -is [bool]) -or ($property.value -is [DateTime]) -or ($property.value -is [enum]))
                 {
                     $outputObject | Add-Member -MemberType NoteProperty -Name $property.Name -Value $property.Value
                 }
@@ -38,13 +39,11 @@ function Remove-NullValuesFromObject
                     $cleanedArray = @()
                     foreach ($item in $property.Value)
                     {
-                        if ($item -is [Object])
-                        {
-                            $cleanedArray += Remove-NullValuesFromObject -InputObject $item
+                        if($item -is [array]){
+                            $cleanedArray += ,@($(Remove-NullValuesFromObject -InputObject $item))
                         }
-                        else
-                        {
-                            $cleanedArray += $item
+                        else{
+                            $cleanedArray += $(Remove-NullValuesFromObject -InputObject $item)
                         }
                     }
                     $outputObject | Add-Member -MemberType NoteProperty -Name $property.Name -Value $cleanedArray
