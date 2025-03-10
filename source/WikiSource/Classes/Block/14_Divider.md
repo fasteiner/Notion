@@ -1,6 +1,6 @@
 # Block: Divider
 
-[API reference]()
+[API reference](https://developers.notion.com/reference/block#divider)
 
 ```mermaid
 classDiagram

@@ -1,9 +1,6 @@
 # Block: Callout
 
 [API reference](https://developers.notion.com/reference/block#callout)
-# Block: 
-
-[API reference]()
 
 ```mermaid
 classDiagram
