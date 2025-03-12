@@ -1,6 +1,6 @@
 # PageProperty: Last_edited_time
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#last-edited-time)
+[API Reference](https://developers.notion.com/reference/page-property-values#last-edited-time)
 
 ```mermaid
 classDiagram

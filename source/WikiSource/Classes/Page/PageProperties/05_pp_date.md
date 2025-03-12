@@ -1,6 +1,6 @@
 # PageProperty: Date
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#date)
+[API Reference](https://developers.notion.com/reference/page-property-values#date)
 
 ```mermaid
 classDiagram

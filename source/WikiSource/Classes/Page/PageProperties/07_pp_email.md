@@ -1,6 +1,6 @@
 # PageProperty: Email
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#email)
+[API Reference](https://developers.notion.com/reference/page-property-values#email)
 
 ```mermaid
 classDiagram

@@ -1,6 +1,6 @@
 # PageProperty: Rollup
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#rollup)
+[API Reference](https://developers.notion.com/reference/page-property-values#rollup)
 
 ```mermaid
 classDiagram

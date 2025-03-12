@@ -1,6 +1,6 @@
 # PageProperty: Files
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#files)
+[API Reference](https://developers.notion.com/reference/page-property-values#files)
 
 ```mermaid
 classDiagram

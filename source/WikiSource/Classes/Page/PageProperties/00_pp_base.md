@@ -1,6 +1,6 @@
 # PageProperty: Base
 
-[API Refernce](https://developers.notion.com/reference/page-property-values)
+[API Reference](https://developers.notion.com/reference/page-property-values)
 
 ```mermaid
 classDiagram

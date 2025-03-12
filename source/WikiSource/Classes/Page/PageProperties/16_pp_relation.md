@@ -1,11 +1,11 @@
 # PageProperty: Relation
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#relation)
+[API Reference](https://developers.notion.com/reference/page-property-values#relation)
 
 ```mermaid
 classDiagram
     class notion_relation_page_property {
-        [bool] $has_more        
+        [bool] $has_more
         [notion_page_reference[]] $relation
         ConvertFromObject()
     }

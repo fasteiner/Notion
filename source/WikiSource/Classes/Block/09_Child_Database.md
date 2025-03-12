@@ -10,7 +10,6 @@ classDiagram
     }
 
     class notion_child_database_block {
-        link notion_child_database_block "https://developers.notion.com/reference/block#child-database" "Link"
         [notion_blocktype] $type = "child_database"
         [child_database_structure] $child_database
         ConvertFromObject()

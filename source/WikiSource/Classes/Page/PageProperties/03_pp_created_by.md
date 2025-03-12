@@ -1,6 +1,6 @@
 # PageProperty: Created_by
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#created-by)
+[API Reference](https://developers.notion.com/reference/page-property-values#created-by)
 
 ```mermaid
 classDiagram

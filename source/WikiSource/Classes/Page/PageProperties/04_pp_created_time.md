@@ -1,6 +1,6 @@
 # PageProperty: Created_time
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#created-time)
+[API Reference](https://developers.notion.com/reference/page-property-values#created-time)
 
 ```mermaid
 classDiagram

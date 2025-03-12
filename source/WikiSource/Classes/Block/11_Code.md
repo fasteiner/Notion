@@ -12,7 +12,6 @@ classDiagram
     }
 
     class notion_code_block {
-    link notion_code_block"https://developers.notion.com/reference/block#code" "Link"
         [notion_blocktype] $type = "code"
         [code_structure] $code
         ConvertFromObject()

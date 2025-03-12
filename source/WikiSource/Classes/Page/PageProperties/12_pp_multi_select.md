@@ -1,6 +1,6 @@
 # PageProperty: Multi_select
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#multi-select)
+[API Reference](https://developers.notion.com/reference/page-property-values#multi-select)
 
 ```mermaid
 classDiagram

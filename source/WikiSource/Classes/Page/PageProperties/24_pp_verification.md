@@ -1,6 +1,6 @@
 # PageProperty: Verification
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#verification)
+[API Reference](https://developers.notion.com/reference/page-property-values#verification)
 
 ```mermaid
 classDiagram

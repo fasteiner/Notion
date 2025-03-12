@@ -1,6 +1,6 @@
 # PageProperty: Unique_id
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#unique-id)
+[API Reference](https://developers.notion.com/reference/page-property-values#unique-id)
 
 ```mermaid
 classDiagram

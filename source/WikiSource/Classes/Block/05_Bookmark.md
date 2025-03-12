@@ -3,7 +3,6 @@
 [API Reference](https://developers.notion.com/reference/block#bookmark)
 
 ```mermaid
-
 classDiagram
    class bookmark_structure{
         [notion_blocktype] $type = "bookmark"

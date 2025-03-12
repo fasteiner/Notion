@@ -1,6 +1,6 @@
 # PageProperty: People
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#people)
+[API Reference](https://developers.notion.com/reference/page-property-values#people)
 
 ```mermaid
 classDiagram

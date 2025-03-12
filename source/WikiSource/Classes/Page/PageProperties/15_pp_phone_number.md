@@ -1,6 +1,6 @@
 # PageProperty: Phone_Number
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#phone-number)
+[API Reference](https://developers.notion.com/reference/page-property-values#phone-number)
 
 ```mermaid
 classDiagram

@@ -1,6 +1,6 @@
 # PageProperty: Rich_text
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#rich-text)
+[API Reference](https://developers.notion.com/reference/page-property-values#rich-text)
 
 ```mermaid
 classDiagram

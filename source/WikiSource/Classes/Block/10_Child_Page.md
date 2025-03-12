@@ -10,7 +10,6 @@ classDiagram
     }
 
     class notion_child_page_block {
-    link notion_child_page_block "https://developers.notion.com/reference/block#child-page" "Link"
         [notion_blocktype] $type = "child_page"
         [child_page_structure] $child_page
         ConvertFromObject()

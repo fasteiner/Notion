@@ -1,6 +1,6 @@
 # PageProperty: Checkbox
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#checkbox)
+[API Reference](https://developers.notion.com/reference/page-property-values#checkbox)
 
 ```mermaid
 classDiagram

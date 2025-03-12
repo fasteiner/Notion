@@ -1,6 +1,6 @@
 # PageProperty: Title
 
-[API Refernce](https://developers.notion.com/reference/page-property-values#title)
+[API Reference](https://developers.notion.com/reference/page-property-values#title)
 
 ```mermaid
 classDiagram
