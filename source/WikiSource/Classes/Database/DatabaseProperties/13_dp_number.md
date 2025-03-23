@@ -16,3 +16,7 @@ classDiagram
     `notion_number_database_property_structure` <.. `notion_number_database_property`:uses
     `DatabasePropertiesBase` --|> `notion_number_database_property`:inherits
 ```
+
+## Related Classes
+
+- [DatabasePropertiesBase](./00_dp_DatabasePropertiesBase.md)

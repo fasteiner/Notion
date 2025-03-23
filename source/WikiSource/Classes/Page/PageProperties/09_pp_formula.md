@@ -10,3 +10,8 @@ classDiagram
     }
     `PagePropertiesBase` --|> `notion_formula_page_property`:inherits
 ```
+
+## Related Classes
+
+- [PagePropertiesBase](./00_pp_base.md)
+- [notion_formula](../../General/09_formula.md) 

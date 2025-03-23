@@ -16,4 +16,9 @@ classDiagram
         ConvertFromObject()
     }
     `PagePropertiesBase` --|> `notion_verification_page_property`:inherits
+    `notion_verification` <.. `notion_verification_page_property`:uses
 ```
+
+## Related Classes
+
+- [PagePropertiesBase](./00_pp_base.md)

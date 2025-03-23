@@ -5,7 +5,7 @@
 ```mermaid
 classDiagram
 
-class notion_to_do {
+class to_do_structure {
     [rich_text[]] $rich_text
     [bool] $checked = $false
     [notion_color] $color = "default"
@@ -15,10 +15,9 @@ class notion_to_do {
 
 class notion_to_do_block {
     [notion_blocktype] $type = "to_do"
-    [notion_to_do] $to_do
+    [to_do_structure] $to_do
     ConvertFromObject()
 }
-`Table_Of_Contents_structure` <.. `notion_table_of_contents_block`:uses
-`notion_block` --|> `notion_table_of_contents_block`:inherits
+`to_do_structure` <.. `notion_to_do_block`:uses
+`notion_block` --|> `notion_to_do_block`:inherits
 ```
-## TODO: Name falsch (notion_to_do -> to_do_structure)

@@ -12,7 +12,9 @@ classDiagram
     }   
     class notion_custom_emoji {
         [icontype]$type = "custom_emoji"
-        [string]$custom_emoji
+        [custom_emoji_structure]$custom_emoji
         ConvertfromObject()
     }
+
+    `custom_emoji_structure` <.. `notion_custom_emoji`:uses
 ```

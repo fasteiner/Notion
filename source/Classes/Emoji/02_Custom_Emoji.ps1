@@ -28,7 +28,7 @@ class notion_custom_emoji
 # https://developers.notion.com/reference/emoji-object#custom-emoji
 {
     [icontype]$type = "custom_emoji"
-    [string]$custom_emoji
+    [custom_emoji_structure]$custom_emoji
 
     notion_custom_emoji()
     {

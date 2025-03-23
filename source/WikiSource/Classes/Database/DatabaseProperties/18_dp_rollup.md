@@ -10,3 +10,7 @@ class notion_rollup_database_property {
     }
     `DatabasePropertiesBase` --|> `notion_rollup_database_property`:inherits
 ```
+## Related Objects
+
+- [DatabasePropertiesBase](./00_dp_DatabasePropertiesBase.md)
+- [notion_rollup](../../General/17_rollup.md)

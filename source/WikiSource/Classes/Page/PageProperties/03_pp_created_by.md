@@ -10,3 +10,8 @@ classDiagram
     }
     `PagePropertiesBase` --|> `notion_created_by_page_property`:inherits
 ```
+
+## Related Classes
+
+- [notion_user](../../User/01_user.md)
+- [PagePropertiesBase](./00_pp_base.md)

@@ -10,3 +10,7 @@ classDiagram
     }
     `notion_parent` --|> `notion_block_parent`:inherits
 ```
+
+## Related classes
+
+- [notion_parent](./00_parent.md)

@@ -16,3 +16,7 @@ classDiagram
     `notion_formula_database_property_structure` <.. `notion_formula_database_property`:uses
     `DatabasePropertiesBase` --|> `notion_formula_database_property`:inherits
 ```
+
+## Related Classes
+
+- [DatabasePropertiesBase](./00_dp_DatabasePropertiesBase.md)

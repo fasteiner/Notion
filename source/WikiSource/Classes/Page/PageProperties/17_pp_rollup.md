@@ -10,3 +10,8 @@ classDiagram
     }
     `PagePropertiesBase` --|> `notion_rollup_page_property`:inherits
 ```
+
+## Related Classes
+
+- [PagePropertiesBase](./00_pp_base.md)
+- [notion_rollup](../../General/17_rollup.md)

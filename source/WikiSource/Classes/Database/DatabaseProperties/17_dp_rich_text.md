@@ -10,3 +10,7 @@ class notion_rich_text_database_property {
     }
     `DatabasePropertiesBase` --|> `notion_rich_text_database_property`:inherits
 ```
+
+## Related Classes
+
+- [DatabasePropertiesBase](./00_dp_DatabasePropertiesBase.md)

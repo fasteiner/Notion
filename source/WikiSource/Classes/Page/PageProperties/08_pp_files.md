@@ -11,3 +11,7 @@ classDiagram
     }
     `PagePropertiesBase` --|> `notion_files_page_property`:inherits
 ```
+
+## Related Classes
+
+- [PagePropertiesBase](./00_pp_base.md)

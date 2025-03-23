@@ -15,4 +15,9 @@ classDiagram
         ConvertFromObject()
     }
     `PagePropertiesBase` --|> `notion_unique_id_page_property`:inherits
+    `notion_unique_id_page_property` ..> `notion_unique_id`:uses
 ```
+
+## Related Classes
+
+- [PagePropertiesBase](./00_pp_base.md)

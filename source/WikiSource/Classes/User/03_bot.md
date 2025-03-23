@@ -12,3 +12,8 @@ classDiagram
     }
     `notion_user` --|> `notion_bot_user`:inherits
 ```
+
+## Related Classes
+
+- [notion_user](./01_user.md)
+- [notion_bot_user](./03_bot.md)

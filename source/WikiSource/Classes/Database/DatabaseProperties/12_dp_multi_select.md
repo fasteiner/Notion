@@ -18,3 +18,8 @@ classDiagram
     `notion_multi_select_database_property_structure` <.. `notion_multi_select_database_property`:uses
     `DatabasePropertiesBase` --|> `notion_multi_select_database_property`:inherits
 ```
+
+## Related Objects
+
+- [DatabasePropertiesBase](./00_dp_DatabasePropertiesBase.md)
+- [notion_multi_select_item](../../General/12_multi_select_item.md)

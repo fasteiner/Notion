@@ -1,7 +1,6 @@
-class PDF_structure
+class PDF_structure : notion_file
 {
     [rich_text[]] $caption
-    [notion_filetype] $type
     
     PDF_structure([notion_file] $file)
     {
@@ -18,11 +17,14 @@ class PDF_structure
 
     static [PDF_structure] ConvertFromObject($Value)
     {
-        return [PDF_structure]::new($Value.caption, $Value.pdf)
+        $pdf_obj = [notion_file]::ConvertFromObject($Value)
+        $pdf_obj.caption = $Value.caption.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
+        return $pdf_obj
     }
-
 }
-class notion_PDF_block : notion_file
+
+
+class notion_PDF_block : notion_block
 # https://developers.notion.com/reference/block#pdf
 {
     [notion_blocktype] $type = "pdf"

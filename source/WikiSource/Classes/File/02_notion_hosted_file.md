@@ -15,4 +15,9 @@ classDiagram
         ConvertFromObject()
     }
     `notion_file` --|> `notion_hosted_file`:inherits
+    `notion_hosted_file_structure` <.. `notion_hosted_file`:uses
 ```
+
+## Related Classes
+
+- [notion_file](./01_file.md)

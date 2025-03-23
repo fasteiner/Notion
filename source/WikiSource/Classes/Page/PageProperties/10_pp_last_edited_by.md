@@ -10,3 +10,8 @@ classDiagram
     }
     `PagePropertiesBase` --|> `notion_last_edited_by_page_property`:inherits
 ```
+
+## Related Classes
+
+- [PagePropertiesBase](./00_pp_base.md)
+- [notion_user](../../User/01_user.md)

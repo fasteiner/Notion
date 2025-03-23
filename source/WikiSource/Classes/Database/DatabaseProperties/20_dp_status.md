@@ -26,3 +26,7 @@ class notion_status_database_property {
     `notion_status_database_property_structure` <.. `notion_status_database_property`:uses
     `DatabasePropertiesBase` --|> `notion_status_database_property`:inherits
 ```
+
+## Related Classes
+
+- [DatabasePropertiesBase](./00_dp_DatabasePropertiesBase.md)

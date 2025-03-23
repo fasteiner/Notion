@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Documentation to Classes: Comment, Emoji, File, General, Page, Parent, User
 - Documentation to Classes: Block, Database, DatabaseProperties
+- Documentation to Classes: add relation between classes
 - Documentation to all PSCmdlets
 - prepared automatic Wiki Generation
 - Add-NotionPageToDatabase, Move-NotionPageToArchive: prepared

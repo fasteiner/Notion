@@ -10,3 +10,7 @@ classDiagram
     }
     `DatabasePropertiesBase` --|> `notion_email_database_property`:inherits
 ```
+
+## Related Classes
+
+- [DatabasePropertiesBase](./00_dp_DatabasePropertiesBase.md)

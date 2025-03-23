@@ -11,3 +11,8 @@ classDiagram
     }
     `PagePropertiesBase` --|> `notion_multi_select_page_property`:inherits
 ```
+
+## Related Classes
+
+- [PagePropertiesBase](./00_pp_base.md)
+- [notion_multi_select_item](../../General/12_multi_select_item.md)

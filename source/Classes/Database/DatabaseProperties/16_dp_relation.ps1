@@ -1,34 +1,3 @@
-class notion_database_relation_property{
-    # https://developers.notion.com/reference/property-object#relation
-    [string] $database_id
-    [string] $synced_property_id
-    [string] $synced_property_name
-
-    notion_database_relation_property()
-    {
-        $this.database_id = $null
-        $this.synced_property_id = $null
-        $this.synced_property_name = $null
-    }
-
-    notion_database_relation_property([string]$database_id)
-    {
-        $this.database_id = $database_id
-    }
-    
-    notion_database_relation_property([string]$database_id, [string]$synced_property_id, [string]$synced_property_name)
-    {
-        $this.database_id = $database_id
-        $this.synced_property_id = $synced_property_id
-        $this.synced_property_name = $synced_property_name
-    }
-
-    static [notion_database_relation_property] ConvertFromObject($Value)
-    {
-        return [notion_database_relation_property]::new($Value.id, $Value.synced_property_id, $Value.synced_property_name)
-    }
-}
-
 class notion_database_relation_base{
     [string] $database_id
     [notion_database_relation_type] $type

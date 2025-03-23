@@ -10,3 +10,7 @@ classDiagram
     }
     `PagePropertiesBase` --|> `notion_phone_number_page_property`:inherits
 ```
+
+## Related Classes
+
+- [PagePropertiesBase](./00_pp_base.md)

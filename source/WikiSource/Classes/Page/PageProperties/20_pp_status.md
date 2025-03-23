@@ -10,3 +10,8 @@ classDiagram
     }
     `PagePropertiesBase` --|> `notion_status_page_property`:inherits
 ```
+
+## Related Classes
+
+- [PagePropertiesBase](./00_pp_base.md)
+- [notion_status](../../General/20_status.md)
