@@ -1,4 +1,6 @@
-class notion_rollup{
+class notion_rollup
+# https://developers.notion.com/reference/page-property-values#rollup
+{
     [notion_rollup_function_type] $function
     [notion_rollup_type] $type
 
@@ -7,7 +9,7 @@ class notion_rollup{
 
     }
 
-    notion_rollup_ ($type_value, $function, $type)
+    notion_rollup ($type_value, $function, $type)
     {
         $this.$type = $type_value
         $this.function = [Enum]::Parse([notion_rollup_function_type], $function)
@@ -16,24 +18,31 @@ class notion_rollup{
 
     static [notion_rollup] ConvertFromObject($Value)
     {
-        if(!$value.type){
+        if (!$value.type)
+        {
             return $null
         }
         $rollup_obj = $null
-        switch ($value.type) {
-            "array" {
+        switch ($value.type)
+        {
+            "array"
+            {
                 $rollup_obj = [notion_rollup_array]::ConvertFromObject($Value)
             }
-            "date" {
+            "date"
+            {
                 $rollup_obj = [notion_rollup_date]::ConvertFromObject($Value)
             }
-            "incomplete" {
+            "incomplete"
+            {
                 $rollup_obj = [notion_rollup_incomplete]::ConvertFromObject($Value)
             }
-            "number" {
+            "number"
+            {
                 $rollup_obj = [notion_rollup_number]::ConvertFromObject($Value)
             }
-            "unsupported" {
+            "unsupported"
+            {
                 $rollup_obj = [notion_rollup_unsupported]::ConvertFromObject($Value)
             }
         }

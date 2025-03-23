@@ -1,2 +1,0 @@
-```mermaid
-classDiagram`n``

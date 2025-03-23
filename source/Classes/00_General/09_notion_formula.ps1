@@ -1,4 +1,5 @@
 class notion_formula
+# https://developers.notion.com/reference/page-property-values#formula
 {
     [notion_formula_type] $type
 

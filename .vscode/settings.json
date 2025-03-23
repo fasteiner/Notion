@@ -39,5 +39,7 @@
     "[markdown]": {
         "files.trimTrailingWhitespace": false,
         "files.encoding": "utf8"
-    }
+    },
+    "liveshare.languages.allowGuestCommandControl": true,
+    "liveshare.allowGuestDebugControl": true
 }
