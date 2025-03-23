@@ -5,16 +5,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-
-
 ### Added
 
+- Documentation to Classes: Comment, Emoji, File, General, Page, Parent, User
+- Documentation to Classes: Block, Database, DatabaseProperties
+- Documentation to Classes: add relation between classes
 - Documentation to all PSCmdlets
 - prepared automatic Wiki Generation
 - Add-NotionPageToDatabase, Move-NotionPageToArchive: prepared
 - Get-NotionPageProperty: prepared and partly tested
 - Update-NotionPageProperty: prepared
-- Add-NotionDatabaseProperty, Remove-NotionDatabaseProperty, Move-NotionPageToArchive: prepared 
+- Add-NotionDatabaseProperty, Remove-NotionDatabaseProperty, Move-NotionPageToArchive: prepared
 - Add-NotionBlockToPage: prepared
 - Get-NotionPageChildren: implemented
 - Remove-NotionBlock: function to remove / trash a block

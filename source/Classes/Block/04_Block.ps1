@@ -3,7 +3,7 @@ class notion_block
 {
     $object = "block"
     $id = $null
-    $parent = $null
+    [notion_parent]$parent = $null
     #$after = ""
     $children = @()
     [string]$created_time
@@ -259,7 +259,6 @@ class notion_block
         
         }
         $notion_block.id = $Value.id
-        #TODO: real parent object
         $notion_block.parent = [notion_parent]::ConvertFromObject($Value.parent)
         if($Value.created_time){
             $notion_block.created_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"

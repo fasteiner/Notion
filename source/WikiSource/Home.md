@@ -39,6 +39,14 @@ There are several type of Notion object for different purposes.
 - File
 - Emoji
 
+### General used verbs for those objects
+
+- Get (retrieves an object)
+- New (creates an object without uploading it)
+- Add (adds a new object to another already existing object e.g. a block to a page)
+- Update (modifies an object)
+- Remove (deletes an object)
+
 Each of the objects have got individual CmdLets to deal with.
 <div style="display: flex;">
 

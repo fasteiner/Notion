@@ -1,4 +1,5 @@
-class notion_block_parent : notion_parent{
+class notion_block_parent : notion_parent {
+    # https://developers.notion.com/reference/parent-object#block-parent
     [string] $block_id
 
     notion_block_parent() : base("block_id")

@@ -3,6 +3,7 @@
         "davidanson.vscode-markdownlint",
         "ms-vscode.powershell",
         "streetsidesoftware.code-spell-checker",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "bierner.markdown-mermaid"
     ]
 }

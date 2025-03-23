@@ -1,6 +1,5 @@
 class callout_structure
 {
-    [notion_blocktype] $type = "callout"
     [rich_text[]] $rich_text
     # icon: emoji or file
     $icon = [notion_emoji]::new("")

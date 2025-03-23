@@ -18,7 +18,6 @@ class rich_text_mention_page_structure
     }
 }
 
-
 class rich_text_mention_page : rich_text_mention_base
 # https://developers.notion.com/reference/rich-text#mention
 {

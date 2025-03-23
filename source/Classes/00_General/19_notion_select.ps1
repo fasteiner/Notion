@@ -1,4 +1,5 @@
 class notion_select
+# https://developers.notion.com/reference/page-property-values#select
 {
     [notion_color] $color
     [string] $id
