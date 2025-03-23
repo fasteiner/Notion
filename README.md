@@ -7,7 +7,7 @@ In order to ensure the smoothest possible interaction with the API, the specific
 ## Prerequisites
 
 - PowerShell 7.0 or higher
-- 
+ 
 ## Getting started
 
 To get started either:
@@ -26,8 +26,6 @@ Install-PSResource -Name Notion
 $BearerToken = Read-Host -Prompt "Enter your Notion Bearer Token" -AsSecureString
 Connect-Notion -BearerToken $BearerToken
 ```
-
-
 
 Or download it via the [Microsoft PowerShell Gallery](https://www.powershellgallery.com/packages/Notion)
 

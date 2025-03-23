@@ -5,7 +5,7 @@
 ![Platform](https://img.shields.io/badge/Platform-Windows|Linux|MacOS-blue)
 ![GitHub Issues](https://img.shields.io/github/issues/fasteiner/Notion?label=Issues)
 
-<img src="../../TSNotion.png" width="30%" />
+<img src="../../TSNotion.png" width="10%" />
 
 Here you will find all the information you need to use Notion.
 
@@ -16,10 +16,10 @@ of this repository.
 ## Installation
 
 ``` PowerShell
-# Install from PowerShell Gallery
+# Install via PowerShellGet 2.x
 Install-Module -Name Notion -Repository PSGallery
 
-# Install via resource
+# Install via PowerShellGet 3.x
 Install-PSResource Notion -Repository PSGallery
 ```
 ## How to start with this module?
@@ -50,7 +50,7 @@ Connect-Notion -BearerToken $BearerToken
 
 There are several attepts to talkto the Notion API out there, but most of them din't take care of the correct
 syntax of the individual configuration of each block/page/database etc. So I decided to create classes for all
-available Notion objects presented by the API. (there are some objects which ar not available right now -
+available Notion objects presented by the API. (there are some objects which ar not available at the time of writing -
 end of 2024 like e.g. template)
 
 The charm of Notion classes are thies simple use while creating objects.
