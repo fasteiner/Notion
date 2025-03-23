@@ -1,12 +1,50 @@
-# Welcome to the Notion wiki
+# Welcome to the PowerShell Notion Module Wiki
 
-<sup>_Notion v#.#.#_</sup>
+![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Notion?label=PSGallery%20Version)
+![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Notion?label=Downloads)
+![Platform](https://img.shields.io/badge/Platform-Windows|Linux|MacOS-blue)
+![GitHub Issues](https://img.shields.io/github/issues/fasteiner/Notion?label=Issues)
+
+<img src="../../TSNotion.png" width="30%" />
 
 Here you will find all the information you need to use Notion.
 
-Please leave comments, feature requests, and bug reports for this module in
+Please leave comments, feature requests and bug reports for this module in
 the [issues section](https://github.com/fasteiner/Notion/issues)
-for this repository.
+of this repository.
+
+## Installation
+
+``` PowerShell
+# Install from PowerShell Gallery
+Install-Module -Name Notion -Repository PSGallery
+
+# Install via resource
+Install-PSResource Notion -Repository PSGallery
+```
+## How to start with this module?
+
+Before you start with connecting to your Notion teamspace, you need to create an integration, which is allowed to interact with your space.
+
+Follow this link to get a detailed instructions how to [create your Notion integration](./Configuration_of_integration.md).
+
+## Usage
+
+``` PowerShell
+# Import the module
+Import-Module -Name Notion
+
+# List all Cmdlets
+Get-Command -Module Notion
+
+# List Cmdlets for blocks
+Get-Command -Module Notion -Noun NotionBlock
+
+# Connect to Notion (with your integration/bearer token)
+$BearerToken = Read-Host -Prompt "Enter your Bearer token" | ConvertTo-Securestring -AsPlainText
+Connect-Notion -BearerToken $BearerToken
+```
+
 
 ## Idea behind a class based Notion module
 
@@ -22,7 +60,7 @@ The charm of Notion classes are thies simple use while creating objects.
 [notion_page]::new()  # creates a new page object
 ```
 
-If you receive items from the API, Notion will automatically convert it into Notion objects
+If you receive items from the API, the Notion module will automatically convert it into Notion objects
 (based on the classes) so that the can be used.
 
 ## Notion Objects
@@ -39,13 +77,17 @@ There are several type of Notion object for different purposes.
 - File
 - Emoji
 
-### General used verbs for those objects
+### Nesting of those objects
 
-- Get (retrieves an object)
-- New (creates an object without uploading it)
-- Add (adds a new object to another already existing object e.g. a block to a page)
-- Update (modifies an object)
-- Remove (deletes an object)
+![Nested objects](./Notion%20Elements.png)
+
+### General used verbs for objects
+
+- Get     (retrieves an object)
+- New     (creates an object without uploading it)
+- Add     (adds a new object to another already existing object e.g. a block to a page)
+- Update  (modifies an object)
+- Remove  (deletes an object)
 
 Each of the objects have got individual CmdLets to deal with.
 <div style="display: flex;">
