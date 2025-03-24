@@ -39,7 +39,7 @@ There are several type of Notion object for different purposes.
 - File
 - Emoji
 
-Find the classes Documentation here: [Classes Documentation](../../doc/Classes/)
+Find the classes Documentation here: [Classes Documentation](../../docs/Classes/)
 
 ### General used verbs for those objects
 
