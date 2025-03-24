@@ -9,6 +9,7 @@ function Copy-WikiFolder
         $Path,
 
         [Parameter(Mandatory = $true)]
+        [Alias('DestinationFolder')]
         [System.String]
         $DestinationPath,
 
