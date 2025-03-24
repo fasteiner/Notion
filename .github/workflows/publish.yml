@@ -12,7 +12,7 @@ defaults:
 
 jobs:
   build-and-publish:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,8 +24,8 @@ jobs:
         with:
           versionSpec: '5.x'
       
-      # - name: chmod build.ps1
-      #   run: chmod +x build.ps1
+      - name: chmod build.ps1
+        run: chmod +x build.ps1
 
       - name: Package Module
         run: |
