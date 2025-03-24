@@ -33,7 +33,7 @@ jobs:
 
       - name: Show Generated Wiki Files
         run: |
-          Get-ChildItem -Recurse -Path ./output/WikiContent | Select-Object FullName 
+          (Get-ChildItem -Recurse -Path ./output/WikiContent).FullName
 
       - name: Publish Module
         env:
