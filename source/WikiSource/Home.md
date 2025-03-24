@@ -15,7 +15,7 @@ syntax of the individual configuration of each block/page/database etc. So we de
 available Notion objects presented by the API. (there are some objects which are not available right now -
 end of 2024 like e.g. template)
 
-The charm of Notion classes are thies simple use while creating objects.
+The charm of Notion classes are this simple use while creating objects.
 
 ``` PowerShell
 [notion_block]::new() # creates an empty block object
@@ -39,7 +39,7 @@ There are several type of Notion object for different purposes.
 - File
 - Emoji
 
-Find the classes Documentation here: [Classes Documentation](../../docs/Classes/)
+Find the classes Documentation here: [Classes Documentation]((https://github.com/fasteiner/Notion/tree/main/docs/Classes))
 
 ### General used verbs for those objects
 
@@ -109,8 +109,8 @@ Each of the objects have got individual CmdLets to deal with.
 
 ## Classes and Enums
 
-An easy way to genrate new blocks is to instantiate them from predefined classes via `[classname]::new()`.
-On the querying side the API returns a nacked object with properties. The module automatically turns those answers into proper Notion objects (derived from classes)
+An easy way to generate new blocks is to instantiate them from predefined classes via `[classname]::new()`.
+On the querying side the API returns a naked object with properties. The module automatically turns those answers into proper Notion objects (derived from classes)
 
 The enumerations (enums) are predefined values which are valid for a certain properties. e.g. colors
 
