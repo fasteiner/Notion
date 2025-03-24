@@ -39,6 +39,8 @@ There are several type of Notion object for different purposes.
 - File
 - Emoji
 
+Find the classes Documentation here: [Classes Documentation](../../doc/Classes/)
+
 ### General used verbs for those objects
 
 - Get (retrieves an object)
