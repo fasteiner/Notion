@@ -63,7 +63,7 @@ BuildWorkflow:
   # - Generate_Markdown_For_DSC_Resources # Used for DSC resources
   - Generate_Markdown_For_Public_Commands
   # - Generate_External_Help_File_For_Public_Commands
-  - Clean_Markdown_Of_Public_Commands
+  #- Clean_Markdown_Of_Public_Commands
   - Generate_Wiki_Sidebar
   - Clean_Markdown_Metadata
   - Package_Wiki_Content
