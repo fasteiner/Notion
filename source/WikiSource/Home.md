@@ -10,9 +10,9 @@ for this repository.
 
 ## Idea behind a class based Notion module
 
-There are several attepts to talkto the Notion API out there, but most of them din't take care of the correct
-syntax of the individual configuration of each block/page/database etc. So I decided to create classes for all
-available Notion objects presented by the API. (there are some objects which ar not available right now -
+There are several attempts to talk to the Notion API out there, but most of them didn't take care of the correct
+syntax of the individual configuration of each block/page/database etc. So we decided to create classes for all
+available Notion objects presented by the API. (there are some objects which are not available right now -
 end of 2024 like e.g. template)
 
 The charm of Notion classes are thies simple use while creating objects.
