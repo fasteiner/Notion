@@ -1,3 +1,35 @@
+class notion_relation_database_property_structure{
+    # https://developers.notion.com/reference/property-object#relation
+    [string] $database_id
+    [string] $synced_property_id
+    [string] $synced_property_name
+
+    notion_relation_database_property_structure()
+    {
+        $this.database_id = $null
+        $this.synced_property_id = $null
+        $this.synced_property_name = $null
+    }
+
+    notion_relation_database_property_structure([string]$database_id)
+    {
+        $this.database_id = $database_id
+    }
+    
+    notion_relation_database_property_structure([string]$database_id, [string]$synced_property_id, [string]$synced_property_name)
+    {
+        $this.database_id = $database_id
+        $this.synced_property_id = $synced_property_id
+        $this.synced_property_name = $synced_property_name
+    }
+
+    static [notion_relation_database_property_structure] ConvertFromObject($Value)
+    {
+        return [notion_relation_database_property_structure]::new($Value.id, $Value.synced_property_id, $Value.synced_property_name)
+    }
+}
+
+
 class notion_database_relation_base{
     [string] $database_id
     [notion_database_relation_type] $type
@@ -39,54 +71,54 @@ class notion_database_relation_base{
 }
 
 class notion_database_single_relation : notion_database_relation_base{
-    [notion_database_relation_property] $single_property
+    [notion_relation_database_property_structure] $single_property
 
     notion_database_single_relation() : base("single_property")
     {
-        $this.single_property = [notion_database_relation_property]::new()
+        $this.single_property = [notion_relation_database_property_structure]::new()
     }
 
-    notion_database_single_relation([notion_database_relation_property]$single_property) : base("single_property")
+    notion_database_single_relation([notion_relation_database_property_structure]$single_property) : base("single_property")
     {
         $this.single_property = $single_property
     }
 
     notion_database_single_relation([string]$database_id, [string]$synced_property_id, [string]$synced_property_name) : base($database_id, "single_property")
     {
-        $this.single_property = [notion_database_relation_property]::new($synced_property_id, $synced_property_name)
+        $this.single_property = [notion_relation_database_property_structure]::new($synced_property_id, $synced_property_name)
     }
 
     static [notion_database_single_relation] ConvertFromObject($Value)
     {
         $single_relation_obj = [notion_database_single_relation]::new()
-        $single_relation_obj.single_property = [notion_database_relation_property]::ConvertFromObject($Value.single_property)
+        $single_relation_obj.single_property = [notion_relation_database_property_structure]::ConvertFromObject($Value.single_property)
         return $single_relation_obj
     }
     
 }
 
 class notion_database_dual_relation : notion_database_relation_base{
-    [notion_database_relation_property] $dual_property
+    [notion_relation_database_property_structure] $dual_property
 
     notion_database_dual_relation() : base("dual_property")
     {
-        $this.dual_property = [notion_database_relation_property]::new()
+        $this.dual_property = [notion_relation_database_property_structure]::new()
     }
 
-    notion_database_dual_relation([notion_database_relation_property]$dual_property) : base("dual_property")
+    notion_database_dual_relation([notion_relation_database_property_structure]$dual_property) : base("dual_property")
     {
         $this.dual_property = $dual_property
     }
 
     notion_database_dual_relation([string]$database_id, [string]$synced_property_id, [string]$synced_property_name) : base($database_id, "dual_property")
     {
-        $this.dual_property = [notion_database_relation_property]::new($synced_property_id, $synced_property_name)
+        $this.dual_property = [notion_relation_database_property_structure]::new($synced_property_id, $synced_property_name)
     }
 
     static [notion_database_dual_relation] ConvertFromObject($Value)
     {
         $dual_relation_obj = [notion_database_dual_relation]::new()
-        $dual_relation_obj.dual_property = [notion_database_relation_property]::ConvertFromObject($Value.dual_property)
+        $dual_relation_obj.dual_property = [notion_relation_database_property_structure]::ConvertFromObject($Value.dual_property)
         return $dual_relation_obj
     }
 }
