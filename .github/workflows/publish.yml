@@ -31,10 +31,6 @@ jobs:
         run: |
           ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
 
-      - name: Show Generated Wiki Files
-        run: |
-          (Get-ChildItem -Recurse -Path ./output/WikiContent).FullName
-
       - name: Publish Module
         env:
           GalleryApiToken: ${{ secrets.PSGALLERY_API_KEY }}
