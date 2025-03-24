@@ -1,4 +1,5 @@
 class notion_status_page_property : PagePropertiesBase{
+    # https://developers.notion.com/reference/page-property-values#status
     [notion_status] $status
 
     notion_status_page_property() : base("status")

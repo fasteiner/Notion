@@ -5,7 +5,7 @@ function Connect-Notion
     Connects to the Notion API using the provided Bearer token and URL.
     
     .DESCRIPTION
-    The Connect-TSNotion function is used to establish a connection to the Notion API. It requires a Bearer token and the URL to the Notion API. Optionally, you can specify the API version.
+    The Connect-Notion function is used to establish a connection to the Notion API. It requires a Bearer token and the URL to the Notion API. Optionally, you can specify the API version.
 
     How to obtain an Bearer Token / Notion API Key / Integration Key?
     1. Register a new account at [https://notion.com](https://notion.com)
@@ -69,13 +69,13 @@ function Connect-Notion
         Write-Error "Failed to connect to Notion API." -RecommendedAction "Please check your Bearer token and URL." -Category ConnectionError
         return
     }
-    $global:NotionAPIKey = $BearerToken
-    $global:NotionApiUri = $notionURL
-    $global:NotionAPIVersion = $APIVersion
+    $script:NotionAPIKey = $BearerToken
+    $script:NotionApiUri = $notionURL
+    $script:NotionAPIVersion = $APIVersion
     Write-Host "Successfully connected to Notion API." -ForegroundColor Green
 
     return @{
-        url     = $global:NotionApiUri
-        version = $global:NotionAPIVersion
+        url     = $script:NotionApiUri
+        version = $script:NotionAPIVersion
     }
 }

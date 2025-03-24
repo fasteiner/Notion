@@ -1,18 +1,22 @@
 mode: ContinuousDelivery
-next-version: 0.0.1
-major-version-bump-message: '(breaking\schange|breaking|major)\b'
+next-version: "0.2.0"
+major-version-bump-message: '\s?(breaking|major|breaking\schange)'
 minor-version-bump-message: '(adds?|features?|minor)\b'
 patch-version-bump-message: '\s?(fix|patch)'
 no-bump-message: '\+semver:\s?(none|skip)'
 assembly-informational-format: '{NuGetVersionV2}+Sha.{Sha}.Date.{CommitDate}'
 branches:
   master:
-    tag: preview
+    tag: ""
     regex: ^main$
+  develop:
+    tag: preview
+    regex: ^Dev$
+    source-branches: ['master']
   pull-request:
     tag: PR
   feature:
-    tag: useBranchName
+    tag: alpha
     increment: Minor
     regex: f(eature(s)?)?[\/-]
     source-branches: ['master']
@@ -37,4 +41,3 @@ merge-message-formats: {}
 #   increment: Patch
 #   regex: (hot)?fix(es)?[/-]
 #   source-branches: ['master']
-

@@ -1,5 +1,6 @@
 
-function Move-NotionDatabaseToArchive {
+function Move-NotionDatabaseToArchive 
+{
     <#
         .SYNOPSIS
         Moves a Notion database to the archive.

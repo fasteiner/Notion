@@ -42,7 +42,7 @@ class rich_text_mention_template_mention_template_mention_user_structure : rich_
             $this.template_mention_user = $template_mention_user
         }
         else{
-            Write-Error "Only 'me' is allowed as a user in the current API Version: $global:NotionAPIVersion" -Category InvalidData -TargetObject $template_mention_user -RecommendedAction "Please provide 'me' as a user"
+            Write-Error "Only 'me' is allowed as a user in the current API Version: $script:NotionAPIVersion" -Category InvalidData -TargetObject $template_mention_user -RecommendedAction "Please provide 'me' as a user"
         }
     }
 

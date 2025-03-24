@@ -1,26 +1,41 @@
-class heading_1 : Heading
-# https://developers.notion.com/reference/block#headings
+class notion_heading_1_block : notion_heading_block
 {
-    # Generates an empty heading_1 block
-    heading_1() : base(1)
+    [Heading_structure] $heading_1
+
+    notion_heading_1_block() : base ("heading_1")
     {
+        $this.heading_1 = [Heading_structure]::new()
     }
 
-    # Generates a heading_1 block with content
-    # [heading_1]::new("Hallo")
-    heading_1([string] $text) : base(1, [string]$text)
+    notion_heading_1_block([Heading_structure] $heading_structure) : base("heading_1")
     {
+        $this.heading_1 = $heading_structure
     }
 
-    # Generates a heading_1 block with content and toggleable option
-    # [heading_1]::new("Hallo", $true)
-    heading_1([string] $text, [bool] $is_toggleable) : base(1, $text, $is_toggleable)
+    notion_heading_1_block([string] $text) : base("heading_1")
     {
+        $this.heading_1 = [Heading_structure]::new($text)
     }
 
-    # Generates a heading_1 block with content class rich_text and toggleable
-    # [heading_1]::new([rich_text]::new("Hallo"), $true)
-    heading_1([rich_text] $content, [bool] $is_toggleable) : base(1, $content, $is_toggleable)
+    notion_heading_1_block([string] $text, [notion_color] $color) : base("heading_1")
     {
+        $this.heading_1 = [Heading_structure]::new($text, $color)
+    }
+
+    notion_heading_1_block([string] $text, [bool] $is_toggleable) : base("heading_1")
+    {
+        $this.heading_1 = [Heading_structure]::new($text, $is_toggleable)
+    }
+
+    notion_heading_1_block([string] $text, [notion_color] $color, [bool] $is_toggleable) : base("heading_1")
+    {
+        $this.heading_1 = [Heading_structure]::new($text, $color, $is_toggleable)
+    }
+
+
+    static [notion_heading_1_block] ConvertFromObject($Value)
+    {
+        $notion_heading_1_block = [notion_heading_1_block]::new([Heading_structure]::ConvertFromObject($Value.heading_1))
+        return $notion_heading_1_block
     }
 }

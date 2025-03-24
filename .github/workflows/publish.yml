@@ -1,0 +1,39 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+      - Dev
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for GitVersion
+
+      - name: Install GitVersion
+        uses: GitTools/actions/gitversion/setup@v0
+        with:
+          versionSpec: '5.x'
+      
+      - name: chmod build.ps1
+        run: chmod +x build.ps1
+
+      - name: Package Module
+        run: |
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
+
+      - name: Publish Module
+        env:
+          GalleryApiToken: ${{ secrets.PSGALLERY_API_KEY }}
+          GitHubToken: ${{ secrets.GH_TOKEN }}
+        run: |
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task publish

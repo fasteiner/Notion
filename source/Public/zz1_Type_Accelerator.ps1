@@ -23,9 +23,10 @@ $ExportableTypes = @(
     
     # classes
     [annotation]
-    [heading_1]
-    [heading_2]
-    [heading_3]
+    [notion_heading_block]
+    [notion_heading_1_block]
+    [notion_heading_2_block]
+    [notion_heading_3_block]
     
     [notion_block]
     [notion_bookmark_block]
@@ -88,6 +89,8 @@ $ExportableTypes = @(
     [notion_sub_type_unfurl_attribute]
     [notion_synced_block]
     [notion_table_of_contents_block]
+    [notion_table_row_block]
+    [notion_table_block]
     [notion_title_page_property]
     [notion_to_do_block]
     [notion_toggle_block]
@@ -97,6 +100,7 @@ $ExportableTypes = @(
     [notion_verification_page_property]
     [notion_video_block]
 
+    #rich text
     [rich_text]
     [rich_text_equation]
     [rich_text_equation_structure]
@@ -114,7 +118,6 @@ $ExportableTypes = @(
     [rich_text_mention_template_mention_template_mention_date_structure]
     [rich_text_mention_template_mention_template_mention_user_structure]
     [rich_text_mention_user]
-    [rich_text_text]
     [rich_text_text]
     [rich_text_text_structure]
 

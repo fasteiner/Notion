@@ -1,6 +1,6 @@
 class notion_rich_text_page_property : PagePropertiesBase
+# https://developers.notion.com/reference/page-property-values#rich-text
 {
-    # $type = "rich_text"
     [rich_text[]] $rich_text
     
     notion_rich_text_page_property([object[]]$text) : base("rich_text")

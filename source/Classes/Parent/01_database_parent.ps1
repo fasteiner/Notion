@@ -1,4 +1,5 @@
-class notion_database_parent : notion_parent{
+class notion_database_parent : notion_parent {
+    # https://developers.notion.com/reference/parent-object#database-parent
     [string] $database_id
 
     notion_database_parent() : base("database_id")

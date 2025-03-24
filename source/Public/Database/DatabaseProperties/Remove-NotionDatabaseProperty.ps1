@@ -1,4 +1,5 @@
-function Remove-NotionDatabaseProperty {
+function Remove-NotionDatabaseProperty 
+{
     <#
     .SYNOPSIS
     Removes a specified property from a Notion database.

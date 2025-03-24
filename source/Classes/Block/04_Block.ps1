@@ -3,7 +3,7 @@ class notion_block
 {
     $object = "block"
     $id = $null
-    $parent = $null
+    [notion_parent]$parent = $null
     #$after = ""
     $children = @()
     [string]$created_time
@@ -150,17 +150,17 @@ class notion_block
             }
             "heading_1"
             {
-                $notion_block = [heading]::ConvertfromObject($value)
+                $notion_block = [notion_heading_block]::ConvertfromObject($value)
                 break
             }
             "heading_2"
             {
-                $notion_block = [heading]::ConvertfromObject($value)
+                $notion_block = [notion_heading_block]::ConvertfromObject($value)
                 break
             }
             "heading_3"
             {
-                $notion_block = [heading]::ConvertfromObject($value)
+                $notion_block = [notion_heading_block]::ConvertfromObject($value)
                 break
             }
             "image"
@@ -206,14 +206,14 @@ class notion_block
             }
             "table"
             {
-                $notion_block = [table]::ConvertfromObject($value) 
+                $notion_block = [notion_table_block]::ConvertfromObject($value) 
                 break
             }
-            # "table_row"
-            # {
-            #     $notion_block =  [table_row]::ConvertfromObject($value.table_row)
-            #     break
-            # }
+            "table_row"
+            {
+                $notion_block =  [notion_table_row_block]::ConvertfromObject($value)
+                break
+            }
             "table_of_contents"
             {
                 $notion_block = [notion_table_of_contents_block]::ConvertfromObject($value)
@@ -259,7 +259,6 @@ class notion_block
         
         }
         $notion_block.id = $Value.id
-        #TODO: real parent object
         $notion_block.parent = [notion_parent]::ConvertFromObject($Value.parent)
         if($Value.created_time){
             $notion_block.created_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
