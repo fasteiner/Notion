@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Documentation to Classes: Comment, Emoji, File, General, Page, Parent, User
 - Documentation to Classes: Block, Database, DatabaseProperties
-- Documentation to Classes: add relation between classes
+- Documentation to Classes: add relation between classes, in dedicated docs folder
 - Documentation to all PSCmdlets
 - prepared automatic Wiki Generation
 - Add-NotionPageToDatabase, Move-NotionPageToArchive: prepared
@@ -33,10 +33,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - For changes in existing functionality.
 - Remove-NotionPage: specify output type, fix code
 - Get-NotionBlockChildren: refactored
-
-### Deprecated
-
-- For soon-to-be removed features.
 
 ### Removed
 
