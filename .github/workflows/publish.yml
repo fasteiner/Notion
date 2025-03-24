@@ -27,13 +27,6 @@ jobs:
       - name: chmod build.ps1
         run: chmod +x build.ps1
 
-      - name: Package Module
+      - name: Release Module
         run: |
-          ./build.ps1 -ResolveDependency -UseModuleFast -Task pack
-
-      - name: Publish Module
-        env:
-          GalleryApiToken: ${{ secrets.PSGALLERY_API_KEY }}
-          GitHubToken: ${{ secrets.GH_TOKEN }}
-        run: |
-          ./build.ps1 -ResolveDependency -UseModuleFast -Task publish
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task release
