@@ -24,8 +24,8 @@ jobs:
         with:
           versionSpec: '5.x'
       
-      - name: chmod build.ps1
-        run: chmod +x build.ps1
+      # - name: chmod build.ps1
+      #   run: chmod +x build.ps1
 
       - name: Package Module
         run: |
