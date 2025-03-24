@@ -5,6 +5,7 @@ function Copy-WikiFolder
     (
         [Parameter(Mandatory = $true)]
         [System.String]
+        [Alias('SourceFolder')]
         $Path,
 
         [Parameter(Mandatory = $true)]
