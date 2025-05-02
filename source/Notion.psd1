@@ -104,7 +104,7 @@
             ProjectUri = 'https://github.com/fasteiner/Notion'
 
             # A URL to an icon representing this module.
-            IconUri      = 'https://github.com/fasteiner/Notion/blob/main/TSNotion.png'
+            IconUri      = 'https://raw.githubusercontent.com/fasteiner/Notion/main/TSNotion.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = ''
