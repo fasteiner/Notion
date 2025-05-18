@@ -1,4 +1,10 @@
+<center>
+
+  ![Notion Module Logo](TSNotion_mini.png)
+</center>
+
 # Notion - A class-based PowerShell module for interacting with Notion
+
 
 [![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Notion?label=PSGallery%20Version)](https://www.powershellgallery.com/packages/Notion/)
 [![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Notion?label=Downloads)](https://www.powershellgallery.com/packages/Notion/)
@@ -14,7 +20,7 @@ In order to ensure the smoothest possible interaction with the API, the specific
 ## Prerequisites
 
 - PowerShell 7.0 or higher
- 
+
 ## Getting started
 
 To get started either:
