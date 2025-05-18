@@ -1,12 +1,13 @@
 name: New resource proposal
 description: If you have a new resource proposal that you think should be added to this resource module.
-title: "NewResourceName: New resource proposal"
+title: "ResourceType: NewResourceName: New resource proposal"
 labels: []
 assignees: []
 body:
   - type: markdown
     attributes:
       value: |
+        Please replace `ResourceType` in the issue title (above) with the type of resource you are proposing (command, class or Enum)
         Please replace `NewResourceName` in the issue title (above) with your proposed resource name.
 
         Thank you for contributing and making this resource module better!

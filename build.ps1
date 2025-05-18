@@ -168,7 +168,7 @@ process
 
     try
     {
-        Write-Host -Object "[build] Parsing defined tasks" -ForeGroundColor Magenta
+        Write-Host -Object "[build] Parsing defined tasks" -ForegroundColor Magenta
 
         # Load the default BuildInfo if the parameter BuildInfo is not set.
         if (-not $PSBoundParameters.ContainsKey('BuildInfo'))
@@ -327,6 +327,39 @@ process
         # Synopsis: Empty task, useful to test the bootstrap process.
         task noop { }
 
+        task Generate_Wiki_Sidebar_From_Ps1 {
+            $error.Clear()
+            Write-Host -ForegroundColor Yellow "TS: Generate_Wiki_Sidebar_From_Ps1"
+            $SidebarParamsPs1 = @{
+                CommandsSourcePath  = "./source/Public"
+                #OutputPath = $OutputDirectory
+                ClassesSourcePath   = "./docs/Classes"
+                EnumSourcePath      = "./docs/Enums"
+                WikiSourcePath      = "./source/WikiSource"
+                WikiDestinationPath = Join-Path $OutputDirectory "WikiContent"
+                # SidebarFile = '_Sidebar.md'
+                ExcludeFiles        = @('*.local.*', 'zz*.ps1')
+            }
+            Write-Host -ForegroundColor Yellow $SidebarParamsPs1
+            New-WikiSidebarFromPs1 @SidebarParamsPs1
+            Get-Error | Out-String | Write-Host -ForegroundColor Yellow
+        }
+
+        task Copy_Wiki_Content_Custom {
+            $error.Clear()
+            Write-Host -ForegroundColor Yellow "TS: Copy_Wiki_Content_Custom"
+            $DestinationPath = Join-Path $OutputDirectory 'WikiContent'
+            $CopyWikiParams = @{
+                SourcePath      = './docs/'
+                DestinationPath = $DestinationPath
+            }
+            Write-Host -ForegroundColor Yellow $CopyWikiParams
+            Copy-WikiContent @CopyWikiParams
+            Get-Error | Out-String | Write-Host -ForegroundColor Yellow
+            Copy-Item -Recurse (Join-Path $OutputDirectory 'docs') $DestinationPath
+        }
+
+
         # Define default task sequence ("."), can be overridden in the $BuildInfo.
         task . {
             Write-Build -Object 'No sequence currently defined for the default task' -ForegroundColor Yellow
@@ -351,7 +384,7 @@ process
             task $workflow $workflowItem
         }
 
-        Write-Host -Object "[build] Executing requested workflow: $($Tasks -join ', ')" -ForeGroundColor Magenta
+        Write-Host -Object "[build] Executing requested workflow: $($Tasks -join ', ')" -ForegroundColor Magenta
 
     }
     finally

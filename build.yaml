@@ -64,9 +64,14 @@ BuildWorkflow:
   - Generate_Markdown_For_Public_Commands
   # - Generate_External_Help_File_For_Public_Commands
   - Clean_Markdown_Of_Public_Commands
-  - Generate_Wiki_Sidebar
+  # - Generate_Wiki_Sidebar
   - Clean_Markdown_Metadata
+  - Copy_Wiki_Content_Custom
+  - Generate_Wiki_Sidebar_From_Ps1
   - Package_Wiki_Content
+
+  sidebar:
+    - Generate_Wiki_Sidebar_From_Ps1
 
   pack:
     - build

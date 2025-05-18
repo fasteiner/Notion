@@ -5,13 +5,15 @@
 ![Platform](https://img.shields.io/badge/Platform-Windows|Linux|MacOS-blue)
 ![GitHub Issues](https://img.shields.io/github/issues/fasteiner/Notion?label=Issues)
 
-<img src="../../TSNotion.png" width="10%" />
+<img src="../../TSNotion.png" width="10%" alt ="Notion Module Logo" />
 
 Here you will find all the information you need to use Notion.
 
 Please leave comments, feature requests and bug reports for this module in
 the [issues section](https://github.com/fasteiner/Notion/issues)
 of this repository.
+
+Find the FAQs here: [FAQs](Module%20FAQ.md)
 
 ## Installation
 
@@ -26,7 +28,7 @@ Install-PSResource Notion -Repository PSGallery
 
 Before you start with connecting to your Notion teamspace, you need to create an integration, which is allowed to interact with your space.
 
-Follow this link to get a detailed instructions how to [create your Notion integration](./Configuration_of_integration.md).
+Follow this link to get a detailed instructions how to [create your Notion integration](SetupOfIntegration.md).
 
 ## Usage
 
