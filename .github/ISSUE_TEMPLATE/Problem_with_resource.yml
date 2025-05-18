@@ -1,5 +1,5 @@
 name: Problem with a resource
-description: If you have a problem, bug, or enhancement with a resource in this resource module.
+description: If you have a problem, bug, or enhancement with a resource (command, class or enum) in this resource module.
 labels: []
 assignees: []
 body:
