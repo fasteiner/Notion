@@ -5,8 +5,6 @@
 ![Platform](https://img.shields.io/badge/Platform-Windows|Linux|MacOS-blue)
 ![GitHub Issues](https://img.shields.io/github/issues/fasteiner/Notion?label=Issues)
 
-<img src="../../TSNotion.png" width="10%" alt ="Notion Module Logo" />
-
 Here you will find all the information you need to use Notion.
 
 Please leave comments, feature requests and bug reports for this module in
