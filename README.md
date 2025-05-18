@@ -1,13 +1,18 @@
 # Notion - A class-based PowerShell module for interacting with Notion
 
-(Notion)[https://notion.com], is an online knowledge management tool in which you can structure your requirements yourself or be inspired by countless templates and formats. Unfortunately, there was no PowerShell module that offers the full power of the API.
+![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Notion?label=PSGallery%20Version)
+![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Notion?label=Downloads)
+![Platform](https://img.shields.io/badge/Platform-Windows|Linux|MacOS-blue)
+![GitHub Issues](https://img.shields.io/github/issues/fasteiner/Notion?label=Issues)
+
+[Notion](https://notion.com), is an online knowledge management tool in which you can structure your requirements yourself or be inspired by countless templates and formats. Unfortunately, there was no PowerShell module that offers the full power of the API.
 
 In order to ensure the smoothest possible interaction with the API, the specifications were implemented with PowerShell classes. This means that classes are used in the background for all cmdlets. You can also create your own Notion objects directly using the classes provided.
 
 ## Prerequisites
 
 - PowerShell 7.0 or higher
-- 
+ 
 ## Getting started
 
 To get started either:
@@ -26,8 +31,6 @@ Install-PSResource -Name Notion
 $BearerToken = Read-Host -Prompt "Enter your Notion Bearer Token" -AsSecureString
 Connect-Notion -BearerToken $BearerToken
 ```
-
-
 
 Or download it via the [Microsoft PowerShell Gallery](https://www.powershellgallery.com/packages/Notion)
 

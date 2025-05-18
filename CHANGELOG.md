@@ -34,10 +34,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove-NotionPage: specify output type, fix code
 - Get-NotionBlockChildren: refactored
 
-### Deprecated
-
-- For soon-to-be removed features.
-
 ### Removed
 
 - page, Get-NotionPage: remove children
