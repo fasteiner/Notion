@@ -1,9 +1,9 @@
 # Notion - A class-based PowerShell module for interacting with Notion
 
-![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Notion?label=PSGallery%20Version)
-![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Notion?label=Downloads)
+[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Notion?label=PSGallery%20Version)](https://www.powershellgallery.com/packages/Notion/)
+[![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Notion?label=Downloads)](https://www.powershellgallery.com/packages/Notion/)
 ![Platform](https://img.shields.io/badge/Platform-Windows|Linux|MacOS-blue)
-![GitHub Issues](https://img.shields.io/github/issues/fasteiner/Notion?label=Issues)
+[![GitHub Issues](https://img.shields.io/github/issues/fasteiner/Notion?label=Issues)](https://github.com/fasteiner/Notion/issues)
 
 &#x26a0; Work in progress - not all features are implemented yet, if you are missing something, or experience any issues, please open an issue on GitHub.
 
