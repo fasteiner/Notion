@@ -50,5 +50,6 @@
     ],
     "liveshare.languages.allowGuestCommandControl": true,
     "liveshare.allowGuestDebugControl": true,
-    "workbench.iconTheme": "vscode-icons"
+    "workbench.iconTheme": "vscode-icons",
+    "terminal.integrated.bracketedPasteMode": false
 }

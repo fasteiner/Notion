@@ -39,7 +39,7 @@ class notion_child_page_block : notion_block
     static [notion_child_page_block] ConvertFromObject($Value)
     {
         $child_page_Obj = [notion_child_page_block]::new()
-        $child_page_Obj.child_page = [child_page_structure]::new($Value.child_page)
+        $child_page_Obj.child_page = [child_page_structure]::ConvertFromObject($Value.child_page)
         return $child_page_Obj
     }
 }

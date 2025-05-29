@@ -55,6 +55,11 @@ BuildWorkflow:
     # - Generate_Markdown_For_Public_Commands
     - Generate_MAML_from_built_module
 
+  minibuild:
+    - Clean
+    - Build_Module_ModuleBuilder
+    - Build_NestedModules_ModuleBuilder
+
   docs:
     # The meta task Generate_Wiki_Content is not used so that Linux and macOS is supported
     # - Generate_Conceptual_Help # Used for DSC resources

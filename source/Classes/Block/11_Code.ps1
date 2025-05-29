@@ -11,25 +11,24 @@ class code_structure
 
     }
 
-    code_structure([string] $text, [string] $language)
+    code_structure($text, [string] $language)
     {
         if (-not [code_structure]::IsValidLanguage($language))
         {
             throw "Invalid language: $language"
         }
-        $this.caption = [rich_text]::new($text)
-        $this.rich_text = [rich_text]::new($text)
+        $this.rich_text = [rich_text]::ConvertFromObjects($text)
         $this.language = $language
     }
 
-    code_structure([string] $text, [string] $language, [notion_color] $color)
+    code_structure($text, $caption, [string] $language)
     {
         if (-not [code_structure]::IsValidLanguage($language))
         {
             throw "Invalid language: $language"
         }
-        $this.caption = [rich_text]::new($text, $color)
-        $this.rich_text = [rich_text]::new($text, $color)
+        $this.caption = [rich_text]::ConvertFromObjects($text)
+        $this.rich_text = [rich_text]::ConvertFromObjects($text)
         $this.language = $language
     }
 
@@ -85,14 +84,14 @@ class notion_code_block : notion_block
         $this.code = [code_structure]::new()
     }
 
-    notion_code_block([string] $text, [string] $language)
+    notion_code_block($text, [string] $language)
     {
         $this.code = [code_structure]::new($text, $language)
     }
 
-    notion_code_block([string] $text, [string] $language, [notion_color] $color)
+    notion_code_block($text, $caption, [string] $language)
     {
-        $this.code = [code_structure]::new($text, $language, $color)
+        $this.code = [code_structure]::new($text, $caption, $language)
     }
 
     [string] getLanguage()

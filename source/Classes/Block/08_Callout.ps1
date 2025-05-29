@@ -2,40 +2,24 @@ class callout_structure
 {
     [rich_text[]] $rich_text
     # icon: emoji or file
-    $icon = [notion_emoji]::new("")
+    [notion_emoji]$icon
     [notion_color] $color = "default"
 
     callout_structure()
     {
-        $this.rich_text = @([rich_text]::new())
     }
 
     callout_structure([string] $text)
     {
         $this.rich_text = @([rich_text_text]::new($text))
-        $this.icon = [notion_emoji]::new()
         $this.color = [notion_color]::default
     }
 
-    callout_structure([rich_text[]] $rich_text, [string] $icon, [notion_color] $color = [notion_color]::default)
+    callout_structure($rich_text, $icon, $color = [notion_color]::default)
     {
-        $this.rich_text = $rich_text.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
-        $this.icon = [notion_emoji]::new($icon)
-        $this.color = $color
-    }
-
-    callout_structure([rich_text[]] $rich_text, [notion_emoji] $icon, [notion_color] $color = [notion_color]::default)
-    {
-        $this.rich_text = $rich_text.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
-        $this.icon = $icon
-        $this.color = $color
-    }
-
-    callout_structure([string] $text, [notion_emoji] $icon, [notion_color] $color = [notion_color]::default)
-    {
-        $this.rich_text = @([rich_text_text]::new($text))
-        $this.icon = $icon
-        $this.color = $color
+        $this.rich_text = [rich_text]::ConvertFromObjects($rich_text)
+        $this.icon = [notion_emoji]::ConvertFromObject($icon)
+        $this.color = [Enum]::Parse([notion_color], $color)
     }
 
     static [callout_structure] ConvertFromObject($Value)
@@ -68,15 +52,11 @@ class notion_callout_block : notion_block
         $this.callout = [callout_structure]::new()
     }
 
-    notion_callout_block([rich_text[]] $rich_text, [string] $icon, [notion_color] $color)
+    notion_callout_block($rich_text, $icon, $color)
     {
         $this.callout = [callout_structure]::new($rich_text, $icon, $color)
     }
 
-    notion_callout_block([rich_text[]] $rich_text, [notion_emoji] $icon, [notion_color] $color)
-    {
-        $this.callout = [callout_structure]::new($rich_text, $icon, $color)
-    }
 
     static [notion_callout_block] ConvertFromObject($Value)
     {
