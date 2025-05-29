@@ -7,9 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- tests/Integration/PageProperties/testpage.tests.ps1: verify all properties have been converted correctly
+- tests/Integration/Block/testpage.tests.ps1:
+  - added debugging capabilities, to find out, which of the integration tests failed.
+
+### Changed
+
+- RequiredModules.psd1: switch to Pester Version 6
+
+### Fixed
+ 
+- source/Enum/01_notion_color.ps1: added default_backround as color (missing in documentation but available in API)
+- source/Classes/Block/32_Toggle.ps1: Fixed class notion_toggle_block
+
+## [0.3.0] - 2025-05-18
+
+### Fixed
+
+- Fix Wiki Sidebar
+- Fix Logo in ReadMe
+
+## [0.2.0] - 2025-05-18
+
+### Added
+
 - Documentation to Classes: Comment, Emoji, File, General, Page, Parent, User
 - Documentation to Classes: Block, Database, DatabaseProperties
-- Documentation to Classes: add relation between classes
+- Documentation to Classes: add relation between classes, in dedicated docs folder
 - Documentation to all PSCmdlets
 - prepared automatic Wiki Generation
 - Add-NotionPageToDatabase, Move-NotionPageToArchive: prepared
@@ -37,10 +61,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove-NotionPage: specify output type, fix code
 - Get-NotionBlockChildren: refactored
 - Invoke-NotionApiCall: add the possibility to pass query parameters other than `page_size` and `start_cursor`
-
-### Deprecated
-
-- For soon-to-be removed features.
 
 ### Removed
 

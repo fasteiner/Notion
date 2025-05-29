@@ -1,4 +1,5 @@
 enum notion_blocktype
+# https://developers.notion.com/reference/block#keys
 {
     bookmark
     breadcrumb

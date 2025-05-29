@@ -1,6 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: "Virtual PowerShell User Group #DSC channel"
-    url: https://dsccommunity.org/community/contact/
-    about: "To talk to the community and maintainers of DSC Community, please visit the #DSC channel."
-
+  - name: "Contact Notion (Vendor Support)"
+    url: https://www.notion.com/help
+    about: "To get help from the Vendor, please use this link or write to: team@makenotion.com"

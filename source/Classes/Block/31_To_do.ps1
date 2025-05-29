@@ -30,7 +30,7 @@ class notion_to_do_block : notion_block
 # https://developers.notion.com/reference/block#to-do
 {
     [notion_blocktype] $type = "to_do"
-    [notion_to_do] $to_do
+    [to_do_structure] $to_do
 
     notion_to_do_block() : base("to_do")
     {
@@ -38,7 +38,7 @@ class notion_to_do_block : notion_block
 
     notion_to_do_block([rich_text[]] $rich_text, [bool] $checked = $false, [notion_color] $color = "default") : base("to_do")
     {
-        $this.to_do = [notion_to_do]::new($rich_text, $checked, $color)
+        $this.to_do = [to_do_structure]::new($rich_text, $checked, $color)
     }
 
     static [notion_to_do_block] ConvertFromObject ($Value)

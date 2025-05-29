@@ -1,28 +1,66 @@
-# Welcome to the Notion wiki
+# Welcome to the PowerShell Notion Module Wiki
 
-<sup>_Notion v#.#.#_</sup>
+![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Notion?label=PSGallery%20Version)
+![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/Notion?label=Downloads)
+![Platform](https://img.shields.io/badge/Platform-Windows|Linux|MacOS-blue)
+![GitHub Issues](https://img.shields.io/github/issues/fasteiner/Notion?label=Issues)
 
 Here you will find all the information you need to use Notion.
 
-Please leave comments, feature requests, and bug reports for this module in
+Please leave comments, feature requests and bug reports for this module in
 the [issues section](https://github.com/fasteiner/Notion/issues)
-for this repository.
+of this repository.
+
+Find the FAQs here: [FAQs](Module%20FAQ.md)
+
+## Installation
+
+``` PowerShell
+# Install via PowerShellGet 2.x
+Install-Module -Name Notion -Repository PSGallery
+
+# Install via PowerShellGet 3.x
+Install-PSResource Notion -Repository PSGallery
+```
+## How to start with this module?
+
+Before you start with connecting to your Notion teamspace, you need to create an integration, which is allowed to interact with your space.
+
+Follow this link to get a detailed instructions how to [create your Notion integration](SetupOfIntegration.md).
+
+## Usage
+
+``` PowerShell
+# Import the module
+Import-Module -Name Notion
+
+# List all Cmdlets
+Get-Command -Module Notion
+
+# List Cmdlets for blocks
+Get-Command -Module Notion -Noun NotionBlock
+
+# Connect to Notion (with your integration/bearer token)
+$BearerToken = Read-Host -Prompt "Enter your Bearer token" | ConvertTo-Securestring -AsPlainText
+Connect-Notion -BearerToken $BearerToken
+```
+
 
 ## Idea behind a class based Notion module
 
-There are several attepts to talkto the Notion API out there, but most of them din't take care of the correct
-syntax of the individual configuration of each block/page/database etc. So I decided to create classes for all
-available Notion objects presented by the API. (there are some objects which ar not available right now -
+There are several attempts to talk to the Notion API out there, but most of them didn't take care of the correct
+syntax of the individual configuration of each block/page/database etc. So we decided to create classes for all
+available Notion objects presented by the API. (there are some objects which are not available right now -
 end of 2024 like e.g. template)
 
-The charm of Notion classes are thies simple use while creating objects.
+The charm of Notion classes are this simple use while creating objects.
 
 ``` PowerShell
 [notion_block]::new() # creates an empty block object
 [notion_page]::new()  # creates a new page object
 ```
 
-If you receive items from the API, Notion will automatically convert it into Notion objects
+If you receive items from the API, the Notion module will automatically convert it into Notion objects
 (based on the classes) so that the can be used.
 
 ## Notion Objects
@@ -39,13 +77,21 @@ There are several type of Notion object for different purposes.
 - File
 - Emoji
 
+Find the classes Documentation here: [Classes Documentation](https://github.com/fasteiner/Notion/tree/main/docs/Classes)
+
 ### General used verbs for those objects
 
-- Get (retrieves an object)
-- New (creates an object without uploading it)
-- Add (adds a new object to another already existing object e.g. a block to a page)
-- Update (modifies an object)
-- Remove (deletes an object)
+#### Nesting of those objects
+
+![Nested objects](./Notion%20Elements.png)
+
+### General used verbs for objects
+
+- Get     (retrieves an object)
+- New     (creates an object without uploading it)
+- Add     (adds a new object to another already existing object e.g. a block to a page)
+- Update  (modifies an object)
+- Remove  (deletes an object)
 
 Each of the objects have got individual CmdLets to deal with.
 <div style="display: flex;">
@@ -107,8 +153,8 @@ Each of the objects have got individual CmdLets to deal with.
 
 ## Classes and Enums
 
-An easy way to genrate new blocks is to instantiate them from predefined classes via `[classname]::new()`.
-On the querying side the API returns a nacked object with properties. The module automatically turns those answers into proper Notion objects (derived from classes)
+An easy way to generate new blocks is to instantiate them from predefined classes via `[classname]::new()`.
+On the querying side the API returns a naked object with properties. The module automatically turns those answers into proper Notion objects (derived from classes)
 
 The enumerations (enums) are predefined values which are valid for a certain properties. e.g. colors
 

@@ -1,4 +1,6 @@
-enum notion_parent_type {
+enum notion_parent_type
+# https://developers.notion.com/reference/parent-object
+{
     database_id
     page_id
     workspace
