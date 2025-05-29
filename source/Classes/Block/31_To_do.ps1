@@ -32,11 +32,11 @@ class notion_to_do_block : notion_block
     [notion_blocktype] $type = "to_do"
     [to_do_structure] $to_do
 
-    notion_to_do_block() : base("to_do")
+    notion_to_do_block()
     {
     }
 
-    notion_to_do_block([rich_text[]] $rich_text, [bool] $checked = $false, [notion_color] $color = "default") : base("to_do")
+    notion_to_do_block([rich_text[]] $rich_text, [bool] $checked = $false, [notion_color] $color = "default")
     {
         $this.to_do = [to_do_structure]::new($rich_text, $checked, $color)
     }

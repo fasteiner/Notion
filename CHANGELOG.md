@@ -5,20 +5,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
 ### Added
 
-- tests/Integration/PageProperties/testpage.tests.ps1: verify all properties have been converted correctly
-- tests/Integration/Block/testpage.tests.ps1:
-  - added debugging capabilities, to find out, which of the integration tests failed.
+- `.vscode/settings.json`: added `terminal.integrated.bracketedPasteMode` setting
+- `build.yaml`: added `minibuild` task with steps for `Clean`, `Build_Module_ModuleBuilder`, and `Build_NestedModules_ModuleBuilder`
+- `source/Classes/03_File/01_notion_file.ps1`:  
+  - Added static `Create` method to instantiate child objects based on file type
+- `source/Classes/Block/RichText/01_Rich_Text.ps1`:  
+  - Added `ConvertFromObjects` method to convert arrays or single objects into `rich_text[]`
+- `source/Classes/Block/04_Block.ps1`:  
+  - Improved error messages for unsupported and unknown block types with GitHub issue link and quoted block type
+- `source/Classes/Block/05_Bookmark.ps1`:  
+  - Refactored constructors to support flexible input types and added `ConvertFromObject` method
+- `source/Classes/Block/07_Bulleted_List_Item.ps1`:  
+  - Refactored constructors to use `ConvertFromObjects` and support flexible input
+- `source/Classes/Block/08_Callout.ps1`:  
+  - Refactored constructors and added `ConvertFromObject` for emoji and rich text
+- `source/Classes/Block/09_Child_Database.ps1`:  
+  - Used `ConvertFromObject` for `child_database_structure`
+- `source/Classes/Block/10_Child_Page.ps1`:  
+  - Used `ConvertFromObject` for `child_page_structure`
+- `source/Classes/Block/11_Code.ps1`:  
+  - Refactored constructors to use `ConvertFromObjects` and support caption
+- `source/Classes/Block/15_Embed.ps1`:  
+  - Added support for `caption` and `ConvertFromObject` improvements
+- `source/Classes/Block/16_Equation.ps1`:  
+  - Renamed constructors to match class name
+- `source/Classes/Block/21_Image.ps1`:  
+  - Added support for `caption` and improved `ConvertFromObject`
+- `source/Classes/Block/31_To_do.ps1`:  
+  - Refactored constructor to remove base call
+- `source/Classes/Block/33_Video.ps1`:  
+  - Refactored constructors to use `Create` method and support caption
+- `source/Classes/Emoji/01_emoji.ps1`:  
+  - Added `ConvertFromObject` method to handle strings and emoji objects
+- `tests/Integration/Block/testpage.tests.ps1`:  
+  - Improved test logic for unsupported block types with specific error message checks
 
 ### Changed
 
-- RequiredModules.psd1: switch to Pester Version 6
+- `RequiredModules.psd1`: switched to Pester Version 6
+- Refactored multiple constructors across block classes to support more flexible input types and use `ConvertFromObjects` for consistency
 
 ### Fixed
- 
-- source/Enum/01_notion_color.ps1: added default_backround as color (missing in documentation but available in API)
-- source/Classes/Block/32_Toggle.ps1: Fixed class notion_toggle_block
+
+- `source/Enum/01_notion_color.ps1`: added `default_backround` as a color (missing in documentation but available in API)
+- `source/Classes/Block/32_Toggle.ps1`: fixed class `notion_toggle_block`
+- `source/Classes/Block/33_Video.ps1`: fixed constructors to use `Create` method and correct file instantiation
+- `source/Classes/Block/05_Bookmark.ps1`:  
+  - Fixed constructors  
+  - `bookmark_structure`: fixed constructor with two parameters to fully support `rich_text`
+- `source/Classes/Block/07_Bulleted_List_Item.ps1`:  
+  - Fixed `rich_text` conversion in constructors
+- `source/Classes/Block/08_Callout.ps1`:  
+  - Fixed constructors and emoji handling
+- `source/Classes/Emoji/01_emoji.ps1`:  
+  - Fixed `ConvertFromObject` to handle strings and emoji objects
+
 
 ## [0.3.0] - 2025-05-18
 

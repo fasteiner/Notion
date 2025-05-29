@@ -211,7 +211,7 @@ class notion_block
             }
             "table_row"
             {
-                $notion_block =  [notion_table_row_block]::ConvertfromObject($value)
+                $notion_block = [notion_table_row_block]::ConvertfromObject($value)
                 break
             }
             "table_of_contents"
@@ -249,22 +249,25 @@ class notion_block
                 $type = $null
                 if ([System.Enum]::TryParse([notion_blocktype], $Value.type, [ref]$type))
                 {
-                    Write-Error "Block type $($Value.type) not implemented yet" -Category NotImplemented -RecommendedAction "Please create a Github issue to request this feature"
+                    Write-Error "Block type `"$($Value.type)`" not implemented yet" -Category NotImplemented -RecommendedAction "Please create a Github issue to request this feature at https://github.com/fasteiner/Notion/issues"
                 }
                 else
                 {
-                    Write-Error "Unknown block type: $($Value.type)" -Category InvalidData -TargetObject $Value -RecommendedAction "Please provide a valid block type"
+                    Write-Error "Unknown block type: `"$($Value.type)`"" -Category InvalidData -TargetObject $Value -RecommendedAction "Please provide a valid block type"
                 }
+                return $null
             }
         
         }
         $notion_block.id = $Value.id
         $notion_block.parent = [notion_parent]::ConvertFromObject($Value.parent)
-        if($Value.created_time){
+        if ($Value.created_time)
+        {
             $notion_block.created_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
         }
         $notion_block.created_by = [notion_user]::ConvertFromObject($Value.created_by)
-        if($value.last_edited_time){
+        if ($value.last_edited_time)
+        {
             $notion_block.last_edited_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
         }
         $notion_block.last_edited_by = [notion_user]::ConvertFromObject($Value.last_edited_by)

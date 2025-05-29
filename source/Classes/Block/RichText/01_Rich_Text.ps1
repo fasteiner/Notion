@@ -58,6 +58,30 @@ class rich_text
         $this.href = $href
     }
 
+    static [rich_text[]] ConvertFromObjects([object] $Value)
+    {
+        if ($Value -isnot [array])
+        {
+            $Value = @($Value)
+        }
+        $output = @()
+        foreach ($item in $Value)
+        {
+            if ($item -isnot [rich_text])
+            {
+                if($item -is [string])
+                {
+                    $item = [rich_text_text]::new($item)
+                }
+                else{
+                    $item = [rich_text]::ConvertFromObject($item)
+                }
+            }
+            $output += $item
+        }
+        return $output
+    }
+
 
     static [rich_text] ConvertFromObject($Value)
     {

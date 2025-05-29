@@ -40,7 +40,7 @@ class notion_child_database_block : notion_block
     static [notion_child_database_block] ConvertFromObject($Value)
     {
         $child_database_Obj = [notion_child_database_block]::new()
-        $child_database_Obj.child_database = [child_database_structure]::new($Value.child_database)
+        $child_database_Obj.child_database = [child_database_structure]::ConvertFromObject($Value.child_database)
         return $child_database_Obj
     }
 }

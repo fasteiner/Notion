@@ -42,9 +42,32 @@ Describe "Iterate the testpage and check if all objects are converted correctly"
         foreach ($child in $childrenRaw)
         {
             Write-Debug "Checking child block of type $($child.type) at index $($i)"
-            $childObj = $child | ConvertTo-NotionObject
-            $childObj.type | Should -Be $child.type
-            $childObj | Should -BeOfType "notion_$($child.type)_block"
+            
+            if ($child.type -eq "unsupported")
+            {
+                $message = ""
+                $type = ""
+                if ([System.Enum]::TryParse([notion_blocktype], $child.type, [ref]$type))
+                {
+                    $message = "Block type `"$($child.type)`" not implemented yet"
+                }
+                else
+                {
+                    $message = "Unknown block type: `"$($child.type)`""
+                }
+                { $child | ConvertTo-NotionObject -ErrorAction Stop } | Should -Throw $message
+            }
+            else
+            {
+                $childObj = $child | ConvertTo-NotionObject
+                $childObj.type | Should -Be $child.type
+                $className = "notion_$($child.type)"
+                if (-not $className.EndsWith("_block"))
+                {
+                    $className += "_block"
+                }
+                $childObj | Should -BeOfType "$className"
+            }
             $i++
         }
     }
