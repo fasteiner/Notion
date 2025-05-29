@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- source\Enum\01_notion_color.ps1: added default_backround as color (missing in documentation but available in API)
+- source\Classes\Block\32_Toggle.ps1: Fixed class notion_toggle_block
+
 ## [0.3.0] - 2025-05-18
 
 ### Fixed
