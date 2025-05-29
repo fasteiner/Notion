@@ -41,6 +41,14 @@
         "files.trimTrailingWhitespace": false,
         "files.encoding": "utf8"
     },
+    "vsicons.associations.files": [
+        {
+            "icon": "pester",
+            "extensions": ["Tests.ps1", "tests.ps1"],
+            "format": "svg"
+        }
+    ],
     "liveshare.languages.allowGuestCommandControl": true,
-    "liveshare.allowGuestDebugControl": true
+    "liveshare.allowGuestDebugControl": true,
+    "workbench.iconTheme": "vscode-icons"
 }
