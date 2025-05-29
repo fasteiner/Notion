@@ -95,13 +95,13 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @('Notion', 'API', 'Classes')
+            Tags         = @('Notion', 'API', 'Classes')
 
             # A URL to the license for this module.
             # LicenseUri = ''
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/fasteiner/Notion'
+            ProjectUri   = 'https://github.com/fasteiner/Notion'
 
             # A URL to an icon representing this module.
             IconUri      = 'https://raw.githubusercontent.com/fasteiner/Notion/main/TSNotion.png'

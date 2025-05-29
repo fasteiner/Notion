@@ -1,5 +1,6 @@
 
 enum notion_page_property_type
+# https://developers.notion.com/reference/page-property-values
 {
     checkbox
     created_by

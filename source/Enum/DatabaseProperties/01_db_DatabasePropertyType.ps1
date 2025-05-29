@@ -1,4 +1,5 @@
 enum notion_database_property_type
+# https://developers.notion.com/reference/property-object
 {
     checkbox
     created_by
