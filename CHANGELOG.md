@@ -5,7 +5,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- tests/Integration/PageProperties/testpage.tests.ps1: verify all properties have been converted correctly
+
+### Changed
+
+- RequiredModules.psd1: switch to Pester Version 6
+
 ### Fixed
+
 - source\Enum\01_notion_color.ps1: added default_backround as color (missing in documentation but available in API)
 - source\Classes\Block\32_Toggle.ps1: Fixed class notion_toggle_block
 
