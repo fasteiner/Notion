@@ -1,11 +1,7 @@
-function New-NotionLinkPreviewBlock {
-[CmdletBinding()]
-    [OutputType([void])]
-    param(
-        [Parameter(Mandatory = $True)]
-        $parameter1
-    )
+function New-NotionLinkPreviewBlock
+{
+    [CmdletBinding()]
+    param( )
     
-throw [System.NotImplementedException]::new("This function is not yet implemented.")
-
+    throw [System.NotImplementedException]::new("The API does not support creating or appending link_preview blocks.")
 }
