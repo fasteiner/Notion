@@ -5,10 +5,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-
 ### Added
 
-- `.vscode/settings.json`: added `terminal.integrated.bracketedPasteMode` setting
+- `.vscode/settings.json`: added `terminal.integrated.bracketedPasteMode`, disabled minimap, and configured custom terminal profile
+- `.vscode/profile.ps1`: PowerShell profile to auto-import the module during development
+- `.vscode/vsicons-custom-icons/`: added custom icon support for Pester files
+- `.build/Copy-WikiContent.ps1`: script to copy wiki content from source to destination, flattening structure
+- `.build/New-WikiSidebarFromPs1.ps1`: script to generate `_Sidebar.md` from PowerShell and Markdown files
+- `.build/README.md`: documentation for adding custom build tasks and workflows
 - `build.yaml`: added `minibuild` task with steps for `Clean`, `Build_Module_ModuleBuilder`, and `Build_NestedModules_ModuleBuilder`
 - `source/Classes/03_File/01_notion_file.ps1`:  
   - Added static `Create` method to instantiate child objects based on file type
@@ -42,17 +46,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added `ConvertFromObject` method to handle strings and emoji objects
 - `tests/Integration/Block/testpage.tests.ps1`:  
   - Improved test logic for unsupported block types with specific error message checks
+- `source/Public/Block/New-NotionBlock.ps1`: generic factory function to create Notion blocks
+- `source/Public/Block/Cmds/*`: added many new `New-Notion*Block.ps1` cmdlets for block creation (e.g., `Bookmark`, `Callout`, `ChildPage`, `Code`, etc.)
+- `docs/Enums/`: added Markdown documentation for all enums used in the module
+- `source/WikiSource/`: added wiki source files including setup guide, FAQ, and integration images
+- `tests/Unit/Classes/Block/`: added unit tests for many block classes (e.g., `Bookmark`, `Breadcrumb`, `Callout`, `Code`, `Image`, `Video`, etc.)
 
 ### Changed
 
 - `RequiredModules.psd1`: switched to Pester Version 6
+- `.vscode/analyzersettings.psd1`: relaxed some analyzer rules (e.g., allow `Write-Host`)
+- `.github/ISSUE_TEMPLATE/`: updated templates to reflect support for commands, classes, and enums
+- `README.md`: added badges, logo, and improved getting started section
+- `build.ps1`: added tasks `Generate_Wiki_Sidebar_From_Ps1` and `Copy_Wiki_Content_Custom`
 - Refactored multiple constructors across block classes to support more flexible input types and use `ConvertFromObjects` for consistency
+- `source/Classes/Emoji/01_emoji.ps1`: improved emoji conversion logic
+- `source/Enum/*`: added missing enum values and documentation links
 
 ### Fixed
 
-- `source/Enum/01_notion_color.ps1`: added `default_backround` as a color (missing in documentation but available in API)
-- `source/Classes/Block/32_Toggle.ps1`: fixed class `notion_toggle_block`
-- `source/Classes/Block/33_Video.ps1`: fixed constructors to use `Create` method and correct file instantiation
+- `source/Enum/01_notion_color.ps1`: added `default_background` as a color (missing in documentation but available in API)
+- `source/Classes/Block/32_Toggle.ps1`: fixed class name and constructor
+- `source/Classes/Block/33_Video.ps1`: fixed constructors and file instantiation logic
 - `source/Classes/Block/05_Bookmark.ps1`:  
   - Fixed constructors  
   - `bookmark_structure`: fixed constructor with two parameters to fully support `rich_text`
@@ -62,7 +77,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed constructors and emoji handling
 - `source/Classes/Emoji/01_emoji.ps1`:  
   - Fixed `ConvertFromObject` to handle strings and emoji objects
-
+- `tests/Integration/Block/testpage.tests.ps1`: improved error handling and validation for unsupported block types
+- `tests/Integration/PageProperties/testpage.tests.ps1`: added validation for page property types
 
 ## [0.3.0] - 2025-05-18
 

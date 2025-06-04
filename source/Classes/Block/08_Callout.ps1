@@ -2,7 +2,7 @@ class callout_structure
 {
     [rich_text[]] $rich_text
     # icon: emoji or file
-    [notion_emoji]$icon
+    [notion_emoji] $icon
     [notion_color] $color = "default"
 
     callout_structure()
