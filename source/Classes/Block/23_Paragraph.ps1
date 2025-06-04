@@ -9,20 +9,20 @@ class paragraph_structure
     {
     }
 
-    paragraph_structure([rich_text[]] $rich_text)
+    paragraph_structure($rich_text)
     {
-        $this.rich_text = $rich_text
+        $this.rich_text = [rich_text]::ConvertFromObjects($rich_text)
     }
 
-    [void] addRichText([rich_text] $richtext)
+    [void] addRichText($rich_text)
     {
-        $this.rich_text += $richtext
+        $this.rich_text += [rich_text]::ConvertFromObjects($rich_text)
     }
 
     static [paragraph_structure] ConvertFromObject($Value)
     {
         $Paragraph = [paragraph_structure]::new()
-        $Paragraph.rich_text = $Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
+        $Paragraph.rich_text = [rich_text]::ConvertFromObjects($Value.rich_text)
         $Paragraph.color = [Enum]::Parse([notion_color], ($Value.color ?? "default"))
         return $Paragraph
     }
@@ -38,12 +38,12 @@ class notion_paragraph_block : notion_block
         $this.paragraph = [Paragraph_structure]::new(@())
     }
 
-    notion_paragraph_block([rich_text] $richtext)
+    notion_paragraph_block($richtext)
     {
-        $this.paragraph = [Paragraph_structure]::new(@($richtext))
+        $this.paragraph = [Paragraph_structure]::new($richtext)
     }
 
-    [void] addRichText([rich_text] $richtext)
+    [void] addRichText($richtext)
     {
         $this.paragraph = [Paragraph_structure]::addRichText($richtext)
     }
