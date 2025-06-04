@@ -22,7 +22,7 @@ function New-NotionChildDatabaseBlock
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
-        [Parameter(ParameterSetName = 'Default')]
+        [Parameter(ParameterSetName = 'Default', HelpMessage = 'Title of the child database.')]
         [string] $Title
     )
 

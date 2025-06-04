@@ -22,58 +22,18 @@ class notion_file : notion_icon
         $this.name = $name
     }
 
-    #string caption (optional)
-    notion_file([notion_filetype]$type, [string]$name, [string]$caption = "")
-    {
-        $this.type = $type
-        $this.name = $name
-        if ([string]::IsNullOrEmpty($caption) -eq $false)
-        {
-            $this.caption = @([rich_text_text]::new($caption))
-        }
-    }
 
-    notion_file([notion_filetype]$type, [string]$name, [object[]] $caption)
+    notion_file([notion_filetype]$type, [string]$name, $caption)
     {
         Write-Verbose "[notion_file]::new($type, $name, $($caption | ConvertTo-Json))"
         $this.type = $type
         $this.name = $name
-        $this.caption = @()
-        foreach ($item in $caption)
-        {
-            if ($item -is [string])
-            {
-                $this.caption += [rich_text_text]::new($item)
-            }
-            elseif ($item -is [rich_text])
-            {
-                $this.caption += $item
-            }
-            else
-            {
-                $this.caption += [rich_text]::ConvertFromObject($item)
-            }
-        }
+        $this.caption = [rich_text]::ConvertFromObjects($caption)
     }
 
-    static [notion_file] Create([notion_filetype] $type, [string] $name, [object[]] $caption, [string] $url, $expiry_time = $null  )
+    static [notion_file] Create([notion_filetype] $type, [string] $name, $caption, [string] $url, $expiry_time = $null  )
     {
-        $processedCaption = @()
-        foreach ($item in $caption)
-        {
-            if ($item -is [string])
-            {
-                $processedCaption += [rich_text_text]::new($item)
-            }
-            elseif ($item -is [rich_text])
-            {
-                $processedCaption += $item
-            }
-            else
-            {
-                $processedCaption += [rich_text]::ConvertFromObject($item)
-            }
-        }
+        $processedCaption = [rich_text]::ConvertFromObjects($caption)
 
         switch ($type)
         {
@@ -116,7 +76,7 @@ class notion_file : notion_icon
             $fileObject = [notion_external_file]::ConvertFromObject($Value)
         }
         $fileObject.type = $Value.type
-        $fileObject.caption = $Value.caption.ForEach({ [rich_text]::ConvertFromObject($_) })
+        $fileObject.caption = [rich_text]::ConvertFromObjects($Value.caption)
         $fileObject.name = $Value.name
         return $fileObject
     }

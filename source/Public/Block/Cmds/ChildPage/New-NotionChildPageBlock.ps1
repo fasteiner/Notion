@@ -23,7 +23,7 @@ function New-NotionChildPageBlock
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     [OutputType([notion_child_page_block])]
     param (
-        [Parameter(ParameterSetName = 'Default')]
+        [Parameter(ParameterSetName = 'Default', HelpMessage = 'Title of the child page.')]
         [string]$Title
     )
     $obj = $null

@@ -23,11 +23,12 @@ class notion_external_file : notion_file
     notion_external_file():base("external")
     {
     }
-    notion_external_file([string]$name, [string]$caption="",[string]$url):base("external", $name, $caption)
+    notion_external_file([string]$name, $url):base("external", $name)
     {
         $this.external = [notion_external_file_structure]::new($url)
     }
-    notion_external_file([string]$name, [rich_text[]]$caption, [string]$url):base("external", $name, $caption)
+
+    notion_external_file([string]$name, $caption, [string]$url):base("external", $name, $caption)
     {
         $this.external = [notion_external_file_structure]::new($url)
     }
@@ -39,7 +40,7 @@ class notion_external_file : notion_file
         $notionFileOb = [notion_external_file]::new()
         $notionFileOb.external = [notion_external_file_structure]::ConvertFromObject($Value.external)
         $notionFileOb.type = $Value.type
-        $notionFileOb.caption = $Value.caption.ForEach({[rich_text]::ConvertFromObject($_)})
+        $notionFileOb.caption = $Value.caption.ForEach({ [rich_text]::ConvertFromObject($_) })
         $notionFileOb.name = $Value.name
         return $notionFileOb
     }
