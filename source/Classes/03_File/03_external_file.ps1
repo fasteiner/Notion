@@ -23,6 +23,12 @@ class notion_external_file : notion_file
     notion_external_file():base("external")
     {
     }
+
+    notion_external_file([string]$url):base("external")
+    {
+        $this.external = [notion_external_file_structure]::new($url)
+    }
+
     notion_external_file([string]$name, $url):base("external", $name)
     {
         $this.external = [notion_external_file_structure]::new($url)
