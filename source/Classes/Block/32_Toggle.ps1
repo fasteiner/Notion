@@ -7,15 +7,15 @@ class Toggle_structure
 
     Toggle_structure() {}
 
-    Toggle_structure([rich_text[]] $rich_text, [notion_color] $color = "default")
+    Toggle_structure($rich_text, $color = "default")
     {
-        $this.rich_text = @($rich_text)
-        $this.color = $color
+        $this.rich_text = [rich_text]::ConvertFromObjects($rich_text)
+        $this.color = [Enum]::Parse([notion_color], $color)
     }
 
     static [Toggle_structure] ConvertFromObject($Value)
     {
-        return [Toggle_structure]::new($Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) }), $Value.color)
+        return [Toggle_structure]::new($Value.rich_text, $Value.color ?? "default")
     }
 }
 class notion_toggle_block : notion_block
@@ -29,7 +29,12 @@ class notion_toggle_block : notion_block
 
     }
 
-    notion_toggle_block([rich_text[]] $rich_text, [notion_color] $color = "default") : base("toggle")
+    notion_toggle_block($rich_text)
+    {
+        $this.toggle = [Toggle_structure]::new($rich_text, "default")
+    }
+
+    notion_toggle_block($rich_text, $color = "default")
     {
         $this.toggle = [Toggle_structure]::new($rich_text, $color)
     }
