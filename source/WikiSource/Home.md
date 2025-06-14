@@ -58,6 +58,14 @@ The charm of Notion classes are this simple use while creating objects.
 ``` PowerShell
 [notion_block]::new() # creates an empty block object
 [notion_page]::new()  # creates a new page object
+[notion_emoji]::new() # creates a new emoji object
+```
+
+However, there is also a New-Notion<BlockName>Block CmdLet available to create a new block object.
+
+``` PowerShell
+New-NotionBookmarkBlock -URL "https://www.example.com" -Caption "Example Bookmark"
+New-NotionCalloutBlock -RichText "This is a callout" -Icon "💡"
 ```
 
 If you receive items from the API, the Notion module will automatically convert it into Notion objects
