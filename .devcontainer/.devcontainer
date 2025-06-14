@@ -1,0 +1,28 @@
+{
+  "name": "Notion PowerShell Dev Container",
+  "image": "mcr.microsoft.com/powershell",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/powershell:1": {}
+  },
+  "postCreateCommand": "pwsh -f .devcontainer/setup.ps1",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+       "davidanson.vscode-markdownlint",
+        "ms-vscode.powershell",
+        "streetsidesoftware.code-spell-checker",
+        "redhat.vscode-yaml",
+        "bierner.markdown-mermaid",
+         "vscode-icons-team.vscode-icons"
+      ],
+      "settings": {
+        "powershell.scriptAnalysis.enable": true,
+        "powershell.codeFormatting.preset": "OTBS",
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true
+      }
+    }
+  },
+  "remoteUser": "vscode"
+}
