@@ -35,4 +35,7 @@ if (\$env:PATH -notlike "*\$dotnetTools*") {
 "@
 
 Write-Host "✅ Setup complete. Verifying GitVersion..."
-gitversion /showvariable SemVer
+dotnet-gitversion /showvariable SemVer
+
+# Run a full build of the Notion module
+#./build.ps1 -tasks build -ResolveDependency -UseModuleFast
