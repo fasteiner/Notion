@@ -1,11 +1,12 @@
-function New-NotionNumberedListItemBlock {
-[CmdletBinding()]
+function New-NotionNumberedListItemBlock
+{
+    [CmdletBinding()]
     [OutputType([void])]
-    param(
+    param (
         [Parameter(Mandatory = $True)]
         $parameter1
     )
     
-throw [System.NotImplementedException]::new("This function is not yet implemented.")
+    throw [System.NotImplementedException]::new("This function is not yet implemented.")
 
 }
