@@ -55,6 +55,17 @@
     "liveshare.allowGuestDebugControl": true,
     "workbench.iconTheme": "vscode-icons",
     "terminal.integrated.bracketedPasteMode": false,
+    "terminal.integrated.profiles.linux": {
+    "Notion pwsh": {
+        "path": "pwsh",
+        "args": [
+        "-NoExit",
+        "-Command",
+        "& './.vscode/profile.ps1'"
+        ]
+    }
+    },
+    "terminal.integrated.defaultProfile.linux": "Notion pwsh",
     "terminal.integrated.profiles.windows": {
         "Notion pwsh": {
             "source": "PowerShell",
