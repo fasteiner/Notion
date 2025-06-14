@@ -78,6 +78,11 @@ class notion_block
 
     static [notion_block] ConvertFromObject($Value)
     {
+        if($value -is [notion_block])
+        {
+            # If the value is already a notion_block, return it
+            return $value
+        }
         # Write-Verbose "[notion_block]::ConvertFromObject($($Value | ConvertTo-Json -Depth 10 ))"
         $notion_block = $null
         switch ($Value.type)

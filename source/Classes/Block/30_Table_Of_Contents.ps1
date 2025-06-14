@@ -5,11 +5,11 @@ class Table_Of_Contents_structure
 
     Table_Of_Contents_structure([notion_color] $color = "default")
     {
-        $this.color = $color
+        $this.color = [enum]::Parse([notion_color], $color)
     }
     static [Table_Of_Contents_structure] ConvertFromObject($Value)
     {
-        return [Table_Of_Contents_structure]::new([Enum]::Parse([notion_color], $Value.color))
+        return [Table_Of_Contents_structure]::new($Value.color)
     }
 }
 
@@ -19,7 +19,7 @@ class notion_table_of_contents_block : notion_block
     [notion_blocktype] $type = "table_of_contents"
     [Table_Of_Contents_structure] $table_of_contents
 
-    notion_table_of_contents_block([notion_color] $color = "default")
+    notion_table_of_contents_block($color = "default")
     {
         $this.table_of_contents = [Table_Of_Contents_structure]::new($color)
     }

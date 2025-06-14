@@ -14,6 +14,12 @@ class paragraph_structure
         $this.rich_text = [rich_text]::ConvertFromObjects($rich_text)
     }
 
+    paragraph_structure($rich_text, $color)
+    {
+        $this.rich_text = [rich_text]::ConvertFromObjects($rich_text)
+        $this.color = [Enum]::Parse([notion_color], $color)
+    }
+
     [void] addRichText($rich_text)
     {
         $this.rich_text += [rich_text]::ConvertFromObjects($rich_text)
@@ -41,6 +47,11 @@ class notion_paragraph_block : notion_block
     notion_paragraph_block($richtext)
     {
         $this.paragraph = [Paragraph_structure]::new($richtext)
+    }
+
+    notion_paragraph_block($richtext, $color)
+    {
+        $this.paragraph = [Paragraph_structure]::new($richtext, $color)
     }
 
     [void] addRichText($richtext)

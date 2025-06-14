@@ -45,6 +45,11 @@ class notion_file : notion_icon
             {
                 return [notion_external_file]::new($name, $processedCaption, $url)
             }
+            "file_upload "
+            {
+                # not implemented yet
+                Write-Error "File upload type is not implemented yet." -Category NotImplemented -TargetObject $type
+            }
             default
             {
                 Write-Error "Invalid file type: $type. Supported types are 'file' or 'external'." -Category InvalidData -TargetObject $type
@@ -67,14 +72,22 @@ class notion_file : notion_icon
             return $Value
         }
         $fileObject = $null
-        if ($Value.type -eq "file")
+        switch ($Value.type)
         {
-            $fileObject = [notion_hosted_file]::ConvertFromObject($Value)
-        }
-        else
-        {
-            $fileObject = [notion_external_file]::ConvertFromObject($Value)
-        }
+            "file" {
+                $fileObject = [notion_hosted_file]::ConvertFromObject($Value)
+            }
+            "external" {
+                $fileObject = [notion_external_file]::ConvertFromObject($Value)
+            }
+            "file_upload" {
+                # not implemented yet
+                Write-Error "File upload type is not implemented yet." -Category NotImplemented -TargetObject $Value.type
+            }
+            default {
+                Write-Error "Invalid file type: $($Value.type). Supported types are 'file' or 'external'." -Category InvalidData -TargetObject $Value.type
+            }
+        }      
         $fileObject.type = $Value.type
         $fileObject.caption = [rich_text]::ConvertFromObjects($Value.caption)
         $fileObject.name = $Value.name
