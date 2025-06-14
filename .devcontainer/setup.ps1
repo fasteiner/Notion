@@ -13,3 +13,6 @@ dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
 
 # Install GitVersion as global tool
 dotnet tool install --global GitVersion.Tool --version 5.12.0
+
+# Run a full build of the Notion module
+./build.ps1 -tasks build -ResolveDependency -UseModuleFast
