@@ -1,26 +1,32 @@
 {
   "name": "Notion PowerShell Dev Container",
-  "image": "mcr.microsoft.com/powershell",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
-    "ghcr.io/devcontainers/features/common-utils:2": {},
-    "ghcr.io/devcontainers/features/powershell:1": {}
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": false,
+      "installGit": true
+    },
+    "ghcr.io/devcontainers/features/powershell:1": {
+      "version": "7"
+    }
   },
   "postCreateCommand": "pwsh -f .devcontainer/setup.ps1",
   "customizations": {
     "vscode": {
       "extensions": [
-       "davidanson.vscode-markdownlint",
+        "davidanson.vscode-markdownlint",
         "ms-vscode.powershell",
         "streetsidesoftware.code-spell-checker",
         "redhat.vscode-yaml",
         "bierner.markdown-mermaid",
-         "vscode-icons-team.vscode-icons"
+        "vscode-icons-team.vscode-icons"
       ],
       "settings": {
         "powershell.scriptAnalysis.enable": true,
         "powershell.codeFormatting.preset": "OTBS",
         "files.trimTrailingWhitespace": true,
-        "files.insertFinalNewline": true
+        "files.insertFinalNewline": true,
+        "terminal.integrated.defaultProfile.linux": "pwsh"
       }
     }
   },
