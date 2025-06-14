@@ -66,6 +66,7 @@ However, there is also a New-Notion<BlockName>Block CmdLet available to create a
 ``` PowerShell
 New-NotionBookmarkBlock -URL "https://www.example.com" -Caption "Example Bookmark"
 New-NotionCalloutBlock -RichText "This is a callout" -Icon "💡"
+New-NotionBreadcrumbBlock #new breadcrumb block
 ```
 
 If you receive items from the API, the Notion module will automatically convert it into Notion objects
