@@ -7,78 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `.vscode/settings.json`: added `terminal.integrated.bracketedPasteMode`, disabled minimap, and configured custom terminal profile
-- `.vscode/profile.ps1`: PowerShell profile to auto-import the module during development
-- `.vscode/vsicons-custom-icons/`: added custom icon support for Pester files
-- `.build/Copy-WikiContent.ps1`: script to copy wiki content from source to destination, flattening structure
-- `.build/New-WikiSidebarFromPs1.ps1`: script to generate `_Sidebar.md` from PowerShell and Markdown files
-- `.build/README.md`: documentation for adding custom build tasks and workflows
-- `build.yaml`: added `minibuild` task with steps for `Clean`, `Build_Module_ModuleBuilder`, and `Build_NestedModules_ModuleBuilder`
-- `source/Classes/03_File/01_notion_file.ps1`:  
-  - Added static `Create` method to instantiate child objects based on file type
-- `source/Classes/Block/RichText/01_Rich_Text.ps1`:  
-  - Added `ConvertFromObjects` method to convert arrays or single objects into `rich_text[]`
-- `source/Classes/Block/04_Block.ps1`:  
-  - Improved error messages for unsupported and unknown block types with GitHub issue link and quoted block type
-- `source/Classes/Block/05_Bookmark.ps1`:  
-  - Refactored constructors to support flexible input types and added `ConvertFromObject` method
-- `source/Classes/Block/07_Bulleted_List_Item.ps1`:  
-  - Refactored constructors to use `ConvertFromObjects` and support flexible input
-- `source/Classes/Block/08_Callout.ps1`:  
-  - Refactored constructors and added `ConvertFromObject` for emoji and rich text
-- `source/Classes/Block/09_Child_Database.ps1`:  
-  - Used `ConvertFromObject` for `child_database_structure`
-- `source/Classes/Block/10_Child_Page.ps1`:  
-  - Used `ConvertFromObject` for `child_page_structure`
-- `source/Classes/Block/11_Code.ps1`:  
-  - Refactored constructors to use `ConvertFromObjects` and support caption
-- `source/Classes/Block/15_Embed.ps1`:  
-  - Added support for `caption` and `ConvertFromObject` improvements
-- `source/Classes/Block/16_Equation.ps1`:  
-  - Renamed constructors to match class name
-- `source/Classes/Block/21_Image.ps1`:  
-  - Added support for `caption` and improved `ConvertFromObject`
-- `source/Classes/Block/31_To_do.ps1`:  
-  - Refactored constructor to remove base call
-- `source/Classes/Block/33_Video.ps1`:  
-  - Refactored constructors to use `Create` method and support caption
-- `source/Classes/Emoji/01_emoji.ps1`:  
-  - Added `ConvertFromObject` method to handle strings and emoji objects
-- `tests/Integration/Block/testpage.tests.ps1`:  
-  - Improved test logic for unsupported block types with specific error message checks
-- `source/Public/Block/New-NotionBlock.ps1`: generic factory function to create Notion blocks
-- `source/Public/Block/Cmds/*`: added many new `New-Notion*Block.ps1` cmdlets for block creation (e.g., `Bookmark`, `Callout`, `ChildPage`, `Code`, etc.)
-- `docs/Enums/`: added Markdown documentation for all enums used in the module
-- `source/WikiSource/`: added wiki source files including setup guide, FAQ, and integration images
-- `tests/Unit/Classes/Block/`: added unit tests for many block classes (e.g., `Bookmark`, `Breadcrumb`, `Callout`, `Code`, `Image`, `Video`, etc.)
+- **VSCode Configuration**
+  - `.vscode/settings.json`: Configured `terminal.integrated.bracketedPasteMode`, disabled minimap, custom terminal profile, formatter preferences, and extension settings.
+  - `.vscode/profile.ps1`: PowerShell profile to auto-import the module during VSCode sessions.
+  - `.vscode/vsicons-custom-icons/`: Support for custom icons, including `file_type_pester.svg` and `copyFileToSystemPath.ps1`.
+
+- **Build and Wiki Scripts**
+  - `.build/Copy-WikiContent.ps1`: Script to copy wiki content from source to destination with flattened structure.
+  - `.build/New-WikiSidebarFromPs1.ps1`: Generates `_Sidebar.md` from PowerShell and Markdown files.
+  - `.build/README.md`: Documentation for adding custom build tasks and workflows.
+  - `build.yaml`: Added `minibuild` task with steps for `Clean`, `Build_Module_ModuleBuilder`, and `Build_NestedModules_ModuleBuilder`.
+
+- **Module Source Code**
+  - `source/Classes/03_File/01_notion_file.ps1`: Static `Create` method to instantiate child objects based on file type.
+  - `source/Classes/Block/RichText/01_Rich_Text.ps1`: `ConvertFromObjects` method to convert arrays or single objects into `rich_text[]`.
+  - Various block classes (`Bookmark`, `Callout`, `ChildPage`, `Code`, `Image`, `Video`, etc.): New or refactored constructors, support for flexible input, `ConvertFromObject(s)` methods, support for `caption`, emoji, etc.
+  - `source/Classes/Block/04_Block.ps1`: Improved error messages for unsupported and unknown block types with GitHub issue link.
+  - `source/Classes/Emoji/01_emoji.ps1`: `ConvertFromObject` method to handle strings and emoji objects.
+  - `source/Public/Block/New-NotionBlock.ps1`: Generic factory function to create Notion blocks.
+  - `source/Public/Block/Cmds/*`: Many new cmdlets like `New-NotionBookmarkBlock`, `New-NotionCalloutBlock`, etc.
+  - `docs/Enums/`: Markdown documentation for all enums used in the module.
+  - `source/WikiSource/`: Wiki source files including setup guide, FAQ, and integration images.
+
+- **Tests**
+  - `tests/Integration/Block/testpage.tests.ps1`: Improved logic and error message validation.
+  - `tests/Integration/PageProperties/testpage.tests.ps1`: Validation for page property types.
+  - `tests/Unit/Classes/Block/`: Unit tests for many block classes.
+  - Additional tests for new constructors, block types, and unsupported block error messages.
 
 ### Changed
 
-- `RequiredModules.psd1`: switched to Pester Version 6
-- `.vscode/analyzersettings.psd1`: relaxed some analyzer rules (e.g., allow `Write-Host`)
-- `.github/ISSUE_TEMPLATE/`: updated templates to reflect support for commands, classes, and enums
-- `README.md`: added badges, logo, and improved getting started section
-- `build.ps1`: added tasks `Generate_Wiki_Sidebar_From_Ps1` and `Copy_Wiki_Content_Custom`
-- Refactored multiple constructors across block classes to support more flexible input types and use `ConvertFromObjects` for consistency
-- `source/Classes/Emoji/01_emoji.ps1`: improved emoji conversion logic
-- `source/Enum/*`: added missing enum values and documentation links
+- **General Refactoring**
+  - Refactored many constructors across block classes to support more flexible input and consistent use of `ConvertFromObjects`.
+  - `source/Classes/Emoji/01_emoji.ps1`: Improved emoji conversion logic.
+  - `source/Enum/*`: Added missing enum values and documentation links.
+
+- **Configuration Files**
+  - `.vscode/analyzersettings.psd1`: Relaxed some analyzer rules (e.g., allowed `Write-Host`).
+  - `.github/ISSUE_TEMPLATE/`: Updated templates to reflect support for cmdlets, classes, and enums.
+  - `README.md`: Added badges, logo, and improved getting started section.
+  - `RequiredModules.psd1`: Switched to Pester Version 6.
+  - `build.ps1`: Added tasks `Generate_Wiki_Sidebar_From_Ps1` and `Copy_Wiki_Content_Custom`.
 
 ### Fixed
 
-- `source/Enum/01_notion_color.ps1`: added `default_background` as a color (missing in documentation but available in API)
-- `source/Classes/Block/32_Toggle.ps1`: fixed class name and constructor
-- `source/Classes/Block/33_Video.ps1`: fixed constructors and file instantiation logic
-- `source/Classes/Block/05_Bookmark.ps1`:  
-  - Fixed constructors  
-  - `bookmark_structure`: fixed constructor with two parameters to fully support `rich_text`
-- `source/Classes/Block/07_Bulleted_List_Item.ps1`:  
-  - Fixed `rich_text` conversion in constructors
-- `source/Classes/Block/08_Callout.ps1`:  
-  - Fixed constructors and emoji handling
-- `source/Classes/Emoji/01_emoji.ps1`:  
-  - Fixed `ConvertFromObject` to handle strings and emoji objects
-- `tests/Integration/Block/testpage.tests.ps1`: improved error handling and validation for unsupported block types
-- `tests/Integration/PageProperties/testpage.tests.ps1`: added validation for page property types
+- **Class Fixes**
+  - `source/Enum/01_notion_color.ps1`: Added `default_background` color.
+  - `source/Classes/Block/32_Toggle.ps1`: Fixed class name and constructor.
+  - `source/Classes/Block/33_Video.ps1`: Fixed constructors and file instantiation logic.
+  - `source/Classes/Block/05_Bookmark.ps1`: Fixed constructors and `bookmark_structure` logic.
+  - `source/Classes/Block/07_Bulleted_List_Item.ps1`: Fixed `rich_text` conversion in constructors.
+  - `source/Classes/Block/08_Callout.ps1`: Fixed constructors and emoji handling.
+  - `source/Classes/Emoji/01_emoji.ps1`: Fixed `ConvertFromObject` to handle strings and emoji objects.
+
+- **Tests and Validation**
+  - Improved error handling and validation in integration tests.
+  - Enhanced input validation to prevent runtime errors.
+  - Fixed `ConvertTo-Json` depth handling for complete serialization.
+  - Fixed enum handling and added missing values.
 
 ## [0.3.0] - 2025-05-18
 
