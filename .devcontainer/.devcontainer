@@ -1,6 +1,6 @@
 {
   "name": "Notion PowerShell Dev Container",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "image": "mcr.microsoft.com/powershell:alpine-3.13",
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
       "installZsh": false,
