@@ -5,6 +5,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **VSCode Configuration**
+  - `.vscode/settings.json`: Configured `terminal.integrated.bracketedPasteMode`, disabled minimap, custom terminal profile, formatter preferences, and extension settings.
+  - `.vscode/profile.ps1`: PowerShell profile to auto-import the module during VSCode sessions.
+  - `.vscode/vsicons-custom-icons/`: Support for custom icons, including `file_type_pester.svg` and `copyFileToSystemPath.ps1`.
+
+- **Build and Wiki Scripts**
+  - `.build/Copy-WikiContent.ps1`: Script to copy wiki content from source to destination with flattened structure.
+  - `.build/New-WikiSidebarFromPs1.ps1`: Generates `_Sidebar.md` from PowerShell and Markdown files.
+  - `.build/README.md`: Documentation for adding custom build tasks and workflows.
+  - `build.yaml`: Added `minibuild` task with steps for `Clean`, `Build_Module_ModuleBuilder`, and `Build_NestedModules_ModuleBuilder`.
+
+- **Module Source Code**
+  - `source/Classes/03_File/01_notion_file.ps1`: Static `Create` method to instantiate child objects based on file type.
+  - `source/Classes/Block/RichText/01_Rich_Text.ps1`: `ConvertFromObjects` method to convert arrays or single objects into `rich_text[]`.
+  - Various block classes (`Bookmark`, `Callout`, `ChildPage`, `Code`, `Image`, `Video`, etc.): New or refactored constructors, support for flexible input, `ConvertFromObject(s)` methods, support for `caption`, emoji, etc.
+  - `source/Classes/Block/04_Block.ps1`: Improved error messages for unsupported and unknown block types with GitHub issue link.
+  - `source/Classes/Emoji/01_emoji.ps1`: `ConvertFromObject` method to handle strings and emoji objects.
+  - `source/Public/Block/New-NotionBlock.ps1`: Generic factory function to create Notion blocks.
+  - `source/Public/Block/Cmds/*`: Many new cmdlets like `New-NotionBookmarkBlock`, `New-NotionCalloutBlock`, etc.
+  - `docs/Enums/`: Markdown documentation for all enums used in the module.
+  - `source/WikiSource/`: Wiki source files including setup guide, FAQ, and integration images.
+
+- **Tests**
+  - `tests/Integration/Block/testpage.tests.ps1`: Improved logic and error message validation.
+  - `tests/Integration/PageProperties/testpage.tests.ps1`: Validation for page property types.
+  - `tests/Unit/Classes/Block/`: Unit tests for many block classes.
+  - Additional tests for new constructors, block types, and unsupported block error messages.
+
+### Changed
+
+- **General Refactoring**
+  - Refactored many constructors across block classes to support more flexible input and consistent use of `ConvertFromObjects`.
+  - `source/Classes/Emoji/01_emoji.ps1`: Improved emoji conversion logic.
+  - `source/Enum/*`: Added missing enum values and documentation links.
+
+- **Configuration Files**
+  - `.vscode/analyzersettings.psd1`: Relaxed some analyzer rules (e.g., allowed `Write-Host`).
+  - `.github/ISSUE_TEMPLATE/`: Updated templates to reflect support for cmdlets, classes, and enums.
+  - `README.md`: Added badges, logo, and improved getting started section.
+  - `RequiredModules.psd1`: Switched to Pester Version 6.
+  - `build.ps1`: Added tasks `Generate_Wiki_Sidebar_From_Ps1` and `Copy_Wiki_Content_Custom`.
+
+### Fixed
+
+- **Class Fixes**
+  - `source/Enum/01_notion_color.ps1`: Added `default_background` color.
+  - `source/Classes/Block/32_Toggle.ps1`: Fixed class name and constructor.
+  - `source/Classes/Block/33_Video.ps1`: Fixed constructors and file instantiation logic.
+  - `source/Classes/Block/05_Bookmark.ps1`: Fixed constructors and `bookmark_structure` logic.
+  - `source/Classes/Block/07_Bulleted_List_Item.ps1`: Fixed `rich_text` conversion in constructors.
+  - `source/Classes/Block/08_Callout.ps1`: Fixed constructors and emoji handling.
+  - `source/Classes/Emoji/01_emoji.ps1`: Fixed `ConvertFromObject` to handle strings and emoji objects.
+
+- **Tests and Validation**
+  - Improved error handling and validation in integration tests.
+  - Enhanced input validation to prevent runtime errors.
+  - Fixed `ConvertTo-Json` depth handling for complete serialization.
+  - Fixed enum handling and added missing values.
+
 ## [0.3.0] - 2025-05-18
 
 ### Fixed

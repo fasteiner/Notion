@@ -1,7 +1,7 @@
 Import-Module Pester
 
 BeforeDiscovery {
-    $projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
+    $projectPath = "$($PSScriptRoot)/../../.." | Convert-Path
 
     <#
         If the QA tests are run outside of the build script (e.g with Invoke-Pester)
@@ -21,9 +21,9 @@ BeforeDiscovery {
 
 }
 
-BeforeAll
- {
-    if (-not $env:NOTION_BEARER_TOKEN) {
+BeforeAll {
+    if (-not $env:NOTION_BEARER_TOKEN)
+    {
         $BearerTokenFile = ".\BearerToken.$((whoami).split('\')[1]).local.xml"
         #Create Credentials
         # $BearerToken1 = Read-Host -Prompt "Enter your Bearer token (API Key)" -AsSecureString
@@ -39,9 +39,16 @@ Describe "Iterate the testpage and check if all objects are converted correctly"
     It "Should convert the testpage to a notion_page object" {
         $page = Invoke-NotionApiCall -uri "/pages/$global:TestPageID" -method GET
         $pageObj = $page | ConvertTo-NotionObject
-        $page | Should -BeOfType [notion_page]
+        $pageObj | Should -BeOfType [notion_page]
+        $properties = $pageObj.properties
+        $properties | Should -BeOfType [notion_pageproperties]
+        foreach ($property in $properties.GetEnumerator())
+        {
+            Write-Debug "Checking property $($property.Key) of type $($property.Value.type)"
+            $property.Value | Should -BeOfType "notion_$($property.Value.type)_page_property"
+        }
     }
 }
-AfterAll{
+AfterAll {
     Disconnect-Notion -Confirm:$false
 }

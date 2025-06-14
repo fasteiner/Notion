@@ -24,12 +24,11 @@ class notion_equation_block : notion_block
     [notion_blocktype] $type = "equation"
     [equation_structure] $equation
     
-    equation()
+    notion_equation_block()
     { 
-        $this.equation = [equation_structure]::new()
     }
 
-    equation([string] $expression)
+    notion_equation_block([string] $expression)
     {
         $this.equation = [equation_structure]::new([string] $expression)
     }

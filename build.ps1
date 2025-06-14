@@ -156,7 +156,16 @@ param
 #>
 process
 {
-    Set-Alias -Name gitversion -Value dotnet-gitversion -Scope Global
+    # when the command git version does not exist, create an alias to dotnet-gitversion.
+    if (-not (Get-Command -Name gitversion -ErrorAction SilentlyContinue))
+    {
+        Write-Host -Object "[pre-build] Creating alias 'gitversion' for 'dotnet-gitversion'" -ForegroundColor Green
+        Set-Alias -Name gitversion -Value dotnet-gitversion -Scope Global
+    }
+    else
+    {
+        Write-Host -Object "[pre-build] Command 'gitversion' already exists, skipping alias creation." -ForegroundColor Yellow
+    }
     if ($MyInvocation.ScriptName -notLike '*Invoke-Build.ps1')
     {
         # Only run the process block through InvokeBuild (look at the Begin block at the bottom of this script).

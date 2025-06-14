@@ -22,6 +22,11 @@ class notion_hosted_file_structure
 
     static [notion_hosted_file_structure] ConvertFromObject($Value)
     {
+        if ($Value -is [notion_hosted_file_structure])
+        {
+            Write-Verbose "[notion_hosted_file_structure]::ConvertFromObject($($Value | ConvertTo-Json)) - already a notion_hosted_file_structure"
+            return $Value
+        }
         Write-Verbose "[notion_hosted_file_structure]::ConvertFromObject($($Value | ConvertTo-Json))"
         return [notion_hosted_file_structure]::new($Value.url, $Value.expiry_time)
     }
@@ -35,15 +40,10 @@ class notion_hosted_file : notion_file
     {
     }
 
-    notion_hosted_file([string]$name, [string]$caption="",[string]$url, $expiry_time):base("file", $name, $caption)
-    {
-        Write-Verbose "[notion_hosted_file]::new($name, $caption, $url, $expiry_time)"
-        $this.file = [notion_hosted_file_structure]::new($url, $expiry_time)
-    }
-
-    notion_hosted_file([string]$name, [object[]]$caption, [string]$url, $expiry_time):base("file", $name, $caption)
+    notion_hosted_file([string]$name, $caption, [string]$url, $expiry_time):base("file", $name, $caption)
     {
         Write-Verbose "[notion_hosted_file]::new($name, $($caption | ConvertTo-Json), $url, $expiry_time)"
+        $caption = [rich_text]::ConvertFromObject($caption)
         $this.file = [notion_hosted_file_structure]::new($url, $expiry_time)
     }
 
@@ -53,7 +53,7 @@ class notion_hosted_file : notion_file
         $notion_file_obj = [notion_hosted_file]::new()
         $notion_file_obj.file = [notion_hosted_file_structure]::ConvertFromObject($Value.file)
         $notion_file_obj.type = $Value.type
-        $notion_file_obj.caption = $Value.caption.ForEach({[rich_text]::ConvertFromObject($_)})
+        $notion_file_obj.caption = [rich_text]::ConvertFromObjects($Value.caption)
         $notion_file_obj.name = $Value.name
         return $notion_file_obj
     }

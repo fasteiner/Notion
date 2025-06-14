@@ -1,4 +1,5 @@
-function New-NotionTableRow {
+function New-NotionTableRow
+{
     <#
     .SYNOPSIS
         Creates a new Notion table row.

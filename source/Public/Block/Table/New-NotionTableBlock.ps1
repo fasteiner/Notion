@@ -1,4 +1,5 @@
-function New-NotionTable{
+function New-NotionTable
+{
     <#
     .SYNOPSIS
         Creates a new Notion table.
@@ -26,7 +27,7 @@ function New-NotionTable{
     #>
     [CmdletBinding()]
     [OutputType([notion_table_block])]
-    param(
+    param (
         [Alias("data")]
         [object[][]] $TableData,
         [bool] $has_column_header = $false,

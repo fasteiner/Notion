@@ -11,18 +11,24 @@ class notion_video_block : notion_block
 
     notion_video_block($url)
     {
-        $this.video = [notion_file]::new($url)
+        $this.video = [notion_external_file]::new($url)
     }
 
     notion_video_block($url, $expiry_time)
     {
-        $this.video = [notion_file]::new($url, $expiry_time)
+        $this.video = [notion_file]::new([notion_filetype]::file, $url, $expiry_time)
     }
 
-    notion_video_block([notion_filetype] $filetype, $url, $expiry_time) :base($filetype, $url, $expiry_time)
+    notion_video_block([notion_filetype] $filetype, $url, $expiry_time)
     {
-        $this.video = [notion_file]::new($filetype, $url, $expiry_time)
+        $this.video = [notion_file]::Create($filetype, "", @(), $url, $expiry_time)
     }
+    notion_video_block([notion_filetype] $filetype, $name, $caption, $url, $expiry_time)
+    {
+        $this.video = [notion_file]::Create($filetype, $name, $caption, $url, $expiry_time)
+    }
+
+
 
     static [notion_video_block] ConvertFromObject($Value)
     {

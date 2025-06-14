@@ -5,7 +5,6 @@
 ```mermaid
 classDiagram
    class bookmark_structure{
-        [notion_blocktype] $type = "bookmark"
         [rich_text[]] $caption
         [string] $url = $null
    }

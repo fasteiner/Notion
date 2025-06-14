@@ -22,7 +22,8 @@ BeforeDiscovery {
 }
 
 BeforeAll {
-    if (-not $env:NOTION_BEARER_TOKEN) {
+    if (-not $env:NOTION_BEARER_TOKEN)
+    {
         $BearerTokenFile = ".\BearerToken.$((whoami).split('\')[1]).local.xml"
         #Create Credentials
         # $BearerToken1 = Read-Host -Prompt "Enter your Bearer token (API Key)" -AsSecureString
@@ -37,13 +38,40 @@ BeforeAll {
 Describe "Iterate the testpage and check if all objects are converted correctly" {
     It "Should convert the page correctly" {
         $childrenRaw = Invoke-NotionApiCall -Uri "/blocks/$global:TestPageID/children" -Method GET
-        foreach ($child in $childrenRaw) {
-            $childObj = $child | ConvertTo-NotionObject
-            $childObj.type | Should -Be $child.type
-            $childObj | Should -BeOfType "notion_$($child.type)_block"
+        $i = 0
+        foreach ($child in $childrenRaw)
+        {
+            Write-Debug "Checking child block of type $($child.type) at index $($i)"
+            
+            if ($child.type -eq "unsupported")
+            {
+                $message = ""
+                $type = ""
+                if ([System.Enum]::TryParse([notion_blocktype], $child.type, [ref]$type))
+                {
+                    $message = "Block type `"$($child.type)`" not implemented yet"
+                }
+                else
+                {
+                    $message = "Unknown block type: `"$($child.type)`""
+                }
+                { $child | ConvertTo-NotionObject -ErrorAction Stop } | Should -Throw $message
+            }
+            else
+            {
+                $childObj = $child | ConvertTo-NotionObject
+                $childObj.type | Should -Be $child.type
+                $className = "notion_$($child.type)"
+                if (-not $className.EndsWith("_block"))
+                {
+                    $className += "_block"
+                }
+                $childObj | Should -BeOfType "$className"
+            }
+            $i++
         }
     }
 }
-AfterAll{
+AfterAll {
     Disconnect-Notion -Confirm:$false
 }

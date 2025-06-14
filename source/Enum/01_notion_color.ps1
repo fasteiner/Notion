@@ -6,6 +6,7 @@ enum notion_color
     brown
     brown_background
     default
+    default_background
     gray
     gray_background
     green

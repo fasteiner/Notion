@@ -16,6 +16,12 @@ class notion_emoji : notion_icon
 
     static [notion_emoji] ConvertFromObject($Value)
     {
+        if ($Value -is [notion_emoji]) {
+            return $Value
+        }
+        if( $Value -is [string]) {
+            return [notion_emoji]::new($Value)
+        }
         return [notion_emoji]::new($Value.emoji)
     }
 }
