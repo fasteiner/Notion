@@ -3,7 +3,7 @@ name: Generate Project Page
 on:
   push:
     branches:
-      - main
+      - feature/gh-page-generation
   workflow_dispatch:
 
 jobs:
