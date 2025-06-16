@@ -25,18 +25,8 @@ class callout_structure
     static [callout_structure] ConvertFromObject($Value)
     {
         $callout_structure = [callout_structure]::new()
-        $callout_structure.rich_text = $Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
-        switch ($Value.psobject.properties)
-        {
-            "emoji"
-            {
-                $callout_structure.icon = [notion_emoji]::new($Value.icon.emoji.emoji) 
-            }
-            "file"
-            {
-                $callout_structure.icon = [notion_file]::new($Value.icon.external.url) 
-            }
-        }
+        $callout_structure.rich_text = [rich_text]::ConvertFromObjects($Value.rich_text)
+        $callout_structure.icon = [notion_icon]::ConvertFromObject($Value.icon)
         $callout_structure.color = [Enum]::Parse([notion_color], $Value.color)
         return $callout_structure
     }

@@ -1,4 +1,4 @@
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
@@ -43,7 +43,10 @@ Describe "notion_synced_block Tests" {
         It "Should not add a child to a duplicate synced block" {
             $block = [notion_synced_block]::new([PSCustomObject]@{ block_id = "abc123" })
             $child = [notion_paragraph_block]::new(@([rich_text_text]::new("Should not add")))
-            { $ErrorActionPreference = "Stop"; $block.AddChild($child) } | Should -Throw
+            $ErrorActionPreference = "SilentlyContinue"
+            $block.AddChild($child)
+            $ErrorActionPreference = "Continue"
+            $Error[0].Exception.Message | Should -Match "Cannot add child to synced block, as this is a duplicate synced block."
         }
     }
 

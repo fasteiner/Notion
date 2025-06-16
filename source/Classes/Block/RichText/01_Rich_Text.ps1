@@ -1,9 +1,9 @@
 class rich_text
 # https://developers.notion.com/reference/rich-text
 {
-    [rich_text_type] $type
+    [notion_rich_text_type] $type
     # object: text / mention / equation
-    [annotation] $annotations
+    [notion_annotation] $annotations
     [string] $plain_text = $null
     $href = $null
 
@@ -15,23 +15,23 @@ class rich_text
     }
     rich_text([string] $type)
     {
-        $this.type = [Enum]::Parse([rich_text_type], $type)
+        $this.type = [Enum]::Parse([notion_rich_text_type], $type)
     }
 
-    rich_text([rich_text_type] $type)
+    rich_text([notion_rich_text_type] $type)
     {
         $this.type = $type
     }
 
     # rich text object with content and annotations
-    # [rich_text]::new("Hallo", [annotation]::new())
+    # [rich_text]::new("Hallo", [notion_annotation]::new())
     #BUG ?? sollte das nicht mit test moeglich sein ??
-    rich_text([rich_text_type] $type, [annotation] $annotations)
+    rich_text([notion_rich_text_type] $type, [notion_annotation] $annotations)
     {
         $this.type = $type
         $this.annotations = $annotations
     }
-    rich_text([rich_text_type] $type, [annotation] $annotations, [string] $plain_text)
+    rich_text([notion_rich_text_type] $type, [notion_annotation] $annotations, [string] $plain_text)
     {
         if ($plain_text.Length -gt 2000)
         {
@@ -42,7 +42,7 @@ class rich_text
         $this.plain_text = $plain_text
     }
     
-    rich_text([rich_text_type] $type, [annotation] $annotations, [string] $plain_text, $href)
+    rich_text([notion_rich_text_type] $type, [notion_annotation] $annotations, [string] $plain_text, $href)
     {
         if ($plain_text.Length -gt 2000)
         {
@@ -69,11 +69,12 @@ class rich_text
         {
             if ($item -isnot [rich_text])
             {
-                if($item -is [string])
+                if ($item -is [string])
                 {
                     $item = [rich_text_text]::new($item)
                 }
-                else{
+                else
+                {
                     $item = [rich_text]::ConvertFromObject($item)
                 }
             }
@@ -113,7 +114,7 @@ class rich_text
                 Write-Error "Unknown rich text type: $($Value.type)" -Category InvalidData -TargetObject $Value -RecommendedAction "Please provide a valid rich text type (text, mention or equation)"
             }
         }
-        $local:annotations = [annotation]::ConvertFromObject($Value.annotations)
+        $local:annotations = [notion_annotation]::ConvertFromObject($Value.annotations)
         if ($local:annotations)
         {
             $rich_text.annotations = $local:annotations

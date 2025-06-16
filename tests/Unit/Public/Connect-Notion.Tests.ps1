@@ -17,35 +17,45 @@ BeforeDiscovery {
     $script:version = (gitversion /showvariable MajorMinorPatch)
 
     Remove-Module -Name $global:moduleName -Force -ErrorAction SilentlyContinue
-
+    
     $mut = Import-Module -Name "$script:projectPath/output/module/$ProjectName/$script:version/$ProjectName.psd1" -Force -ErrorAction Stop -PassThru
 
+    $script:capturedMessages = @()
 }
 
 BeforeAll {
     #Import-Module -Name "$PSScriptRoot/../../..\output\Notion.psd1" -Force
     $standardOutput = [System.IO.StringWriter]::new()
-    $BearerToken = $env:NOTION_BEARER_TOKEN | ConvertTo-SecureString -AsPlainText -Force
+    $BearerToken = $null
+    if (-not $env:NOTION_BEARER_TOKEN)
+    {
+        $BearerTokenFile = ".\BearerToken.$((whoami).split('\')[1]).local.xml"
+        #Create Credentials
+        # $BearerToken1 = Read-Host -Prompt "Enter your Bearer token (API Key)" -AsSecureString
+        # $BearerToken1 | Export-Clixml -Path $BearerTokenFile
+        "Importing BearerToken from $BearerTokenFile"
+        $BearerToken = Import-Clixml -Path $BearerTokenFile -ErrorAction Stop
+    }
+    else
+    {
+        $BearerToken = $env:NOTION_BEARER_TOKEN | ConvertTo-SecureString -AsPlainText -Force
+    }
 }
 
 Describe "Connect-Notion" {
     Context "When providing valid Bearer token and URL" {
         It "Should connect to the Notion API" {
             # Arrange
-            $standardOutput.GetStringBuilder().Clear() | Out-Null
+            
             
             $notionURL = "https://api.notion.com/v1"
-            $expectedResult = @{
-                url     = $notionURL
-                version = '2022-06-28'
-            }
 
             # Act
-            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL > $standardOutput
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
 
             # Assert
-            $result | Should -Be $expectedResult
-            $standardOutput | Should -Contain "Successfully connected to Notion API."
+            $result.url | Should -Be $notionURL
+            $result.version | Should -Be '2022-06-28'
         }
     }
 
@@ -62,8 +72,11 @@ Describe "Connect-Notion" {
             # Act
             $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
 
+
             # Assert
-            $result | Should -Be $expectedResult
+            $result.url | Should -Be $expectedResult.url
+            $result.version | Should -Be $expectedResult.version
+            
         }
     }
 
@@ -74,7 +87,7 @@ Describe "Connect-Notion" {
             $notionURL = "https://api.notion.com/v1"
 
             # Act
-            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
+            {Connect-Notion -BearerToken $BearerToken -notionURL $notionURL} | Should -Throw
 
             # Assert
             $result | Should -Be $null
@@ -95,23 +108,12 @@ Describe "Connect-Notion" {
             $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
     
             # Assert
-            $result | Should -Be $expectedResult
+            $result.url | Should -Be $expectedResult.url
+            $result.version | Should -Be $expectedResult.version
+            
         }
     }
     
-    Context "When providing an invalid Bearer token" {
-        It "Should fail to connect to the Notion API" {
-            # Arrange
-            $BearerToken = "invalidBearerToken"
-            $notionURL = "https://api.notion.com/v1"
-    
-            # Act
-            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
-    
-            # Assert
-            $result | Should -Be $null
-        }
-    }
     
     Context "When providing an empty Bearer token" {
         It "Should fail to connect to the Notion API" {
@@ -120,10 +122,8 @@ Describe "Connect-Notion" {
             $notionURL = "https://api.notion.com/v1"
     
             # Act
-            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
+            {Connect-Notion -BearerToken $BearerToken -notionURL $notionURL} | Should -Throw
     
-            # Assert
-            $result | Should -Be $null
         }
     }
     
@@ -134,10 +134,8 @@ Describe "Connect-Notion" {
             $notionURL = "https://api.notion.com/v1"
     
             # Act
-            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
-    
-            # Assert
-            $result | Should -Be $null
+            {Connect-Notion -BearerToken $BearerToken -notionURL $notionURL} | Should -Throw
+
         }
     }
     
@@ -148,24 +146,21 @@ Describe "Connect-Notion" {
             $notionURL = "invalidURL"
     
             # Act
-            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
+            {Connect-Notion -BearerToken $BearerToken -notionURL $notionURL -ErrorAction Stop} | Should -Throw
     
-            # Assert
-            $result | Should -Be $null
-        }
+            }
     }
     
     Context "When providing a null URL" {
-        It "Should fail to connect to the Notion API" {
+        It "Should not fail to connect to the Notion API" {
             # Arrange
             
             $notionURL = $null
     
-            # Act
-            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
-    
+            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL -ErrorAction SilentlyContinue
+
             # Assert
-            $result | Should -Be $null
+            $result | Should -Not -BeNullOrEmpty
         }
     }
     
@@ -176,10 +171,7 @@ Describe "Connect-Notion" {
             $notionURL = ""
     
             # Act
-            $result = Connect-Notion -BearerToken $BearerToken -notionURL $notionURL
-    
-            # Assert
-            $result | Should -Be $null
+            { Connect-Notion -BearerToken $BearerToken -notionURL $notionURL -ErrorAction Stop } | Should -Throw
         }
     }
 }

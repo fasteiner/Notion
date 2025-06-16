@@ -5,8 +5,8 @@
 ```mermaid
 classDiagram
     class rich_text {
-        [rich_text_type] $type
-        [annotation] $annotations
+        [notion_rich_text_type] $type
+        [notion_annotation] $annotations
         [string] $plain_text = $null
         $href = $null
         ConvertFromObject()
