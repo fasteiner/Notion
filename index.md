@@ -7,7 +7,7 @@ title: Notion PowerShell Module
 
 <center>
 
-  ![Notion Module Logo](/TSNotion_mini.png)
+  ![Notion Module Logo](/assets/TSNotion_mini.png)
 </center>
 
 # Notion - A class-based PowerShell module for interacting with Notion
