@@ -27,7 +27,7 @@ jobs:
           files: |
             .github/templates/README.template.md=README.md
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           PROJECT_NAME: Notion
 
       - name: 📄 Copy README to gh-pages
@@ -38,6 +38,6 @@ jobs:
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./gh-pages
           publish_branch: gh-pages
