@@ -4,20 +4,12 @@
 
 ```mermaid
 classDiagram
-    class PDF_structure {
-        [rich_text[]] $caption
-        ConvertFromObject()
-    }
-
-
-    
-    class notion_PDF_block {
+   class notion_PDF_block {
         [notion_blocktype] $type = "pdf"
-        [PDF_structure] $pdf
+        [notion_file] $pdf
         ConvertFromObject()
     }
-    `notion_file` --|> `PDF_structure`:inherits
-    `PDF_structure` <.. `notion_PDF_block`:uses
+    `notion_file` <.. `notion_PDF_block`:uses
     `notion_block` --|> `notion_PDF_block`:inherits
 ```
 

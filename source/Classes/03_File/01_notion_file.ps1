@@ -22,59 +22,74 @@ class notion_file : notion_icon
         $this.name = $name
     }
 
-    #string caption (optional)
-    notion_file([notion_filetype]$type, [string]$name, [string]$caption = "")
-    {
-        $this.type = $type
-        $this.name = $name
-        if([string]::IsNullOrEmpty($caption) -eq $false)
-        {
-            $this.caption = @([rich_text_text]::new($caption))
-        }
-    }
 
-    notion_file([notion_filetype]$type, [string]$name, [object[]] $caption)
+    notion_file([notion_filetype]$type, [string]$name, $caption)
     {
         Write-Verbose "[notion_file]::new($type, $name, $($caption | ConvertTo-Json))"
         $this.type = $type
         $this.name = $name
-        $this.caption = @()
-        foreach($item in $caption)
+        $this.caption = [rich_text]::ConvertFromObjects($caption)
+    }
+
+    static [notion_file] Create([notion_filetype] $type, [string] $name, $caption, [string] $url, $expiry_time = $null  )
+    {
+        $processedCaption = [rich_text]::ConvertFromObjects($caption)
+
+        switch ($type)
         {
-            if($item -is [string])
+            "file"
             {
-                $this.caption += [rich_text_text]::new($item)
+                return [notion_hosted_file]::new($name, $processedCaption, $url, $expiry_time)
             }
-            elseif($item -is [rich_text])
+            "external"
             {
-                $this.caption += $item
+                return [notion_external_file]::new($name, $processedCaption, $url)
             }
-            else
+            "file_upload "
             {
-                $this.caption += [rich_text]::ConvertFromObject($item)
+                # not implemented yet
+                Write-Error "File upload type is not implemented yet." -Category NotImplemented -TargetObject $type
+            }
+            default
+            {
+                Write-Error "Invalid file type: $type. Supported types are 'file' or 'external'." -Category InvalidData -TargetObject $type
             }
         }
+        return $null
     }
 
 
     static [notion_file] ConvertFromObject($Value)
     {
         Write-Verbose "[notion_file]::ConvertFromObject($($Value | ConvertTo-Json))"
-        if($null -eq $Value)
+        if ($null -eq $Value)
         {
             return $null
         }
+        if ( $Value -is [notion_file] )
+        {
+            Write-Verbose "Value is already a notion_file object."
+            return $Value
+        }
         $fileObject = $null
-        if ($Value.type -eq "file")
+        switch ($Value.type)
         {
-            $fileObject = [notion_hosted_file]::ConvertFromObject($Value)
-        }
-        else
-        {
-            $fileObject = [notion_external_file]::ConvertFromObject($Value)
-        }
+            "file" {
+                $fileObject = [notion_hosted_file]::ConvertFromObject($Value)
+            }
+            "external" {
+                $fileObject = [notion_external_file]::ConvertFromObject($Value)
+            }
+            "file_upload" {
+                # not implemented yet
+                Write-Error "File upload type is not implemented yet." -Category NotImplemented -TargetObject $Value.type
+            }
+            default {
+                Write-Error "Invalid file type: $($Value.type). Supported types are 'file' or 'external'." -Category InvalidData -TargetObject $Value.type
+            }
+        }      
         $fileObject.type = $Value.type
-        $fileObject.caption = $Value.caption.ForEach({[rich_text]::ConvertFromObject($_)})
+        $fileObject.caption = [rich_text]::ConvertFromObjects($Value.caption)
         $fileObject.name = $Value.name
         return $fileObject
     }

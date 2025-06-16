@@ -1,0 +1,58 @@
+name: Generate Project Page
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📦 GitHub Repository Metadata
+        uses: varunsridharan/action-repository-meta@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🧠 Dynamic Template Render
+        uses: varunsridharan/action-dynamic-readme@main
+        with:
+          files: |
+            .github/templates/README.template.md=README.md
+          confirm_and_push: false # Important if use "Require a pull request before merging" rule
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          PROJECT_NAME: Notion
+
+      - name: 📄 Copy README to gh-pages
+        run: |
+          mkdir -p gh-pages
+          cp jekyll_config.yml gh-pages/_config.yml
+          cp ./GemFile gh-pages/Gemfile
+          mkdir gh-pages/assets
+          cp ./assets/* gh-pages/assets/
+          # Generate index.md with Jekyll front matter
+          {
+            echo '---'
+            echo 'layout: default'
+            echo 'title: Notion PowerShell Module'
+            echo '---'
+            echo ''
+            cat README.md
+          } > gh-pages/index.md
+
+
+
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./gh-pages
+          publish_branch: gh-pages

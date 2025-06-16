@@ -1,35 +1,41 @@
 class bookmark_structure
 {
-    [notion_blocktype] $type = "bookmark"
     [rich_text[]] $caption = @()
     [string] $url = $null
 
-    bookmark_structure([string] $url)
+    bookmark_structure()
     {
-        $this.url = $url
-    }
-    
-    
-    bookmark_structure([object]$bookmark)
-    {
-        $this.caption = $bookmark.caption
-        $this.url = $bookmark.url
     }
 
-
-    bookmark_structure([rich_text[]]$caption, [string]$url)
+    bookmark_structure($bookmark)
     {
-        $this.caption = $caption
+        if ($bookmark -is [string])
+        {
+            $this.url = $bookmark
+            return
+        }
+        elseif ($bookmark -is [PSCustomObject])
+        {
+            $this.caption = [rich_text]::ConvertFromObjects($bookmark.caption)
+            $this.url = $bookmark.url
+        }
+    }
+
+    bookmark_structure([object]$caption, [string]$url)
+    {
+        $this.caption = [rich_text]::ConvertFromObjects($caption)
         $this.url = $url
     }
 
-    bookmark_structure([string]$caption, [string]$url)
+    static [bookmark_structure] ConvertFromObject($Value)
     {
-        $this.caption = @([rich_text_text]::new($caption))
-        $this.url = $url
+        if ( $Value -is [bookmark_structure] )
+        {
+            return $value
+        }
+        return [bookmark_structure]::new($Value)
     }
 }
-
 
 class notion_bookmark_block : notion_block
 # https://developers.notion.com/reference/block#bookmark
@@ -37,23 +43,16 @@ class notion_bookmark_block : notion_block
     [notion_blocktype] $type = "bookmark"
     [bookmark_structure] $bookmark
     
-
-    notion_bookmark_block([string]$url)
+    notion_bookmark_block() :base("bookmark")
     {
-        $this.bookmark = [bookmark_structure]::new($url)
-    }
-    
-    notion_bookmark_block([bookmark_structure]$bookmark)
-    {
-        $this.bookmark = [bookmark_structure]::new($bookmark)
-    }
-    
-    notion_bookmark_block([rich_text[]]$caption, [string]$url)
-    {
-        $this.bookmark = [bookmark_structure]::new($caption, $url)
     }
 
-    notion_bookmark_block([string]$caption, [string]$url)
+    notion_bookmark_block($url) :base("bookmark")
+    {
+        $this.bookmark = [bookmark_structure]::ConvertFromObject($url)
+    }
+    
+    notion_bookmark_block($caption, [string]$url) :base("bookmark")
     {
         $this.bookmark = [bookmark_structure]::new($caption, $url)
     }
