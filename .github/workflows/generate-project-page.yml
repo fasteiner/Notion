@@ -37,7 +37,15 @@ jobs:
           cp TSNotion_mini.png gh-pages/
           cp jekyll_config.yml gh-pages/_config.yml
           cp ./GemFile gh-pages/Gemfile
-          cp README.md gh-pages/index.md
+          # Generate index.md with Jekyll front matter
+          {
+            echo '---'
+            echo 'layout: default'
+            echo 'title: Notion PowerShell Module'
+            echo '---'
+            echo ''
+            cat README.md
+          } > gh-pages/index.md
 
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
