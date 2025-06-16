@@ -13,12 +13,6 @@ class notion_image_block : notion_block
     {
         $this.image = [notion_file]::ConvertFromObject($file)
     }
-
-    notion_image_block($file, $caption)
-    {
-        $file | Add-Member -MemberType NoteProperty -Name "caption" -Value $caption
-        $this.image = [notion_file]::ConvertFromObject($file)       
-    }
     
     static [notion_image_block] ConvertFromObject($Value)
     {

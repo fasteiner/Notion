@@ -33,13 +33,11 @@ Describe "notion_image_block Tests" {
         }
 
         It "Should create a notion_image_block with file and caption" {
-            $file = [notion_external_file]::new("image.png", "", "https://example.com/image.png")
-            $caption = [rich_text_text]::new("Block caption")
-            $block = [notion_image_block]::new($file, @($caption))
+            $file = [notion_external_file]::new("image.png", "Image Caption", "https://example.com/image.png")
+            $block = [notion_image_block]::new($file)
             $block.image.name | Should -Be "image.png"
             $block.image.caption | Should -Not -BeNullOrEmpty
-            $block.caption.Count | Should -Be 1
-            $block.caption[0].plain_text | Should -Be "Block caption"
+            $block.image.caption[0].plain_text | Should -Be "Image Caption"
         }
     }
 
@@ -49,21 +47,20 @@ Describe "notion_image_block Tests" {
                 image   = [PSCustomObject]@{
                     type     = "external"
                     name     = "converted.png"
-                    caption  = @()
                     external = @{ url = "https://example.com/converted.png" }
+                    caption = @([PSCustomObject]@{
+                            type       = "text"
+                            text       = @{ content = "Converted caption" }
+                            plain_text = "Converted caption"
+                        })
                 }
-                caption = @([PSCustomObject]@{
-                        type       = "text"
-                        text       = @{ content = "Converted caption" }
-                        plain_text = "Converted caption"
-                    })
             }
             $block = [notion_image_block]::ConvertFromObject($mock)
             $block | Should -BeOfType "notion_image_block"
             $block.image.name | Should -Be "converted.png"
             $block.image.external.url | Should -Be "https://example.com/converted.png"
-            $block.caption.Count | Should -Be 1
-            $block.caption[0].plain_text | Should -Be "Converted caption"
+            $block.image.caption | Should -Not -BeNullOrEmpty
+            $block.image.caption[0].plain_text | Should -Be "Converted caption"
         }
     }
 }

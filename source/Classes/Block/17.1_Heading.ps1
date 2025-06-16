@@ -50,7 +50,7 @@ class Heading_structure
     {
         $Heading_structure = [Heading_structure]::new()
         $Heading_structure.rich_text = [rich_text]::ConvertFromObjects($Value.rich_text)
-        $Heading_structure.color = [Enum]::Parse([notion_color], $Value.color)
+        $Heading_structure.color = [Enum]::Parse([notion_color], ($Value.color ?? "default"))
         $Heading_structure.is_toggleable = $Value.is_toggleable
         return $Heading_structure
     }
