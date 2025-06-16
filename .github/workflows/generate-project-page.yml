@@ -36,6 +36,8 @@ jobs:
           mkdir -p gh-pages
           cp jekyll_config.yml gh-pages/_config.yml
           cp ./GemFile gh-pages/Gemfile
+          mkdir _layouts
+          cp .github/templates/defaults.html _layouts/default.html
           # Generate index.md with Jekyll front matter
           {
             echo '---'
