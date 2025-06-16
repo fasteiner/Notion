@@ -3,7 +3,7 @@ name: Generate Project Page
 on:
   push:
     branches:
-      - Dev 
+      - main
   workflow_dispatch:
 
 jobs:
@@ -11,28 +11,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # wichtig für gh-pages
+          fetch-depth: 0
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: 📦 GitHub Repository Metadata
+        uses: varunsridharan/action-repository-meta@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🧠 Dynamic Template Render
+        uses: varunsridharan/action-dynamic-readme@main
         with:
-          node-version: '20'
+          files: |
+            .github/templates/README.template.md=README.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_NAME: Notion
 
-      - name: Install Dynamic Readme
-        run: npm install -g dynamic-readme
-
-      - name: Generate README.md
-        run: dynamic-readme --template .github/templates/README.template.md --output README.md
-
-      - name: Copy README to gh-pages
+      - name: 📄 Copy README to gh-pages
         run: |
           mkdir -p gh-pages
           cp README.md gh-pages/index.md
 
-      - name: Deploy to gh-pages
+      - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
