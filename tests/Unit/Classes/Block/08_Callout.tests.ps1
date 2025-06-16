@@ -1,4 +1,4 @@
-Import-Module Pester 
+Import-Module Pester -DisableNameChecking 
 
 BeforeDiscovery {
     $projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
@@ -47,6 +47,7 @@ Describe "notion_callout_block Tests" {
     Context "ConvertFromObject Tests" {
         It "Should convert from object with emoji icon" {
             $emoji = @{
+                type  = "emoji"
                 emoji = "🔥"
             }
             $mock = [PSCustomObject]@{

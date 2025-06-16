@@ -12,22 +12,22 @@ class notion_heading_1_block : notion_heading_block
         $this.heading_1 = $heading_structure
     }
 
-    notion_heading_1_block([string] $text) : base("heading_1")
+    notion_heading_1_block($text) : base("heading_1")
     {
         $this.heading_1 = [Heading_structure]::new($text)
     }
 
-    notion_heading_1_block([string] $text, [notion_color] $color) : base("heading_1")
+    notion_heading_1_block($text, $color) : base("heading_1")
     {
         $this.heading_1 = [Heading_structure]::new($text, $color)
     }
 
-    notion_heading_1_block([string] $text, [bool] $is_toggleable) : base("heading_1")
+    notion_heading_1_block($text, [bool] $is_toggleable) : base("heading_1")
     {
         $this.heading_1 = [Heading_structure]::new($text, $is_toggleable)
     }
 
-    notion_heading_1_block([string] $text, [notion_color] $color, [bool] $is_toggleable) : base("heading_1")
+    notion_heading_1_block($text, $color, [bool] $is_toggleable) : base("heading_1")
     {
         $this.heading_1 = [Heading_structure]::new($text, $color, $is_toggleable)
     }

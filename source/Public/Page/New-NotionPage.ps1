@@ -78,7 +78,7 @@ function New-NotionPage
         if ($title -and (-not $properties.Title))
         {
             #BUG: [notion_title_page_property]::new($title) geht so nicht
-            $titleobj = [rich_text]::new([rich_text_type]::text, [annotation]::new())
+            $titleobj = [rich_text]::new([notion_rich_text_type]::text, [notion_annotation]::new())
             $titleobj.plain_text = $title
             #$properties.Add("Title", [notion_title_page_property]::new($title))
             $properties.Add("Title", $titleobj)

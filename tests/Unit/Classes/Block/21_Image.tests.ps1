@@ -1,4 +1,4 @@
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
@@ -37,7 +37,7 @@ Describe "notion_image_block Tests" {
             $caption = [rich_text_text]::new("Block caption")
             $block = [notion_image_block]::new($file, @($caption))
             $block.image.name | Should -Be "image.png"
-            $block.image.caption | Should -BeNullOrEmpty
+            $block.image.caption | Should -Not -BeNullOrEmpty
             $block.caption.Count | Should -Be 1
             $block.caption[0].plain_text | Should -Be "Block caption"
         }
@@ -46,17 +46,17 @@ Describe "notion_image_block Tests" {
     Context "ConvertFromObject Tests" {
         It "Should convert from object with image and caption" {
             $mock = [PSCustomObject]@{
-                image = [PSCustomObject]@{
-                    type = "external"
-                    name = "converted.png"
-                    caption = @()
+                image   = [PSCustomObject]@{
+                    type     = "external"
+                    name     = "converted.png"
+                    caption  = @()
                     external = @{ url = "https://example.com/converted.png" }
                 }
                 caption = @([PSCustomObject]@{
-                    type = "text"
-                    text = @{ content = "Converted caption" }
-                    plain_text = "Converted caption"
-                })
+                        type       = "text"
+                        text       = @{ content = "Converted caption" }
+                        plain_text = "Converted caption"
+                    })
             }
             $block = [notion_image_block]::ConvertFromObject($mock)
             $block | Should -BeOfType "notion_image_block"

@@ -1,7 +1,7 @@
 # Define the types to export with type accelerators.
 $ExportableTypes = @(
     # enums
-    [rich_text_type]
+    [notion_rich_text_type]
     [notion_blocktype]
     [notion_database_property_type]
     #[relation_type]
@@ -22,7 +22,7 @@ $ExportableTypes = @(
     [template_mention_date]
     
     # classes
-    [annotation]
+    [notion_annotation]
     [notion_heading_block]
     [notion_heading_1_block]
     [notion_heading_2_block]
