@@ -34,7 +34,6 @@ jobs:
       - name: 📄 Copy README to gh-pages
         run: |
           mkdir -p gh-pages
-          cp TSNotion_mini.png gh-pages/
           cp jekyll_config.yml gh-pages/_config.yml
           cp ./GemFile gh-pages/Gemfile
           # Generate index.md with Jekyll front matter
@@ -46,6 +45,13 @@ jobs:
             echo ''
             cat README.md
           } > gh-pages/index.md
+
+      - name: 🛠️ Fix image path in index.md
+        run: |
+          mkdir -p gh-pages/assets
+          cp TSNotion_mini.png gh-pages/assets/
+          sed -i 's#](TSNotion_mini.png)#](/assets/TSNotion_mini.png)#' gh-pages/index.md
+
 
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
