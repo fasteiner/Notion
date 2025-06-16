@@ -2,5 +2,4 @@ markdown: kramdown
 theme: minima
 title: Notion PowerShell Module
 plugins:
-  - jekyll-feed
   - jekyll-seo-tag
