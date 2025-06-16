@@ -5,6 +5,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`.devcontainer/devcontainer.json`**
+  - Added VS Code extensions: `github.vscode-github-actions` and `shd101wyy.markdown-preview-enhanced` for enhanced GitHub workflow support and markdown preview.
+
+- **`.vscode/extensions.json`**
+  - Added the same extensions as above to the recommended list.
+
+- **`.github/templates/README.template.md`**
+  - Introduced a new README template that dynamically includes `README.md`, `CONTRIBUTING.md`, the Wiki homepage, and `CHANGELOG.md`.
+
+- **`.github/workflows/generate-project-page.yml`**
+  - Created a new GitHub Actions workflow to generate and deploy a project page from a feature branch.
+  - Steps include:
+    - Checkout and metadata actions.
+    - Rendering dynamic README content.
+    - Preparing and generating a Jekyll-based site.
+    - Publishing to GitHub Pages using `peaceiris/actions-gh-pages`.
+
+- **`GemFile`**
+  - Added Gem dependencies for GitHub Pages site:
+    - `jekyll`, `minima`, `csv`, `logger`, and `base64`.
+
+- **`jekyll_config.yml`**
+  - Defined Jekyll site settings including theme and SEO plugin.
+
+### Changed
+
+- **`README.md`**
+  - Replaced deprecated `<center>` HTML tag with semantic `<p align="center">` for the logo block.
+  - Updated image path to reflect asset relocation.
+
+- **`TSNotion_mini.png`**
+  - Removed from the project root and relocated to `assets/TSNotion_mini.png` for better directory structure.
+
+
 ## [0.5.0] - 2025-06-15
 
 ### Added
