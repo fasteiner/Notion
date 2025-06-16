@@ -26,6 +26,7 @@ jobs:
         with:
           files: |
             .github/templates/README.template.md=README.md
+          confirm_and_push: false # Important if use "Require a pull request before merging" rule
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           PROJECT_NAME: Notion
