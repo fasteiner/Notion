@@ -50,7 +50,7 @@ jobs:
         run: |
           mkdir -p gh-pages/assets
           cp TSNotion_mini.png gh-pages/assets/
-          sed -i 's#](TSNotion_mini.png)#](/assets/TSNotion_mini.png)#' gh-pages/index.md
+          sed -i 's#](/*TSNotion_mini.png)#](/assets/TSNotion_mini.png)#' gh-pages/index.md
 
 
       - name: 🚀 Deploy to GitHub Pages
