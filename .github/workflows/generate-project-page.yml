@@ -35,6 +35,7 @@ jobs:
         run: |
           mkdir -p gh-pages
           cp TSNotion_mini.png gh-pages/
+          cp jekyll_config.yml gh-pages/_config.yml
           cp README.md gh-pages/index.md
 
       - name: 🚀 Deploy to GitHub Pages
