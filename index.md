@@ -275,7 +275,7 @@ On the querying side the API returns a naked object with properties. The module 
 The enumerations (enums) are predefined values which are valid for a certain properties. e.g. colors
 
 ### Enums
-- `[rich_text_type]`
+- `[notion_rich_text_type]`
 - `[notion_blocktype]`
 - `[notion_database_property_type]`
 - `#[relation_type]`
@@ -295,7 +295,7 @@ The enumerations (enums) are predefined values which are valid for a certain pro
 - `[template_mention_date]`
 
 ### Classes
-- `[annotation]`
+- `[notion_annotation]`
 - `[notion_heading_1_block]`
 - `[notion_heading_2_block]`
 - `[notion_heading_3_block]`
@@ -400,6 +400,59 @@ The format is based on and uses the types of changes according to [Keep a Change
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Removed
+
+- **Development Container Configuration**
+  - `.devcontainer/devcontainer.json`: Removed the Dev Container configuration that defined the base image, development tools, VSCode extensions, and user settings.
+  - `.devcontainer/setup.ps1`: Removed setup script that installed PowerShell modules, configured PATH, installed GitVersion, and triggered an initial module build.
+
+### Changed
+
+- **Development Environment Settings**
+  - `.vscode/profile.ps1`: Removed conditional directory check to always set the working location to the Notion module path.
+  - `.vscode/settings.json`: Removed the custom integrated terminal profile configuration for Linux, including associated settings.
+
+- **Build Script Behavior**
+  - `build.ps1`: Simplified pre-build alias setup by always setting `gitversion` as an alias for `dotnet-gitversion` without checking for its existence.
+
+  - `build.yaml`: Added `Create_ChangeLog_GitHub_PR` task to `publish` stage, which updates the versionnumber in `CHANGELOG.md` based on the latest GitHub release tag.
+
+- **Class Definitions**
+  - `source/Classes/03_File/01_notion_file.ps1`: Removed the unsupported `"file_upload"` case in both `Create` and `ConvertFromObject` methods to streamline error handling.
+  - `source/Classes/03_File/03_external_file.ps1`: Removed an unused constructor that accepted only a URL for `notion_external_file`.
+
+- **Block Type Handling**
+  - `source/Classes/Block/04_Block.ps1`: Removed redundant check that returned early if the input was already a `notion_block`.
+
+- **Paragraph Block Structure**
+  - `source/Classes/Block/23_Paragraph.ps1`: Removed constructors that took color as a second argument; simplified structure initialization.
+
+- **PDF Block Structure**
+  - `source/Classes/Block/24_PDF.ps1`: Refactored `notion_PDF_block` to delegate PDF content to a new `PDF_structure` class, allowing rich text captions and improving type safety.
+
+- **Quote Block Structure**
+  - `source/Classes/Block/25_Quote.ps1`: Simplified constructors and improved type parsing; `ConvertFromObject` now uses rich text conversion per element.
+
+- **Synced Block Structure**
+  - `source/Classes/Block/26_Synced_Block.ps1`: Removed redundant `Synced_Block_Duplicate_structure` class and streamlined logic to handle synced blocks more directly.
+
+- **Table Row Logic**
+  - `source/Classes/Block/27.2_TableRow.ps1`: Improved logic for adding cells by simplifying conditional checks and using `ForEach` directly.
+
+- **Table of Contents Block**
+  - `source/Classes/Block/30_Table_Of_Contents.ps1`: Simplified constructor logic and clarified enum parsing.
+
+- **To-do Block Structure**
+  - `source/Classes/Block/31_To_do.ps1`: Updated to use `ForEach` for rich text conversion and clarified constructor argument types.
+
+- **Toggle Block Structure**
+  - `source/Classes/Block/32_Toggle.ps1`: Rewrote constructors to clarify expected types and simplify text conversion logic.
+
+### Removed
+
+- **Cmdlet Scripts (Legacy Structure)**
+  - Removed legacy cmdlet scripts for various Notion blocks (e.g., `New-NotionFileBlock`, `New-NotionQuoteBlock`, etc.) that existed outside of the standardized `Cmds` directory structure. These were replaced with stubbed or restructured versions in `source/Public/Block/Cmds/`.
 
 ## [0.6.0] - 2025-06-16
 
