@@ -22,7 +22,8 @@
         "streetsidesoftware.code-spell-checker",
         "redhat.vscode-yaml",
         "bierner.markdown-mermaid",
-        "vscode-icons-team.vscode-icons"
+        "vscode-icons-team.vscode-icons",
+        "github.vscode-github-actions"
       ],
       "settings": {
         "powershell.scriptAnalysis.enable": true,

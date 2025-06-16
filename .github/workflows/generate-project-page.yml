@@ -1,0 +1,40 @@
+name: Generate Project Page
+
+on:
+  push:
+    branches:
+      - Dev 
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # wichtig für gh-pages
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dynamic Readme
+        run: npm install -g dynamic-readme
+
+      - name: Generate README.md
+        run: dynamic-readme --template .github/templates/README.template.md --output README.md
+
+      - name: Copy README to gh-pages
+        run: |
+          mkdir -p gh-pages
+          cp README.md gh-pages/index.md
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages
+          publish_branch: gh-pages
