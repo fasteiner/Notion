@@ -34,6 +34,7 @@ jobs:
       - name: 📄 Copy README to gh-pages
         run: |
           mkdir -p gh-pages
+          cp TSNotion_mini.png gh-pages/
           cp README.md gh-pages/index.md
 
       - name: 🚀 Deploy to GitHub Pages
