@@ -1,3 +1,8 @@
+---
+layout: default
+title: Notion PowerShell Module
+---
+
 # Notion PowerShell Module
 
 <center>
