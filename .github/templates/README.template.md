@@ -5,8 +5,8 @@
 ## Contributing
 <!-- include CONTRIBUTING.md -->
 
-## Changes
-<!-- include CHANGELOG.md -->
-
 ## Wiki
 <!-- include source/WikiSource/Home.md -->
+
+## Changes
+<!-- include CHANGELOG.md -->
