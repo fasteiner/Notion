@@ -1,4 +1,5 @@
-class notion_page_parent : notion_parent{
+class notion_page_parent : notion_parent
+{
     # https://developers.notion.com/reference/parent-object#page-parent
     [string] $page_id
 

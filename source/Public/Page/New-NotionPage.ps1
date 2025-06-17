@@ -38,7 +38,7 @@ function New-NotionPage
     [CmdletBinding()]
     [OutputType([notion_page])]
     param (
-        [Parameter(HelpMessage = "The parent object of the page, if empty it will be created at the root (workspace) level")]
+        [Parameter(Mandatory = $true, HelpMessage = "The parent object of the page")] #, if empty it will be created at the root (workspace) level")]
         [object] $parent_obj,
         [Parameter(HelpMessage = "The properties of the page")]
         [hashtable] $properties = @{},
@@ -53,9 +53,16 @@ function New-NotionPage
     )
     try
     {
+        Wait-Debugger
+        if (-not $script:NotionAPIKey -or -not $script:NotionApiUri -or -not $script:NotionAPIVersion)
+        {
+            Write-Error "Notion API credentials are not set. Please connect to Notion using Connect-Notion." -Category ConnectionError -RecommendedAction "Run Connect-Notion to set the API credentials."
+            return
+        }
+
         $body = @{}
     
-        # if $parent_obj is not provided, add page to Workspace
+        # if $parent_obj is not provided, add page to Workspace (not supported by Notion API at the moment)
         $parent_obj ??= [notion_workspace_parent]::new()
 
         if ($parent_obj -isnot [notion_parent])
@@ -133,7 +140,9 @@ function New-NotionPage
     }
     try
     {
+        #BUG: endless loop when a $body property is an empty object
         $body = $body | Remove-NullValuesFromObject
+        Write-Debug "New-NotionPage: `n Body: `n$($body | ConvertTo-Json -Depth 10)"
         $response = Invoke-NotionAPICall -Method POST -uri "/pages" -Body $body
         return [notion_page]::ConvertFromObject($response)
     }
