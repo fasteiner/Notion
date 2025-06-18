@@ -2,6 +2,10 @@ class notion_parent
 {
     #https://developers.notion.com/reference/parent-object
     [notion_parent_type]$type
+    [string]$database_id
+    [string]$page_id
+    [string]$workspace
+    [string]$block_id
 
     notion_parent()
     {
@@ -13,11 +17,22 @@ class notion_parent
     }
 
     notion_parent([notion_parent_type]$type, [string]$id)
+    # {
+    #     #$this = $this::ConvertFromObject(@{type = $type; id = $id })
+    #     $temp = [notion_parent]::ConvertFromObject(@{type = $type; id = $id })
+    #     $this.type = $temp.type
+    #     $this | Add-Member -MemberType NoteProperty -Name $type -Value $temp.$type
+    # }
     {
-        #$this = $this::ConvertFromObject(@{type = $type; id = $id })
-        $temp = [notion_parent]::ConvertFromObject(@{type = $type; id = $id })
-        $this.type = $temp.type
-        $this | Add-Member -MemberType NoteProperty -Name $type -Value $temp.$type
+        $this.type = $type
+        switch ($type)
+        {
+            "database_id" { $this.database_id = $id }
+            "page_id"     { $this.page_id = $id }
+            "workspace"   { $this.workspace = $true }
+            "block_id"    { $this.block_id = $id }
+            default       { Write-Error "Unknown parent type: $type" }
+        }
     }
 
     static [notion_parent] ConvertFromObject($Value)

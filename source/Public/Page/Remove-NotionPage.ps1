@@ -1,5 +1,6 @@
-function Remove-NotionPage {
-<#
+function Remove-NotionPage
+{
+    <#
 .SYNOPSIS
 Removes a Notion page by moving it to the trash.
 
@@ -21,19 +22,27 @@ The ConfirmImpact is set to 'High' due to the potential impact of removing a pag
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     [OutputType([notion_page])]
     param(
-        [Parameter(Mandatory = $true, Position=0, HelpMessage = "The ID of the page to remove")]
+        [Parameter(Mandatory = $true, Position = 0, HelpMessage = "The ID of the page to remove")]
         [Alias("Id")]
         [string]$PageId
     )
+    
+    if (-not (Test-NotionApiSettings $MyInvocation.MyCommand.Name))
+    {
+        return
+    }
 
     $body = @{
         in_trash = $true
     }
     $body = $body | Remove-NullValuesFromObject
-    if ($PSCmdlet.ShouldProcess($PageId)) {
+    if ($PSCmdlet.ShouldProcess($PageId))
+    {
         $response = Invoke-NotionApiCall -method PATCH -uri "/pages/$PageId" -body $body
         return [notion_page]::ConvertFromObject($response)
-    } else {
+    }
+    else
+    {
         return $null
     }
 }

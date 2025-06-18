@@ -10,6 +10,11 @@ function Remove-NullValuesFromObject
 
     process
     {
+        # Return an empty object if there are no properties
+        if ($InputObject.Count -eq 0)
+        {
+            return [PSCustomObject]@{}
+        }
         # Ensure enums are serialized as strings
         #$InputObject = $InputObject | ConvertTo-Json -Depth 20 -EnumsAsStrings | ConvertFrom-Json
         $InputObject = $InputObject | Select-Object *

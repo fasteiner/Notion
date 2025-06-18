@@ -46,5 +46,11 @@ function Get-NotionPageChildren
         [Alias("Id")]
         [string]$PageId
     )
+
+    if (-not (Test-NotionApiSettings $MyInvocation.MyCommand.Name))
+    {
+        return
+    }
+    
     return (Get-NotionBlockChildren -BlockId $PageId)
 }
