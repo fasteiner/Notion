@@ -71,7 +71,15 @@ class rich_text
             {
                 if ($item -is [string])
                 {
-                    $item = [rich_text_text]::new($item)
+                    if ($item.Length -gt 0)
+                    {
+                        # Convert string to rich_text_text
+                        $item = [rich_text_text]::new($item)
+                    }
+                    else
+                    {
+                        $item = $null
+                    }
                 }
                 else
                 {
@@ -90,6 +98,22 @@ class rich_text
         if (!$Value.type)
         {
             return $null
+        }
+        if ($Value -is [rich_text])
+        {
+            return $Value
+        }
+        if ($Value -is [string])
+        {
+            if ($Value.Length -gt 0)
+            {
+                # Convert string to rich_text_text
+                return [rich_text_text]::new($Value)
+            }
+            else
+            {
+                return $null
+            }
         }
         $rich_text = $null
         switch ($Value.type)

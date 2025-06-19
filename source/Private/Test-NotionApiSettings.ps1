@@ -1,4 +1,4 @@
-function Test-NotionConnectParams
+function Test-NotionApiSettings
 {
     <#
     .SYNOPSIS

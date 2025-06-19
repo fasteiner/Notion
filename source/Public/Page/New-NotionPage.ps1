@@ -119,24 +119,19 @@ function New-NotionPage
     
         if ($icon)
         {
-            if ($icon -is [notion_file])
-            {
-                $icon = [notion_file]::ConvertFromObject($icon)
-            }
-            else
-            {
-                $icon = [notion_emoji]::ConvertFromObject($icon)
-            }
+            $icon = [notion_icon]::ConvertFromObject($icon)
             $body.Add("icon", $icon)
+            Write-Debug "New-NotionPage: `n Icon: `n$($icon | ConvertTo-Json -Depth 10 -EnumsAsStrings)"
         }
 
         if ($cover)
         {
             if ($cover -isnot [notion_file])
             {
-                $cover = [notion_file]::ConvertToObject($cover)
+                $cover = [notion_file]::ConvertFromObject($cover)
             }
-            $body.Add("cover", [notion_file]::ConvertFromObject($cover))
+            $body.Add("cover", $cover)
+            Write-Debug "New-NotionPage: `n Cover: `n$($Cover | ConvertTo-Json -Depth 10 -EnumsAsStrings)"
         }
     }
     catch
@@ -144,11 +139,12 @@ function New-NotionPage
         Write-Host -ForegroundColor Green "TS"
         Write-Host -ForegroundColor Cyan $properties
         Write-Error $_.Exception.Message
-        Write-Host -ForegroundColor Magenta ($body | conertto-json)
+        Write-Host -ForegroundColor Magenta ($body | ConvertTo-Json)
         Write-Host -ForegroundColor Green "--"
     }
     try
     {
+        Write-Verbose "New-NotionPage: `n Body before Remove-NullValuesFromObject: `n$($body | ConvertTo-Json -Depth 10 -EnumsAsStrings)"
         $body = $body | Remove-NullValuesFromObject
         Write-Debug "New-NotionPage: `n Body: `n$($body | ConvertTo-Json -Depth 10 -EnumsAsStrings)"
         $response = Invoke-NotionAPICall -Method POST -uri "/pages" -Body $body

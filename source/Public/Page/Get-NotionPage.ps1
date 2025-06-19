@@ -37,8 +37,9 @@ function Get-NotionPage
     param (
         [Parameter(Mandatory = $true, Position = 0)]
         [Alias("Id")]
-        [string]$PageId
-
+        [string]$PageId,
+        [Parameter()]
+        [switch]$Raw
     )
     
     if (-not (Test-NotionApiSettings $MyInvocation.MyCommand.Name))
@@ -54,5 +55,9 @@ function Get-NotionPage
 
     # Return the response to the caller
     $pageObj = [notion_page]::ConvertFromObject($response)
+    if ($Raw)
+    {
+        return $response
+    }
     return $pageObj
 }

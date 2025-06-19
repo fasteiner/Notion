@@ -1,4 +1,5 @@
-function ConvertTo-NotionFormattedDateTime {
+function ConvertTo-NotionFormattedDateTime
+{
     <#
     .SYNOPSIS
         Converts an input date to a specified Notion formatted date-time string.
@@ -38,26 +39,31 @@ function ConvertTo-NotionFormattedDateTime {
         $InputDate,
         [Parameter(Mandatory = $false)]
         $fieldName = "not_provided"
-        )
+    )
     $Format = "yyyy-MM-ddTHH:mm:ss.fffZ"
 
     # Check if the input is already a datetime object
-    if ($InputDate -is [datetime]) {
+    if ($InputDate -is [datetime])
+    {
         return $InputDate.ToUniversalTime().ToString($Format)
     }
     # Check if the input is a string and attempt to parse it
-    elseif ($InputDate -is [string]) {
+    elseif ($InputDate -is [string])
+    {
         $dateObj = [datetime]::UtcNow
-        if ([datetime]::TryParse($InputDate, [ref]$dateObj)) {
+        if ([datetime]::TryParse($InputDate, [ref]$dateObj))
+        {
             return $dateObj.ToUniversalTime().toString($Format)
         }
-        else {
+        else
+        {
             # Log an error for invalid format
             Write-Error "Invalid date time format in field $fieldName" -Category InvalidData -TargetObject $value -RecommendedAction "Please provide a valid datetime format"
             return $null
         }
     }
-    else {
+    else
+    {
         # Handle cases where the type is neither string nor datetime
         Write-Error "Invalid input type for field $fieldName" -Category InvalidData -TargetObject $value -RecommendedAction "Please provide a valid datetime format"
         return $null

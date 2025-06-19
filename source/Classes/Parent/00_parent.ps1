@@ -2,10 +2,6 @@ class notion_parent
 {
     #https://developers.notion.com/reference/parent-object
     [notion_parent_type]$type
-    [string]$database_id
-    [string]$page_id
-    [string]$workspace
-    [string]$block_id
 
     notion_parent()
     {
@@ -16,23 +12,33 @@ class notion_parent
         $this.type = $type
     }
 
-    notion_parent([notion_parent_type]$type, [string]$id)
-    # {
-    #     #$this = $this::ConvertFromObject(@{type = $type; id = $id })
-    #     $temp = [notion_parent]::ConvertFromObject(@{type = $type; id = $id })
-    #     $this.type = $temp.type
-    #     $this | Add-Member -MemberType NoteProperty -Name $type -Value $temp.$type
-    # }
+    static [notion_parent] Create([notion_parent_type]$type, [string]$id)
     {
-        $this.type = $type
+        $parent = $null
         switch ($type)
         {
-            "database_id" { $this.database_id = $id }
-            "page_id"     { $this.page_id = $id }
-            "workspace"   { $this.workspace = $true }
-            "block_id"    { $this.block_id = $id }
-            default       { Write-Error "Unknown parent type: $type" }
+            "database_id"
+            {
+                $parent = [notion_database_parent]::new($id) 
+            }
+            "page_id"
+            {
+                $parent = [notion_page_parent]::new($id) 
+            }
+            "workspace"
+            {
+                $parent = [notion_workspace_parent]::new() 
+            }
+            "block_id"
+            {
+                $parent = [notion_block_parent]::new($id) 
+            }
+            default
+            {
+                Write-Error "Unknown parent type: $type" -Category InvalidData -TargetObject $type 
+            }
         }
+        return $parent
     }
 
     static [notion_parent] ConvertFromObject($Value)
@@ -42,23 +48,18 @@ class notion_parent
         {
             "database_id"
             {
-                $Value | Add-Member -MemberType NoteProperty -Name "database_id" -Value $Value.id
                 $parent_obj = [notion_database_parent]::ConvertFromObject($Value)
             }
             "page_id"
             {
-                # $Value | Add-Member -MemberType AliasProperty -Name id  -Value "page_id"
-                $Value | Add-Member -MemberType NoteProperty -Name "page_id" -Value $Value.id
                 $parent_obj = [notion_page_parent]::ConvertFromObject($Value)
             }
             "workspace"
             {
-                $Value | Add-Member -MemberType NoteProperty -Name "workspace" -Value $Value.id
                 $parent_obj = [notion_workspace_parent]::ConvertFromObject($Value)
             }
             "block_id"
             {
-                $Value | Add-Member -MemberType NoteProperty -Name "block_id" -Value $Value.id
                 $parent_obj = [notion_block_parent]::ConvertFromObject($Value)
             }
             default

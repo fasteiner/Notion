@@ -1,3 +1,4 @@
+
 function New-NotionParent
 {
     <#
@@ -51,7 +52,7 @@ function New-NotionParent
 
     if ($PSCmdlet.ParameterSetName -eq 'WithTypeAndId')
     {
-        $obj = [notion_parent]::new($Type, $Id)
+        $obj = [notion_parent]::Create($Type, $Id)
     }
     elseif ($PSCmdlet.ParameterSetName -eq 'WithType')
     {

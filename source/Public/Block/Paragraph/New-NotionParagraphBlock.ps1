@@ -17,11 +17,17 @@ function New-NotionParagraphBlock
     .EXAMPLE
         New-NotionParagraphBlock
 
+        Creates a new empty Notion paragraph block.
+
     .EXAMPLE
         New-NotionParagraphBlock -RichText "This is a paragraph."
 
+        Creates a new Notion paragraph block with the specified rich text content.
+
     .EXAMPLE
         New-NotionParagraphBlock -RichText "This is a paragraph." -Color "yellow"
+
+        Creates a new Notion paragraph block with the specified rich text content and color.
 
     .OUTPUTS
     notion_paragraph_block
