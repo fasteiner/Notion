@@ -401,6 +401,73 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **.gitignore**
+  - Added rules to exclude diff files (`*.diff`, `diff.*`) from version control.
+- **source/Classes/Parent/00_parent.ps1**
+  - Created Factory method `::new` to instantiate `notion_parent` objects from various input types.
+- **source/Public/Parent/New-NotionParent.ps1**
+  - New function to create `parent` objects (`page_id`, `database_id`, `block_id`, `wordspace`)
+- **source/Private/Remove-NullValuesFromObject.ps1**
+  - Added docs
+- **source/Private/Test-NotionApiSettings.ps1**
+  - New function to validate Notion API settings, ensuring `NotionApiKey`, `NotionApiUri` and `NotionApiVersion` are set.
+- **source/Public/File/New-NotionFile.ps1**
+  - New function to create `notion_file` objects, supporting various file types and rich text captions.
+- **source/Public/Page/Get-NotionPage.ps1**
+  - Added `-Raw` parameter to return raw JSON data from the Notion API, allowing for more flexible data handling.
+  - Added check of API Parameters to ensure `NotionApiKey`, `NotionApiUri`, and `NotionApiVersion` are set before making API calls.
+- **tests/Unit/Classes/00_General/00_icon.tests.ps1**
+  - Added unit tests for `notion_icon` class, covering various input types and conversion methods.
+
+### Changed
+
+- **.vscode/profile.ps1**
+  - Simplified directory change logic to always set location to the Notion module path.
+
+- **.vscode/settings.json**
+  - Removed custom terminal profile definition for Linux (`Notion pwsh`), likely to simplify or standardize terminal configurations.
+
+- **build.ps1**
+  - Simplified `gitversion` alias creation by unconditionally defining the alias to `dotnet-gitversion`, removing conditional logic.
+
+- **source/Classes/03_File/01_notion_file.ps1**
+  - Refactored `ConvertFromObject` logic to simplify type checking and error handling.
+  - Removed unimplemented `file_upload` type handling.
+
+- **source/Classes/03_File/03_external_file.ps1**
+  - Removed redundant constructor that accepted only a URL, consolidating object creation pathways.
+
+- **source/Public/Block/_RichText/New-NotionRichText.ps1**
+  - Use handling in [richt_text] instead of maintaining separate logic in the cmdlet.
+
+- **source/Public/Page/Get-NotionPageChildren.ps1**
+  - Added connectivity check
+
+### Fixed
+
+- **source/Classes/00_General/00_icon.ps1**
+  - Fixed `ConvertFromObject` to handle both string and object inputs correctly, ensuring robust icon handling.
+  - Created factory method (::new) to instantiate `notion_icon` objects from various input types.
+- **source/Classes/03_File/01_file.ps1**
+  - Handle caption correctly in `ConvertFromObject`, ensuring its only processed if present.
+- **source/Classes/03_File/02_hosted_file.ps1**
+  - Added Constructor with two parameters: `url` and `expiry_time`, to support creation without caption and name.
+  - Ensure the rich_text is converted correctly using `[rich_text]::ConvertFromObjects` for consistent rich text handling.
+- **source/Classes/03_File/03_external_file.ps1**
+  - Fixed `ConvertFromObject` to handle both string and object inputs correctly, ensuring robust external file handling.
+  - Ensure rich_text is converted correctly using `[rich_text]::ConvertFromObjects` for consistent rich text handling.
+- **source/Classes/Block/RichText/01_Rich_Text.ps1**
+  - Fixed `ConvertFromObjects` to handle empty strings correctly (no conversion), and allow Object and
+- **source/Public/Page/New-NotionPage.ps1**
+  - Fixed `Icon` and `Cover` property handling
+- **source/Private/Remove-NullValuesFromObject.ps1**
+  - Fixed handling of empty strings and arrays only containing empty strings, ensuring they are removed from the object.
+
+- **source/Public/Block/Paragraph/New-NotionParagraphBlock.ps1**
+  - Fixed parameter handling, added example documentation
+
 ## [0.6.0] - 2025-06-16
 
 ### Added
