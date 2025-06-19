@@ -1,6 +1,44 @@
 
 function Remove-NullValuesFromObject
 {
+    <#
+    .SYNOPSIS
+        Removes properties with null or empty values from a PowerShell object, including nested objects and arrays.
+
+    .DESCRIPTION
+        The Remove-NullValuesFromObject function recursively processes a given object and removes any properties that have null values, empty strings, or empty arrays.
+        It supports nested objects and arrays, ensuring that only properties with meaningful values are retained in the output.
+        The function returns a cleaned PSCustomObject with all null or empty properties removed.
+
+    .PARAMETER InputObject
+        The object to process. This can be any object, including nested objects or arrays.
+        The function will recursively remove null or empty properties from the object.
+
+    .EXAMPLE
+        $obj = [PSCustomObject]@{
+            Name = "John"
+            Age = $null
+            Address = [PSCustomObject]@{
+                Street = ""
+                City = "Seattle"
+            }
+            Tags = @("admin", $null, "user")
+        }
+        $cleaned = Remove-NullValuesFromObject -InputObject $obj
+
+        # Result:
+        # @{
+        #     Name = "John"
+        #     Address = @{
+        #         City = "Seattle"
+        #     }
+        #     Tags = @("admin", "user")
+        # }
+
+    .NOTES
+        This function is needed, as the notion API does not allow null values in properties and also no empty strings or empty arrays.
+
+    #>
     [CmdletBinding()]
     [OutputType([PSCustomObject])]
     param (
