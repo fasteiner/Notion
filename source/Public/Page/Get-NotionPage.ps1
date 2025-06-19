@@ -14,9 +14,6 @@ function Get-NotionPage
     .PARAMETER Raw
         If this switch is enabled, the raw response from the API call will be returned.
     
-    .PARAMETER maxDepth
-        The maximum depth of subblocks objects. The default is 5.    
-    
     .EXAMPLE
         $pageId = "d5f1d1a5-7b16-4c2a-a2a6-7d43574a1787"
         Get-NotionPage -PageId $pageId
@@ -28,19 +25,27 @@ function Get-NotionPage
         - The API token and version are handled within the `Invoke-NotionApiCall` function.
 
         - If you need the page content use [Get-NotionPageChildren](./Get-NotionPageChildren.ps1) to get the children of the page.
-    
+
+    .OUTPUTS
+        notion_page
+
     .LINK
         https://developers.notion.com/reference/retrieve-a-page-property-item
     #>
     [CmdletBinding()]
     [OutputType([notion_page])]
     param (
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [Alias("Id")]
         [string]$PageId,
-        [Parameter(ParameterSetName = "Class")]
-        [int]$maxDepth = 5
+        [Parameter()]
+        [switch]$Raw
     )
+    
+    if (-not (Test-NotionApiSettings $MyInvocation.MyCommand.Name))
+    {
+        return
+    }
 
     # Construct the API endpoint URL
     $url = "/pages/$PageId"
@@ -50,5 +55,9 @@ function Get-NotionPage
 
     # Return the response to the caller
     $pageObj = [notion_page]::ConvertFromObject($response)
+    if ($Raw)
+    {
+        return $response
+    }
     return $pageObj
 }

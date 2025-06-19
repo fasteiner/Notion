@@ -19,22 +19,30 @@ function Move-NotionPageToArchive
     The ConfirmImpact is set to 'High' due to the potential impact of removing a page.
     
     #>
-        [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
-        [OutputType([notion_page])]
-        param(
-            [Parameter(Mandatory = $true, HelpMessage = "The ID of the page to archive")]
-            [string]$PageId
-        )
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
+    [OutputType([notion_page])]
+    param(
+        [Parameter(Mandatory = $true, HelpMessage = "The ID of the page to archive")]
+        [string]$PageId
+    )
     
-        $body = @{
-            archived = $true
-        }
-        $body = $body | Remove-NullValuesFromObject
-        if ($PSCmdlet.ShouldProcess($PageId)) {
-            $response = Invoke-NotionApiCall -method PATCH -uri "/pages/$PageId" -body $body
-            return [notion_page]::ConvertFromObject($response)
-        } else {
-            return $null
-        }
+    if (-not (Test-NotionApiSettings $MyInvocation.MyCommand.Name))
+    {
+        return
     }
+
+    $body = @{
+        archived = $true
+    }
+    $body = $body | Remove-NullValuesFromObject
+    if ($PSCmdlet.ShouldProcess($PageId))
+    {
+        $response = Invoke-NotionApiCall -method PATCH -uri "/pages/$PageId" -body $body
+        return [notion_page]::ConvertFromObject($response)
+    }
+    else
+    {
+        return $null
+    }
+}
     

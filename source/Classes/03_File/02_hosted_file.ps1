@@ -35,15 +35,22 @@ class notion_hosted_file_structure
 class notion_hosted_file : notion_file
 {
     [notion_hosted_file_structure]$file
+    [rich_text[]]$caption
 
     notion_hosted_file():base("file")
     {
     }
 
+    notion_hosted_file([string]$url, $expiry_time):base("file", $name)
+    {
+        Write-Verbose "[notion_hosted_file]::new($url, $expiry_time)"
+        $this.file = [notion_hosted_file_structure]::new($url, $expiry_time)
+    }
+
     notion_hosted_file([string]$name, $caption, [string]$url, $expiry_time):base("file", $name, $caption)
     {
         Write-Verbose "[notion_hosted_file]::new($name, $($caption | ConvertTo-Json), $url, $expiry_time)"
-        $caption = [rich_text]::ConvertFromObject($caption)
+        $this.caption = [rich_text]::ConvertFromObjects($caption)
         $this.file = [notion_hosted_file_structure]::new($url, $expiry_time)
     }
 

@@ -1,6 +1,7 @@
 # PageProperty: Icon
 
-[API Reference](https://developers.notion.com/reference/page-property-values#icon)
+[API Reference Page Property](https://developers.notion.com/reference/page-property-values#icon)
+[API Reference Database](https://developers.notion.com/reference/database)
 
 ```mermaid
 classDiagram

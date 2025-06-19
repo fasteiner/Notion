@@ -18,3 +18,7 @@ markdownissues.txt
 node_modules
 package-lock.json
 desktop.ini
+
+# exclude diff files
+*.diff
+diff.*

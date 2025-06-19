@@ -74,22 +74,29 @@ class notion_file : notion_icon
         $fileObject = $null
         switch ($Value.type)
         {
-            "file" {
+            "file"
+            {
                 $fileObject = [notion_hosted_file]::ConvertFromObject($Value)
             }
-            "external" {
+            "external"
+            {
                 $fileObject = [notion_external_file]::ConvertFromObject($Value)
             }
-            "file_upload" {
+            "file_upload"
+            {
                 # not implemented yet
                 Write-Error "File upload type is not implemented yet." -Category NotImplemented -TargetObject $Value.type
             }
-            default {
+            default
+            {
                 Write-Error "Invalid file type: $($Value.type). Supported types are 'file' or 'external'." -Category InvalidData -TargetObject $Value.type
             }
         }      
         $fileObject.type = $Value.type
-        $fileObject.caption = [rich_text]::ConvertFromObjects($Value.caption)
+        if ($Value.caption)
+        {
+            $fileObject.caption = [rich_text]::ConvertFromObjects($Value.caption)
+        }
         $fileObject.name = $Value.name
         return $fileObject
     }

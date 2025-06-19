@@ -36,37 +36,23 @@ function New-NotionRichText
     .OUTPUTS
         [rich_text]
     #>
-    [CmdletBinding(DefaultParameterSetName = 'None')]
+    [CmdletBinding()]
     param (
-        [Parameter(ParameterSetName = 'WithText', Mandatory = $true, Position = 0 )]
-        [Parameter(ParameterSetName = 'WithTextAnnotations', Mandatory = $true)]
-        [Parameter(ParameterSetName = 'WithTextAnnotationsAndLink', Mandatory = $true )]
-        [string]$Text,
+        [Parameter(Position = 0 )]
+        [ValidateSet("text", "mention", "equation")]
+        [string]$Type = "text",
 
-        [Parameter(ParameterSetName = 'WithTextAnnotations', Mandatory = $true, Position = 1 )]
-        [Parameter(ParameterSetName = 'WithTextAnnotationsAndLink', Mandatory = $true, Position = 1 )]
+        [Parameter(Position = 1 )]
         [object]$Annotations,
 
-        [Parameter(ParameterSetName = 'WithTextAnnotationsAndLink', Mandatory = $true, Position = 2 )]
+        [Parameter(Position = 2 )]
+        [string]$Text,
+
+        [Parameter(Position = 3 )]
         [object]$Link
     )
 
-    write-Host -ForegroundColor Cyan $PSCmdlet.ParameterSetName
-    if ($PSCmdlet.ParameterSetName -eq 'WithTextAnnotationsAndLink')
-    {
-        $obj = [rich_text]::new($Text, $Annotations, $Link)
-    }
-    elseif ($PSCmdlet.ParameterSetName -eq 'WithTextAnnotations')
-    {
-        $obj = [rich_text]::new($Text, $Annotations)
-    }
-    elseif ($PSCmdlet.ParameterSetName -eq 'WithText')
-    {
-        $obj = [rich_text_text]::new($Text)
-    }
-    else
-    {
-        $obj = [rich_text_text]::new()
-    }
+        $obj = [rich_text]::new($Type, [notion_annotation]::ConvertFromObject($Annotations), $Text, $Link)
+
     return $obj
 }
