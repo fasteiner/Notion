@@ -43,16 +43,16 @@ class notion_bookmark_block : notion_block
     [notion_blocktype] $type = "bookmark"
     [bookmark_structure] $bookmark
     
-    notion_bookmark_block() :base("bookmark")
+    notion_bookmark_block()
     {
     }
 
-    notion_bookmark_block($url) :base("bookmark")
+    notion_bookmark_block($url)
     {
         $this.bookmark = [bookmark_structure]::ConvertFromObject($url)
     }
-    
-    notion_bookmark_block($caption, [string]$url) :base("bookmark")
+
+    notion_bookmark_block($caption, [string]$url)
     {
         $this.bookmark = [bookmark_structure]::new($caption, $url)
     }

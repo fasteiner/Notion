@@ -42,6 +42,7 @@ function New-NotionCodeBlock
     [OutputType([notion_code_block])]
     param (
         [Parameter(ParameterSetName = 'Default', HelpMessage = 'Code text for the code block.')]
+        [Alias('Code', 'Content')]
         $Text,
 
         [Parameter(ParameterSetName = 'Default', HelpMessage = 'Caption to be displayed above the code block.')]
