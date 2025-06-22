@@ -60,8 +60,12 @@ function New-NotionRichText
         $richTextArray = [rich_text]::ConvertFromMarkdown($MarkdownText)
         return $richTextArray
     }
-
-    $obj = [rich_text]::new($Type, [notion_annotation]::ConvertFromObject($Annotations), $Text, $Link)
+    $obj = [rich_text]::ConvertFromObjects(@{
+        Type = $Type
+        Annotations = $Annotations
+        Text = $Text
+        Link = $Link
+    })
 
     return $obj
 }

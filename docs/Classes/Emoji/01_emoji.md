@@ -5,7 +5,7 @@
 ```mermaid
 classDiagram
     class notion_emoji {
-        [icontype]$type = "emoji"
+        [notion_icon_type]$type = "emoji"
         [string]$emoji
         ConvertfromObject()
     }

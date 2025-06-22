@@ -77,9 +77,14 @@ Describe "notion_parent class" {
             $parent | Should -BeOfType notion_block_parent
             $parent.block_id | Should -Be "blk789"
         }
-        It "Throws error for unknown type" {
-            $obj = [PSCustomObject]@{ type = "unknown_type" }
-            { [notion_parent]::ConvertFromObject($obj) } | Should -Throw
+        It "Creates an error for unknown type" {
+            $ErrorActionPreference = "SilentlyContinue"
+            $obj = [PSCustomObject]@{ type = "unknown_type"; id = "id123" }
+            $parent = [notion_parent]::ConvertFromObject($obj)
+            $ErrorActionPreference = "Continue"
+            $parent | Should -BeNullOrEmpty
+            $Error[0] | Should -Not -BeNullOrEmpty
+            $Error[0].Exception.Message | Should -Contain "Unknown parent type: unknown_type"
         }
     }
 }

@@ -58,6 +58,41 @@ class rich_text
         $this.href = $href
     }
 
+    static [rich_text] Create([string] $type = "text", $annotations = $null, [object] $content = "", $href = $null)
+    {
+        if ($content -is [string] -and $content.Length -gt 2000)
+        {
+            throw [System.ArgumentException]::new("The content must be 2000 characters or less.")
+        }
+        switch($type)
+        {
+            "text"
+            {
+                return [rich_text_text]::new($annotations, $content, $href)
+            }
+            "mention"
+            {
+                # not implemented exeption
+                throw [System.NotImplementedException]::new("Rich text mention creation is not implemented yet.") 
+            }
+            "equation"
+            {
+                $equation = [rich_text_equation]::new($content)
+                $equation.href = $href
+                if ($annotations)
+                {
+                    $equation.annotations = $annotations
+                }
+                return $equation
+            }
+            default
+            {
+                throw [System.ArgumentException]::new("Invalid rich text type: $type")
+            }
+        }
+        return $null
+    }
+
     static [rich_text[]] ConvertFromMarkdown([string] $markdownInput)
     {
         #TODO: test

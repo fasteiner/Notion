@@ -49,18 +49,8 @@ function New-NotionParent
         [Parameter(ParameterSetName = 'WithTypeAndId', Mandatory = $true)]
         [string]$Id
     )
-
-    if ($PSCmdlet.ParameterSetName -eq 'WithTypeAndId')
-    {
-        $obj = [notion_parent]::Create($Type, $Id)
+    if(-not $id){
+        $id = [string]::Empty
     }
-    elseif ($PSCmdlet.ParameterSetName -eq 'WithType')
-    {
-        $obj = [notion_parent]::new($Type)
-    }
-    else
-    {
-        $obj = [notion_parent]::new()
-    }
-    return $obj
+    return [notion_parent]::Create([notion_parent_type]$Type, $Id)
 }

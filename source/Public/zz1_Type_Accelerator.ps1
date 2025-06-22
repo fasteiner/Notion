@@ -16,7 +16,7 @@ $ExportableTypes = @(
     [notion_parent_type]
     [bot_owner_type]
     [notion_color]
-    [icontype]
+    [notion_icon_type]
     [rich_text_mention_type]
     
     [template_mention_date]

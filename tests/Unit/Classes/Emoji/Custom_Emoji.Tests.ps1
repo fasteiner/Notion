@@ -31,8 +31,8 @@ Describe "notion_custom_emoji class" {
     }
 
     It "Should create an instance with custom_emoji_structure" {
-        $customEmoji = [custom_emoji_structure]::new("789", "laugh", "https://example.com/laugh.png")
-        $notionEmoji = [notion_custom_emoji]::new($customEmoji)
+        $notionEmoji = [notion_custom_emoji]::new("789", "laugh", "https://example.com/laugh.png")
+        $notionEmoji.custom_emoji.getType().Name | Should -Be "custom_emoji_structure"
         $notionEmoji.custom_emoji.id   | Should -Be "789"
         $notionEmoji.custom_emoji.name | Should -Be "laugh"
         $notionEmoji.custom_emoji.url  | Should -Be "https://example.com/laugh.png"
