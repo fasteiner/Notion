@@ -5,6 +5,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **source/Public/Block/Cmds/Image/New-NotionImageBlock.ps1**
+  - Added the implementation to correctly create a `notion_image_block` object from the provided file parameter.
+
+### Fixed
+
+- **source/Public/Block/Table/New-NotionTableBlock.ps1**
+  - Renamed the function to match the filename to ensure it gets included by the module builder.
+- **source/Public/Block/TableRow/New-NotionTableRowBlock.ps1**
+  - Renamed the function to match the filename to ensure it gets included by the module builder.
+
 ## [0.8.0] - 2025-06-23
 
 ### Added

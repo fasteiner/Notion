@@ -1,17 +1,17 @@
-function New-NotionTableRow
+function New-NotionTableRowBlock
 {
     <#
     .SYNOPSIS
         Creates a new Notion table row.
 
     .DESCRIPTION
-        The New-NotionTableRow function creates a new Notion table row with specified cell data.
+        The New-NotionTableRowBlock function creates a new Notion table row with specified cell data.
 
     .PARAMETER CellData
         The cell data for the table row. This should be an array of objects.
 
     .EXAMPLE
-        $row = New-NotionTableRow -CellData @("Cell1", "Cell2", "Cell3")
+        $row = New-NotionTableRowBlock -CellData @("Cell1", "Cell2", "Cell3")
 
     .OUTPUTS
         [notion_table_row_block] object
