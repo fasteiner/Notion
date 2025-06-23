@@ -51,7 +51,7 @@ Describe "Create a Callout Block on a Notion Page" {
         # A fancy callout block
     $CalloutRichText = @(
         (New-NotionRichText -Text "It's not so hard to create content by the " -Annotations (New-NotionRichTextAnnotation)),
-        (New-NotionRichText -Text "Notion" -Annotations (New-NotionRichTextAnnotation -Bold)),
+        (New-NotionRichText -Text "Notion " -Annotations (New-NotionRichTextAnnotation -Bold)),
         (New-NotionRichText -Text "Module, which is available at the PowerShellGallery")
     )
 
@@ -59,7 +59,7 @@ Describe "Create a Callout Block on a Notion Page" {
         ## List all added children by block type
         $children = @(
             $calloutBlock,
-            (New-NotionCalloutBlock -RichText $CalloutRichText -Icon (New-NotionEmoji -Emoji "🔔") -Color "red")
+            (New-NotionCalloutBlock -RichText $CalloutRichText -Icon (New-NotionEmoji -Emoji "🔔") -Color "background_red")
         )
 
         # Putting together needed parameters to create the page
@@ -83,7 +83,7 @@ Describe "Create a Callout Block on a Notion Page" {
         $pageBlocks | Should -HaveCount 1
         $pageBlocks[0].type | Should -Be "callout"
         $pageBlocks[0].callout.rich_text[0].plain_text | Should -Be "This is a callout"
-        $pageBlocks[0].callout.icon.emoji | Should -Be ":bulb:"
+        $pageBlocks[0].callout.icon.emoji | Should -Be "🔥"
         $pageBlocks[0].callout.color.ToString() | Should -Be "yellow"
 
         Remove-NotionPage -PageID $page.id -Confirm:$false -ErrorAction Stop
