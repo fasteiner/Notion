@@ -58,6 +58,116 @@ class rich_text
         $this.href = $href
     }
 
+    static [rich_text] Create([string] $type = "text", $annotations = $null, [object] $content = "", $href = $null)
+    {
+        if ($content -is [string] -and $content.Length -gt 2000)
+        {
+            throw [System.ArgumentException]::new("The content must be 2000 characters or less.")
+        }
+        switch($type)
+        {
+            "text"
+            {
+                return [rich_text_text]::new($annotations, $content, $href)
+            }
+            "mention"
+            {
+                # not implemented exeption
+                throw [System.NotImplementedException]::new("Rich text mention creation is not implemented yet.") 
+            }
+            "equation"
+            {
+                $equation = [rich_text_equation]::new($content)
+                $equation.href = $href
+                if ($annotations)
+                {
+                    $equation.annotations = $annotations
+                }
+                return $equation
+            }
+            default
+            {
+                throw [System.ArgumentException]::new("Invalid rich text type: $type")
+            }
+        }
+        return $null
+    }
+
+    static [rich_text[]] ConvertFromMarkdown([string] $markdownInput)
+    {
+        #TODO: test
+        $resultList = @()
+        $regexPattern = '(\$\$(.+?)\$\$|\\\((.+?)\\\)|\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`|\[(.+?)\]\((.+?)\)|@(\w+)|([^*`@$\[]+))'
+        $matches = [regex]::Matches($markdownInput, $regexPattern)
+
+        foreach ($match in $matches)
+        {
+            $annotationObj = [notion_annotation]::new()
+            $textContent = $null
+            $linkTarget = $null
+
+            if ($match.Groups[2].Success -or $match.Groups[3].Success)
+            {
+                # LaTeX
+                $latexExpr = $match.Groups[2].Value
+                if (-not $latexExpr)
+                {
+                    $latexExpr = $match.Groups[3].Value 
+                }
+                $resultList += [rich_text_equation]::new($latexExpr)
+                continue
+            }
+            elseif ($match.Groups[4].Success)
+            {
+                $textContent = $match.Groups[4].Value
+                $annotationObj.bold = $true
+            }
+            elseif ($match.Groups[5].Success)
+            {
+                $textContent = $match.Groups[5].Value
+                $annotationObj.italic = $true
+            }
+            elseif ($match.Groups[6].Success)
+            {
+                $textContent = $match.Groups[6].Value
+                $annotationObj.code = $true
+            }
+            elseif ($match.Groups[7].Success -and $match.Groups[8].Success)
+            {
+                $textContent = $match.Groups[7].Value
+                $linkTarget = $match.Groups[8].Value
+            }
+            elseif ($match.Groups[9].Success)
+            {
+                $mentionName = $match.Groups[9].Value
+                $mentionObj = [rich_text_mention_user]::new($mentionName)  # Beispiel: User-Mention
+                $mentionRichText = [rich_text_mention]::new("user")
+                $mentionRichText.mention = $mentionObj
+                $mentionRichText.plain_text = "@$mentionName"
+                $resultList += $mentionRichText
+                continue
+            }
+            elseif ($match.Groups[10].Success)
+            {
+                $textContent = $match.Groups[10].Value
+            }
+
+            if ($textContent)
+            {
+                $richTextObj = [rich_text]::new("text", $annotationObj, $textContent)
+                if ($linkTarget)
+                {
+                    $richTextObj.href = $linkTarget 
+                }
+                $resultList += $richTextObj
+            }
+        }
+
+        return $resultList
+    }
+
+
+
     static [rich_text[]] ConvertFromObjects([object] $Value)
     {
         if ($Value -isnot [array])

@@ -27,7 +27,8 @@ class custom_emoji_structure
 class notion_custom_emoji
 # https://developers.notion.com/reference/emoji-object#custom-emoji
 {
-    [icontype]$type = "custom_emoji"
+    # needs to be string, as it is not contained in any enum
+    [string]$type = "custom_emoji"
     [custom_emoji_structure]$custom_emoji
 
     notion_custom_emoji()
@@ -35,9 +36,19 @@ class notion_custom_emoji
         $this.custom_emoji = $null
     }
 
-    notion_custom_emoji([notion_custom_emoji]$custom_emoji)
+    notion_custom_emoji($custom_emoji)
     {
-        $this.custom_emoji = $custom_emoji
+        $this.custom_emoji = [custom_emoji_structure]::ConvertFromObject($custom_emoji)
+    }
+
+    notion_custom_emoji($name, $url)
+    {
+        $this.custom_emoji = [custom_emoji_structure]::new($null, $name, $url)
+    }
+
+    notion_custom_emoji($id, $name, $url)
+    {
+        $this.custom_emoji = [custom_emoji_structure]::new($id, $name, $url)
     }
 
     static [notion_custom_emoji] ConvertFromObject($Value)

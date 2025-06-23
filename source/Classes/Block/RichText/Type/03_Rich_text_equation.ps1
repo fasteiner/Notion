@@ -33,11 +33,6 @@ class rich_text_equation : rich_text{
     {
     }
     
-    rich_text_equation([rich_text_equation_structure] $equation) :base("equation")
-    {
-        $this.equation = $equation
-    }
-    
     rich_text_equation([string] $content) :base("equation")
     {
         $this.equation = [rich_text_equation_structure]::new($content)

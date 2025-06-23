@@ -35,7 +35,7 @@ class notion_parent
             }
             default
             {
-                Write-Error "Unknown parent type: $type" -Category InvalidData -TargetObject $type 
+                Write-Error "Unknown parent type: $type" -Category InvalidData -TargetObject $type -RecommendedAction "Check the parent type and try again. Supported types are: database, page, workspace, block"
             }
         }
         return $parent

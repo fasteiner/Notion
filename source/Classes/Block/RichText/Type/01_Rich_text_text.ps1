@@ -25,7 +25,16 @@ class rich_text_text_structure
 
     static [rich_text_text_structure] ConvertFromObject($Value)
     {
+        if($Value -is [rich_text_text])
+        {
+            return $Value
+        }
         $rich_text_text_structure = [rich_text_text_structure]::new()
+        if ($Value -is [string])
+        {
+            $rich_text_text_structure.content = $Value
+            return $rich_text_text_structure
+        }
         $rich_text_text_structure.content = $Value.content
         $rich_text_text_structure.link = $Value.link
         return $rich_text_text_structure
@@ -79,10 +88,12 @@ class rich_text_text : rich_text
         $this.plain_text = $content
     }
 
-    # Constructor with content string, annotations, and plain_text
-    rich_text_text([string] $content, $annotations, $plain_text) : base("text", $annotations, $plain_text)
+    # Constructor with content string, annotations, and link
+    rich_text_text([string] $content, $annotations, $href) : base("text", $annotations)
     {
         $this.text = [rich_text_text_structure]::new($content)
+        $this.plain_text = $content
+        $this.href = $href
     }
 
     # [string] ToJson([bool]$compress = $false) {
@@ -99,6 +110,16 @@ class rich_text_text : rich_text
     static [rich_text_text] ConvertFromObject($Value)
     {
         $rich_text = [rich_text_text]::new()
+        if($Value -is [rich_text_text])
+        {
+            return $Value
+        }
+        if ($Value -is [string])
+        {
+            $rich_text.text = [rich_text_text_structure]::new($Value)
+            $rich_text.plain_text = $Value
+            return $rich_text
+        }
         $rich_text.text = [rich_text_text_structure]::ConvertFromObject($Value.text)
         $rich_text.plain_text = $Value.plain_text ?? $Value.text.content
         return $rich_text

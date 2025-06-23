@@ -5,6 +5,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **source/Classes/Block/RichText/01_Rich_Text.ps1**
+  - Added Factory method `::Create` to instantiate `notion_rich_text` objects from various input types.
+  - Added prototype of `ConvertFromMarkdown` method to convert Markdown text to `notion_rich_text` objects.
+- **source/Classes/Parent/00_parent.ps1**
+  - Added Recommended Action for unknown parent types in the `ConvertFromObject` method.
+- **source/Public/Block/Code/New-NotionCodeBlock.ps1**
+  - Added Aliases for `text`: `code`, `content`, for better flexibility in block creation.
+- **source/Public/Block/_RichText/New-NotionRichText.ps1**
+  - Included Possibility to pass a Markdown via `-MarkdownText`
+- **source/Public/Emoji/New-NotionEmoji.ps1**
+  - Added new function to create `notion_emoji` objects from strings.
+- **tests/Integration/Block/callout.tests.ps1**
+  - Added integration tests for `New-NotionCalloutBlock` cmdlet, covering various scenarios and rich text handling.
+- New Unit Tests for several classes: 
+  - `tests/Unit/Classes/Emoji/Custom_Emoji.Tests.ps1`
+  - `tests/Unit/Classes/Emoji/Emoji.Tests.ps1`
+  - `tests/Unit/Classes/Page/PageProperties/pp_checkbox.Tests.ps1`
+  - `tests/Unit/Classes/Parent/parent.Tests.ps1`
+  - `tests/Unit/Classes/User/user.Tests.ps1`
+- New Unit Tests for several functions:
+  - `tests/Unit/Public/Block/Callout/New-NotionCalloutBlock.Tests.ps1`
+  - `tests/Unit/Public/Emoji/New-NotionEmoji.Tests.ps1`
+
+### Changed
+
+- renamed `icon_type` to `notion_icon_type`
+
+### Fixed
+
+- **source/Classes/Block/05_Bookmark.ps1**
+  - Corrected constructors to (remove call to base class constructor)
+- **source/Classes/Block/RichText/Type/01_Rich_text_text.ps1**
+  - Fixed `ConvertFromObject` in main class and structure class to handle both string and object inputs correctly, ensuring robust rich text handling.
+  - Also fix href handling in the constructor to ensure it is set correctly when provided.
+- **source/Classes/Emoji/02_Custom_Emoji.ps1**
+  - hardcoded the `type` property to `custom_emoji` in the constructor, as it is required by the Notion API.
+- **source/Public/Block/Callout/New-NotionCalloutBlock.ps1**
+  - Switched to object array for `rich_text` parameter to allow multiple rich text objects, improving flexibility in block creation.
+- **source/Public/Block/_RichText/New-NotionRichText.ps1**
+  - Fixed conversion of rich_text, by passing it as an object to `[rich_text]::ConvertFromObjects`, ensuring consistent handling of rich text objects.
+- **source/Public/Parent/New-NotionParent.ps1**
+  - Switched to factory method `::Create` to ensure the conversion logic is handled by the class itself, improving consistency and maintainability. Also initalize the id to an empty string if not provided, to ensure the object is always in a valid state and can be created without errors.
+
+### Removed
+
+- **source/Classes/Block/RichText/Type/03_Rich_text_equation.ps1**
+  - Duplicate constructor with one parameter removed, PowerShell does not support this syntax.
+
+### Deprecated
+
+- **source/Public/Block/LinkPreview/New-NotionLinkPreviewBlock.ps1**
+  - Deprecated `New-NotionLinkPreviewBlock` cmdlet, as the Notion API does not support creating link preview blocks directly.
+  - Added a error message to inform users about the deprecation.
+
 ## [0.7.0] - 2025-06-19
 
 ### Added

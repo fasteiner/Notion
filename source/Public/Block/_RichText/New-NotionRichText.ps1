@@ -45,14 +45,27 @@ function New-NotionRichText
         [Parameter(Position = 1 )]
         [object]$Annotations,
 
-        [Parameter(Position = 2 )]
+        [Parameter(ParameterSetName = "Text", Position = 2 )]
         [string]$Text,
+
+        [Parameter(ParameterSetName = "ConvertFromMarkdown", Position = 2 )]
+        [string]$MarkdownText,
 
         [Parameter(Position = 3 )]
         [object]$Link
     )
 
-        $obj = [rich_text]::new($Type, [notion_annotation]::ConvertFromObject($Annotations), $Text, $Link)
+    if ($MarkdownText)
+    {
+        $richTextArray = [rich_text]::ConvertFromMarkdown($MarkdownText)
+        return $richTextArray
+    }
+    $obj = [rich_text]::ConvertFromObjects(@{
+        Type = $Type
+        Annotations = $Annotations
+        Text = $Text
+        Link = $Link
+    })
 
     return $obj
 }

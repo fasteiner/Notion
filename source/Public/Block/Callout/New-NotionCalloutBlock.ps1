@@ -30,8 +30,8 @@ function New-NotionCalloutBlock
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
-        [Parameter(ParameterSetName = 'Default', HelpMessage = 'Rich text content for the callout block.')]
-        $RichText,
+        [Parameter(ParameterSetName = 'Default', HelpMessage = 'Rich text content array for the callout block.')]
+        [Object[]] $RichText,
 
         [Parameter(ParameterSetName = 'Default', HelpMessage = 'Icon (object). Can be an emoji or a file.')]
         $Icon,

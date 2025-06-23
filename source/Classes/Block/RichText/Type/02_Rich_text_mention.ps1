@@ -67,6 +67,41 @@ class rich_text_mention : rich_text
         $json.href = $this.href
         return $json | ConvertTo-Json -Compress:$compress
     }
+
+    #TODO: Implement a factory method to create rich_text_mention objects based on type
+
+    # static [rich_text_mention] Create ([string] $mentionType, [string] $identifier)
+    # {
+    #     $mentionObj = $null
+
+    #     switch ($mentionType.ToLower())
+    #     {
+    #         "user"
+    #         {
+    #             $mentionObj = [rich_text_mention_user]::new($identifier)
+    #         }
+    #         "page"
+    #         {
+    #             $mentionObj = [rich_text_mention_page]::new($identifier)
+    #         }
+    #         "date"
+    #         {
+    #             $mentionObj = [rich_text_mention_date]::new($identifier)
+    #         }
+    #         # Add more mention types as needed
+    #         default
+    #         {
+    #             throw "Unsupported mention type: $mentionType"
+    #         }
+    #     }
+
+    #     $mentionRichText = [rich_text_mention]::new($mentionType)
+    #     $mentionRichText.mention = $mentionObj
+    #     $mentionRichText.plain_text = "@$identifier"
+
+    #     return $mentionRichText
+    # }
+
     
     static [rich_text_mention] ConvertFromObject($Value)
     {
