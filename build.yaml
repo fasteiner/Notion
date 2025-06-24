@@ -105,7 +105,7 @@ BuildWorkflow:
   publish:
     - Publish_Release_To_GitHub
     - publish_module_to_gallery
-    - Create_ChangeLog_GitHub_PR
+    #- Create_ChangeLog_GitHub_PR - needs to run in a dedicated pipeline
     - Publish_GitHub_Wiki_Content # Runs last to ensure that the module is published to the gallery, even if the wiki content is not updated.
 
 
