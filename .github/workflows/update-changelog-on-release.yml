@@ -28,6 +28,6 @@ jobs:
 
       - name: Update ChangeLog Version
         env:
-          GitHubToken: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./build.ps1 -Task Create_ChangeLog_GitHub_PR

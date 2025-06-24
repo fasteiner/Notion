@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **.github/workflows/update-changelog-on-release.yml**
   - Added a GitHub Actions workflow to automatically update the changelog upon release.
+- **github/workflows/publish.yml**
+  - Added a exclusion for ChangeLog.md changes and commits by the bot user to prevent unnecessary workflow runs.
 
 ## [0.8.0] - 2025-06-23
 
