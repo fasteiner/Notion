@@ -30,4 +30,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ./build.ps1 -Task Create_ChangeLog_GitHub_PR
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task Create_ChangeLog_GitHub_PR
