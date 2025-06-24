@@ -49,7 +49,7 @@ Describe "notion_parent class" {
             $parent.block_id | Should -Be "blk789"
         }
         It "Throws error for unknown type" {
-                        { [notion_parent]::Create("unknown_type", "id") } | Should -Throw -ExceptionType System.Management.Automation.RuntimeException
+            { [notion_parent]::Create("unknown_type", "id") } | Should -Throw -ExceptionType System.Management.Automation.RuntimeException
         }
     }
 
@@ -78,13 +78,18 @@ Describe "notion_parent class" {
             $parent.block_id | Should -Be "blk789"
         }
         It "Creates an error for unknown type" {
-            $ErrorActionPreference = "SilentlyContinue"
+            # $ErrorActionPreference = "SilentlyContinue"
             $obj = [PSCustomObject]@{ type = "unknown_type"; id = "id123" }
-            $parent = [notion_parent]::ConvertFromObject($obj)
-            $ErrorActionPreference = "Continue"
-            $parent | Should -BeNullOrEmpty
-            $Error[0] | Should -Not -BeNullOrEmpty
-            $Error[0].Exception.Message | Should -Contain "Unknown parent type: unknown_type"
+            # $parent = [notion_parent]::ConvertFromObject($obj)
+            # $ErrorActionPreference = "Continue"
+            # $parent | Should -BeNullOrEmpty
+            # $Error[0] | Should -Not -BeNullOrEmpty
+            # $Error[0].Exception.Message | Should -Contain "Unknown parent type: unknown_type"
+            $scriptblock = InModuleScope -ModuleName $global:moduleName -ScriptBlock {
+                # Just outputting a scriptblock so it originates from the module = is module bound
+                { $ErrorActionPreference = "stop"; [notion_parent]::ConvertFromObject($obj) }
+            }
+            $scriptblock | Should -Throw
         }
     }
 }
