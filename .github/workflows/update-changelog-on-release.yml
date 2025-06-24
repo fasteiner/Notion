@@ -31,3 +31,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./build.ps1 -ResolveDependency -UseModuleFast -Task Create_ChangeLog_GitHub_PR
+
+      - name: Debug Output for Create_ChangeLog_GitHub_PR
+        run: |
+          echo "Debug: Checking PowerShellForGitHub module"
+          pwsh -Command "Get-Module -Name PowerShellForGitHub | Format-Table"
+          echo "Debug: Checking Git Metadata"
+          pwsh -Command "git rev-parse origin/main"
+          pwsh -Command "git tag -l --points-at $(git rev-parse origin/main)"
