@@ -28,7 +28,6 @@ jobs:
 
       - name: Update ChangeLog Version
         env:
-          GalleryApiToken: ${{ secrets.PSGALLERY_API_KEY }}
           GitHubToken: ${{ secrets.GH_TOKEN }}
         run: |
           ./build.ps1 -Task Create_ChangeLog_GitHub_PR
