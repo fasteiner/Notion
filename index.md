@@ -401,6 +401,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **.github/workflows/update-changelog-on-release.yml**
+  - Included Dependency installation
+
+## [0.8.0] - 2025-06-24
+
 ### Added
 
 - **.github/workflows/update-changelog-on-release.yml**
