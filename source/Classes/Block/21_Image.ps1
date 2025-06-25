@@ -25,7 +25,13 @@ class notion_image_block : notion_block
             return $Value
         }
         $Image_Obj = [notion_image_block]::new()
-        $Image_Obj.image = [notion_file]::ConvertFromObject($Value.image)
+        if($value -is [notion_file])
+        {
+            $Image_Obj.image = $Value
+        }
+        else{
+            $Image_Obj.image = [notion_file]::ConvertFromObject($Value.image)
+        }
         return $Image_Obj
     }
 }

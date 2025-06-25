@@ -1,0 +1,41 @@
+name: Update Changelog on Release
+
+on:
+  release:
+    types: [published]
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  update-changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for GitVersion
+
+      - name: Install GitVersion
+        uses: GitTools/actions/gitversion/setup@v0
+        with:
+          versionSpec: '5.x'
+      
+      - name: chmod build.ps1
+        run: chmod +x build.ps1
+
+      - name: Update ChangeLog Version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ./build.ps1 -ResolveDependency -UseModuleFast -Task Create_ChangeLog_GitHub_PR
+
+      - name: Debug Output for Create_ChangeLog_GitHub_PR
+        run: |
+          echo "Debug: Checking PowerShellForGitHub module"
+          Get-Module -Name PowerShellForGitHub | Format-Table
+          echo "Debug: Checking Git Metadata"
+          git rev-parse origin/main
+          git tag -l --points-at $(git rev-parse origin/main)

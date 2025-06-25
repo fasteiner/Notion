@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'CHANGELOG.md' # Trigger when the changelog is updated
   workflow_dispatch:
 
 jobs:

@@ -17,6 +17,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **source/Public/Block/TableRow/New-NotionTableRowBlock.ps1**
   - Renamed the function to match the filename to ensure it gets included by the module builder.
 
+## [0.9.2] - 2025-06-24
+
+- **.github/workflows/generate-project-page.yml**
+  - Only run when the changelog was updated
+
+## [0.9.1] - 2025-06-24
+
+### Fixed
+
+- **.github/workflows/update-changelog-on-release.yml**
+  - Included Dependency installation
+
+## [0.9.0] - 2025-06-24
+
+### Added
+
+- **.github/workflows/update-changelog-on-release.yml**
+  - Added a GitHub Actions workflow to automatically update the changelog upon release.
+- **github/workflows/publish.yml**
+  - Added a exclusion for ChangeLog.md changes and commits by the bot user to prevent unnecessary workflow runs.
+
 ## [0.8.0] - 2025-06-23
 
 ### Added
