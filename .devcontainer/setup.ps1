@@ -28,9 +28,9 @@ if (-not (Test-Path -Path $profileScript)) {
 }
 Add-Content -Path $profileScript -Value @"
 # Added by devcontainer setup
-\$dotnetTools = [System.IO.Path]::Combine(\$HOME, '.dotnet', 'tools')
-if (\$env:PATH -notlike "*\$dotnetTools*") {
-    \$env:PATH = "\$dotnetTools`:\$env:PATH"
+`$dotnetTools = [System.IO.Path]::Combine(`$HOME, '.dotnet', 'tools')
+if (`$env:PATH -notlike "*`$dotnetTools*") {
+    `$env:PATH = "`$dotnetTools``:`$env:PATH"
 }
 "@
 
