@@ -401,7 +401,69 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`.devcontainer/setup.ps1`**
+  - Added logic to ensure the `.dotnet/tools` directory is prepended to `$env:PATH` if not already present, improving the reliability of dotnet tool availability in devcontainers.
+
+- **`GitVersion.yml`**
+  - Updated the `hotfix` branch regex to also match `bugfix` prefixes, enhancing support for multiple fix naming conventions.
+
+- **`source/Private/Invoke-TransposeTable.ps1`**
+  - Introduced `Invoke-TransposeTable`, a utility function that transposes a 2D array. Useful for converting row-major to column-major formats.
+
+- **`source/Public/Block/Image/New-NotionImageBlock.ps1`**
+  - Implemented `New-NotionImageBlock` to construct a `notion_image_block` from a file input.
+
+- **`tests/Integration/Block/table.tests.ps1`**
+  - Added integration tests verifying creation of table blocks with structured content.
+
+- **`tests/QA/ModulePrefix.Tests.ps1`**
+  - Introduced QA test to enforce module function naming conventions using `Verb-PrefixFunctionName` pattern.
+
+- **`tests/Unit/Classes/Block/27.99_Table.tests.ps1`**
+  - Added comprehensive unit tests for `Table_structure` and `notion_table_block` classes, covering constructors, methods, and conversion behavior.
+
+- **`tests/Unit/Private/Invoke-TransposeTable.Tests.ps1`**
+  - Introduced unit tests for `Invoke-TransposeTable`, validating matrix transposition and error handling for invalid input.
+
+- **`tests/Unit/Public/Block/New-NotionTableBlock.Tests.ps1`**
+  - Added extensive unit tests for `New-NotionTableBlock`, validating behavior across input types, flags, and edge cases.
+
+### Changed
+
+- **`source/Classes/Block/21_Image.ps1`**
+  - Enhanced `notion_image_block.ConvertFromObject` to handle both `notion_file` objects and plain objects, improving robustness.
+
+- **`source/Classes/Block/27.2_TableRow.ps1`**
+  - Updated `TableRow_structure.ConvertFromObject` to short-circuit if input is already a `TableRow_structure` instance, avoiding unnecessary processing.
+
+- **`source/Classes/Block/27.99_Table.ps1`**
+  - Modified `addRow` and `addRows` to set `has_children` flag when adding rows, ensuring block state consistency.
+
+- **`source/Public/Block/_RichText/New-NotionRichText.ps1`**
+  - Updated the `Annotations` parameter to inherit defaults from parent object when unspecified.
+
+- **`tests/Integration/Block/callout.tests.ps1`**
+  - Adjusted emoji and color properties of callout blocks to align with expected test results.
+
+- **`tests/Unit/Classes/Page/PageProperties/pp_checkbox.Tests.ps1`**
+  - Fixed path resolution logic to correct import of project resources.
+
+- **`tests/Unit/Classes/Parent/parent.Tests.ps1`**
+  - Improved error handling for invalid parent types in `notion_parent.ConvertFromObject`.
+
 ### Fixed
+
+- **`source/Public/Block/Table/New-NotionTableBlock.ps1`**
+  - Renamed function from `New-NotionTable` to `New-NotionTableBlock` and significantly refactored its logic to support structured inputs (e.g., hashtables).
+  - Corrected behavior for handling column and row headers.
+  - Added support for optional pivoting of data and validation of inputs.
+
+- **`source/Public/Block/TableRow/New-NotionTableRowBlock.ps1`**
+  - Renamed function from `New-NotionTableRow` to `New-NotionTableRowBlock` and updated references to match, ensuring correct module export and functionality.
+
+## [0.9.2] - 2025-06-24
 
 - **.github/workflows/generate-project-page.yml**
   - Only run when the changelog was updated
