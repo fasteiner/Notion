@@ -23,7 +23,7 @@ branches:
   hotfix:
     tag: fix
     increment: Patch
-    regex: (hot)?fix(es)?[\/-]
+    regex: hotfix(es)?[\/-]|bugfix(es)?[\/-]
     source-branches: ['master']
 
 ignore:

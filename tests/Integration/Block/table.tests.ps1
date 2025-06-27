@@ -38,36 +38,29 @@ BeforeAll {
 Describe "Create a Callout Block on a Notion Page" {
     It "Should create a callout block with rich text, icon, and color" {
 
-        # Create a callout block with rich text, icon, and color
-        $calloutBlock = New-NotionCalloutBlock -RichText "This is a callout" -Icon "🔥" -Color "yellow"
-
-        # Validate the properties of the created callout block
-        $calloutBlock | Should -BeOfType "notion_callout_block"
-        $calloutBlock.type | Should -Be "callout"
-        $calloutBlock.callout.rich_text[0].plain_text | Should -Be "This is a callout"
-        $calloutBlock.callout.icon.emoji | Should -Be "🔥"
-        $calloutBlock.callout.color.ToString() | Should -Be "yellow"
-
-        # A fancy callout block
-    $CalloutRichText = @(
-        (New-NotionRichText -Text "It's not so hard to create content by the " -Annotations (New-NotionRichTextAnnotation)),
-        (New-NotionRichText -Text "Notion " -Annotations (New-NotionRichTextAnnotation -Bold)),
-        (New-NotionRichText -Text "Module, which is available at the PowerShellGallery")
-    )
-
-        # Result
-        ## List all added children by block type
-        $children = @(
-            $calloutBlock,
-            (New-NotionCalloutBlock -RichText $CalloutRichText -Icon (New-NotionEmoji -Emoji "🔔") -Color "background_red")
+        $children = @()
+        # Table data for Notion
+        $tableData = @(
+            @{
+                "Name" = "Person"
+                "Description" = "A class representing a person with properties and methods."
+                "Properties" = "Name (string), Age (int)"
+                "Methods" = "Greet()"
+            },
+            @{
+                "Name" = "Car"
+                "Description" = "A class representing a car with properties and methods."
+                "Properties" = "Make (string), Model (string), Year (int)"
+                "Methods" = "Start(), Stop()"
+            }
         )
-
-        # Putting together needed parameters to create the page
+        $children += New-NotionTableBlock -TableData $tableData
         $ParentObject = New-NotionParent -Type "page_id" -Id $global:TestPageID
+
         $NewPageProps = @{
-            Parent_Obj = $ParentObject
-            Children   = $children
-            Title      = $title
+            Parent = $ParentObject
+            Title = "Table Block Test Page"
+            Children = $children
         }
 
         $page = New-NotionPage @NewPageProps -ErrorAction Stop

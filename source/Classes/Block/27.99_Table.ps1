@@ -24,11 +24,13 @@ class Table_structure
 
     addRow([notion_table_row_block] $row)
     {
+        $this.has_children = $true
         $this.children += $row
     }
 
     addRows([notion_table_row_block[]] $rows)
     {
+        $this.has_children = $true
         $this.children += $rows
     }
 

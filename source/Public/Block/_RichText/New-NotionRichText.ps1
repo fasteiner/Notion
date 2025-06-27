@@ -12,7 +12,7 @@ function New-NotionRichText
         The text content for the rich text block.
 
     .PARAMETER Annotations
-        The annotations (bold, italic, etc.) for the rich text block.
+        The annotations (bold, italic, etc.) for the rich text block. If not specified, the properties of the parent object are used.
 
     .PARAMETER Link
         The link object or URL for the rich text block.
@@ -42,7 +42,7 @@ function New-NotionRichText
         [ValidateSet("text", "mention", "equation")]
         [string]$Type = "text",
 
-        [Parameter(Position = 1 )]
+        [Parameter(Position = 1, HelpMessage = "If not specified, the properties of the parent object are used" )]
         [object]$Annotations,
 
         [Parameter(ParameterSetName = "Text", Position = 2 )]

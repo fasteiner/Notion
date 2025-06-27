@@ -65,6 +65,11 @@ class TableRow_structure
     static [TableRow_structure] ConvertFromObject($Value)
     {
         $table_row_Obj = [TableRow_structure]::new()
+        if($Value -is [TableRow_structure])
+        {
+            $table_row_Obj.cells = $Value.cells
+            return $table_row_Obj
+        }
         $Value.cells.foreach({
                 $table_row_Obj.AddCell($_)
             })
