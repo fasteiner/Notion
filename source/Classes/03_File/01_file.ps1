@@ -33,17 +33,15 @@ class notion_file : notion_icon
 
     static [notion_file] Create([notion_filetype] $type, [string] $name, $caption, [string] $url, $expiry_time = $null  )
     {
-        $processedCaption = [rich_text]::ConvertFromObjects($caption)
-
         switch ($type)
         {
             "file"
             {
-                return [notion_hosted_file]::new($name, $processedCaption, $url, $expiry_time)
+                return [notion_hosted_file]::new($name, $caption, $url, $expiry_time)
             }
             "external"
             {
-                return [notion_external_file]::new($name, $processedCaption, $url)
+                return [notion_external_file]::new($name, $caption, $url)
             }
             "file_upload "
             {
@@ -61,7 +59,7 @@ class notion_file : notion_icon
 
     static [notion_file] ConvertFromObject($Value)
     {
-        Write-Verbose "[notion_file]::ConvertFromObject($($Value | ConvertTo-Json))"
+        Write-Verbose "[notion_file]::ConvertFromObject($($Value | ConvertTo-Json -Depth 10))"
         if ($null -eq $Value)
         {
             return $null
