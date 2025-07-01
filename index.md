@@ -403,6 +403,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **`source/Public/Block/Pdf/New-NotionPdfBlock.ps1`**
+  - Implemented `New-NotionPdfBlock` to generate a Notion PDF block from provided caption and URL.
+
+- **`source/Public/Block/Video/New-NotionVideoBlock.ps1`**
+  - Implemented `New-NotionVideoBlock` to create a Notion video block with specified input.
+
+- **`tests/Unit/Public/Block/New-NotionPdfBlock.Tests.ps1`**
+  - Added unit tests for `New-NotionPdfBlock`, validating block construction from caption and URL.
+
+- **`tests/Unit/Public/Block/New-NotionVideoBlock.Tests.ps1`**
+  - Added unit tests for `New-NotionVideoBlock`, covering basic functionality and input validation.
+
+### Fixed
+
+- **`/workspaces/Notion/source/Classes/Block/27.99_Table.ps1`**
+  - Fixed `[Table_structure]::ConvertFromObject()`
+
+### Removed
+
+- Removed unimplemented placeholder versions of these functions from the `Cmds` folder after relocating and implementing them.
+  - **`source/Public/Block/Cmds/Pdf/New-NotionPdfBlock.ps1`**
+  - **`source/Public/Block/Cmds/Video/New-NotionVideoBlock.ps1`**
+
+## [0.10.0] - 2025-06-27
+
+### Added
+
 - **`.devcontainer/setup.ps1`**
   - Added logic to ensure the `.dotnet/tools` directory is prepended to `$env:PATH` if not already present, improving the reliability of dotnet tool availability in devcontainers.
 
