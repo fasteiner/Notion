@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`tests/Unit/Public/Block/New-NotionVideoBlock.Tests.ps1`**
   - Added unit tests for `New-NotionVideoBlock`, covering basic functionality and input validation.
 
+### Fixed
+
+- **`/workspaces/Notion/source/Classes/Block/27.99_Table.ps1`**
+  - Fixed `[Table_structure]::ConvertFromObject()`
+
 ### Removed
 
 - Removed unimplemented placeholder versions of these functions from the `Cmds` folder after relocating and implementing them.
