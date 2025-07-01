@@ -14,6 +14,11 @@ class notion_PDF_block : notion_block
         $this.pdf = [notion_file]::ConvertFromObject($file)
     }
 
+    notion_PDF_block($caption, $url)
+    {
+        $this.pdf = [notion_file]::Create("external", $null, $caption, $url, $null)
+    }
+
     notion_PDF_block($caption, $url, $name)
     {
         $this.pdf = [notion_file]::Create("external", $name, $caption, $url, $null)
