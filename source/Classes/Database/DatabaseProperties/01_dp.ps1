@@ -7,16 +7,7 @@ class notion_databaseproperties : hashtable
     {
     }
 
-    static [notion_databaseproperties] ConvertFromObject($Value)
-    {
-        $pageproperties = [notion_databaseproperties]::new()
-        foreach ($key in $Value.PSObject.Properties.Name)
-        {
-            $pageproperties.Add($key, [DatabasePropertiesBase]::ConvertFromObject($Value.$key))
-        }
-        return $pageproperties
-    }
-
+    
     [void] Add([object] $Key, [object] $Value)
     {
         if (($value) -and (-not ($Value -is [DatabasePropertiesBase])))
@@ -25,5 +16,24 @@ class notion_databaseproperties : hashtable
         }
         # Call the base Add method
         ([hashtable] $this).Add($Key, $Value)
+    }
+
+    static [notion_databaseproperties] ConvertFromObject($Value)
+    {
+        $dbproperties = [notion_databaseproperties]::new()
+        $propertynames = @()
+        if ($Value -is [hashtable])
+        {
+            $propertynames = $Value.Keys
+        }
+        else
+        {
+            $propertynames = Remove-DefaultPropertyNames $Value.PSObject.Properties.Name
+        }
+        foreach ($key in $propertynames)
+        {
+            $dbproperties.Add($key, [DatabasePropertiesBase]::ConvertFromObject($Value.$key))
+        }
+        return $dbproperties
     }
 }

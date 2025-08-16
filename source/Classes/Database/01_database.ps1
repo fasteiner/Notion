@@ -26,7 +26,7 @@ class notion_database
         $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
     }
 
-    notion_database([rich_text[]]$title, [notion_parent]$parent, [notion_databaseproperties]$properties)
+    notion_database([notion_parent]$parent, [rich_text[]]$title, [notion_databaseproperties]$properties)
     {
         $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
         $this.title = $title
@@ -34,7 +34,7 @@ class notion_database
         $this.properties = $properties
     }
 
-    notion_database([string]$title, [notion_parent]$parent, [notion_databaseproperties]$properties)
+    notion_database([notion_parent]$parent, [string]$title, [notion_databaseproperties]$properties)
     {
         $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
         $this.title = [rich_text_text]::new($title)
@@ -51,8 +51,8 @@ class notion_database
         $database_obj.last_edited_time = $Value.last_edited_time
         $database_obj.last_edited_by = [notion_user]::ConvertFromObject($Value.last_edited_by)
         # is an array of rich_text objects, which does not make sense
-        $database_obj.title = $value.title.foreach({[rich_text]::ConvertFromObject($_)})
-        $database_obj.description = $value.description.foreach({[rich_text]::ConvertFromObject($_)})
+        $database_obj.title = $value.title.foreach({ [rich_text]::ConvertFromObject($_) })
+        $database_obj.description = $value.description.foreach({ [rich_text]::ConvertFromObject($_) })
         $database_obj.icon = [notion_icon]::ConvertFromObject($Value.icon)
         $database_obj.cover = [notion_file]::ConvertFromObject($Value.cover)
         $database_obj.properties = [notion_databaseproperties]::ConvertFromObject($Value.properties)

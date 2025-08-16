@@ -5,6 +5,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`source/Classes/02_Page/PageProperties/01_pp.ps1`**
+  - Enhanced `ConvertFromObject` method in `notion_pageproperties` to handle both hashtables and custom objects, using `Remove-DefaultPropertyNames` for cleaner property filtering.
+
+- **`source/Classes/Database/DatabaseProperties/01_dp.ps1`**
+  - Re-implemented `ConvertFromObject` method in `notion_databaseproperties` to support input validation and dynamic property extraction, aligning with improvements in `notion_pageproperties`.
+
+### Changed
+
+- **`source/Classes/Block/08_Callout.ps1`**
+  - Refactored constructor of `callout_structure` to accept rich text object(s) directly, replacing single string handling with `rich_text::ConvertFromObjects`, enhancing flexibility and correctness.
+
+- **`source/Classes/Database/01_database.ps1`**
+  - Reordered parameters in constructors of `notion_database` to place `parent` before `title` for consistent and intuitive usage.
+  - Adjusted `ConvertFromObject` logic to correctly transform `title` and `description` fields using `foreach` with clearer formatting.
+
+- **`source/Public/Database/New-NotionDatabase.ps1`**
+  - Simplified rich text conversion for the `title` parameter using `rich_text::ConvertFromObjects`.
+  - Refactored function to directly return a new `notion_database` object instead of manually building a body and invoking the API call, reducing redundancy and centralizing object construction logic.
+  - Updated documentation to clarify parameter usage.
+
+- **`source/Public/Database/Add-NotionPageToDatabase.ps1`**
+  - Minor formatting and parameter declaration updates to align with standard PowerShell conventions.
+
+- **`source/Public/Invoke-NotionApiCall.ps1`**
+  - Unified casing for `param` and `process` keywords for consistency.
+  - Updated format specifiers from `-F` to lowercase `-f`, aligning with PowerShell formatting best practices.
+  - Cleaned up spacing and streamlined control flow for pagination logic in API call processing.
+
+
 ## [0.11.0] - 2025-07-01
 
 ### Added
