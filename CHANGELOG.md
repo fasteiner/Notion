@@ -9,9 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`source/Classes/02_Page/PageProperties/01_pp.ps1`**
   - Enhanced `ConvertFromObject` method in `notion_pageproperties` to handle both hashtables and custom objects, using `Remove-DefaultPropertyNames` for cleaner property filtering.
-
 - **`source/Classes/Database/DatabaseProperties/01_dp.ps1`**
   - Re-implemented `ConvertFromObject` method in `notion_databaseproperties` to support input validation and dynamic property extraction, aligning with improvements in `notion_pageproperties`.
+- **`source/Public/zz1_Type_Accelerator.ps1`**
+  - **Complete Type Accelerator Reorganization**: Added comprehensive type accelerators for all Database and Page Property classes, organized into clear sections:
+    - **DatabaseProperties Section**: Added all database property classes (`notion_*_database_property`) and related classes (`DatabasePropertiesBase`, relation hierarchy, `notion_status_group`)
+    - **PageProperties Section**: Added all page property classes (`notion_*_page_property`) and related classes (`PagePropertiesBase`, `notion_pageproperties`)
+    - **Structure Cleanup**: Removed internal `*_structure` classes to keep type accelerators focused on main classes
+    - **Proper Organization**: Moved misplaced classes (`notion_unique_id`, `notion_verification`) to appropriate sections
+    - **Alphabetical Ordering**: All classes within sections are alphabetically sorted for better maintainability
+- **Unit Tests**  
+  - Introduced `New-NotionDatabase.Tests.ps1` with Pester tests to validate the `New-NotionDatabase` function:
+    - Ensures `-parent_obj` is mandatory.
+    - Verifies creation with string titles and rich_text title objects.
+    - Supports pre-converted `notion_databaseproperties`.
+    - Confirms default values (archived, in_trash, is_inline) are unset.
+  - Added `notion_database.Class.Tests.ps1` with Pester unit tests for the notion_database class, covering constructors, ConvertFromObject, default values, nested object conversions, and edge cases.
+  - **Comprehensive Database Properties Test Suite**: Added complete Pester test coverage for all Database Property classes with extensive German inline comments:
+    - **Simple Property Tests**: `01_dp.Tests.ps1`, `02_dp_checkbox.Tests.ps1`, `03_dp_created_by.Tests.ps1`, `04_dp_created_time.Tests.ps1`, `05_dp_date.Tests.ps1`, `07_dp_email.Tests.ps1`, `08_dp_files.Tests.ps1`, `09_dp_formula.Tests.ps1`, `10_dp_last_edited_by.Tests.ps1`, `11_dp_last_edited_time.Tests.ps1`, `14_dp_people.Tests.ps1`, `15_dp_phone_number.Tests.ps1`, `17_dp_rich_text.Tests.ps1`, `21_dp_title.Tests.ps1`, `22_dp_url.Tests.ps1`
+    - **Complex Property Tests**: `12_dp_multi_select.Tests.ps1` (with options management and 100-item limit validation), `13_dp_number.Tests.ps1` (with format type support), `16_dp_relation.Tests.ps1` (with inheritance hierarchy for single/dual relations), `18_dp_rollup.Tests.ps1` (with fallback mechanisms), `19_dp_select.Tests.ps1` (with options management), `20_dp_status.Tests.ps1` (with groups and options), `23_dp_unique_id.Tests.ps1` (with prefix handling)
+    - Each test file includes: Constructor Tests, Property Tests, ConvertFromObject Tests, Inheritance Tests from `DatabasePropertiesBase`
+    - Comprehensive edge case handling: null values, empty arrays, type validation, parameter limits, and error conditions
+    - All tests follow consistent structure with detailed German documentation for maintainability
 
 ### Changed
 
@@ -35,6 +54,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated format specifiers from `-F` to lowercase `-f`, aligning with PowerShell formatting best practices.
   - Cleaned up spacing and streamlined control flow for pagination logic in API call processing.
 
+### Fixed
+
+- **`source/Classes/Database/01_database.ps1`**
+  - Fixed constructor to ensure all kind of possible parameter types are handled correctly, including rich text objects for `title`.
+- **`source/Classes/Database/DatabaseProperties/16_dp_relation.ps1`**
+  - Fixed Write Error parameters to use `-Category InvalidData`, fixed the error message to include the actual type value, and removed the `-invalidData` parameter which is not a valid parameter for `Write-Error`.
 
 ## [0.11.0] - 2025-07-01
 
@@ -165,7 +190,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added new function to create `notion_emoji` objects from strings.
 - **tests/Integration/Block/callout.tests.ps1**
   - Added integration tests for `New-NotionCalloutBlock` cmdlet, covering various scenarios and rich text handling.
-- New Unit Tests for several classes: 
+- New Unit Tests for several classes:
   - `tests/Unit/Classes/Emoji/Custom_Emoji.Tests.ps1`
   - `tests/Unit/Classes/Emoji/Emoji.Tests.ps1`
   - `tests/Unit/Classes/Page/PageProperties/pp_checkbox.Tests.ps1`

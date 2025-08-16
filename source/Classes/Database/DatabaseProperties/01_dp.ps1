@@ -10,6 +10,11 @@ class notion_databaseproperties : hashtable
     
     [void] Add([object] $Key, [object] $Value)
     {
+        if (!$value)
+        {
+            Write-Error "Value cannot be null" -Category InvalidData -TargetObject $Value -RecommendedAction "Provide a valid DatabasePropertiesBase object or null"
+            return
+        }
         if (($value) -and (-not ($Value -is [DatabasePropertiesBase])))
         {
             Write-Error "Value must be of type DatabasePropertiesBase" -Category InvalidType -TargetObject $Value -RecommendedAction "Use a class that inherits from DatabasePropertiesBase"
@@ -22,8 +27,20 @@ class notion_databaseproperties : hashtable
     {
         $dbproperties = [notion_databaseproperties]::new()
         $propertynames = @()
+        if (!$Value)
+        {
+            return $dbproperties
+        }
+        if ($Value -is [notion_databaseproperties])
+        {
+            return $Value
+        }
         if ($Value -is [hashtable])
         {
+            if ($Value.Keys.count -eq 0)
+            {
+                return $dbproperties
+            }
             $propertynames = $Value.Keys
         }
         else

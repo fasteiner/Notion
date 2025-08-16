@@ -26,20 +26,13 @@ class notion_database
         $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
     }
 
-    notion_database([notion_parent]$parent, [rich_text[]]$title, [notion_databaseproperties]$properties)
-    {
-        $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
-        $this.title = $title
-        $this.parent = $parent
-        $this.properties = $properties
-    }
 
-    notion_database([notion_parent]$parent, [string]$title, [notion_databaseproperties]$properties)
+    notion_database($parent, $title, $properties)
     {
         $this.created_time = [datetime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
-        $this.title = [rich_text_text]::new($title)
-        $this.parent = $parent
-        $this.properties = $properties
+        $this.title = [rich_text]::ConvertFromObjects($title)
+        $this.parent = [notion_parent]::ConvertFromObject($parent)
+        $this.properties = [notion_databaseproperties]::ConvertFromObject($properties)
     }
 
     static [notion_database] ConvertFromObject($Value)
