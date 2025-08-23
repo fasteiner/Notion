@@ -8,7 +8,6 @@ class notion_title_database_property : DatabasePropertiesBase
         $this.title = @{}
     }
 
-    #TODO Array of rich_text?
     static [notion_title_database_property] ConvertFromObject($Value)
     {
         Write-Verbose "[notion_title_database_property]::ConvertFromObject($($Value | ConvertTo-Json -Depth 10))"

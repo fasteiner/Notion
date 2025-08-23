@@ -1,4 +1,5 @@
-class notion_unique_id_database_property_structure{
+class notion_unique_id_database_property_structure
+{
     [string] $prefix
 
     notion_unique_id_database_property_structure()
@@ -13,6 +14,14 @@ class notion_unique_id_database_property_structure{
 
     static [notion_unique_id_database_property_structure] ConvertFromObject($Value)
     {
+        if (-not $Value)
+        {
+            throw [System.ArgumentNullException]::new("Value cannot be null.")
+        }
+        if ($Value -is [notion_unique_id_database_property_structure])
+        {
+            return $Value
+        }
         $notion_unique_id_database_property_structure_obj = [notion_unique_id_database_property_structure]::new()
         $notion_unique_id_database_property_structure_obj.prefix = $Value.prefix
         return $notion_unique_id_database_property_structure_obj
@@ -37,8 +46,16 @@ class notion_unique_id_database_property : DatabasePropertiesBase
 
     static [notion_unique_id_database_property] ConvertFromObject($Value)
     {
+        if (-not $Value)
+        {
+            throw [System.ArgumentNullException]::new("Value cannot be null.")
+        }
+        if ($Value -is [notion_unique_id_database_property])
+        {
+            return $Value
+        }
         $unique_id_obj = [notion_unique_id_database_property]::new()
         $unique_id_obj.unique_id = [notion_unique_id_database_property_structure]::ConvertFromObject($Value.unique_id)
         return $unique_id_obj
     }
-}   
+}

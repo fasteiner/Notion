@@ -1,9 +1,22 @@
-class notion_select_database_property_structure{
+class notion_select_database_property_structure
+{
     [notion_select[]] $options
 
     notion_select_database_property_structure()
     {
         $this.options = @()
+    }
+
+    notion_select_database_property_structure($name)
+    {
+        $this.options = @()
+        $this.add($name)
+    }
+
+    notion_select_database_property_structure($color, $name)
+    {
+        $this.options = @()
+        $this.add($color, $name)
     }
 
     add($name)
@@ -15,10 +28,28 @@ class notion_select_database_property_structure{
         $this.options += [notion_select]::new($name)
     }
 
+    add($color = [notion_color]::default, $name)
+    {
+        if ($this.options.Count -ge 100)
+        {
+            throw [System.ArgumentException]::new("The select property must have 100 items or less.")
+        }
+        $this.options += [notion_select]::new($color, $name)
+    }
+
+    add($color = [notion_color]::default, $id, $name)
+    {
+        if ($this.options.Count -ge 100)
+        {
+            throw [System.ArgumentException]::new("The select property must have 100 items or less.")
+        }
+        $this.options += [notion_select]::new($color, $id, $name)
+    }
+
     static [notion_select_database_property_structure] ConvertFromObject($Value)
     {
         $notion_select_database_property_structure_obj = [notion_select_database_property_structure]::new()
-        $notion_select_database_property_structure_obj.options = $Value.options.ForEach({[notion_select]::ConvertFromObject($_)})
+        $notion_select_database_property_structure_obj.options = $Value.options.ForEach({ [notion_select]::ConvertFromObject($_) })
         return $notion_select_database_property_structure_obj
     }
 }
@@ -29,22 +60,46 @@ class notion_select_database_property : DatabasePropertiesBase
 {
     [notion_select_database_property_structure] $select
 
-    notion_select_database_property() : base("select")
+    notion_select_database_property() : base ("select")
     {
         $this.select = [notion_select_database_property_structure]::new()
     }
 
-    notion_select_database_property($name) : base("select")
+    notion_select_database_property($name) : base ("select")
     {
-        $this.select = [notion_select_database_property_structure]::new()
+        $this.select = [notion_select_database_property_structure]::new($name)
+    }
+
+    notion_select_database_property($color, $name) : base ("select")
+    {
+        $this.select = [notion_select_database_property_structure]::new($color, $name)
+    }
+
+    notion_select_database_property($color, $id, $name) : base ("select")
+    {
+        $this.select = [notion_select_database_property_structure]::new($color, $id, $name)
+    }
+
+    add($name)
+    {
         $this.select.add($name)
+    }
+
+    add($color = [notion_color]::default, $name)
+    {
+        $this.select.add($color, $name)
+    }
+
+    add($color = [notion_color]::default, $id, $name)
+    {
+        $this.select.add($color, $id, $name)
     }
 
 
     static [notion_select_database_property] ConvertFromObject($Value)
     {
         $notion_select_database_property_obj = [notion_select_database_property]::new()
-        $notion_select_database_property_obj.select =[notion_select_database_property_structure]::ConvertFromObject($value.select)
+        $notion_select_database_property_obj.select = [notion_select_database_property_structure]::ConvertFromObject($value.select)
         return $notion_select_database_property_obj
     }
 }

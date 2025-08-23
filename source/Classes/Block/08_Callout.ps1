@@ -9,9 +9,10 @@ class callout_structure
     {
     }
 
-    callout_structure([string] $text)
+    callout_structure($rich_text)
     {
-        $this.rich_text = @([rich_text_text]::new($text))
+        #$this.rich_text = @([rich_text_text]::new($text))
+        $this.rich_text = [rich_text]::ConvertFromObjects($rich_text)
         $this.color = [notion_color]::default
     }
 

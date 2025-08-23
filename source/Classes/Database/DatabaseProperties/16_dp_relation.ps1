@@ -1,36 +1,32 @@
-class notion_relation_database_property_structure{
+class notion_relation_database_property_structure
+{
     # https://developers.notion.com/reference/property-object#relation
-    [string] $database_id
+    # Note: Refer to the Notion changelog for updates: https://developers.notion.com/changelog/releasing-notion-version-2022-06-28
+
     [string] $synced_property_id
     [string] $synced_property_name
 
     notion_relation_database_property_structure()
     {
-        $this.database_id = $null
         $this.synced_property_id = $null
         $this.synced_property_name = $null
     }
-
-    notion_relation_database_property_structure([string]$database_id)
-    {
-        $this.database_id = $database_id
-    }
     
-    notion_relation_database_property_structure([string]$database_id, [string]$synced_property_id, [string]$synced_property_name)
+    notion_relation_database_property_structure([string]$synced_property_id, [string]$synced_property_name)
     {
-        $this.database_id = $database_id
         $this.synced_property_id = $synced_property_id
         $this.synced_property_name = $synced_property_name
     }
 
     static [notion_relation_database_property_structure] ConvertFromObject($Value)
     {
-        return [notion_relation_database_property_structure]::new($Value.id, $Value.synced_property_id, $Value.synced_property_name)
+        return [notion_relation_database_property_structure]::new($Value.synced_property_id, $Value.synced_property_name)
     }
 }
 
 
-class notion_database_relation_base{
+class notion_database_relation_base
+{
     [string] $database_id
     [notion_database_relation_type] $type
 
@@ -49,18 +45,26 @@ class notion_database_relation_base{
     static [notion_database_relation_base] ConvertFromObject($Value)
     {
         $relation_obj = $null
-        switch($Value.type)
+        if (!$value.type)
         {
-            "single_property" {
+            Write-Error "Relation type is missing in the provided object." -Category InvalidData
+            return $null
+        }
+        switch ($Value.type)
+        {
+            "single_property"
+            {
                 $relation_obj = [notion_database_single_relation]::ConvertFromObject($Value)
                 break
             }
-            "dual_property" {
+            "dual_property"
+            {
                 $relation_obj = [notion_database_dual_relation]::ConvertFromObject($Value)
                 break
             }
-            default {
-                Write-Error "Invalid relation type: $Value.type" -invalidData
+            default
+            {
+                Write-Error "Invalid relation type: $($Value.type)" -Category InvalidData
             }
         }
         $relation_obj.database_id = $Value.database_id
@@ -70,7 +74,9 @@ class notion_database_relation_base{
 
 }
 
-class notion_database_single_relation : notion_database_relation_base{
+class notion_database_single_relation : notion_database_relation_base
+{
+    #TODO: Verify correctness as no documentation is available for this
     [notion_relation_database_property_structure] $single_property
 
     notion_database_single_relation() : base("single_property")
@@ -97,7 +103,8 @@ class notion_database_single_relation : notion_database_relation_base{
     
 }
 
-class notion_database_dual_relation : notion_database_relation_base{
+class notion_database_dual_relation : notion_database_relation_base
+{
     [notion_relation_database_property_structure] $dual_property
 
     notion_database_dual_relation() : base("dual_property")
@@ -129,18 +136,20 @@ class notion_relation_database_property : DatabasePropertiesBase
 {
     [notion_database_relation_base] $relation
 
+
     notion_relation_database_property($relation) : base("relation")
     {
-        if($relation -eq $null)
+        if ($relation -eq $null)
         {
             $this.relation = $null
             return
         }
-        if($relation -is [notion_database_relation_base])
+        if ($relation -is [notion_database_relation_base])
         {
             $this.relation = $relation
         }
-        else{
+        else
+        {
             $this.relation = [notion_database_relation_base]::ConvertFromObject($relation)
         }
     }
@@ -150,18 +159,19 @@ class notion_relation_database_property : DatabasePropertiesBase
         $this.relation = [notion_database_relation_base]::new()
     }
 
-    notion_relation_database_property([string]$database_id, [notion_database_relation_type] $type,[string]$synced_property_id, [string]$synced_property_name) : base("relation")
+    notion_relation_database_property([string]$database_id, [notion_database_relation_type] $type, [string]$synced_property_id, [string]$synced_property_name) : base("relation")
     {
-        if($type -eq "single_property")
+        if ($type -eq "single_property")
         {
             $this.relation = [notion_database_single_relation]::new($database_id, $synced_property_id, $synced_property_name)
         }
-        elseif($type -eq "dual_property")
+        elseif ($type -eq "dual_property")
         {
             $this.relation = [notion_database_dual_relation]::new($database_id, $synced_property_id, $synced_property_name)
         }
-        else{
-            Write-Error "Invalid relation type: $type" -invalidData
+        else
+        {
+            Write-Error "Invalid relation type: $type" -Category InvalidData
         }
     }
 

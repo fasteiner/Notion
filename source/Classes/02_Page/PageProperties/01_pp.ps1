@@ -20,7 +20,16 @@ class notion_pageproperties : hashtable
     static [notion_pageproperties] ConvertFromObject($Value)
     {
         $pageproperties = [notion_pageproperties]::new()
-        foreach ($key in $Value.PSObject.Properties.Name)
+        $propertynames = @()
+        if ($Value -is [hashtable])
+        {
+            $propertynames = $Value.Keys
+        }
+        else
+        {
+            $propertynames = Remove-DefaultPropertyNames $Value.PSObject.Properties.Name
+        }        
+        foreach ($key in $propertynames)
         {
             $pageproperties.Add($key, [PagePropertiesBase]::ConvertFromObject($Value.$key))
         }
