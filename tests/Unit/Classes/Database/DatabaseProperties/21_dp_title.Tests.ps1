@@ -192,6 +192,7 @@ Describe "notion_title_database_property Tests" {
             
             # Verify the type property exists and is set correctly by base constructor
             $titleProperty.type | Should -Be "title"
+            $titleProperty.type | Should -BeOfType [notion_database_property_type]
         }
     }
 }

@@ -159,6 +159,7 @@ Describe "notion_url_database_property Tests" {
             
             # Verify the type property exists and is set correctly by base constructor
             $urlProperty.type | Should -Be "url"
+            $urlProperty.type | Should -BeOfType [notion_database_property_type]
         }
     }
 }

@@ -5,6 +5,13 @@ class notion_status
     [string] $id
     [string] $name
 
+    notion_status() 
+    {
+        $this.color = [notion_property_color]::default
+        $this.id = $null
+        $this.name = $null
+    }
+
     notion_status($name) 
     {
         $this.color = [notion_property_color]::default
@@ -12,13 +19,13 @@ class notion_status
         $this.name = $name
     }
 
-    notion_status($color, $name)
+    notion_status($color = [notion_property_color]::default, $name)
     {
         $this.color = [Enum]::Parse([notion_property_color], $color)
         $this.name = $name
     }
 
-    notion_status($color, $id, $name)
+    notion_status($color = [notion_property_color]::default, $id, $name)
     {
         $this.color = [Enum]::Parse([notion_property_color], $color)
         $this.id = $id

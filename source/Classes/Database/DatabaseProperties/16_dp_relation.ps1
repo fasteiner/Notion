@@ -1,7 +1,8 @@
 class notion_relation_database_property_structure
 {
     # https://developers.notion.com/reference/property-object#relation
-    # Attention: https://developers.notion.com/changelog/releasing-notion-version-2022-06-28
+    # Note: Refer to the Notion changelog for updates: https://developers.notion.com/changelog/releasing-notion-version-2022-06-28
+
     [string] $synced_property_id
     [string] $synced_property_name
 
@@ -75,7 +76,7 @@ class notion_database_relation_base
 
 class notion_database_single_relation : notion_database_relation_base
 {
-    #TODO: find out if this is correct as no documentation is available for this
+    #TODO: Verify correctness as no documentation is available for this
     [notion_relation_database_property_structure] $single_property
 
     notion_database_single_relation() : base("single_property")
@@ -134,6 +135,7 @@ class notion_relation_database_property : DatabasePropertiesBase
 # https://developers.notion.com/reference/page-property-values#relation
 {
     [notion_database_relation_base] $relation
+
 
     notion_relation_database_property($relation) : base("relation")
     {
