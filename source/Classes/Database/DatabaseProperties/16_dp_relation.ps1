@@ -159,7 +159,7 @@ class notion_relation_database_property : DatabasePropertiesBase
         $this.relation = [notion_database_relation_base]::new()
     }
 
-    notion_relation_database_property([string]$database_id, [notion_database_relation_type] $type, [string]$synced_property_id, [string]$synced_property_name) : base("relation")
+    notion_relation_database_property([string]$database_id, $type, [string]$synced_property_id, [string]$synced_property_name) : base("relation")
     {
         if ($type -eq "single_property")
         {

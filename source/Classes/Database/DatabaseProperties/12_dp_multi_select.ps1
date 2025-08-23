@@ -49,7 +49,7 @@ class notion_multi_select_database_property : DatabasePropertiesBase
         $this.multi_select = [notion_multi_select_database_property_structure]::new($color, $name)
     }
 
-    add([notion_property_color]$color, $name)
+    add($color, $name)
     {
         $this.multi_select.add($color, $name)
     }

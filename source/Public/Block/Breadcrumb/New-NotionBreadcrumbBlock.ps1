@@ -18,6 +18,6 @@ function New-NotionBreadcrumbBlock
     #>
     [CmdletBinding()]
     [OutputType([notion_breadcrumb_block])]
-    param( )
+    param ( )
     return [notion_breadcrumb_block]::new()
 }

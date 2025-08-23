@@ -29,7 +29,7 @@ Describe "notion_file Class Tests" {
             @{type = "file"}
             @{type = "external"}
         ){
-            param($type)
+            param ($type)
             $file = [notion_file]::new($type)
             $file.type | Should -Be $type
         }

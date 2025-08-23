@@ -36,7 +36,7 @@ function New-NotionVideoBlock {
     #>
     [CmdletBinding(DefaultParameterSetName = "InputObjectSet")]
     [OutputType([notion_video_block])]
-    param(
+    param (
         [Parameter(Mandatory = $True, ParameterSetName = "InputObjectSet")]
         [Alias("File")]
         [object] $InputObject,

@@ -1,7 +1,7 @@
 function New-NotionImageBlock {
 [CmdletBinding()]
     [OutputType([notion_image_block])]
-    param(
+    param (
         [Parameter(Mandatory = $True)]
         [object] $File
     )

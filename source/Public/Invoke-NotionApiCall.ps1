@@ -49,7 +49,7 @@ function Invoke-NotionApiCall
     #>
     
     [CmdletBinding()]
-    param(
+    param (
         [Parameter(Mandatory = $false, HelpMessage = "The URI to Notion", Position = 0)]
         [string]$uri,
         [Parameter(Mandatory = $false, HelpMessage = "The API key to authenticate the API call")]
