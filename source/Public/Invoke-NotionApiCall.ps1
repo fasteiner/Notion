@@ -49,7 +49,7 @@ function Invoke-NotionApiCall
     #>
     
     [CmdletBinding()]
-    Param(
+    param(
         [Parameter(Mandatory = $false, HelpMessage = "The URI to Notion", Position = 0)]
         [string]$uri,
         [Parameter(Mandatory = $false, HelpMessage = "The API key to authenticate the API call")]
@@ -70,7 +70,7 @@ function Invoke-NotionApiCall
     )
 
 
-    Process
+    process
     {
         if ((-not $script:NotionAPIKey) -and (-not $APIKey))
         {
@@ -96,10 +96,10 @@ function Invoke-NotionApiCall
         $Params = @{
             "URI"     = $uri
             "Headers" = @{
-                "Authorization"  = "Bearer {0}" -F ($APIKey | ConvertFrom-SecureString -AsPlainText)
+                "Authorization"  = "Bearer {0}" -f ($APIKey | ConvertFrom-SecureString -AsPlainText)
                 "Accept"         = "application/json"
                 "Content-type"   = "application/json"
-                "Notion-Version" = "{0}" -F $APIVersion
+                "Notion-Version" = "{0}" -f $APIVersion
             }
             "Method"  = $method
         }
@@ -115,11 +115,11 @@ function Invoke-NotionApiCall
         "Request params:", $Params | Add-NotionLogToFile -filename $fileName -level DEBUG
         :loop while ($true)
         {
-            Try
+            try
             {
                 $output = @()
                 if ($method -in @("GET", "POST"))
-                {                   
+                {
                     # https://developers.notion.com/reference/intro#pagination
                     $SupportPagingPatterns = @(
                         "/v1/users", 

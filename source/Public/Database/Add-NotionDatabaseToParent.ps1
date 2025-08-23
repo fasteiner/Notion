@@ -1,11 +1,11 @@
-function New-NotionDatabase
+function Add-NotionDatabaseToParent
 {
     <#
     .SYNOPSIS
     Creates a new Notion database.
 
     .DESCRIPTION
-    The New-NotionDatabase function creates a new Notion database within the specified parent object, title, and properties. 
+    The function Add-NotionDatabaseToParent creates a new Notion database within the specified parent object, title, and properties. 
     It converts the provided parameters to the appropriate types and makes an API call to create the database in Notion.
 
     .PARAMETER parent_obj
@@ -33,9 +33,9 @@ function New-NotionDatabase
             title = @{}
         }
     }
-    New-NotionDatabase -parent_obj $parent -title $title -properties $properties
+    Add-NotionDatabaseToParent -parent_obj $parent -title $title -properties $properties
 
-    This command adds a Notion database within the specified parent, title, and properties.
+    This command creates a new Notion database within the specified parent page, title, and properties.
 
     .NOTES
     This function requires the Invoke-NotionAPICall and Remove-NullValuesFromObject helper functions, 
@@ -55,20 +55,8 @@ function New-NotionDatabase
         [Parameter(Mandatory = $true, HelpMessage = "The properties-objects of the database")]
         [hashtable] $properties
     )
-    if ($null -eq $parent_obj)
-    {
-        #TODO: Implement a way to get the default parent
-        #$parent = New-NotionPage # (in Workspace)
-        throw "Parent object is required"
-    }
-    else
-    {
-        $parent_obj = [notion_parent]::ConvertFromObject($parent_obj)
-    }
-    $title = [rich_text]::ConvertFromObjects($title)
-    if ($properties -isnot [notion_databaseproperties])
-    {
-        $properties = [notion_databaseproperties]::ConvertFromObject($properties)
-    }
-    return [notion_database]::new($parent_obj, $title, $properties)
+    
+    $body = $(New-NotionDatabase @PSBoundParameters) | Remove-NullValuesFromObject
+    $response = Invoke-NotionAPICall -Method POST -uri "/databases" -Body $body -ErrorAction Stop
+    return [notion_database]::ConvertFromObject($response)
 }
