@@ -7,9 +7,9 @@ class notion_number_database_property_structure
         $this.format = [notion_database_property_format_type]::number
     }
 
-    notion_number_database_property_structure([notion_database_property_format_type] $format)
+    notion_number_database_property_structure($format)
     {
-        $this.format = $format
+        $this.format = [Enum]::Parse([notion_database_property_format_type], $format)
     }
 
     static [notion_number_database_property_structure] ConvertFromObject($Value)

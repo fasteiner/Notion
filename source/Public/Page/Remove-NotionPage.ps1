@@ -21,7 +21,7 @@ The ConfirmImpact is set to 'High' due to the potential impact of removing a pag
 #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     [OutputType([notion_page])]
-    param(
+    param (
         [Parameter(Mandatory = $true, Position = 0, HelpMessage = "The ID of the page to remove")]
         [Alias("Id")]
         [string]$PageId

@@ -21,7 +21,7 @@ function Move-NotionPageToArchive
     #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     [OutputType([notion_page])]
-    param(
+    param (
         [Parameter(Mandatory = $true, HelpMessage = "The ID of the page to archive")]
         [string]$PageId
     )

@@ -41,7 +41,7 @@ function Restore-NotionPage
     #>
     
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
-    param(
+    param (
         [Parameter(Mandatory = $true, Position = 0, HelpMessage = "The ID of the page to remove")]
         [Alias("Id")]
         [string]$PageId

@@ -57,22 +57,25 @@ function Add-NotionDatabaseProperty
     [CmdletBinding()]
     [OutputType([notion_database])]
     param (
-        [Parameter(Mandatory= $true, Position = 0,HelpMessage = "The ID of the database to add the property to")]
+        [Parameter(Mandatory = $true, Position = 0, HelpMessage = "The ID of the database to add the property to")]
         [Alias("Id")]
         [string]$DatabaseId,
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName=$true, HelpMessage = "The property object to add to the database")]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "The property object to add to the database")]
         [object]$property,
-        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName=$true, HelpMessage = "The name of the property to add to the database")]
+        [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true, HelpMessage = "The name of the property to add to the database")]
         [string]$PropertyName
 
     )
-    begin{
+    begin
+    {
         $properties = [notion_databaseproperties]::new()
     }
-    process{
-        $properties = $properties.AddProperty($property, $PropertyName)
+    process
+    {
+        $properties = $properties.Add($PropertyName, $property)
     }
-    end{
+    end
+    {
         $body = @{
             properties = $properties
         }

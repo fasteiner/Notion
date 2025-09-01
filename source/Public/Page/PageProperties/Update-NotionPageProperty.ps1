@@ -39,7 +39,7 @@ function Update-NotionPageProperty
     #>
     [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact = 'Medium')]
     [OutputType([notion_page])]
-    param(
+    param (
         [Parameter(Mandatory = $true, HelpMessage = "The ID of the page to remove")]
         [Alias("Id")]
         [string]$PageId,

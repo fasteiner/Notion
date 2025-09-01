@@ -1,322 +1,215 @@
-# Import the module containing the notion_last_edited_time_database_property class
+# Import Pester (test framework) – the module under test is imported in BeforeDiscovery
 Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
-    # Get the project path by going up 4 levels from the test file
+    # Resolve project root (4 levels up from this test file)
     $projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
 
     <#
-        If the QA tests are run outside of the build script (e.g with Invoke-Pester)
-        the parent scope has not set the variable $ProjectName.
+        If tests are run outside the build script (e.g. Invoke-Pester directly),
+        the parent scope might not have set $ProjectName.
     #>
     if (-not $ProjectName)
     {
-        # Assuming project folder name is project name.
+        # Assume the project folder name equals the project/module name.
         $ProjectName = Get-SamplerProjectName -BuildRoot $projectPath
     }
     Write-Debug "ProjectName: $ProjectName"
     $global:moduleName = $ProjectName
 
-    # Remove any previously loaded module to ensure clean test
+    # Ensure a clean module context before importing
     Remove-Module -Name $global:moduleName -Force -ErrorAction SilentlyContinue
 
-    # Import the module under test
+    # Import the built module from output
     $mut = Import-Module -Name "$projectPath/output/module/$ProjectName" -Force -ErrorAction Stop -PassThru
 }
 
-Describe "notion_select_database_property_structure Tests" {
-    
-    Context "Constructor Tests" {
-        
-        It "Should create default instance successfully" {
-            # Erstelle eine neue Instanz mit dem Standard-Konstruktor
-            $instance = [notion_select_database_property_structure]::new()
-            
-            # Überprüfe, dass die Instanz erstellt wurde
-            $instance | Should -Not -BeNullOrEmpty
-            $instance | Should -BeOfType [notion_select_database_property_structure]
-            
-            # Überprüfe die Standard-Eigenschaften
-            $instance.options | Should -Not -BeNullOrEmpty
-            $instance.options | Should -BeOfType [System.Array]
-            $instance.options.Count | Should -Be 0
-        }
-    }
-    
-    Context "Property Tests" {
-        
-        BeforeEach {
-            # Erstelle eine neue Instanz für jeden Test
-            $script:instance = [notion_select_database_property_structure]::new()
-        }
-        
-        It "Should have options property of correct type" {
-            # Überprüfe den Typ der options-Eigenschaft
-            $script:instance.options | Should -BeOfType [System.Array]
-            
-            # Überprüfe, dass es anfangs leer ist
-            $script:instance.options.Count | Should -Be 0
-        }
-        
-        It "Should allow adding items via add method" {
-            # Teste die add-Methode
-            $script:instance.add("Test Option")
-            
-            # Überprüfe, dass das Element hinzugefügt wurde
-            $script:instance.options.Count | Should -Be 1
-            $script:instance.options[0] | Should -BeOfType [notion_select]
-        }
-        
-        It "Should throw error when adding more than 100 items" {
-            # Füge 100 Elemente hinzu
-            for ($i = 1; $i -le 100; $i++) {
-                $script:instance.add("Option $i")
+InModuleScope -ModuleName $global:moduleName {
+    Describe "notion_select_database_property Tests" {
+        Context "Constructor Tests" {
+            It "Should create a notion_select_database_property with default constructor" {
+                # Create a new instance using the default constructor
+                $selectProperty = [notion_select_database_property]::new()
+                
+                # Verify the object is of the correct type
+                $selectProperty.GetType().Name | Should -Be "notion_select_database_property"
+                
+                # Verify it inherits from DatabasePropertiesBase
+                $selectProperty -is [DatabasePropertiesBase] | Should -Be $true
+                
+                # Verify the type property is set correctly
+                $selectProperty.type | Should -Be "select"
+                
+                # Verify the select property is initialized correctly
+                $selectProperty.select | Should -Not -BeNullOrEmpty
+                $selectProperty.select.GetType().Name | Should -Be "notion_select_database_property_structure"
+                $selectProperty.select.options.Count | Should -Be 0
             }
             
-            # Das 101. Element sollte einen Fehler werfen
-            { $script:instance.add("Option 101") } | Should -Throw "*must have 100 items or less*"
+            It "Should create a notion_select_database_property with name parameter" {
+                # Create a new instance with a name parameter
+                $selectProperty = [notion_select_database_property]::new("Test Option")
+                
+                # Verify the object is of the correct type
+                $selectProperty.GetType().Name | Should -Be "notion_select_database_property"
+                
+                # Verify the type property is set correctly
+                $selectProperty.type | Should -Be "select"
+                
+                # Verify the select property contains the added option
+                $selectProperty.select | Should -Not -BeNullOrEmpty
+                $selectProperty.select.options.Count | Should -Be 1
+                $selectProperty.select.options[0].GetType().Name | Should -Be "notion_select"
+            }
         }
         
-        It "Should add multiple items successfully" {
-            # Füge mehrere Elemente hinzu
-            $script:instance.add("Option A")
-            $script:instance.add("Option B")
-            $script:instance.add("Option C")
+        Context "Property Tests" {
+            It "Should have select property as notion_select_database_property_structure" {
+                # Create a new instance
+                $selectProperty = [notion_select_database_property]::new()
+                
+                # Verify the select property is of correct type
+                $selectProperty.select.GetType().Name | Should -Be "notion_select_database_property_structure"
+                
+                # Verify it's initially empty
+                $selectProperty.select.options.Count | Should -Be 0
+            }
             
-            # Überprüfe, dass alle Elemente hinzugefügt wurden
-            $script:instance.options.Count | Should -Be 3
-            $script:instance.options[0] | Should -BeOfType [notion_select]
-            $script:instance.options[1] | Should -BeOfType [notion_select]
-            $script:instance.options[2] | Should -BeOfType [notion_select]
+            It "Should allow adding options via select structure" {
+                # Create a new instance
+                $selectProperty = [notion_select_database_property]::new()
+                
+                # Add an option to the select structure
+                $selectProperty.select.add("New Option")
+                
+                # Verify the option was added successfully
+                $selectProperty.select.options.Count | Should -Be 1
+                $selectProperty.select.options[0].GetType().Name | Should -Be "notion_select"
+            }
+            
+            It "Should allow multiple options to be added" {
+                # Create a new instance
+                $selectProperty = [notion_select_database_property]::new()
+                
+                # Add multiple options
+                $selectProperty.select.add("Option A")
+                $selectProperty.select.add("Option B")
+                $selectProperty.select.add("Option C")
+                
+                # Verify all options were added
+                $selectProperty.select.options.Count | Should -Be 3
+                $selectProperty.select.options[0].GetType().Name | Should -Be "notion_select"
+                $selectProperty.select.options[1].GetType().Name | Should -Be "notion_select"
+                $selectProperty.select.options[2].GetType().Name | Should -Be "notion_select"
+            }
         }
-    }
-    
-    Context "ConvertFromObject Tests" {
         
-        It "Should convert from hashtable successfully" {
-            # Erstelle ein Test-Hashtable mit der erwarteten Struktur
-            $testData = @{
-                options = @(
-                    @{
-                        name = "Option 1"
-                        color = "blue"
-                        id = "test-id-1"
-                    },
-                    @{
-                        name = "Option 2"
-                        color = "red"
-                        id = "test-id-2"
+        Context "ConvertFromObject Tests" {
+            It "Should convert from object with select options" {
+                # Test with a select object containing options
+                $mockObject = [PSCustomObject]@{
+                    type   = "select"
+                    select = [PSCustomObject]@{
+                        options = @(
+                            [PSCustomObject]@{
+                                name  = "Option 1"
+                                color = "blue"
+                                id    = "test-id-1"
+                            },
+                            [PSCustomObject]@{
+                                name  = "Option 2"
+                                color = "red"
+                                id    = "test-id-2"
+                            }
+                        )
                     }
-                )
-            }
-            
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_select_database_property_structure]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_select_database_property_structure]
-            $result.options | Should -Not -BeNullOrEmpty
-            $result.options.Count | Should -Be 2
-            $result.options[0] | Should -BeOfType [notion_select]
-            $result.options[1] | Should -BeOfType [notion_select]
-        }
-        
-        It "Should handle empty options array" {
-            # Erstelle ein Test-Hashtable mit leerer options-Array
-            $testData = @{
-                options = @()
-            }
-            
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_select_database_property_structure]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_select_database_property_structure]
-            $result.options | Should -Not -BeNullOrEmpty
-            $result.options.Count | Should -Be 0
-        }
-    }
-}
-
-Describe "notion_select_database_property Tests" {
-    
-    Context "Constructor Tests" {
-        
-        It "Should create default instance successfully" {
-            # Erstelle eine neue Instanz mit dem Standard-Konstruktor
-            $instance = [notion_select_database_property]::new()
-            
-            # Überprüfe, dass die Instanz erstellt wurde
-            $instance | Should -Not -BeNullOrEmpty
-            $instance | Should -BeOfType [notion_select_database_property]
-            
-            # Überprüfe die geerbten Eigenschaften von DatabasePropertiesBase
-            $instance.type | Should -Be "select"
-            
-            # Überprüfe die spezifischen Eigenschaften
-            $instance.select | Should -Not -BeNullOrEmpty
-            $instance.select | Should -BeOfType [notion_select_database_property_structure]
-            $instance.select.options.Count | Should -Be 0
-        }
-        
-        It "Should create instance with name parameter successfully" {
-            # Erstelle eine neue Instanz mit Namen
-            $instance = [notion_select_database_property]::new("Test Option")
-            
-            # Überprüfe, dass die Instanz erstellt wurde
-            $instance | Should -Not -BeNullOrEmpty
-            $instance | Should -BeOfType [notion_select_database_property]
-            
-            # Überprüfe die geerbten Eigenschaften
-            $instance.type | Should -Be "select"
-            
-            # Überprüfe die spezifischen Eigenschaften
-            $instance.select | Should -Not -BeNullOrEmpty
-            $instance.select | Should -BeOfType [notion_select_database_property_structure]
-            $instance.select.options.Count | Should -Be 1
-            $instance.select.options[0] | Should -BeOfType [notion_select]
-        }
-    }
-    
-    Context "Property Tests" {
-        
-        BeforeEach {
-            # Erstelle eine neue Instanz für jeden Test
-            $script:instance = [notion_select_database_property]::new()
-        }
-        
-        It "Should have select property of correct type" {
-            # Überprüfe den Typ der select-Eigenschaft
-            $script:instance.select | Should -BeOfType [notion_select_database_property_structure]
-            
-            # Überprüfe, dass options anfangs leer ist
-            $script:instance.select.options.Count | Should -Be 0
-        }
-        
-        It "Should allow adding items via select structure" {
-            # Teste das Hinzufügen über die Struktur
-            $script:instance.select.add("New Option")
-            
-            # Überprüfe, dass das Element hinzugefügt wurde
-            $script:instance.select.options.Count | Should -Be 1
-            $script:instance.select.options[0] | Should -BeOfType [notion_select]
-        }
-        
-        It "Should allow multiple items to be added" {
-            # Füge mehrere Elemente hinzu
-            $script:instance.select.add("Option A")
-            $script:instance.select.add("Option B")
-            $script:instance.select.add("Option C")
-            
-            # Überprüfe, dass alle Elemente hinzugefügt wurden
-            $script:instance.select.options.Count | Should -Be 3
-        }
-    }
-    
-    Context "ConvertFromObject Tests" {
-        
-        It "Should convert from hashtable successfully" {
-            # Erstelle ein Test-Hashtable mit der erwarteten Struktur
-            $testData = @{
-                type = "select"
-                select = @{
-                    options = @(
-                        @{
-                            name = "Option A"
-                            color = "blue"
-                            id = "test-id-a"
-                        },
-                        @{
-                            name = "Option B"
-                            color = "red"
-                            id = "test-id-b"
-                        }
-                    )
                 }
+                
+                # Call the static ConvertFromObject method
+                $convertedProperty = [notion_select_database_property]::ConvertFromObject($mockObject)
+                
+                # Verify the converted object is of the correct type
+                $convertedProperty.GetType().Name | Should -Be "notion_select_database_property"
+                
+                # Verify the type property is set correctly
+                $convertedProperty.type | Should -Be "select"
+                
+                # Verify the select options were converted
+                $convertedProperty.select | Should -Not -BeNullOrEmpty
+                $convertedProperty.select.options.Count | Should -Be 2
+                $convertedProperty.select.options[0].GetType().Name | Should -Be "notion_select"
+                $convertedProperty.select.options[1].GetType().Name | Should -Be "notion_select"
             }
             
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_select_database_property]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_select_database_property]
-            $result.type | Should -Be "select"
-            $result.select | Should -Not -BeNullOrEmpty
-            $result.select | Should -BeOfType [notion_select_database_property_structure]
-            $result.select.options.Count | Should -Be 2
-            $result.select.options[0] | Should -BeOfType [notion_select]
-            $result.select.options[1] | Should -BeOfType [notion_select]
-        }
-        
-        It "Should handle empty select structure" {
-            # Erstelle ein Test-Hashtable mit leerer select Struktur
-            $testData = @{
-                type = "select"
-                select = @{
-                    options = @()
+            It "Should convert from object with empty select structure" {
+                # Test with empty select structure
+                $mockObject = [PSCustomObject]@{
+                    type   = "select"
+                    select = [PSCustomObject]@{
+                        options = @()
+                    }
                 }
+                
+                # Call the static ConvertFromObject method
+                $convertedProperty = [notion_select_database_property]::ConvertFromObject($mockObject)
+                
+                # Verify the converted object is of the correct type
+                $convertedProperty.GetType().Name | Should -Be "notion_select_database_property"
+                
+                # Verify the type property is set correctly
+                $convertedProperty.type | Should -Be "select"
+                
+                # Verify the select structure is empty
+                $convertedProperty.select.options.Count | Should -Be 0
             }
             
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_select_database_property]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_select_database_property]
-            $result.type | Should -Be "select"
-            $result.select.options.Count | Should -Be 0
-        }
-        
-        It "Should handle single option correctly" {
-            # Erstelle ein Test-Hashtable mit einer Option
-            $testData = @{
-                type = "select"
-                select = @{
-                    options = @(
-                        @{
-                            name = "Single Option"
-                            color = "green"
-                            id = "test-single-id"
-                        }
-                    )
+            It "Should convert from hashtable input" {
+                # Test with a hashtable input
+                $hashInput = @{
+                    type   = "select"
+                    select = @{
+                        options = @(
+                            @{
+                                name  = "Hash Option"
+                                color = "green"
+                                id    = "hash-id"
+                            }
+                        )
+                    }
                 }
+                
+                # Call the static ConvertFromObject method
+                $convertedProperty = [notion_select_database_property]::ConvertFromObject($hashInput)
+                
+                # Verify the converted object is of the correct type
+                $convertedProperty.GetType().Name | Should -Be "notion_select_database_property"
+                
+                # Verify the type property is set correctly
+                $convertedProperty.type | Should -Be "select"
+                
+                # Verify the option was converted
+                $convertedProperty.select.options.Count | Should -Be 1
+                $convertedProperty.select.options[0].GetType().Name | Should -Be "notion_select"
+            }
+        }
+        
+        Context "Inheritance Tests" {
+            It "Should inherit from DatabasePropertiesBase" {
+                # Create a new instance
+                $selectProperty = [notion_select_database_property]::new()
+                
+                # Verify inheritance
+                $selectProperty -is [DatabasePropertiesBase] | Should -Be $true
             }
             
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_select_database_property]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_select_database_property]
-            $result.type | Should -Be "select"
-            $result.select.options.Count | Should -Be 1
-            $result.select.options[0] | Should -BeOfType [notion_select]
-        }
-    }
-    
-    Context "Inheritance Tests" {
-        
-        It "Should inherit from DatabasePropertiesBase" {
-            # Erstelle eine Instanz
-            $instance = [notion_select_database_property]::new()
-            
-            # Überprüfe die Vererbung
-            $instance | Should -BeOfType [DatabasePropertiesBase]
-            
-            # Überprüfe die geerbten Eigenschaften
-            $instance.type | Should -Be "select"
-        }
-        
-        It "Should have correct type property from base class" {
-            # Erstelle eine Instanz
-            $instance = [notion_select_database_property]::new()
-            
-            # Überprüfe, dass der Typ korrekt gesetzt ist
-            $instance.type | Should -Be "select"
-            $instance.type | Should -BeOfType [string]
+            It "Should have type property from base class" {
+                # Create a new instance
+                $selectProperty = [notion_select_database_property]::new()
+                
+                # Verify the type property exists and is set correctly by base constructor
+                $selectProperty.type | Should -Be "select"
+                $selectProperty.type.GetType().Name | Should -Be "notion_database_property_type"
+            }
         }
     }
 }

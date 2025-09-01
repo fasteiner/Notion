@@ -21,7 +21,7 @@ function Invoke-TransposeTable {
     .NOTES
         Useful for converting between row-major and column-major representations of tabular data.
     #>
-    param(
+    param (
         [Parameter(Mandatory = $true, Position = 0)]
         [Alias("InputObject")]
         [array]$matrix

@@ -36,7 +36,7 @@ function New-NotionPdfBlock {
     #>
     [CmdletBinding(DefaultParameterSetName = "InputObjectSet")]
     [OutputType([notion_PDF_block])]
-    param(
+    param (
         [Parameter(Mandatory = $True, ParameterSetName = "InputObjectSet")]
         [Alias("File")]
         [object] $InputObject,

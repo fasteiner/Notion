@@ -16,6 +16,80 @@ class notion_rollup
         $this.type = [Enum]::Parse([notion_rollup_type], $type)
     }
 
+    # Factory method to create a new notion_rollup object
+    static [notion_rollup] Create($type, $function, $data = $null)
+    {
+        $rollup_obj = $null
+        switch ($type)
+        {
+            ([notion_rollup_type]::array)
+            {
+                if ($null -eq $data)
+                {
+                    $rollup_obj = [notion_rollup_array]::new()
+                }
+                else
+                {
+                    $rollup_obj = [notion_rollup_array]::new($data)
+                }
+            }
+            ([notion_rollup_type]::date)
+            {
+                if ($null -eq $data)
+                {
+                    $rollup_obj = [notion_rollup_date]::new()
+                }
+                else
+                {
+                    $rollup_obj = [notion_rollup_date]::new($data)
+                }
+            }
+            ([notion_rollup_type]::incomplete)
+            {
+                if ($null -eq $data)
+                {
+                    $rollup_obj = [notion_rollup_incomplete]::new()
+                }
+                else
+                {
+                    $rollup_obj = [notion_rollup_incomplete]::new($data)
+                }
+            }
+            ([notion_rollup_type]::number)
+            {
+                if ($null -eq $data)
+                {
+                    $rollup_obj = [notion_rollup_number]::new()
+                }
+                else
+                {
+                    $rollup_obj = [notion_rollup_number]::new($data)
+                }
+            }
+            ([notion_rollup_type]::unsupported)
+            {
+                if ($null -eq $data)
+                {
+                    $rollup_obj = [notion_rollup_unsupported]::new()
+                }
+                else
+                {
+                    $rollup_obj = [notion_rollup_unsupported]::new($data)
+                }
+            }
+            default
+            {
+                Write-Error -Message "Unsupported rollup type: $type" -Category InvalidArgument -RecommendedAction "Use a supported rollup type"
+                return $null
+            }
+        }
+
+        $rollup_obj.function = [Enum]::Parse([notion_rollup_function_type], $function)
+        $rollup_obj.type = $type
+        return $rollup_obj
+    }
+
+    # Factory method to convert from generic object to specific notion_rollup derived class
     static [notion_rollup] ConvertFromObject($Value)
     {
         if (!$value.type)

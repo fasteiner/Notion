@@ -15,12 +15,9 @@ class notion_databaseproperties : hashtable
             Write-Error "Value cannot be null" -Category InvalidData -TargetObject $Value -RecommendedAction "Provide a valid DatabasePropertiesBase object or null"
             return
         }
-        if (($value) -and (-not ($Value -is [DatabasePropertiesBase])))
-        {
-            Write-Error "Value must be of type DatabasePropertiesBase" -Category InvalidType -TargetObject $Value -RecommendedAction "Use a class that inherits from DatabasePropertiesBase"
-        }
+        $property = [DatabasePropertiesBase]::ConvertFromObject($Value)
         # Call the base Add method
-        ([hashtable] $this).Add($Key, $Value)
+        ([hashtable] $this).Add($Key, $property)
     }
 
     static [notion_databaseproperties] ConvertFromObject($Value)
@@ -49,7 +46,7 @@ class notion_databaseproperties : hashtable
         }
         foreach ($key in $propertynames)
         {
-            $dbproperties.Add($key, [DatabasePropertiesBase]::ConvertFromObject($Value.$key))
+            $dbproperties.Add($key, $Value."$key")
         }
         return $dbproperties
     }

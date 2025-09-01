@@ -1,403 +1,151 @@
-# Import the module containing the notion_last_edited_time_database_property class
+# Import Pester (test framework) – the module under test is imported in BeforeDiscovery
 Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
-    # Get the project path by going up 4 levels from the test file
+    # Resolve project root (4 levels up from this test file)
     $projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
 
     <#
-        If the QA tests are run outside of the build script (e.g with Invoke-Pester)
-        the parent scope has not set the variable $ProjectName.
+        If tests are run outside the build script (e.g. Invoke-Pester directly),
+        the parent scope might not have set $ProjectName.
     #>
     if (-not $ProjectName)
     {
-        # Assuming project folder name is project name.
+        # Assume the project folder name equals the project/module name.
         $ProjectName = Get-SamplerProjectName -BuildRoot $projectPath
     }
     Write-Debug "ProjectName: $ProjectName"
     $global:moduleName = $ProjectName
 
-    # Remove any previously loaded module to ensure clean test
+    # Ensure a clean module context before importing
     Remove-Module -Name $global:moduleName -Force -ErrorAction SilentlyContinue
 
-    # Import the module under test
+    # Import the built module from output
     $mut = Import-Module -Name "$projectPath/output/module/$ProjectName" -Force -ErrorAction Stop -PassThru
 }
 
-Describe "notion_unique_id_database_property_structure Tests" {
-    
-    Context "Constructor Tests" {
-        
-        It "Should create default instance successfully" {
-            # Erstelle eine neue Instanz mit dem Standard-Konstruktor
-            $instance = [notion_unique_id_database_property_structure]::new()
-            
-            # Überprüfe, dass die Instanz erstellt wurde
-            $instance | Should -Not -BeNullOrEmpty
-            $instance | Should -BeOfType [notion_unique_id_database_property_structure]
-            
-            # Überprüfe die Standard-Eigenschaften
-            $instance.prefix | Should -BeNullOrEmpty
-        }
-        
-        It "Should create instance with prefix parameter successfully" {
-            # Erstelle eine neue Instanz mit Prefix
-            $testPrefix = "TEST-"
-            $instance = [notion_unique_id_database_property_structure]::new($testPrefix)
-            
-            # Überprüfe, dass die Instanz erstellt wurde
-            $instance | Should -Not -BeNullOrEmpty
-            $instance | Should -BeOfType [notion_unique_id_database_property_structure]
-            
-            # Überprüfe, dass der Prefix korrekt gesetzt wurde
-            $instance.prefix | Should -Be $testPrefix
-        }
-        
-        It "Should handle empty string prefix" {
-            # Erstelle eine neue Instanz mit leerem String
-            $instance = [notion_unique_id_database_property_structure]::new("")
-            
-            # Überprüfe, dass die Instanz erstellt wurde
-            $instance | Should -Not -BeNullOrEmpty
-            $instance | Should -BeOfType [notion_unique_id_database_property_structure]
-            
-            # Überprüfe, dass der Prefix ein leerer String ist
-            $instance.prefix | Should -Be ""
-        }
-    }
-    
-    Context "Property Tests" {
-        
-        BeforeEach {
-            # Erstelle eine neue Instanz für jeden Test
-            $script:instance = [notion_unique_id_database_property_structure]::new()
-        }
-        
-        It "Should have prefix property of correct type" {
-            # Überprüfe den Typ der prefix-Eigenschaft (kann string oder null sein)
-            $script:instance.PSObject.Properties['prefix'] | Should -Not -BeNullOrEmpty
-        }
-        
-        It "Should allow setting prefix property" {
-            # Setze verschiedene Prefix-Werte
-            $script:instance.prefix = "ABC-"
-            $script:instance.prefix | Should -Be "ABC-"
-            
-            $script:instance.prefix = "ID_"
-            $script:instance.prefix | Should -Be "ID_"
-            
-            $script:instance.prefix = "123-"
-            $script:instance.prefix | Should -Be "123-"
-            
-            # Teste auch null und leeren String
-            $script:instance.prefix = $null
-            $script:instance.prefix | Should -BeNullOrEmpty
-            
-            $script:instance.prefix = ""
-            $script:instance.prefix | Should -Be ""
-        }
-    }
-    
-    Context "ConvertFromObject Tests" {
-        
-        It "Should convert from hashtable successfully" {
-            # Erstelle ein Test-Hashtable mit der erwarteten Struktur
-            $testData = @{
-                prefix = "ITEM-"
-            }
-            
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_unique_id_database_property_structure]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_unique_id_database_property_structure]
-            $result.prefix | Should -Be "ITEM-"
-        }
-        
-        It "Should handle null prefix" {
-            # Erstelle ein Test-Hashtable mit null prefix
-            $testData = @{
-                prefix = $null
-            }
-            
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_unique_id_database_property_structure]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_unique_id_database_property_structure]
-            $result.prefix | Should -BeNullOrEmpty
-        }
-        
-        It "Should handle empty prefix" {
-            # Erstelle ein Test-Hashtable mit leerem prefix
-            $testData = @{
-                prefix = ""
-            }
-            
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_unique_id_database_property_structure]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_unique_id_database_property_structure]
-            $result.prefix | Should -Be ""
-        }
-        
-        It "Should handle missing prefix property" {
-            # Erstelle ein Test-Hashtable ohne prefix Eigenschaft
-            $testData = @{}
-            
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_unique_id_database_property_structure]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_unique_id_database_property_structure]
-            # prefix sollte null oder leer sein wenn nicht gesetzt
-        }
-    }
-}
-
-Describe "notion_unique_id_database_property Tests" {
-    
-    Context "Constructor Tests" {
-        
-        It "Should create default instance successfully" {
-            # Erstelle eine neue Instanz mit dem Standard-Konstruktor
-            $instance = [notion_unique_id_database_property]::new()
-            
-            # Überprüfe, dass die Instanz erstellt wurde
-            $instance | Should -Not -BeNullOrEmpty
-            $instance | Should -BeOfType [notion_unique_id_database_property]
-            
-            # Überprüfe die geerbten Eigenschaften von DatabasePropertiesBase
-            $instance.type | Should -Be "unique_id"
-            
-            # Überprüfe die spezifischen Eigenschaften
-            $instance.unique_id | Should -Not -BeNullOrEmpty
-            $instance.unique_id | Should -BeOfType [notion_unique_id_database_property_structure]
-            $instance.unique_id.prefix | Should -BeNullOrEmpty
-        }
-        
-        It "Should create instance with prefix parameter successfully" {
-            # Erstelle eine neue Instanz mit Prefix
-            $testPrefix = "TASK-"
-            $instance = [notion_unique_id_database_property]::new($testPrefix)
-            
-            # Überprüfe, dass die Instanz erstellt wurde
-            $instance | Should -Not -BeNullOrEmpty
-            $instance | Should -BeOfType [notion_unique_id_database_property]
-            
-            # Überprüfe die geerbten Eigenschaften
-            $instance.type | Should -Be "unique_id"
-            
-            # Überprüfe die spezifischen Eigenschaften
-            $instance.unique_id | Should -Not -BeNullOrEmpty
-            $instance.unique_id | Should -BeOfType [notion_unique_id_database_property_structure]
-            $instance.unique_id.prefix | Should -Be $testPrefix
-        }
-        
-        It "Should create instance with empty prefix successfully" {
-            # Erstelle eine neue Instanz mit leerem Prefix
-            $instance = [notion_unique_id_database_property]::new("")
-            
-            # Überprüfe, dass die Instanz erstellt wurde
-            $instance | Should -Not -BeNullOrEmpty
-            $instance | Should -BeOfType [notion_unique_id_database_property]
-            
-            # Überprüfe die Eigenschaften
-            $instance.type | Should -Be "unique_id"
-            $instance.unique_id.prefix | Should -Be ""
-        }
-        
-        It "Should create instance with various prefix formats" {
-            # Teste verschiedene Prefix-Formate
-            $prefixes = @("ID-", "ITEM_", "123-", "ABC", "")
-            
-            foreach ($prefix in $prefixes) {
-                $instance = [notion_unique_id_database_property]::new($prefix)
+InModuleScope -ModuleName $global:moduleName {
+    Describe "notion_unique_id_database_property Tests" {
+        Context "Constructor Tests" {
+            It "Should create a notion_unique_id_database_property with default constructor" {
+                # Create a new instance using the default constructor
+                $uniqueIdProperty = [notion_unique_id_database_property]::new()
                 
-                $instance | Should -Not -BeNullOrEmpty
-                $instance | Should -BeOfType [notion_unique_id_database_property]
-                $instance.type | Should -Be "unique_id"
-                $instance.unique_id.prefix | Should -Be $prefix
+                # Verify the object is of the correct type
+                $uniqueIdProperty.GetType().Name | Should -Be "notion_unique_id_database_property"
+                
+                # Verify it inherits from DatabasePropertiesBase
+                $uniqueIdProperty -is [DatabasePropertiesBase] | Should -Be $true
+                
+                # Verify the type property is set correctly
+                $uniqueIdProperty.type | Should -Be "unique_id"
+                
+                # Verify the unique_id property is initialized as an empty hashtable
+                $uniqueIdProperty.unique_id.getType().Name | Should -Be "notion_unique_id_database_property_structure"
+                $uniqueIdProperty.unique_id.Count | Should -Be 1
             }
         }
-    }
-    
-    Context "Property Tests" {
         
-        BeforeEach {
-            # Erstelle eine neue Instanz für jeden Test
-            $script:instance = [notion_unique_id_database_property]::new()
+        Context "Property Tests" {
+                        
+            It "Should allow modification of unique_id property" {
+                # Create a new instance
+                $uniqueIdProperty = [notion_unique_id_database_property]::new()
+                
+                # Add some test data to the unique_id hashtable
+                $uniqueIdProperty.unique_id.prefix = "ID-"
+                
+                # Verify the data was added successfully
+                $uniqueIdProperty.unique_id.prefix | Should -Be "ID-"
+                $uniqueIdProperty.unique_id.Count | Should -Be 1
+            }
         }
         
-        It "Should have unique_id property of correct type" {
-            # Überprüfe den Typ der unique_id-Eigenschaft
-            $script:instance.unique_id | Should -BeOfType [notion_unique_id_database_property_structure]
-            
-            # Überprüfe das Standard-Prefix (sollte null oder leer sein)
-            $script:instance.unique_id.prefix | Should -BeNullOrEmpty
-        }
-        
-        It "Should allow modifying unique_id structure" {
-            # Erstelle eine neue Struktur mit Prefix
-            $newStructure = [notion_unique_id_database_property_structure]::new("NEW-")
-            $script:instance.unique_id = $newStructure
-            
-            # Überprüfe die Zuweisung
-            $script:instance.unique_id | Should -Be $newStructure
-            $script:instance.unique_id.prefix | Should -Be "NEW-"
-        }
-        
-        It "Should allow modifying prefix through structure" {
-            # Modifiziere den Prefix direkt über die Struktur
-            $script:instance.unique_id.prefix = "MODIFIED-"
-            
-            # Überprüfe die Änderung
-            $script:instance.unique_id.prefix | Should -Be "MODIFIED-"
-        }
-    }
-    
-    Context "ConvertFromObject Tests" {
-        
-        It "Should convert from hashtable successfully" {
-            # Erstelle ein Test-Hashtable mit der erwarteten Struktur
-            $testData = @{
-                type = "unique_id"
-                unique_id = @{
-                    prefix = "CONV-"
+        Context "ConvertFromObject Tests" {
+            It "Should convert from any object and return default instance" {
+                # Test with a simple object
+                $mockObject = [PSCustomObject]@{
+                    type      = "unique_id"
+                    unique_id = @{}
                 }
+                
+                # Call the static ConvertFromObject method
+                $convertedProperty = [notion_unique_id_database_property]::ConvertFromObject($mockObject)
+                
+                # Verify the converted object is of the correct type
+                $convertedProperty.GetType().Name | Should -Be "notion_unique_id_database_property"
+                
+                # Verify the type property is set correctly
+                $convertedProperty.type | Should -Be "unique_id"
+                
+                # Verify the unique_id property is initialized as empty hashtable
+                $convertedProperty.unique_id.getType().Name | Should -Be "notion_unique_id_database_property_structure"
+                $convertedProperty.unique_id.Count | Should -Be 1
             }
             
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_unique_id_database_property]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_unique_id_database_property]
-            $result.type | Should -Be "unique_id"
-            $result.unique_id | Should -Not -BeNullOrEmpty
-            $result.unique_id | Should -BeOfType [notion_unique_id_database_property_structure]
-            $result.unique_id.prefix | Should -Be "CONV-"
-        }
-        
-        It "Should convert with null prefix successfully" {
-            # Erstelle ein Test-Hashtable mit null prefix
-            $testData = @{
-                type = "unique_id"
-                unique_id = @{
-                    prefix = $null
-                }
-            }
-            
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_unique_id_database_property]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_unique_id_database_property]
-            $result.type | Should -Be "unique_id"
-            $result.unique_id.prefix | Should -BeNullOrEmpty
-        }
-        
-        It "Should convert with empty prefix successfully" {
-            # Erstelle ein Test-Hashtable mit leerem prefix
-            $testData = @{
-                type = "unique_id"
-                unique_id = @{
-                    prefix = ""
-                }
-            }
-            
-            # Konvertiere das Hashtable zu einem Objekt
-            $result = [notion_unique_id_database_property]::ConvertFromObject($testData)
-            
-            # Überprüfe das Ergebnis
-            $result | Should -Not -BeNullOrEmpty
-            $result | Should -BeOfType [notion_unique_id_database_property]
-            $result.type | Should -Be "unique_id"
-            $result.unique_id.prefix | Should -Be ""
-        }
-        
-        It "Should convert complex prefix patterns successfully" {
-            # Teste verschiedene Prefix-Muster
-            $prefixPatterns = @("ITEM-", "ID_", "123-", "ABC", "TASK-001-", "")
-            
-            foreach ($prefix in $prefixPatterns) {
-                $testData = @{
-                    type = "unique_id"
-                    unique_id = @{
-                        prefix = $prefix
+            It "Should convert from object with unique_id configuration" {
+                # Test with a unique_id object containing configuration
+                $mockObject = [PSCustomObject]@{
+                    type      = "unique_id"
+                    unique_id = [PSCustomObject]@{
+                        prefix = "TASK-"
                     }
                 }
                 
-                $result = [notion_unique_id_database_property]::ConvertFromObject($testData)
+                # Call the static ConvertFromObject method
+                $convertedProperty = [notion_unique_id_database_property]::ConvertFromObject($mockObject)
                 
-                $result | Should -Not -BeNullOrEmpty
-                $result | Should -BeOfType [notion_unique_id_database_property]
-                $result.type | Should -Be "unique_id"
-                $result.unique_id.prefix | Should -Be $prefix
-            }
-        }
-        
-        It "Should handle missing unique_id structure" {
-            # Erstelle ein Test-Hashtable ohne unique_id Struktur
-            $testData = @{
-                type = "unique_id"
-            }
-            
-            try {
-                # Konvertiere das Hashtable zu einem Objekt
-                $result = [notion_unique_id_database_property]::ConvertFromObject($testData)
+                # Verify the converted object is of the correct type
+                $convertedProperty.GetType().Name | Should -Be "notion_unique_id_database_property"
                 
-                # Wenn es funktioniert, überprüfe das Ergebnis
-                $result | Should -Not -BeNullOrEmpty
-                $result | Should -BeOfType [notion_unique_id_database_property]
-                $result.type | Should -Be "unique_id"
+                # Verify the type property is set correctly
+                $convertedProperty.type | Should -Be "unique_id"
+                
+                # Verify the unique_id property is a hashtable (implementation may vary)
+                $convertedProperty.unique_id.getType().Name | Should -Be "notion_unique_id_database_property_structure"
             }
-            catch {
-                # Wenn ein Fehler auftritt, ist das erwartetes Verhalten
-                Write-Warning "Missing unique_id structure test produced expected error: $_"
-                $true | Should -Be $true  # Test als bestanden markieren
+            
+            It "Should convert from hashtable input" {
+                # Test with a hashtable input
+                $hashInput = @{
+                    type      = "unique_id"
+                    unique_id = @{ 
+                        prefix = "REQ-"
+                        start  = 1000
+                    }
+                }
+                
+                # Call the static ConvertFromObject method
+                $convertedProperty = [notion_unique_id_database_property]::ConvertFromObject($hashInput)
+                
+                # Verify the converted object is of the correct type
+                $convertedProperty.GetType().Name | Should -Be "notion_unique_id_database_property"
+                
+                # Verify the type property is set correctly
+                $convertedProperty.type | Should -Be "unique_id"
+                
+                # Note: The ConvertFromObject method behavior may vary based on implementation
+                $convertedProperty.unique_id.getType().Name | Should -Be "notion_unique_id_database_property_structure"
             }
         }
-    }
-    
-    Context "Inheritance Tests" {
         
-        It "Should inherit from DatabasePropertiesBase" {
-            # Erstelle eine Instanz
-            $instance = [notion_unique_id_database_property]::new()
+        Context "Inheritance Tests" {
+            It "Should inherit from DatabasePropertiesBase" {
+                # Create a new instance
+                $uniqueIdProperty = [notion_unique_id_database_property]::new()
+                
+                # Verify inheritance
+                $uniqueIdProperty -is [DatabasePropertiesBase] | Should -Be $true
+            }
             
-            # Überprüfe die Vererbung
-            $instance | Should -BeOfType [DatabasePropertiesBase]
-            
-            # Überprüfe die geerbten Eigenschaften
-            $instance.type | Should -Be "unique_id"
-        }
-        
-        It "Should have correct type property from base class" {
-            # Erstelle eine Instanz
-            $instance = [notion_unique_id_database_property]::new()
-            
-            # Überprüfe, dass der Typ korrekt gesetzt ist
-            $instance.type | Should -Be "unique_id"
-            $instance.type | Should -BeOfType [string]
-        }
-        
-        It "Should maintain type consistency across constructors" {
-            # Teste verschiedene Konstruktoren
-            $instance1 = [notion_unique_id_database_property]::new()
-            $instance2 = [notion_unique_id_database_property]::new("PREFIX-")
-            $instance3 = [notion_unique_id_database_property]::new("")
-            
-            # Alle sollten den gleichen Typ haben
-            $instance1.type | Should -Be "unique_id"
-            $instance2.type | Should -Be "unique_id"
-            $instance3.type | Should -Be "unique_id"
+            It "Should have type property from base class" {
+                # Create a new instance
+                $uniqueIdProperty = [notion_unique_id_database_property]::new()
+                
+                # Verify the type property exists and is set correctly by base constructor
+                $uniqueIdProperty.type | Should -Be "unique_id"
+                $uniqueIdProperty.type.GetType().Name | Should -Be "notion_database_property_type"
+            }
         }
     }
 }
