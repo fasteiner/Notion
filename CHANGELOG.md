@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Covers class hierarchy, type usage, PowerShell best practices, and module loading order.
     - Includes inline code examples and module-specific conventions for cmdlets, parameters, and testing.
 
+- **`.markdownlint.json`**
+  - Disabled line length checking as this is unnecessary for this project.
+
 - **`source/Private/Remove-DefaultPropertyNames.ps1`**
 
   - Added utility function `Remove-DefaultPropertyNames` to filter out common .NET object property names, used during property conversion processes for cleaner hashtable parsing.
