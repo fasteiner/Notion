@@ -2,7 +2,7 @@
 Import-Module Pester -DisableNameChecking 
 
 BeforeDiscovery {
-    $projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
+    $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
 
     if (-not $ProjectName)
     {

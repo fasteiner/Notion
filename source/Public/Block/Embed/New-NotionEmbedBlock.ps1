@@ -31,14 +31,17 @@ function New-NotionEmbedBlock
         [Parameter(ParameterSetName = 'BothParams', Mandatory = $true, HelpMessage = 'URL to be embedded in the block.')]
         [string]$Url,
 
-        [Parameter(ParameterSetName = 'BothParams', Mandatory = $true, HelpMessage = 'Caption for the embed block.')]
+        [Parameter(ParameterSetName = 'BothParams', Mandatory = $false, HelpMessage = 'Caption for the embed block.')]
         [object]$Caption
     )
 
     if ($PSBoundParameters.ContainsKey('Url') -and $PSBoundParameters.ContainsKey('Caption'))
     {
-        $caption = [rich_text]::ConvertFromObject($caption)
-        $obj = [notion_embed_block]::new($Url, $Caption)
+        $obj = [notion_embed_block]::ConvertFromObject(
+            @{
+                embed = $PSBoundParameters
+            }
+        )
     }
     elseif ($PSBoundParameters.ContainsKey('Url'))
     {

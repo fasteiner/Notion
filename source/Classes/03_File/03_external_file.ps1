@@ -36,6 +36,7 @@ class notion_external_file : notion_file
 
     notion_external_file([string]$name, $caption, [string]$url):base("external", $name, $caption)
     {
+        Write-Verbose "[notion_external_file]::new($name, $($caption | ConvertTo-Json -Depth 5 -EnumsAsStrings), $url)"
         $this.external = [notion_external_file_structure]::new($url)
     }
 

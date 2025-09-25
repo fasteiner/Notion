@@ -32,7 +32,7 @@ class TableRow_structure
             foreach ($item in $object)
             {
                 $this.AddCell($item)
-                Write-Debug "Added cell $($this.cells[0].count) content: $($item)"
+                Write-Debug "Added cell $($this.cells.count) content: $($item)"
             }
         }
     }

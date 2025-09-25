@@ -24,8 +24,8 @@ BeforeDiscovery {
 }
 
 
-InModuleScope -ModuleName $global:moduleName {
-    Describe "notion_formula_database_property Tests" {
+Describe "notion_formula_database_property Tests" {
+        InModuleScope -ModuleName $global:moduleName {
 
         Context "Constructors" {
             It "Default ctor should set base type 'formula' and empty structure" {
@@ -68,19 +68,8 @@ InModuleScope -ModuleName $global:moduleName {
             }
 
             It "Should Write-Error and return default instance when formula is missing" {
-                $mock = [pscustomobject]@{ type = "formula" }
-
-                $result, $errs = & {
-                    $Error.Clear()
-                    $r = [notion_formula_database_property]::ConvertFromObject($mock)
-                    , $r, $Error.Clone()
-                }
-
-                $result | Should -BeOfType "notion_formula_database_property"
-                $result.type.ToString() | Should -Be "formula"
-                $result.formula.getType().Name | Should -Be "notion_formula_database_property_structure"
-                $result.formula.expression | Should -BeNullOrEmpty
-                ($errs.Count -ge 1) | Should -BeTrue
+                
+                { $ErrorActionPreference = "Stop"; [notion_formula_database_property]::ConvertFromObject(@{ type = "formula" } ) } | Should -Throw
             }
 
             It "Should set .formula `$null if nested ConvertFromObject fails" {

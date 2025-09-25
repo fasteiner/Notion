@@ -37,35 +37,46 @@ function New-NotionRichText
         [rich_text]
     #>
     [CmdletBinding()]
+    [OutputType([rich_text[]])]
     param (
-        [Parameter(Position = 0 )]
-        [ValidateSet("text", "mention", "equation")]
-        [string]$Type = "text",
-
         [Parameter(Position = 1, HelpMessage = "If not specified, the properties of the parent object are used" )]
+        [Parameter(ParameterSetName = "Text")]
+        [Parameter(ParameterSetName = "Equation" )]
         [object]$Annotations,
 
         [Parameter(ParameterSetName = "Text", Position = 2 )]
         [string]$Text,
 
+        [Parameter(ParameterSetName = "Equation" )]
+        [string]$Expression,
+
         [Parameter(ParameterSetName = "ConvertFromMarkdown", Position = 2 )]
         [string]$MarkdownText,
 
-        [Parameter(Position = 3 )]
+        [Parameter(ParameterSetName = "Text")]
         [object]$Link
     )
 
-    if ($MarkdownText)
+    switch ($PSCmdlet.ParameterSetName)
     {
-        $richTextArray = [rich_text]::ConvertFromMarkdown($MarkdownText)
-        return $richTextArray
-    }
-    $obj = [rich_text]::ConvertFromObjects(@{
-        Type = $Type
-        Annotations = $Annotations
-        Text = $Text
-        Link = $Link
-    })
+        "Text"
+        {
+            return New-NotionRichTextText @PSBoundParameters
+        }
+        "Equation"
+        {
+            return New-NotionRichTextEquation @PSBoundParameters
+        }
 
-    return $obj
+        "ConvertFromMarkdown"
+        {
+            throw [System.NotImplementedException]::new("Markdown conversion is not yet implemented.")
+            return @()
+        }
+
+        default
+        {
+            throw "Unsupported parameter set: $($PSCmdlet.ParameterSetName)"
+        }
+    }
 }

@@ -5,6 +5,7 @@ class Table_Of_Contents_structure
 
     Table_Of_Contents_structure()
     {
+        $this.color = [notion_color]::default
     }
 
     Table_Of_Contents_structure($color = "default")
@@ -25,6 +26,7 @@ class notion_table_of_contents_block : notion_block
 
     notion_table_of_contents_block()
     {
+        $this.table_of_contents = [Table_Of_Contents_structure]::new()
     }
 
     notion_table_of_contents_block($color = "default")
