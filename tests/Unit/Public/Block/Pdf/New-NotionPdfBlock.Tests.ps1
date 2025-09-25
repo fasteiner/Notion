@@ -1,10 +1,12 @@
-# FILE: Pdf/New-NotionPdfBlock.Tests.ps1
-Import-Module Pester
+# FILE: New-NotionPdfBlock.Tests.ps1
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
 
-    if (-not $ProjectName) {
+
+    if (-not $ProjectName)
+    {
         $ProjectName = Get-SamplerProjectName -BuildRoot $script:projectPath
     }
     Write-Debug "ProjectName: $ProjectName"
@@ -19,24 +21,33 @@ BeforeDiscovery {
 
 Describe "New-NotionPdfBlock" {
     InModuleScope $moduleName {
-        It "Should create a PDF block from input object" {
-            $fileObject = @{ pdf = @{ type = "external"; external = @{ url = "https://example.com/example.pdf" }; caption = "Example Caption" } }
+        # Test for InputObject parameter set
+        It "Should create a Notion PDF block with InputObject" {
+            $fileObject = @{ pdf = @{ type = "external"; external = @{ url = "https://example.com/example.pdf" }; <#name = "example.pdf";#> caption = "Example Caption" } }
             $result = New-NotionPdfBlock -InputObject $fileObject
-
             $result | Should -Not -BeNullOrEmpty
             $result | Should -BeOfType "notion_PDF_block"
             $result.pdf.type | Should -Be "external"
             $result.pdf.external.url | Should -Be "https://example.com/example.pdf"
+            # $result.pdf.name | Should -Be "example.pdf"
+            $result.pdf.caption.plain_text | Should -Be "Example Caption"
         }
 
-        It "Should create a PDF block with caption and url" {
-            $result = New-NotionPdfBlock -caption "My PDF Caption" -url "https://example.com/example.pdf"
-
+        # Test for caption, name, and URL parameter set
+        It "Should create a Notion PDF block with caption, name, and URL" {
+            $result = New-NotionPdfBlock -caption "My PDF Caption" <#-name "example.pdf"#> -url "https://example.com/example.pdf"
             $result | Should -Not -BeNullOrEmpty
             $result | Should -BeOfType "notion_PDF_block"
             $result.pdf.type | Should -Be "external"
             $result.pdf.external.url | Should -Be "https://example.com/example.pdf"
-            $result.pdf.caption[0].plain_text | Should -Be "My PDF Caption"
+            # $result.pdf.external.name | Should -Be "example.pdf"
+            $result.pdf.caption.plain_text | Should -Be "My PDF Caption"
         }
+
+        # Test for invalid parameter combinations
+        It "Should throw an error when both InputObject and caption are specified" {
+            { New-NotionPdfBlock -InputObject @{ pdf = @{ type = "external"; external = @{ url = "https://example.com/example.pdf"; name = "example.pdf"; caption = "Example Caption" } } } -caption "My PDF" -Name "example.pdf" -url "https://example.com/example.pdf" } | Should -Throw
+        }
+
     }
 }

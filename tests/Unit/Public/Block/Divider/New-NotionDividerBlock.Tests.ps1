@@ -1,5 +1,5 @@
 # FILE: Divider/New-NotionDividerBlock.Tests.ps1
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path

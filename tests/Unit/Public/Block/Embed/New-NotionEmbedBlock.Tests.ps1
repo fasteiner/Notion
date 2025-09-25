@@ -1,10 +1,11 @@
 # FILE: Embed/New-NotionEmbedBlock.Tests.ps1
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
 
-    if (-not $ProjectName) {
+    if (-not $ProjectName)
+    {
         $ProjectName = Get-SamplerProjectName -BuildRoot $script:projectPath
     }
     Write-Debug "ProjectName: $ProjectName"
@@ -34,5 +35,15 @@ Describe "New-NotionEmbedBlock" {
             $result.embed.url | Should -Be "https://example.com"
             $result.embed.caption[0].plain_text | Should -Be "Example"
         }
+
+        It "Should create an embed block with only url" {
+            $result = New-NotionEmbedBlock -Url "https://example.com"
+
+            $result | Should -BeOfType "notion_embed_block"
+            $result.embed.url | Should -Be "https://example.com"
+            $result.embed.caption | Should -BeNullOrEmpty
+        }
+
+
     }
 }

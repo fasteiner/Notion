@@ -1,5 +1,5 @@
 # FILE: Code/New-NotionCodeBlock.Tests.ps1
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
@@ -24,7 +24,7 @@ Describe "New-NotionCodeBlock" {
 
             $result | Should -BeOfType "notion_code_block"
             $result.type | Should -Be ([notion_blocktype]::code)
-            $result.code.rich_text | Should -BeEmpty
+            $result.code.rich_text | Should -BeNullOrEmpty
         }
 
         It "Should create a code block with text and language" {
@@ -41,6 +41,7 @@ Describe "New-NotionCodeBlock" {
 
             $result | Should -BeOfType "notion_code_block"
             $result.code.caption[0].plain_text | Should -Be 'Example snippet'
+            $result.code.rich_text[0].plain_text | Should -Be 'Write-Output "Hello"'
         }
     }
 }

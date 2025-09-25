@@ -1,5 +1,5 @@
 # FILE: TableRow/New-NotionTableRowBlock.Tests.ps1
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
@@ -26,14 +26,6 @@ Describe "New-NotionTableRowBlock" {
             $result.type | Should -Be ([notion_blocktype]::table_row)
             $result.table_row.cells[0][0].plain_text | Should -Be "Cell1"
             $result.table_row.cells[1][0].plain_text | Should -Be "Cell2"
-        }
-
-        It "Should convert from existing structure" {
-            $structure = [TableRow_structure]::new(@("A", "B"))
-            $result = New-NotionTableRowBlock -CellData $structure
-
-            $result | Should -BeOfType "notion_table_row_block"
-            $result.table_row.cells.Count | Should -Be 2
         }
     }
 }

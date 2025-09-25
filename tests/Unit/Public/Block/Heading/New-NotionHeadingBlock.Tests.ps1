@@ -1,10 +1,17 @@
-# FILE: Heading/New-NotionHeadingBlock.Tests.ps1
-Import-Module Pester
+# FILE: New-NotionHeadingBlock.Tests.ps1
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
 
-    if (-not $ProjectName) {
+
+    <#
+        If the QA tests are run outside of the build script (e.g with Invoke-Pester)
+        the parent scope has not set the variable $ProjectName.
+    #>
+    if (-not $ProjectName)
+    {
+        # Assuming project folder name is project name.
         $ProjectName = Get-SamplerProjectName -BuildRoot $script:projectPath
     }
     Write-Debug "ProjectName: $ProjectName"
@@ -19,23 +26,29 @@ BeforeDiscovery {
 
 Describe "New-NotionHeadingBlock" {
     InModuleScope $moduleName {
-        It "Should create a level 1 heading block" {
-            $result = New-NotionHeadingBlock -Text "Heading" -Level 1
-
-            $result | Should -BeOfType "notion_heading_1_block"
-            $result.type | Should -Be ([notion_blocktype]::heading_1)
-            $result.heading_1.rich_text[0].plain_text | Should -Be "Heading"
-            $result.heading_1.color | Should -Be ([notion_color]::default)
+        # Test for level validation
+        It "Should throw an error when Level is out of range" {
+            { New-NotionHeadingBlock -Text "Test Header" -Level 4 } | Should -Throw
+            { New-NotionHeadingBlock -Text "Test Header" -Level 0 } | Should -Throw
         }
 
-        It "Should create a level 2 heading block with color and toggle" {
-            $result = New-NotionHeadingBlock -Text "Section" -Color blue -Level 2 -is_toggleable
+        # Test for default parameters
+        It "Should create a Notion header with default parameters" {
+            $result = New-NotionHeadingBlock -Text "Test Header" -Level 1
+            $result | Should -Not -BeNullOrEmpty
+            $result | Should -BeOfType "notion_heading_block"
+        }
 
-            $result | Should -BeOfType "notion_heading_2_block"
-            $result.type | Should -Be ([notion_blocktype]::heading_2)
-            $result.heading_2.rich_text[0].plain_text | Should -Be "Section"
-            $result.heading_2.color | Should -Be ([notion_color]::blue)
-            $result.heading_2.is_toggleable | Should -BeTrue
+        # Test for custom color
+        It "Should allow setting a custom color" {
+            $result = New-NotionHeadingBlock -Text "Colored Header" -Color "blue" -Level 2
+            $result.heading_2.Color | Should -Be "blue"
+        }
+
+        # Test for toggleable property
+        It "Should correctly set toggleable property" {
+            $result = New-NotionHeadingBlock -Text "Toggleable Header" -Level 3 -is_toggleable
+            $result.heading_3.is_toggleable | Should -Be $true
         }
     }
 }

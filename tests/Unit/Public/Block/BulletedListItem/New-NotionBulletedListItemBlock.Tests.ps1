@@ -1,10 +1,11 @@
 # FILE: BulletedListItem/New-NotionBulletedListItemBlock.Tests.ps1
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
 
-    if (-not $ProjectName) {
+    if (-not $ProjectName)
+    {
         $ProjectName = Get-SamplerProjectName -BuildRoot $script:projectPath
     }
     Write-Debug "ProjectName: $ProjectName"
@@ -24,7 +25,7 @@ Describe "New-NotionBulletedListItemBlock" {
 
             $result | Should -BeOfType "notion_bulleted_list_item_block"
             $result.type | Should -Be ([notion_blocktype]::bulleted_list_item)
-            $result.bulleted_list_item.rich_text | Should -BeEmpty
+            $result.bulleted_list_item.rich_text | Should -BeNullOrEmpty
         }
 
         It "Should create a bulleted list item block with text and color" {

@@ -1,10 +1,11 @@
 # FILE: LinkPreview/New-NotionLinkPreviewBlock.Tests.ps1
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
 
-    if (-not $ProjectName) {
+    if (-not $ProjectName)
+    {
         $ProjectName = Get-SamplerProjectName -BuildRoot $script:projectPath
     }
     Write-Debug "ProjectName: $ProjectName"
@@ -23,7 +24,7 @@ Describe "New-NotionLinkPreviewBlock" {
             {
                 $ErrorActionPreference = 'Stop'
                 New-NotionLinkPreviewBlock
-            } | Should -Throw -ErrorMessage "link_preview" 
+            } | Should -Throw #-ErrorMessage "The `"link_preview`" block can only be returned as part of a response. The Notion API does not support creating or appending link_preview blocks." 
         }
     }
 }

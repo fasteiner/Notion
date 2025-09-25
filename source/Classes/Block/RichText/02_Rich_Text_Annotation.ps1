@@ -16,7 +16,8 @@ class notion_annotation
     # [notion_annotation]::new(@("bold","code"))
     notion_annotation($annotations)
     {
-        if (!$annotations) {
+        if (!$annotations)
+        {
             return
         }
         $this.bold = $annotations.bold
@@ -26,7 +27,7 @@ class notion_annotation
         $this.code = $annotations.code
         $this.color = [Enum]::Parse([notion_color], $annotations.color)
     }
-    notion_annotation([bool]$bold,[bool]$italic,[bool]$strikethrough,[bool]$underline,[bool]$code,[notion_color]$color)
+    notion_annotation([bool]$bold, [bool]$italic, [bool]$strikethrough, [bool]$underline, [bool]$code, [notion_color]$color)
     {
         $this.bold = $bold
         $this.italic = $italic
@@ -39,12 +40,12 @@ class notion_annotation
     [string] ToJson([bool]$compress = $false)
     {
         $json = @{
-            bold = $this.bold
-            italic = $this.italic
+            bold          = $this.bold
+            italic        = $this.italic
             strikethrough = $this.strikethrough
-            underline = $this.underline
-            code = $this.code
-            color = $this.color.ToString()
+            underline     = $this.underline
+            code          = $this.code
+            color         = $this.color.ToString()
         }
         return $json | ConvertTo-Json -Compress:$compress -EnumsAsStrings
     }
@@ -52,11 +53,11 @@ class notion_annotation
     static [notion_annotation] ConvertFromObject($Value)
     {
         Write-Verbose "[notion_annotation]::ConvertFromObject($($Value | ConvertTo-Json))"
-        $annotation = [notion_annotation]::new()
-        if(!$Value)
+        if (!$Value)
         {
             return $null
         }
+        $annotation = [notion_annotation]::new()
         $annotation.bold = $Value.bold
         $annotation.italic = $Value.italic
         $annotation.strikethrough = $Value.strikethrough

@@ -21,7 +21,7 @@ Describe "notion_table_of_contents_block Tests" {
             $block = [notion_table_of_contents_block]::new()
             $block | Should -BeOfType "notion_table_of_contents_block"
             $block.type | Should -Be "table_of_contents"
-            $block.table_of_contents | Should -BeNullOrEmpty
+            $block.table_of_contents.GetType().Name | Should -Be "Table_Of_Contents_structure"
         }
 
         It "Should create a notion_table_of_contents_block with color" {
