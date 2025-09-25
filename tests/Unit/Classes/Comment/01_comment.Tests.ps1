@@ -104,28 +104,36 @@ Describe "notion_comment Tests" {
                     href        = $null
                 }
             )
-            $createdTime = "2024-03-05T09:08:07Z"
-            $lastEditedTime = "2024-03-05T10:11:12Z"
+            $createdTimeString = "2024-03-05T09:08:07Z"
+            $lastEditedTimeString = "2024-03-05T10:11:12Z"
 
             $inputObject = [PSCustomObject]@{
                 id               = "comment-555"
                 parent           = $parent
                 discussion_id    = "discussion-555"
-                created_time     = $createdTime
-                last_edited_time = $lastEditedTime
+                created_time     = $createdTimeString
+                last_edited_time = $lastEditedTimeString
                 created_by       = $createdBy
                 rich_text        = $richTextObjects
             }
 
             $comment = [notion_comment]::ConvertfromObject($inputObject)
 
+            $expectedCreatedTime = InModuleScope $global:moduleName {
+                ConvertTo-NotionFormattedDateTime -InputDate $using:createdTimeString -fieldName "created_time"
+            }
+
+            $expectedLastEditedTime = InModuleScope $global:moduleName {
+                ConvertTo-NotionFormattedDateTime -InputDate $using:lastEditedTimeString -fieldName "last_edited_time"
+            }
+
             $comment | Should -BeOfType "notion_comment"
             $comment.id | Should -Be $inputObject.id
             $comment.parent | Should -Be $parent
             $comment.discussion_id | Should -Be $inputObject.discussion_id
             $comment.created_by | Should -Be $createdBy
-            $comment.created_time | Should -Be (ConvertTo-NotionFormattedDateTime -InputDate $createdTime -fieldName "created_time")
-            $comment.last_edited_time | Should -Be (ConvertTo-NotionFormattedDateTime -InputDate $lastEditedTime -fieldName "last_edited_time")
+            $comment.created_time | Should -Be $expectedCreatedTime
+            $comment.last_edited_time | Should -Be $expectedLastEditedTime
             $comment.rich_text.Count | Should -Be $richTextObjects.Count
             $comment.rich_text[0] | Should -BeOfType "rich_text_text"
             $comment.rich_text[0].plain_text | Should -Be $richTextObjects[0].plain_text
