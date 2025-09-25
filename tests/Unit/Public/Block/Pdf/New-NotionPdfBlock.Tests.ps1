@@ -1,10 +1,12 @@
 # FILE: New-NotionPdfBlock.Tests.ps1
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
-    $script:projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
+    $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
 
-    if (-not $ProjectName) {
+
+    if (-not $ProjectName)
+    {
         $ProjectName = Get-SamplerProjectName -BuildRoot $script:projectPath
     }
     Write-Debug "ProjectName: $ProjectName"
@@ -44,7 +46,7 @@ Describe "New-NotionPdfBlock" {
 
         # Test for invalid parameter combinations
         It "Should throw an error when both InputObject and caption are specified" {
-            { New-NotionPdfBlock -InputObject @{ pdf = @{ type = "external"; external = @{ url = "https://example.com/example.pdf"; name = "example.pdf"; caption = "Example Caption" } } } -caption "My PDF" -name "example.pdf" -url "https://example.com/example.pdf" } | Should -Throw
+            { New-NotionPdfBlock -InputObject @{ pdf = @{ type = "external"; external = @{ url = "https://example.com/example.pdf"; name = "example.pdf"; caption = "Example Caption" } } } -caption "My PDF" -Name "example.pdf" -url "https://example.com/example.pdf" } | Should -Throw
         }
 
     }

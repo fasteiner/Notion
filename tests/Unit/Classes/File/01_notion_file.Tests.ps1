@@ -1,6 +1,6 @@
 # Import the module containing the notion_file class
 # Import the module containing the Get-NotionUser function
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path

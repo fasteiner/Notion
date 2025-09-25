@@ -25,7 +25,8 @@ class rich_text_text_structure
 
     static [rich_text_text_structure] ConvertFromObject($Value)
     {
-        if($Value -is [rich_text_text])
+        Write-Verbose "[rich_text_text_structure]::ConvertFromObject($($Value | ConvertTo-Json -Depth 5))"
+        if ($Value -is [rich_text_text])
         {
             return $Value
         }
@@ -65,7 +66,8 @@ class rich_text_text : rich_text
             $this.text = [rich_text_text_structure]::new($content)
             $this.plain_text = $content
         }
-        elseif ($content -is [datetime] -or $content -is [int] -or $content -is [double] -or $content -is [bool]) {
+        elseif ($content -is [datetime] -or $content -is [int] -or $content -is [double] -or $content -is [bool])
+        {
             $this.text = [rich_text_text_structure]::new($content.ToString())
             $this.plain_text = $content.ToString()
         }
@@ -109,11 +111,13 @@ class rich_text_text : rich_text
 
     static [rich_text_text] ConvertFromObject($Value)
     {
-        $rich_text = [rich_text_text]::new()
-        if($Value -is [rich_text_text])
+        Write-Verbose "[rich_text_text]::ConvertFromObject($($Value | ConvertTo-Json -Depth 5))"
+        if ($Value -is [rich_text_text])
         {
             return $Value
         }
+        
+        $rich_text = [rich_text_text]::new()
         if ($Value -is [string])
         {
             $rich_text.text = [rich_text_text_structure]::new($Value)
@@ -121,7 +125,7 @@ class rich_text_text : rich_text
             return $rich_text
         }
         $rich_text.text = [rich_text_text_structure]::ConvertFromObject($Value.text)
-        $rich_text.plain_text = $Value.plain_text ?? $Value.text.content
+        $rich_text.plain_text = $rich_text.text.content
         return $rich_text
     }
 }

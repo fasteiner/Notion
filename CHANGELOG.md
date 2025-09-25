@@ -5,6 +5,142 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.13.0] - 2025-09-25
+
+### Added
+
+- **tests/Unit/Public/Block/Bookmark/New-NotionBookmarkBlock.Tests.ps1**  
+  Introduced unit tests for `New-NotionBookmarkBlock`, covering default and captioned bookmark creation.
+
+- **tests/Unit/Public/Block/Breadcrumb/New-NotionBreadcrumbBlock.Tests.ps1**  
+  Added unit tests validating default behavior of breadcrumb block creation.
+
+- **tests/Unit/Public/Block/BulletedListItem/New-NotionBulletedListItemBlock.Tests.ps1**  
+  Introduced tests to verify text content and color for bulleted list items.
+
+- **tests/Unit/Public/Block/ChildDatabase/New-NotionChildDatabaseBlock.Tests.ps1**  
+  Added validation for empty and titled child database block generation.
+
+- **tests/Unit/Public/Block/ChildDatabase/ChildPage/New-NotionChildPageBlock.Tests.ps1**  
+  Implemented tests for verifying empty and titled child page block creation.
+
+- **tests/Unit/Public/Block/Code/New-NotionCodeBlock.Tests.ps1**  
+  Introduced unit tests for code block creation with various combinations of text, caption, and language.
+
+- **tests/Unit/Public/Block/Column/New-NotionColumnBlock.Tests.ps1**,  
+  **tests/Unit/Public/Block/ColumnList/New-NotionColumnListBlock.Tests.ps1**  
+  Added tests for verifying the default behavior of column and column list block generation.
+
+- **tests/Unit/Public/Block/Divider/New-NotionDividerBlock.Tests.ps1**  
+  Added validation for divider block construction.
+
+- **tests/Unit/Public/Block/Embed/New-NotionEmbedBlock.Tests.ps1**  
+  Added extensive test coverage for URL and caption handling in embed blocks.
+
+- **tests/Unit/Public/Block/Equation/New-NotionEquationBlock.Tests.ps1**  
+  Added unit tests verifying LaTeX expression parsing in equation blocks.
+
+- **tests/Unit/Public/Block/File/New-NotionFileBlock.Tests.ps1**  
+  Introduced tests for external, hosted, and file-object-based file block creation, including expiry handling.
+
+- **tests/Unit/Public/Block/Heading/New-NotionHeadingBlock.Tests.ps1**  
+  Renamed and relocated test under a structured directory.
+
+- **tests/Unit/Public/Block/Image/New-NotionImageBlock.Tests.ps1**  
+  Added support for image block testing from `notion_file` objects.
+
+- **tests/Unit/Public/Block/LinkPreview/New-NotionLinkPreviewBlock.Tests.ps1**  
+  Added test confirming that `link_preview` blocks cannot be manually created.
+
+- **tests/Unit/Public/Block/NumberedListItem/New-NotionNumberedListItemBlock.Tests.ps1**  
+  Added tests to verify rich text rendering in numbered list items.
+
+- **tests/Unit/Public/Block/Paragraph/New-NotionParagraphBlock.Tests.ps1**  
+  Implemented tests for default and colored paragraph content.
+
+- **tests/Unit/Public/Block/Pdf/New-NotionPdfBlock.Tests.ps1**  
+  Renamed and moved PDF block tests into structured folder.
+
+- **tests/Unit/Public/Block/Quote/New-NotionQuoteBlock.Tests.ps1**  
+  Added validation for quote blocks with content and color options.
+
+- **tests/Unit/Public/Block/Synced/New-NotionSyncedBlock.Tests.ps1**  
+  Added coverage for synced block creation.
+
+- **tests/Unit/Public/Block/Table/New-NotionTableBlock.Tests.ps1**  
+  Rewritten and expanded validation for table blocks, including headers, error handling, and hashtable inputs.
+
+- **tests/Unit/Public/Block/TableOfContents/New-NotionTableOfContentsBlock.Tests.ps1**  
+  Introduced default and color-specific table of contents creation tests.
+
+- **tests/Unit/Public/Block/TableRow/New-NotionTableRowBlock.Tests.ps1**  
+  Added tests verifying creation of table rows from flat cell content arrays.
+
+- **tests/Unit/Public/Block/ToDo/New-NotionToDoBlock.Tests.ps1**  
+  Extensive tests covering plain, checked, and color-variant to-do block creation.
+
+- **tests/Unit/Public/Block/Toggle/New-NotionToggleBlock.Tests.ps1**  
+  Implemented tests for toggle blocks including rich text and color validation.
+
+- **tests/Unit/Public/Block/Video/New-NotionVideoBlock.Tests.ps1**  
+  Renamed and organized video block tests into structured location.
+
+- **tests/Unit/Public/Block/New-NotionBlock.Tests.ps1**  
+  Added meta tests covering dynamic creation of multiple block types using `New-NotionBlock`.
+
+- **tests/Unit/Public/Block/\_RichText/New-NotionRichText.Tests.ps1**  
+  Comprehensive unit tests for rich text construction across multiple parameter sets.
+
+- **tests/Unit/Public/Block/\_RichText/New-NotionRichTextAnnotation.Tests.ps1**  
+  Added focused testing for annotation creation via object and flag-based inputs.
+
+### Changed
+
+- **source/Classes/Block/RichText/01_Rich_Text.ps1**  
+  Minor formatting improvement to spacing in `switch` block for content type routing.
+
+- **source/Classes/Block/RichText/02_Rich_Text_Annotation.ps1**  
+  Improved readability, added verbose logging, and corrected default handling in `ConvertFromObject`.
+
+- **source/Classes/Block/RichText/Type/01_Rich_text_text.ps1**  
+  Introduced verbose output and ensured `plain_text` is assigned from the underlying text structure.
+
+- **source/Classes/Block/RichText/Type/03_Rich_text_equation.ps1**  
+  Implemented full support for `ConvertFromObject` logic and commented out unused `ToJson()` method stub.
+
+- **source/Classes/03_File/03_external_file.ps1**,  **source/Classes/Block/23.1_File_block.ps1**  
+  Added `Write-Verbose` diagnostic logging for constructor calls.
+
+### Fixed
+
+- **source/Classes/Block/05_Bookmark.ps1**  
+  Refactored `bookmark_structure` constructor to unify input parsing and ensure consistent caption/url handling.
+
+- **source/Classes/Block/11_Code.ps1**  
+  Fixed incorrect assignment of caption text to rich text; reordered constructor logic for correctness.
+
+- **source/Classes/Block/30_Table_Of_Contents.ps1**  
+  Ensured `color` property is always initialized to a valid default.
+
+- **source/Classes/Block/27.2_TableRow.ps1**  
+  Corrected debug output to reference actual dynamic cell count instead of fixed index.
+
+
+- **tests/Unit/Classes/Block/05_Bookmark.tests.ps1**  
+  Removed redundant assertion and corrected expected structure for caption verification.
+
+- **tests/Unit/Classes/Block/11_Code.tests.ps1**  
+  Corrected assertion expecting incorrect text in the caption field.
+
+- **tests/Unit/Classes/Block/30_Table_Of_Contents.tests.ps1**  
+  Updated type expectation to match new default structure initialization.
+
+- **tests/Unit/Classes/Database/DatabaseProperties/09_dp_formula.Tests.ps1**  
+  Adjusted tests to validate exception behavior when formula input is missing or malformed.
+
+- **All test files:**  
+  Applied `-DisableNameChecking` to all `Import-Module Pester` statements to suppress Pester warnings and improve compatibility.
+
 ## [0.12.0] - 2025-08-23
 
 ### Added

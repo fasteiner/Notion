@@ -1,5 +1,5 @@
 # FILE: New-NotionDatabase.Tests.ps1
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     # Resolve project path relative to this test file

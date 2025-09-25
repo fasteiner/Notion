@@ -1,7 +1,7 @@
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
-    $script:projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
+    $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
 
     if (-not $ProjectName)
     {
@@ -20,9 +20,9 @@ BeforeDiscovery {
 Describe "New-NotionTableBlock" {
     InModuleScope $moduleName {
 
-         # Test for parameter set conflict
+        # Test for parameter set conflict
         It "Should throw an error when both TableData and -empty_table are specified" {
-            { New-NotionTableBlock -TableData @( @(1,2) ) -empty_table } | Should -Throw
+            { New-NotionTableBlock -TableData @( @(1, 2) ) -empty_table } | Should -Throw
         }
 
         # Test for error on invalid TableData
@@ -44,12 +44,14 @@ Describe "New-NotionTableBlock" {
             $result.table.children | Should -Not -BeNullOrEmpty
             $result.table.children.Count | Should -Be 2
             $rowcount = 0
-            foreach ($row in $result.table.children) {
+            foreach ($row in $result.table.children)
+            {
                 $row | Should -BeOfType [notion_table_row_block]
                 $row.table_row.cells | Should -Not -BeNullOrEmpty
                 $row.table_row.cells.Count | Should -Be 2
                 $cellcount = 0
-                foreach ($cell in $row.table_row.cells) {
+                foreach ($cell in $row.table_row.cells)
+                {
                     $cell | Should -BeOfType [rich_text_text]
                     $cell.plain_text | Should -Be $data[$rowcount][$cellcount]
                     $cellcount++
@@ -66,12 +68,14 @@ Describe "New-NotionTableBlock" {
             $result.table.has_row_header | Should -Be $false
             # verify the data
             $rowCount = 0
-            foreach ($row in $result.table.children) {
+            foreach ($row in $result.table.children)
+            {
                 $row | Should -BeOfType [notion_table_row_block]
                 $row.table_row.cells | Should -Not -BeNullOrEmpty
                 $row.table_row.cells.Count | Should -Be 2
                 $cellCount = 0
-                foreach ($cell in $row.table_row.cells) {
+                foreach ($cell in $row.table_row.cells)
+                {
                     $cell | Should -BeOfType [rich_text_text]
                     $cell.plain_text | Should -Be $data[$rowCount][$cellCount]
                     $cellCount++
@@ -88,12 +92,14 @@ Describe "New-NotionTableBlock" {
             $result.table.has_column_header | Should -Be $false
             # verify the data
             $rowCount = 0
-            foreach ($row in $result.table.children) {
+            foreach ($row in $result.table.children)
+            {
                 $row | Should -BeOfType [notion_table_row_block]
                 $row.table_row.cells | Should -Not -BeNullOrEmpty
                 $row.table_row.cells.Count | Should -Be 2
                 $cellCount = 0
-                foreach ($cell in $row.table_row.cells) {
+                foreach ($cell in $row.table_row.cells)
+                {
                     $cell | Should -BeOfType [rich_text_text]
                     $cell.plain_text | Should -Be $data[$rowCount][$cellCount]
                     $cellCount++
@@ -120,12 +126,14 @@ Describe "New-NotionTableBlock" {
                 @("C", "D")
             )
             $rowCount = 0
-            foreach ($row in $result.table.children) {
+            foreach ($row in $result.table.children)
+            {
                 $row | Should -BeOfType [notion_table_row_block]
                 $row.table_row.cells | Should -Not -BeNullOrEmpty
                 $row.table_row.cells.Count | Should -Be 2
                 $cellCount = 0
-                foreach ($cell in $row.table_row.cells) {
+                foreach ($cell in $row.table_row.cells)
+                {
                     $cell | Should -BeOfType [rich_text_text]
                     $cell.plain_text | Should -Be $expected[$rowCount][$cellCount]
                     $cellCount++
@@ -134,7 +142,7 @@ Describe "New-NotionTableBlock" {
             }
         }
 
-                # # Test for hashtable input
+        # # Test for hashtable input
         It "Should create a table block from ordered hashtable array" {
             $tabledata = @(
                 [ordered]@{ Col2 = 'A'; Col1 = 'B' },
@@ -152,12 +160,14 @@ Describe "New-NotionTableBlock" {
                 @("C", "D")
             )
             $rowCount = 0
-            foreach ($row in $result.table.children) {
+            foreach ($row in $result.table.children)
+            {
                 $row | Should -BeOfType [notion_table_row_block]
                 $row.table_row.cells | Should -Not -BeNullOrEmpty
                 $row.table_row.cells.Count | Should -Be 2
                 $cellCount = 0
-                foreach ($cell in $row.table_row.cells) {
+                foreach ($cell in $row.table_row.cells)
+                {
                     $cell | Should -BeOfType [rich_text_text]
                     $cell.plain_text | Should -Be $expected[$rowCount][$cellCount]
                     $cellCount++
@@ -190,12 +200,14 @@ Describe "New-NotionTableBlock" {
                 @($tabledata[1][$headers[0]], $tabledata[1][$headers[1]])
             )
             $rowCount = 0
-            foreach ($row in $result.table.children) {
+            foreach ($row in $result.table.children)
+            {
                 $row | Should -BeOfType [notion_table_row_block]
                 $row.table_row.cells | Should -Not -BeNullOrEmpty
                 $row.table_row.cells.Count | Should -Be 2
                 $cellCount = 0
-                foreach ($cell in $row.table_row.cells) {
+                foreach ($cell in $row.table_row.cells)
+                {
                     $cell | Should -BeOfType [rich_text_text]
                     $cell.plain_text | Should -Be $expected[$rowCount][$cellCount]
                     $cellCount++
@@ -219,12 +231,14 @@ Describe "New-NotionTableBlock" {
                 @($tabledata[0][$headers[0]], $tabledata[0][$headers[1]])
             )
             $rowCount = 0
-            foreach ($row in $result.table.children) {
+            foreach ($row in $result.table.children)
+            {
                 $row | Should -BeOfType [notion_table_row_block]
                 $row.table_row.cells | Should -Not -BeNullOrEmpty
                 $row.table_row.cells.Count | Should -Be 2
                 $cellCount = 0
-                foreach ($cell in $row.table_row.cells) {
+                foreach ($cell in $row.table_row.cells)
+                {
                     $cell | Should -BeOfType [rich_text_text]
                     $cell.plain_text | Should -Be $expected[$rowCount][$cellCount]
                     $cellCount++
@@ -236,19 +250,19 @@ Describe "New-NotionTableBlock" {
         # Test for empty hashtable array
         It "Should throw for empty hashtable array" {
             $tabledata = @()
-            {$ErrorActionPreference = "Stop" ;New-NotionTableBlock -TableData $tabledata } | Should -Throw
+            { $ErrorActionPreference = "Stop" ; New-NotionTableBlock -TableData $tabledata } | Should -Throw
         }
         
         It "Should throw for hashtable and both headers" {
             $tabledata = @(
                 @{ Col1 = 'A'; Col2 = 'B' }
             )
-            { $ErrorActionPreference = "Stop" ;New-NotionTableBlock -TableData $tabledata -has_column_header -has_row_header } | Should -Throw
+            { $ErrorActionPreference = "Stop" ; New-NotionTableBlock -TableData $tabledata -has_column_header -has_row_header } | Should -Throw
         }
 
         # Test for array of arrays with only one row
         It "Should create a table block from single-row array of arrays" {
-            $data = @(,@("A", "B"))
+            $data = @(, @("A", "B"))
             $result = New-NotionTableBlock -TableData $data
             $result | Should -BeOfType [notion_table_block]
             $result.table.children.Count | Should -Be 1

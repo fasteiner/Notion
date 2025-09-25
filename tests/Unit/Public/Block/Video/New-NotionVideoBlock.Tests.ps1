@@ -1,10 +1,11 @@
 # FILE: New-NotionVideoBlock.Tests.ps1
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
-    $script:projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
+    $script:projectPath = "$($PSScriptRoot)/../../../../.." | Convert-Path
 
-    if (-not $ProjectName) {
+    if (-not $ProjectName)
+    {
         $ProjectName = Get-SamplerProjectName -BuildRoot $script:projectPath
     }
     Write-Debug "ProjectName: $ProjectName"
@@ -44,7 +45,7 @@ Describe "New-NotionVideoBlock" {
 
         # Test for invalid parameter combinations
         It "Should throw an error when both InputObject and caption are specified" {
-            { New-NotionVideoBlock -InputObject @{ video = @{ type = "external"; external = @{ url = "https://example.com/example.mp4"; name = "example.mp4"; caption = "Example Caption" } } } -caption "My Video" -name "example.mp4" -url "https://example.com/example.mp4" } | Should -Throw
+            { New-NotionVideoBlock -InputObject @{ video = @{ type = "external"; external = @{ url = "https://example.com/example.mp4"; name = "example.mp4"; caption = "Example Caption" } } } -caption "My Video" -Name "example.mp4" -url "https://example.com/example.mp4" } | Should -Throw
         }
 
     }
