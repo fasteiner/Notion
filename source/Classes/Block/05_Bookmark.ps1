@@ -9,16 +9,7 @@ class bookmark_structure
 
     bookmark_structure($bookmark)
     {
-        if ($bookmark -is [string])
-        {
-            $this.url = $bookmark
-            return
-        }
-        elseif ($bookmark -is [PSCustomObject])
-        {
-            $this.caption = [rich_text]::ConvertFromObjects($bookmark.caption)
-            $this.url = $bookmark.url
-        }
+        $this.url = $bookmark
     }
 
     bookmark_structure([object]$caption, [string]$url)
@@ -33,7 +24,14 @@ class bookmark_structure
         {
             return $value
         }
-        return [bookmark_structure]::new($Value)
+        if ($value -is [string])
+        {
+            return [bookmark_structure]::new($value)
+        }
+        $bookmark_Obj = [bookmark_structure]::new()
+        $bookmark_Obj.caption = [rich_text]::ConvertFromObjects($Value.caption)
+        $bookmark_Obj.url = $Value.url
+        return $bookmark_Obj
     }
 }
 
@@ -43,16 +41,16 @@ class notion_bookmark_block : notion_block
     [notion_blocktype] $type = "bookmark"
     [bookmark_structure] $bookmark
     
-    notion_bookmark_block() :base("bookmark")
+    notion_bookmark_block()
     {
     }
 
-    notion_bookmark_block($url) :base("bookmark")
+    notion_bookmark_block($url)
     {
-        $this.bookmark = [bookmark_structure]::ConvertFromObject($url)
+        $this.bookmark = [bookmark_structure]::new($url)
     }
-    
-    notion_bookmark_block($caption, [string]$url) :base("bookmark")
+
+    notion_bookmark_block($caption, [string]$url)
     {
         $this.bookmark = [bookmark_structure]::new($caption, $url)
     }
@@ -61,7 +59,7 @@ class notion_bookmark_block : notion_block
     static [notion_bookmark_block] ConvertFromObject($Value)
     {
         $bookmark_Obj = [notion_bookmark_block]::new()
-        $bookmark_Obj.bookmark = [bookmark_structure]::new($Value.bookmark)
+        $bookmark_Obj.bookmark = [bookmark_structure]::ConvertFromObject($Value.bookmark)
         return $bookmark_Obj
     }
 }

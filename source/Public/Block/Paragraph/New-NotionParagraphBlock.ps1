@@ -4,11 +4,11 @@ function New-NotionParagraphBlock
     .SYNOPSIS
         Creates a new Notion paragraph block object.
 
-    .DESCRIPTION
+        .DESCRIPTION
         This function creates a new instance of the notion_paragraph_block class.
         You can create an empty paragraph block, provide rich text content, or provide rich text content and a color.
 
-    .PARAMETER RichText
+        .PARAMETER RichText
         The rich text content for the paragraph block.
 
     .PARAMETER Color
@@ -17,30 +17,36 @@ function New-NotionParagraphBlock
     .EXAMPLE
         New-NotionParagraphBlock
 
+        Creates a new empty Notion paragraph block.
+
     .EXAMPLE
         New-NotionParagraphBlock -RichText "This is a paragraph."
+
+        Creates a new Notion paragraph block with the specified rich text content.
 
     .EXAMPLE
         New-NotionParagraphBlock -RichText "This is a paragraph." -Color "yellow"
 
-    .OUTPUTS
-        notion_paragraph_block
-    #>
-    [CmdletBinding(DefaultParameterSetName = 'None')]
-    param (
-        [Parameter(ParameterSetName = 'WithText', Mandatory = $true)]
-        [Parameter(ParameterSetName = 'WithTextAndColor', Mandatory = $true)]
-        [object[]]$RichText,
+        Creates a new Notion paragraph block with the specified rich text content and color.
 
-        [Parameter(ParameterSetName = 'WithTextAndColor')]
+    .OUTPUTS
+    notion_paragraph_block
+    #>
+    [Alias('New-NotionTextBlock')]
+    [CmdletBinding()]
+    param (
+        [Parameter(Position = 0, HelpMessage = "The rich text content for the paragraph block.")]
+        [Alias('Text', 'Content')]
+        [object[]]$RichText,
+        [Parameter(Position = 1, HelpMessage = "The color for the paragraph block.")]
         $Color = "default"
     )
-
-    if ($PSCmdlet.ParameterSetName -eq 'WithTextAndColor')
+    
+    if ($RichText -and $Color)
     {
         $obj = [notion_paragraph_block]::new($RichText, $Color)
     }
-    elseif ($PSCmdlet.ParameterSetName -eq 'WithText')
+    elseif ($RichText)
     {
         $obj = [notion_paragraph_block]::new($RichText)
     }

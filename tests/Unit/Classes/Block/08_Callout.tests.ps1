@@ -1,4 +1,4 @@
-Import-Module Pester 
+Import-Module Pester -DisableNameChecking 
 
 BeforeDiscovery {
     $projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
@@ -26,10 +26,24 @@ Describe "notion_callout_block Tests" {
             $block.callout.color | Should -Be "default"
         }
 
+        It "Should create an notion_callout_block with rich_text array" {
+            $rtt = [rich_text_text]::new("Callout text")
+            $rt1 = [rich_text]::new("text", [notion_annotation]::new(), "Hello")
+            $block = [notion_callout_block]::new($rt1, "💡", "blue_background")
+            $block.callout.rich_text.gettype().Name | Should -Be "rich_text[]"
+            $block.callout.rich_text[0].plain_text | Should -Be "Hello"
+            $block.callout.icon.emoji | Should -Be "💡"
+            $block.callout.color | Should -Be "blue_background"
+        }
+
         It "Should create from rich_text array and emoji string" {
-            $rt = [rich_text_text]::new("Callout text")
-            $block = [notion_callout_block]::new(@($rt), "💡", "blue_background")
-            $block.callout.rich_text[0].plain_text | Should -Be "Callout text"
+            $rtt = [rich_text_text]::new("Callout text")
+            $rt1 = [rich_text]::new("text", [notion_annotation]::new(), "Hello")
+            $rt2 = [rich_text]::new("text", [notion_annotation]::new(), "World")
+            $block = [notion_callout_block]::new(@($rt1, $rt2), "💡", "blue_background")
+            $block.callout.rich_text.gettype().Name | Should -Be "rich_text[]"
+            $block.callout.rich_text[0].plain_text | Should -Be "Hello"
+            $block.callout.rich_text[1].plain_text | Should -Be "World"
             $block.callout.icon.emoji | Should -Be "💡"
             $block.callout.color | Should -Be "blue_background"
         }
@@ -47,6 +61,7 @@ Describe "notion_callout_block Tests" {
     Context "ConvertFromObject Tests" {
         It "Should convert from object with emoji icon" {
             $emoji = @{
+                type  = "emoji"
                 emoji = "🔥"
             }
             $mock = [PSCustomObject]@{

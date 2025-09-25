@@ -168,7 +168,7 @@ On the querying side the API returns a naked object with properties. The module 
 The enumerations (enums) are predefined values which are valid for a certain properties. e.g. colors
 
 ### Enums
-- `[rich_text_type]`
+- `[notion_rich_text_type]`
 - `[notion_blocktype]`
 - `[notion_database_property_type]`
 - `#[relation_type]`
@@ -183,12 +183,12 @@ The enumerations (enums) are predefined values which are valid for a certain pro
 - `[notion_parent_type]`
 - `[bot_owner_type]`
 - `[notion_color]`
-- `[icontype]`
+- `[notion_icon_type]`
 - `[rich_text_mention_type]`
 - `[template_mention_date]`
 
 ### Classes
-- `[annotation]`
+- `[notion_annotation]`
 - `[notion_heading_1_block]`
 - `[notion_heading_2_block]`
 - `[notion_heading_3_block]`

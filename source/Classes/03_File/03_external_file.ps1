@@ -36,17 +36,38 @@ class notion_external_file : notion_file
 
     notion_external_file([string]$name, $caption, [string]$url):base("external", $name, $caption)
     {
+        Write-Verbose "[notion_external_file]::new($name, $($caption | ConvertTo-Json -Depth 5 -EnumsAsStrings), $url)"
         $this.external = [notion_external_file_structure]::new($url)
     }
 
 
     static [notion_external_file] ConvertFromObject($Value)
     {
+        if (!$value)
+        {
+            Write-Verbose "[notion_external_file]::ConvertFromObject() - Value is null or empty"
+            return $null
+        }
+        if ($Value -is [notion_external_file])
+        {
+            Write-Verbose "[notion_external_file]::ConvertFromObject() - Value is already a notion_external_file object"
+            return $Value
+        }
+        if ($value -is [string])
+        {
+            Write-Verbose "[notion_external_file]::ConvertFromObject() - Value is a string, creating new notion_external_file with URL: $Value"
+            return [notion_external_file]::new($Value)
+        }
+        if (-not $value.external)
+        {
+            Write-Error "Value does not contain 'external' property. Cannot convert to notion_external_file." -Category InvalidData -RecommendedAction "Ensure the input object has the 'external' property."
+            return $null
+        }
         Write-Verbose "[notion_external_file]::ConvertFromObject($($Value | ConvertTo-Json))"
         $notionFileOb = [notion_external_file]::new()
         $notionFileOb.external = [notion_external_file_structure]::ConvertFromObject($Value.external)
         $notionFileOb.type = $Value.type
-        $notionFileOb.caption = $Value.caption.ForEach({ [rich_text]::ConvertFromObject($_) })
+        $notionFileOb.caption = [rich_text]::ConvertFromObjects($Value.caption)
         $notionFileOb.name = $Value.name
         return $notionFileOb
     }

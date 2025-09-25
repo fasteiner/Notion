@@ -1,4 +1,4 @@
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path
@@ -34,7 +34,7 @@ Describe "notion_code_block Tests" {
         It "Should create a notion_code_block with text, caption and language" {
             $block = [notion_code_block]::new("Write-Host 'Hi'", "This is a caption", "powershell")
             $block.code.rich_text[0].plain_text | Should -Be "Write-Host 'Hi'"
-            $block.code.caption[0].plain_text | Should -Be "Write-Host 'Hi'"
+            $block.code.caption[0].plain_text | Should -Be "This is a caption"
             $block.code.getLanguage() | Should -Be "powershell"
         }
 

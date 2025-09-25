@@ -32,7 +32,7 @@ class TableRow_structure
             foreach ($item in $object)
             {
                 $this.AddCell($item)
-                Write-Debug "Added cell $($this.cells[0].count) content: $($item)"
+                Write-Debug "Added cell $($this.cells.count) content: $($item)"
             }
         }
     }
@@ -65,6 +65,11 @@ class TableRow_structure
     static [TableRow_structure] ConvertFromObject($Value)
     {
         $table_row_Obj = [TableRow_structure]::new()
+        if($Value -is [TableRow_structure])
+        {
+            $table_row_Obj.cells = $Value.cells
+            return $table_row_Obj
+        }
         $Value.cells.foreach({
                 $table_row_Obj.AddCell($_)
             })

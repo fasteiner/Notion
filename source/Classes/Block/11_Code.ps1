@@ -27,8 +27,8 @@ class code_structure
         {
             throw "Invalid language: $language"
         }
-        $this.caption = [rich_text]::ConvertFromObjects($text)
         $this.rich_text = [rich_text]::ConvertFromObjects($text)
+        $this.caption = [rich_text]::ConvertFromObjects($caption)
         $this.language = $language
     }
 
@@ -63,8 +63,8 @@ class code_structure
     static [code_structure] ConvertFromObject($Value)
     {
         $code_structure = [code_structure]::new()
-        $code_structure.caption = $Value.caption.ForEach({ [rich_text]::ConvertFromObject($_) })
-        $code_structure.rich_text = $Value.rich_text.ForEach({ [rich_text]::ConvertFromObject($_) })
+        $code_structure.caption = [rich_text]::ConvertFromObjects($Value.caption)
+        $code_structure.rich_text = [rich_text]::ConvertFromObjects($Value.rich_text)
         if (-not [code_structure]::IsValidLanguage($Value.language))
         {
             throw "Invalid language: $($Value.language)"

@@ -53,26 +53,20 @@ function New-NotionFileBlock
         [Parameter(ParameterSetName = 'External', Mandatory = $true)]
         [string]$Url,
 
-        [Parameter(ParameterSetName = 'Hosted', HelpMessage = 'The date and time when the link expires.')]
+        [Parameter(ParameterSetName = 'Hosted', HelpMessage = 'The date and time when the link expires.', Mandatory = $true)]
         [object]$ExpiryTime,
 
         [Parameter(ParameterSetName = 'File', Mandatory = $true)]
         [object]$File
     )
 
+    Write-Verbose "ParameterSetName: $($PSCmdlet.ParameterSetName)"
     if ($PSCmdlet.ParameterSetName -eq 'Hosted')
     {
-        $caption = [rich_text]::ConvertFromObject($caption)
-        # if expiry time is provided, convert it to Notion formatted date-time
-        if ($ExpiryTime)
-        {
-            $ExpiryTime = ConvertTo-NotionFormattedDateTime -InputDate $ExpiryTime
-        }
         $obj = [notion_file_block]::new($Name, $Caption, $Url, $ExpiryTime)
     }
     elseif ($PSCmdlet.ParameterSetName -eq 'External')
     {
-        $caption = [rich_text]::ConvertFromObject($caption)
         $obj = [notion_file_block]::new($Name, $Caption, $Url)
     }
     elseif ($PSCmdlet.ParameterSetName -eq 'File')

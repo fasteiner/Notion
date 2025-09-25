@@ -1,5 +1,5 @@
 # Import the module containing the notion_breadcrumb_block class
-Import-Module Pester
+Import-Module Pester -DisableNameChecking
 
 BeforeDiscovery {
     $projectPath = "$($PSScriptRoot)/../../../.." | Convert-Path

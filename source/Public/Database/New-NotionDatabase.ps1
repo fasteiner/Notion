@@ -35,7 +35,7 @@ function New-NotionDatabase
     }
     New-NotionDatabase -parent_obj $parent -title $title -properties $properties
 
-    This command creates a new Notion database within the specified parent page, title, and properties.
+    This command adds a Notion database within the specified parent, title, and properties.
 
     .NOTES
     This function requires the Invoke-NotionAPICall and Remove-NullValuesFromObject helper functions, 
@@ -65,37 +65,10 @@ function New-NotionDatabase
     {
         $parent_obj = [notion_parent]::ConvertFromObject($parent_obj)
     }
-    $title = $title.foreach({
-            if ($_ -is [rich_text])
-            {
-                $_
-            }
-            else
-            {
-                if ($_ -is [string])
-                {
-                    [rich_text_text]::new($_)
-                }
-                else
-                {
-                    [rich_text]::ConvertFromObject($_)
-                }
-            }
-        })
+    $title = [rich_text]::ConvertFromObjects($title)
     if ($properties -isnot [notion_databaseproperties])
     {
         $properties = [notion_databaseproperties]::ConvertFromObject($properties)
     }
-
-    $body = @{
-        parent     = $parent_obj
-        properties = $properties
-    }
-    if ($title)
-    {
-        $body.title = $title
-    }
-    $body = $body | Remove-NullValuesFromObject
-    $response = Invoke-NotionAPICall -Method POST -uri "/databases" -Body $body
-    return [notion_database]::ConvertFromObject($response)
+    return [notion_database]::new($parent_obj, $title, $properties)
 }

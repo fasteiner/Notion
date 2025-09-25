@@ -1,4 +1,5 @@
-function Add-NotionPageToDatabase {
+function Add-NotionPageToDatabase 
+{
     <#
     .SYNOPSIS
     Adds a new page to a Notion database.
@@ -37,7 +38,7 @@ function Add-NotionPageToDatabase {
     # Alias for New-NotionPage
     [CmdletBinding()]
     [OutputType([notion_page])]
-    param(
+    param (
         [Parameter(HelpMessage = "The parent object of the page, if empty it will be created at the root (workspace) level")]
         [object] $parent_database,
         [Parameter(HelpMessage = "The properties of the page")]

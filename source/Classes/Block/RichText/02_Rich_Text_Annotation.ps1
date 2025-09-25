@@ -1,4 +1,4 @@
-class annotation
+class notion_annotation
 # https://developers.notion.com/reference/rich-text#the-annotation-object
 {
     [bool] $bold = $false
@@ -7,16 +7,17 @@ class annotation
     [bool] $underline = $false
     [bool] $code = $false
     [notion_color] $color = "default"
-    annotation()
+    notion_annotation()
     {
         
     }
-    # annotation with format option
-    # [annotation]::new("bold")
-    # [annotation]::new(@("bold","code"))
-    annotation($annotations)
+    # notion_annotation with format option
+    # [notion_annotation]::new("bold")
+    # [notion_annotation]::new(@("bold","code"))
+    notion_annotation($annotations)
     {
-        if (!$annotations) {
+        if (!$annotations)
+        {
             return
         }
         $this.bold = $annotations.bold
@@ -26,7 +27,7 @@ class annotation
         $this.code = $annotations.code
         $this.color = [Enum]::Parse([notion_color], $annotations.color)
     }
-    annotation([bool]$bold,[bool]$italic,[bool]$strikethrough,[bool]$underline,[bool]$code,[notion_color]$color)
+    notion_annotation([bool]$bold, [bool]$italic, [bool]$strikethrough, [bool]$underline, [bool]$code, [notion_color]$color)
     {
         $this.bold = $bold
         $this.italic = $italic
@@ -39,24 +40,24 @@ class annotation
     [string] ToJson([bool]$compress = $false)
     {
         $json = @{
-            bold = $this.bold
-            italic = $this.italic
+            bold          = $this.bold
+            italic        = $this.italic
             strikethrough = $this.strikethrough
-            underline = $this.underline
-            code = $this.code
-            color = $this.color.ToString()
+            underline     = $this.underline
+            code          = $this.code
+            color         = $this.color.ToString()
         }
         return $json | ConvertTo-Json -Compress:$compress -EnumsAsStrings
     }
 
-    static [annotation] ConvertFromObject($Value)
+    static [notion_annotation] ConvertFromObject($Value)
     {
-        Write-Verbose "[annotation]::ConvertFromObject($($Value | ConvertTo-Json))"
-        $annotation = [annotation]::new()
-        if(!$Value)
+        Write-Verbose "[notion_annotation]::ConvertFromObject($($Value | ConvertTo-Json))"
+        if (!$Value)
         {
             return $null
         }
+        $annotation = [notion_annotation]::new()
         $annotation.bold = $Value.bold
         $annotation.italic = $Value.italic
         $annotation.strikethrough = $Value.strikethrough

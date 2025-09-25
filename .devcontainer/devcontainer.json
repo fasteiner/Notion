@@ -24,7 +24,8 @@
         "bierner.markdown-mermaid",
         "vscode-icons-team.vscode-icons",
         "github.vscode-github-actions",
-        "shd101wyy.markdown-preview-enhanced"
+        "shd101wyy.markdown-preview-enhanced",
+        "pspester.pester-test"
       ],
       "settings": {
         "powershell.scriptAnalysis.enable": true,

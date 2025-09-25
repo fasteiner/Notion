@@ -11,7 +11,7 @@ classDiagram
         ConvertfromObject()
     }   
     class notion_custom_emoji {
-        [icontype]$type = "custom_emoji"
+        [notion_icon_type]$type = "custom_emoji"
         [custom_emoji_structure]$custom_emoji
         ConvertfromObject()
     }

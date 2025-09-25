@@ -19,31 +19,38 @@ function New-NotionCodeBlock
 
     .EXAMPLE
         New-NotionCodeBlock -Text '$a = 1' -Language 'powershell'
+        
+        Creates a code block with the specified text and language.
 
     .EXAMPLE
         New-NotionCodeBlock -Text '$a = 1' -Caption 'Example' -Language 'powershell'
 
+        Creates a code block with the specified text, caption, and language.
+
     .EXAMPLE
         New-NotionCodeBlock
 
+        Creates an empty code block.
+
     .OUTPUTS
-        notion_code_block
+        [notion_code_block]
+
+    .NOTES
+    https://developers.notion.com/reference/block#code
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [OutputType([notion_code_block])]
     param (
         [Parameter(ParameterSetName = 'Default', HelpMessage = 'Code text for the code block.')]
+        [Alias('Code', 'Content')]
         $Text,
 
         [Parameter(ParameterSetName = 'Default', HelpMessage = 'Caption to be displayed above the code block.')]
         $Caption,
 
-        [Parameter(ParameterSetName = 'Default', HelpMessage = 'Programming language for syntax highlighting in the code block.')]
+        [Parameter(ParameterSetName = 'Default', HelpMessage = 'Programming language for syntax highlighting in the code block.Values are abap | arduino | bash | basic | c | clojure | coffeescript | c++ | c# | css | dart | diff | docker | elixir | elm | erlang | flow | fortran | f# | gherkin | glsl | go | graphql | groovy | haskell | html | java | javascript | json | julia | kotlin | latex | less | lisp | livescript | lua | makefile | markdown | markup | matlab | mermaid | nix | objective|c | ocaml | pascal | perl | php | plain text | powershell | prolog | protobuf | python | r | reason | ruby | rust | sass | scala | scheme | scss | shell | sql | swift | typescript | vb.net | verilog | vhdl | visual basic | webassembly | xml | yaml | java/c/c++/c#')]
         $Language
     )
-
-    $Text = [rich_text]::ConvertFromObject($Text)
-    $Caption = [rich_text]::ConvertFromObject($Caption)
-    $Language = [code_structure]::ConvertFromObject($Language)
 
     if ($PSBoundParameters.ContainsKey('Text') -and $PSBoundParameters.ContainsKey('Caption') -and $PSBoundParameters.ContainsKey('Language'))
     {

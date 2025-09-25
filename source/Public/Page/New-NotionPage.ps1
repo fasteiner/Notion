@@ -29,6 +29,14 @@ function New-NotionPage
     .EXAMPLE
         New-NotionPage -parent_obj $parent -properties @{Property1="Value1"} -title "New Page Title"
 
+        Creates a new Notion page with the specified parent object, properties, and title "New Page Title".
+
+    .EXAMPLE
+        $parent = New-NotionParent -Type "workspace"
+        New-NotionPage -parent_obj $parent -properties @{Title="My New Page"; Status="Draft"} -children @([notion_paragraph_block]::new("This is a new page.")) -Icon (New-NotionEmoji -Emoji "📄") -Cover (New-NotionFile -Type "external" -Url "https://example.com/cover.jpg")
+
+        Creates a new Notion page under the specified workspace parent with properties, children blocks, an icon, and a cover image.
+
     .NOTES
         This function requires the Invoke-NotionApiCall function to be defined.
 
@@ -38,25 +46,30 @@ function New-NotionPage
     [CmdletBinding()]
     [OutputType([notion_page])]
     param (
-        [Parameter(HelpMessage = "The parent object of the page, if empty it will be created at the root (workspace) level")]
+        [Parameter(Mandatory = $true, HelpMessage = "The parent object of the page")] #, if empty it will be created at the root (workspace) level")]
         [object] $parent_obj,
         [Parameter(HelpMessage = "The properties of the page")]
         [hashtable] $properties = @{},
         [Parameter(HelpMessage = "An array of blocks within this page")]
         $children = @(),
-        [Parameter(HelpMessage = "The icon of the page")]
-        $icon,
-        [Parameter(HelpMessage = "The cover image of the page (see notion_file)")]
-        $cover,
+        [Parameter(HelpMessage = "The icon of the page(type notion_file or notion_emoji). e.g. 🍸")]
+        $Icon,
+        [Parameter(HelpMessage = "The cover image of the page (see notion_file) e.g. @{type = ""external""; url = ""https://www.notion.so/images/page-cover/webb4.jpg"" }")]
+        $Cover,
         [Parameter(HelpMessage = "The title of the page. (Will overwrite the title-property if it exists)")]
-        $title
+        $Title
     )
     try
     {
+        if (-not (Test-NotionApiSettings $MyInvocation.MyCommand.Name))
+        {
+            return
+        }
+
         $body = @{}
     
-        # if $parent_obj is not provided, add page to Workspace
-        $parent_obj ??= [notion_workspace_parent]::new()
+        # if $parent_obj is not provided, add page to Workspace (not supported by Notion API at the moment)
+        #$parent_obj ??= [notion_workspace_parent]::new()
 
         if ($parent_obj -isnot [notion_parent])
         {
@@ -75,24 +88,23 @@ function New-NotionPage
             $properties = [notion_pageproperties]::ConvertFromObject($properties)
         }
 
-        if ($title -and (-not $properties.Title))
+        if ($title -and (-not $properties.title))
         {
-            #BUG: [notion_title_page_property]::new($title) geht so nicht
-            $titleobj = [rich_text]::new([rich_text_type]::text, [annotation]::new())
-            $titleobj.plain_text = $title
-            #$properties.Add("Title", [notion_title_page_property]::new($title))
-            $properties.Add("Title", $titleobj)
+            # #BUG: [notion_title_page_property]::new($title) geht so nicht
+            # $titleobj = [rich_text]::new([notion_rich_text_type]::text, [notion_annotation]::new())
+            # $titleobj.plain_text = $title
+            # $properties.Add("Title", $titleobj)
+            $properties.Add("title", [notion_title_page_property]::new($title))
         }
         elseif ($title -and $properties.Title)
         {
-            <# Action when this condition is true #>
             $properties.Title = [notion_title_page_property]::new($title)
         }
         $body.Add("properties", $properties)
 
         if ($children)
         {
-            $childrenList = $children.ForEach({
+            [array]$childrenList += $children.ForEach({
                     if ($_ -is [notion_block])
                     {
                         $_
@@ -107,20 +119,19 @@ function New-NotionPage
     
         if ($icon)
         {
-            if ($icon -isnot [notion_icon])
-            {
-                $icon = [notion_icon]::ConvertToObject($icon)
-            }
-            $body.Add("icon", [notion_icon]::ConvertFromObject($icon))
+            $icon = [notion_icon]::ConvertFromObject($icon)
+            $body.Add("icon", $icon)
+            Write-Debug "New-NotionPage: `n Icon: `n$($icon | ConvertTo-Json -Depth 10 -EnumsAsStrings)"
         }
 
         if ($cover)
         {
             if ($cover -isnot [notion_file])
             {
-                $cover = [notion_file]::ConvertToObject($cover)
+                $cover = [notion_file]::ConvertFromObject($cover)
             }
-            $body.Add("cover", [notion_file]::ConvertFromObject($cover))
+            $body.Add("cover", $cover)
+            Write-Debug "New-NotionPage: `n Cover: `n$($Cover | ConvertTo-Json -Depth 10 -EnumsAsStrings)"
         }
     }
     catch
@@ -128,12 +139,14 @@ function New-NotionPage
         Write-Host -ForegroundColor Green "TS"
         Write-Host -ForegroundColor Cyan $properties
         Write-Error $_.Exception.Message
-        Write-Host -ForegroundColor Magenta ($body | conertto-json)
+        Write-Host -ForegroundColor Magenta ($body | ConvertTo-Json)
         Write-Host -ForegroundColor Green "--"
     }
     try
     {
+        Write-Verbose "New-NotionPage: `n Body before Remove-NullValuesFromObject: `n$($body | ConvertTo-Json -Depth 10 -EnumsAsStrings)"
         $body = $body | Remove-NullValuesFromObject
+        Write-Debug "New-NotionPage: `n Body: `n$($body | ConvertTo-Json -Depth 10 -EnumsAsStrings)"
         $response = Invoke-NotionAPICall -Method POST -uri "/pages" -Body $body
         return [notion_page]::ConvertFromObject($response)
     }

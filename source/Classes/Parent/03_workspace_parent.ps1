@@ -1,5 +1,6 @@
-class notion_workspace_parent : notion_parent {
-# https://developers.notion.com/reference/parent-object#workspace-parent    
+class notion_workspace_parent : notion_parent
+{
+    # https://developers.notion.com/reference/parent-object#workspace-parent    
     [bool] $workspace = $true
 
     notion_workspace_parent() : base("workspace")

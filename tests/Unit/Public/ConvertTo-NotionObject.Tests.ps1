@@ -34,31 +34,59 @@ Describe "ConvertTo-NotionObject" {
         $input = @{
             object  = "list"
             results = @(
-                @{ object = "block"; type = "paragraph" },
-                @{ object = "block"; type = "heading_1" }
+                @{
+                    object = "block"
+                    type   = "paragraph"
+                    paragraph = @{
+                        rich_text = @(
+                            @{
+                                type       = "text"
+                                text       = @{ content = "Sample text" }
+                                plain_text = "Sample text"
+                            }
+                        )
+                    }
+                },
+                @{
+                    object = "block"
+                    type   = "heading_1"
+                    heading_1 = @{
+                        rich_text = @(
+                            @{
+                                type       = "text"
+                                text       = @{ content = "Heading 1" }
+                                plain_text = "Heading 1"
+                            }
+                        )
+                    }
+                }
             )
         }
         $result = $input | ConvertTo-NotionObject
         $result | Should -Not -BeNullOrEmpty
     }
 
-    # It "should convert a block object with paragraph type correctly" {
-    #     $input = @{
-    #         object = "block"
-    #         type   = "paragraph"
-    #     }
-    #     $result = $input | ConvertTo-NotionObject
-    #     $result | Should -Not -BeNullOrEmpty
-    # }
+    It "should convert a block object with paragraph type correctly" {
+        $input = @{
+            object = "block"
+            type   = "paragraph"
+        }
+        $result = $input | ConvertTo-NotionObject
+        $result | Should -Not -BeNullOrEmpty
+        $result.type | Should -Be "paragraph"
+        $result | Should -BeOfType "notion_paragraph_block"
+    }
 
-    # It "should convert a block object with heading_1 type correctly" {
-    #     $input = @{
-    #         object = "block"
-    #         type   = "heading_1"
-    #     }
-    #     $result = $input | ConvertTo-NotionObject
-    #     $result | Should -Not -BeNullOrEmpty
-    # }
+    It "should convert a block object with heading_1 type correctly" {
+        $input = @{
+            object = "block"
+            type   = "heading_1"
+        }
+        $result = $input | ConvertTo-NotionObject
+        $result | Should -Not -BeNullOrEmpty
+        $result.type | Should -Be "heading_1"
+        $result | Should -BeOfType "notion_heading_1_block"
+    }
 
     It "should convert a page object correctly" {
         $input = @{

@@ -25,7 +25,17 @@ class rich_text_text_structure
 
     static [rich_text_text_structure] ConvertFromObject($Value)
     {
+        Write-Verbose "[rich_text_text_structure]::ConvertFromObject($($Value | ConvertTo-Json -Depth 5))"
+        if ($Value -is [rich_text_text])
+        {
+            return $Value
+        }
         $rich_text_text_structure = [rich_text_text_structure]::new()
+        if ($Value -is [string])
+        {
+            $rich_text_text_structure.content = $Value
+            return $rich_text_text_structure
+        }
         $rich_text_text_structure.content = $Value.content
         $rich_text_text_structure.link = $Value.link
         return $rich_text_text_structure
@@ -56,7 +66,8 @@ class rich_text_text : rich_text
             $this.text = [rich_text_text_structure]::new($content)
             $this.plain_text = $content
         }
-        elseif ($content -is [datetime] -or $content -is [int] -or $content -is [double] -or $content -is [bool]) {
+        elseif ($content -is [datetime] -or $content -is [int] -or $content -is [double] -or $content -is [bool])
+        {
             $this.text = [rich_text_text_structure]::new($content.ToString())
             $this.plain_text = $content.ToString()
         }
@@ -79,10 +90,12 @@ class rich_text_text : rich_text
         $this.plain_text = $content
     }
 
-    # Constructor with content string, annotations, and plain_text
-    rich_text_text([string] $content, $annotations, $plain_text) : base("text", $annotations, $plain_text)
+    # Constructor with content string, annotations, and link
+    rich_text_text([string] $content, $annotations, $href) : base("text", $annotations)
     {
         $this.text = [rich_text_text_structure]::new($content)
+        $this.plain_text = $content
+        $this.href = $href
     }
 
     # [string] ToJson([bool]$compress = $false) {
@@ -98,9 +111,21 @@ class rich_text_text : rich_text
 
     static [rich_text_text] ConvertFromObject($Value)
     {
+        Write-Verbose "[rich_text_text]::ConvertFromObject($($Value | ConvertTo-Json -Depth 5))"
+        if ($Value -is [rich_text_text])
+        {
+            return $Value
+        }
+        
         $rich_text = [rich_text_text]::new()
+        if ($Value -is [string])
+        {
+            $rich_text.text = [rich_text_text_structure]::new($Value)
+            $rich_text.plain_text = $Value
+            return $rich_text
+        }
         $rich_text.text = [rich_text_text_structure]::ConvertFromObject($Value.text)
-        $rich_text.plain_text = $Value.plain_text ?? $Value.text.content
+        $rich_text.plain_text = $rich_text.text.content
         return $rich_text
     }
 }

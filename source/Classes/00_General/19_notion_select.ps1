@@ -7,7 +7,19 @@ class notion_select
 
     notion_select() 
     {
+        $this.color = [notion_color]::default
+    }
 
+    notion_select($name)
+    {
+        $this.color = [notion_color]::default
+        $this.name = $name
+    }
+
+    notion_select($color, $name)
+    {
+        $this.color = [Enum]::Parse([notion_color], $color)
+        $this.name = $name
     }
 
 

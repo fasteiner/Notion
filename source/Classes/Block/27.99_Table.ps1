@@ -24,11 +24,13 @@ class Table_structure
 
     addRow([notion_table_row_block] $row)
     {
+        $this.has_children = $true
         $this.children += $row
     }
 
     addRows([notion_table_row_block[]] $rows)
     {
+        $this.has_children = $true
         $this.children += $rows
     }
 
@@ -36,9 +38,9 @@ class Table_structure
     static [Table_structure] ConvertFromObject($Value)
     {
         $Table_structure_Obj = [Table_structure]::new()
-        $Table_structure_Obj.table_width = $Value.table.table_width
-        $Table_structure_Obj.has_column_header = $Value.table.has_column_header
-        $Table_structure_Obj.has_row_header = $Value.table.has_row_header
+        $Table_structure_Obj.table_width = $Value.table_width
+        $Table_structure_Obj.has_column_header = $Value.has_column_header
+        $Table_structure_Obj.has_row_header = $Value.has_row_header
         return $Table_structure_Obj
     }
 }

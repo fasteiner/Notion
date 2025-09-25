@@ -1,4 +1,5 @@
-function Restore-NotionPage {
+function Restore-NotionPage
+{
     <#
     .SYNOPSIS
     Restores a Notion page by removing it from the trash or archive.
@@ -41,11 +42,16 @@ function Restore-NotionPage {
     
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     param(
-        [Parameter(Mandatory = $true, Position=0, HelpMessage = "The ID of the page to remove")]
+        [Parameter(Mandatory = $true, Position = 0, HelpMessage = "The ID of the page to remove")]
         [Alias("Id")]
         [string]$PageId
     )
 
+    if (-not (Test-NotionApiSettings $MyInvocation.MyCommand.Name))
+    {
+        return
+    }
+    
     $body = @{
         in_trash = $false
         archived = $false

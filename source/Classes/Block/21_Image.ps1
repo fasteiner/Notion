@@ -4,28 +4,34 @@ class notion_image_block : notion_block
 {
     [notion_blocktype] $type = "image"
     [notion_file] $image
-    [rich_text[]] $caption = @()
 
     notion_image_block()
     {
     }
 
-    notion_image_block([notion_file] $file)
+    notion_image_block($file)
     {
         $this.image = [notion_file]::ConvertFromObject($file)
-    }
-
-    notion_image_block($file, $caption)
-    {
-        $this.image = [notion_file]::ConvertFromObject($file)
-        $this.caption = [rich_text]::ConvertFromObjects($caption)
     }
     
     static [notion_image_block] ConvertFromObject($Value)
     {
+        if ( -not $Value)
+        {
+            return $null
+        }
+        if ($Value -is [notion_image_block])
+        {
+            return $Value
+        }
         $Image_Obj = [notion_image_block]::new()
-        $Image_Obj.image = [notion_file]::ConvertFromObject($Value.image)
-        $Image_Obj.caption = [rich_text]::ConvertFromObjects($Value.caption)
+        if($value -is [notion_file])
+        {
+            $Image_Obj.image = $Value
+        }
+        else{
+            $Image_Obj.image = [notion_file]::ConvertFromObject($Value.image)
+        }
         return $Image_Obj
     }
 }

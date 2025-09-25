@@ -52,9 +52,9 @@ class notion_page
         {
             $page = [notion_page]::new()
             $page.id = $Value.id
-            $page.created_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.created_time -fieldName "created_time"
+            $page.created_time = ConvertTo-NotionFormattedDateTime -InputDate ($Value.created_time ?? (get-date)) -fieldName "created_time"
             $page.created_by = [notion_user]::ConvertFromObject($Value.created_by)
-            $page.last_edited_time = ConvertTo-NotionFormattedDateTime -InputDate $Value.last_edited_time -fieldName "last_edited_time"
+            $page.last_edited_time = ConvertTo-NotionFormattedDateTime -InputDate ($Value.last_edited_time ?? (get-date)) -fieldName "last_edited_time"
             $page.last_edited_by = [notion_user]::ConvertFromObject($Value.last_edited_by)
             $page.archived = $Value.archived
             $page.in_trash = $Value.in_trash

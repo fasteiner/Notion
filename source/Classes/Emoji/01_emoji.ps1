@@ -1,7 +1,7 @@
 class notion_emoji : notion_icon
 # https://developers.notion.com/reference/notion_emoji-object
 {
-    [icontype]$type = "emoji"
+    [notion_icon_type]$type = "emoji"
     [string]$emoji
 
     notion_emoji()

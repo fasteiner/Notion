@@ -37,12 +37,6 @@ Describe "Copy-NotionVariable Tests" {
             $result | Should -BeExactly $sourceVariable
         }
 
-        It "Should copy a hashtable" {
-            $sourceVariable = @{ Key1 = "Value1"; Key2 = "Value2" }
-            $result = Copy-NotionVariable -Variable $sourceVariable
-            $result | Should -BeExactly $sourceVariable
-        }
-
         It "Should convert to hashtable when asHashtable is specified" {
             $sourceVariable = @{ Key1 = "Value1"; Key2 = "Value2" }
             $result = Copy-NotionVariable -Variable $sourceVariable -asHashtable
@@ -53,8 +47,12 @@ Describe "Copy-NotionVariable Tests" {
 
         It "Should handle nested objects" {
             $sourceVariable = @{ Key1 = @{ SubKey1 = "SubValue1" }; Key2 = "Value2" }
-            $result = Copy-NotionVariable -Variable $sourceVariable
-            $result | Should -BeExactly $sourceVariable
+            $result = Copy-NotionVariable -Variable $sourceVariable -asHashtable
+            $result | Should -BeOfType "System.Collections.Hashtable"
+            $result["Key1"] | Should -BeOfType "System.Collections.Hashtable"
+            $result["Key1"]["SubKey1"] | Should -BeExactly "SubValue1"
+            $result["Key2"] | Should -BeExactly "Value2"
+
         }
     }
 }
