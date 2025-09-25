@@ -25,8 +25,9 @@ class rich_text_equation_structure
     
 }
 
-class rich_text_equation : rich_text{
-# https://developers.notion.com/reference/rich-text#equation
+class rich_text_equation : rich_text
+{
+    # https://developers.notion.com/reference/rich-text#equation
     [rich_text_equation_structure] $equation
     
     rich_text_equation():base("equation")
@@ -36,25 +37,40 @@ class rich_text_equation : rich_text{
     rich_text_equation([string] $content) :base("equation")
     {
         $this.equation = [rich_text_equation_structure]::new($content)
+        $this.plain_text = $content
     }
 
-    [string] ToJson([bool]$compress = $false)
-    {
-        $json = @{
-            type = $this.type
-            equation = @{
-                expression = $this.equation.expression
-            }
-            annotations = $this.annotations.ToJson()
-            plain_text = $this.plain_text
-            href = $this.href
-        }
-        return $json | ConvertTo-Json -Compress:$compress
-    }
+    # [string] ToJson([bool]$compress = $false)
+    # {
+    #     $json = @{
+    #         type        = $this.type
+    #         equation    = @{
+    #             expression = $this.equation.expression
+    #         }
+    #         annotations = $this.annotations.ToJson()
+    #         plain_text  = $this.plain_text
+    #         href        = $this.href
+    #     }
+    #     return $json | ConvertTo-Json -Compress:$compress
+    # }
     
     static [rich_text_equation] ConvertFromObject($Value)
     {
-        #TODO: Implement this
-        return $null
+        if ($Value -is [rich_text_equation])
+        {
+            return $Value
+        }
+
+        if ($Value -is [string])
+        {
+            return [rich_text_equation]::new($Value)
+        }
+        $equationObj = [rich_text_equation]::new()
+
+        $equationObj.equation = [rich_text_equation_structure]::ConvertFromObject($Value.equation)
+
+        $equationObj.plain_text = $equationObj.equation.expression
+
+        return $equationObj
     }
 }

@@ -28,7 +28,6 @@ Describe "notion_bookmark_block Tests" {
             $block = [notion_bookmark_block]::new($url)
             $block | Should -BeOfType "notion_bookmark_block"
             $block.type | Should -Be "bookmark"
-            $block.type | Should -Be "bookmark"
             $block.bookmark.getType().Name | Should -Be "bookmark_structure"
             $block.bookmark.url | Should -Be $url
         }
@@ -39,12 +38,12 @@ Describe "notion_bookmark_block Tests" {
             $mockObject = [PSCustomObject]@{
                 bookmark = [PSCustomObject]@{
                     url     = "http://example.com"
-                    caption = @([PSCustomObject]@{ plain_text = "Example"; type = "text" })
+                    caption = @([PSCustomObject]@{ text = "Example"; type = "text" })
                 }
             }
             $block = [notion_bookmark_block]::ConvertFromObject($mockObject)
             $block.bookmark.url | Should -Be $mockObject.bookmark.url
-            $block.bookmark.caption[0].plain_text | Should -Be $mockObject.bookmark.caption[0].plain_text
+            $block.bookmark.caption[0].plain_text | Should -Be $mockObject.bookmark.caption[0].text
             $block.type | Should -Be "bookmark"
             $block.bookmark.getType().Name | Should -Be "bookmark_structure"
         }

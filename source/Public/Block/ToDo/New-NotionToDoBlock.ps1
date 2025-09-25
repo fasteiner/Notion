@@ -28,25 +28,17 @@ function New-NotionToDoBlock
     #>
     [CmdletBinding(DefaultParameterSetName = 'None')]
     param (
-        [Parameter(ParameterSetName = 'WithText', Mandatory = $true)]
-        [Parameter(ParameterSetName = 'WithTextAndChecked', Mandatory = $true)]
-        [object]$RichText,
+        [Parameter(Mandatory = $true)]
+        [Alias("Text", "RichText", "Content")]
+        [object]$rich_text,
+        [switch]$Checked,
+        [notion_color]$Color = [notion_color]::default
 
-        [Parameter(ParameterSetName = 'WithTextAndChecked', Mandatory = $true)]
-        [bool]$Checked
     )
 
-    if ($PSCmdlet.ParameterSetName -eq 'WithTextAndChecked')
-    {
-        $obj = [notion_to_do_block]::new($RichText, $Checked)
-    }
-    elseif ($PSCmdlet.ParameterSetName -eq 'WithText')
-    {
-        $obj = [notion_to_do_block]::new($RichText)
-    }
-    else
-    {
-        $obj = [notion_to_do_block]::new()
-    }
-    return $obj
+    return [notion_to_do_block]::ConvertFromObject(
+        @{
+            to_do = $PSBoundParameters
+        }
+    )
 }

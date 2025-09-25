@@ -17,6 +17,7 @@ class notion_file_block : notion_block
 
     notion_file_block($name, $caption, [string]$url)
     {
+        Write-Verbose "notion_file_block::new($name, $($caption | ConvertTo-Json -Depth 5 -EnumsAsStrings), $url)"
         $caption = [rich_text]::ConvertFromObjects($caption)
         $this.file = [notion_external_file]::new($name, $caption, $url)
     }

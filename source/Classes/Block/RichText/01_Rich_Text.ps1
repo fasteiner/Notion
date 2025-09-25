@@ -64,7 +64,7 @@ class rich_text
         {
             throw [System.ArgumentException]::new("The content must be 2000 characters or less.")
         }
-        switch($type)
+        switch ($type)
         {
             "text"
             {

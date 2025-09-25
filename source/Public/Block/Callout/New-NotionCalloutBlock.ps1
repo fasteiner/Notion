@@ -29,6 +29,7 @@ function New-NotionCalloutBlock
         notion_callout_block
     #>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [OutputType([notion_callout_block])]
     param (
         [Parameter(ParameterSetName = 'Default', HelpMessage = 'Rich text content array for the callout block.')]
         [Object[]] $RichText,
